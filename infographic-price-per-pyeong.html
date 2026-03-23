@@ -264,7 +264,7 @@ function selectSido(code) {
   sidoChart.update();
 
   // 랭킹 차트
-  const labels = sido.ranking.map(r => [r.name, r.umdNm]);
+  const labels = sido.ranking.map(r => `${r.name} · ${r.umdNm}`);
   const data = sido.ranking.map(r => r.pricePerPyeong);
   const mainColor = SIDO_COLORS[code] || '#6366f1';
 

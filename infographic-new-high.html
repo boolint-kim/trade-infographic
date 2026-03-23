@@ -119,7 +119,7 @@ function selectSido(code){
   // 차트
   document.getElementById('chartTitle').textContent=`${sido.name} 신고가 TOP ${recs.length}`;
   if(highChart)highChart.destroy();
-  const labels=recs.map(r=>[r.name, r.umdNm]);
+  const labels=recs.map(r=>`${r.name} · ${r.umdNm}`);
   highChart=new Chart(document.getElementById('highChart'),{
     type:'bar',data:{labels,datasets:[
       {label:'전고점',data:recs.map(r=>r.prevHigh?r.prevHigh/10000:0),backgroundColor:'#e5e7ebcc',borderRadius:4},
