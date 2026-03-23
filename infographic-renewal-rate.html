@@ -3,391 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>아파트 전·월세 갱신계약 비율 인포그래픽</title>
+<title>아파트 전월세 갱신계약 비율 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
-    padding: 32px 20px;
-  }
-  .container { max-width: 1100px; margin: 0 auto; }
-
-  /* 헤더 */
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-  .header h1 {
-    font-size: 26px;
-    font-weight: 800;
-    color: #1a1a2e;
-    margin-bottom: 8px;
-  }
-  .header p {
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.6;
-  }
-
-  /* 요약 카드 */
-  .summary-cards {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 36px;
-    flex-wrap: wrap;
-  }
-  .card {
-    flex: 1;
-    min-width: 220px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px 28px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    border-top: 4px solid;
-  }
-  .card.seoul-year { border-color: #6366f1; }
-  .card.seoul-3y   { border-color: #3b82f6; }
-  .card.busan      { border-color: #f97316; }
-  .card .label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-  }
-  .card .city { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .card .rate {
-    font-size: 44px;
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .card.seoul-year .rate { color: #6366f1; }
-  .card.seoul-3y   .rate { color: #3b82f6; }
-  .card.busan      .rate { color: #f97316; }
-  .card .sub { font-size: 12px; color: #9ca3af; }
-  .card .detail { font-size: 12px; color: #6b7280; margin-top: 8px; }
-  .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-top: 8px;
-  }
-  .badge.up { background: #fee2e2; color: #dc2626; }
-  .badge.down { background: #fef3c7; color: #d97706; }
-
-  /* 차트 섹션 */
-  .section {
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px 32px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    margin-bottom: 24px;
-  }
-  .section-title {
-    font-size: 16px;
-    font-weight: 800;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-sub {
-    font-size: 12px;
-    color: #9ca3af;
-    margin-bottom: 20px;
-  }
-  .dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .chart-wrap { position: relative; }
-
-  /* 비교 섹션 */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 700px) {
-    .compare-grid { grid-template-columns: 1fr; }
-    .card { min-width: 100%; }
-  }
-
-  /* 푸터 */
-  .footer {
-    text-align: center;
-    font-size: 11px;
-    color: #9ca3af;
-    margin-top: 12px;
-    line-height: 1.8;
-  }
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#6366f1;color:#6366f1} .selector button.active{background:#6366f1;border-color:#6366f1;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#6366f1} .card.b{border-color:#3b82f6} .card.c{border-color:#10b981}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:36px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#6366f1} .card.b .value{color:#3b82f6} .card.c .value{color:#10b981}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:16px;font-weight:600;color:#9ca3af}
+  .insight{background:#eef2ff;border-left:4px solid #6366f1;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7}
+  .insight strong{color:#3730a3}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%}}
 </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- 헤더 -->
-  <div class="header">
-    <h1>🏠 아파트 전·월세 계약갱신 비율 분석</h1>
-    <p>국토부 실거래가 공개시스템 기반 | 계약갱신청구권 시행(2020.08) 이후 신고분</p>
-  </div>
-
-  <!-- 요약 카드 -->
+  <div class="header"><h1>아파트 전월세 갱신계약 비율</h1><p>계약갱신청구권 사용 비율 | 전국 17개 시도 | 읍면동별 비교</p></div>
+  <div class="selector" id="sidoButtons"></div>
   <div class="summary-cards">
-    <div class="card seoul-year">
-      <div class="label">🟣 서울 · 2026년</div>
-      <div class="city">서울시 전체 (전·월세)</div>
-      <div class="rate">48.4%</div>
-      <div class="sub">49,391건 중 갱신 23,284건</div>
-      <div class="detail">2026.01~02 신고분</div>
-      <span class="badge up">▲ 3년 평균 대비 +10.5%p</span>
-    </div>
-    <div class="card seoul-3y">
-      <div class="label">🔵 서울 · 최근 3년</div>
-      <div class="city">서울시 전체 (전세)</div>
-      <div class="rate">37.9%</div>
-      <div class="sub">412,782건 중 갱신 156,555건</div>
-      <div class="detail">2023.03~2026.02</div>
-    </div>
-    <div class="card busan">
-      <div class="label">🟠 부산 · 2021년 이후</div>
-      <div class="city">부산시 전체 (전·월세)</div>
-      <div class="rate">17.3%</div>
-      <div class="sub">272,714건 중 갱신 47,097건</div>
-      <div class="detail">2021.01~2026.03</div>
-      <span class="badge down">서울 대비 절반 수준</span>
-    </div>
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">신규 계약</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">갱신 계약</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
   </div>
-
-  <!-- 서울 2026년 구별 -->
+  <div class="insight"><strong>갱신계약이란?</strong> 임차인이 계약갱신청구권(2020.08 시행)을 행사하여 기존 계약을 갱신한 것. <strong>비율이 높을수록</strong> 세입자가 현 거주지에 머무는 경향이 강함 → 전세 매물 감소 요인.</div>
   <div class="section">
-    <div class="section-title">
-      <span class="dot" style="background:#6366f1"></span>
-      서울 25개 구별 갱신계약 비율 — 2026년 (전·월세)
-    </div>
-    <div class="section-sub">2026.01~02 신고분 기준 | 평균 48.4% | 신규+갱신 합계 기준</div>
-    <div class="chart-wrap">
-      <canvas id="seoulYearChart" height="420"></canvas>
-    </div>
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="t1">읍면동별 갱신비율</span></div>
+    <div class="section-sub" id="s1">최근 1년 | 10건 이상 거래 지역만</div>
+    <canvas id="areaChart" height="640"></canvas>
   </div>
-
-  <!-- 서울 3년 + 부산 비교 -->
-  <div class="compare-grid">
-    <!-- 서울 3년 -->
-    <div class="section">
-      <div class="section-title">
-        <span class="dot" style="background:#3b82f6"></span>
-        서울 구별 — 최근 3년 (전세)
-      </div>
-      <div class="section-sub">2023.03~2026.02 | 평균 37.9%</div>
-      <div class="chart-wrap">
-        <canvas id="seoul3yChart" height="620"></canvas>
-      </div>
-    </div>
-    <!-- 부산 -->
-    <div class="section">
-      <div class="section-title">
-        <span class="dot" style="background:#f97316"></span>
-        부산 구·군별 — 2021년 이후 (전·월세)
-      </div>
-      <div class="section-sub">2021.01~2026.03 | 평균 17.3%</div>
-      <div class="chart-wrap">
-        <canvas id="busanChart" height="620"></canvas>
-      </div>
-    </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t2">연도별 갱신비율 추이</span></div>
+    <div class="section-sub" id="s2">contractType 신고분 기준</div>
+    <canvas id="yearlyChart" height="300"></canvas>
   </div>
-
-  <div class="footer">
-    데이터 출처: 국토교통부 실거래가 공개시스템 | contractType(신규/갱신) 신고분만 집계, null 미분류 제외<br>
-    계약갱신청구권: 2020년 8월 4일 시행 | 생성일: 2026-03-23
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#10b981"></span>시도별 갱신비율 비교</div>
+    <div class="section-sub" id="sidoSub">최근 1년 기준</div>
+    <canvas id="sidoChart" height="380"></canvas>
   </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | contractType(신규/갱신) 신고분만 집계, null 미분류 제외<br>계약갱신청구권: 2020년 8월 4일 시행 | <span id="genDate"></span></div>
 </div>
-
 <script>
-Chart.defaults.font.family = "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
 const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const C={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let D,areaChart,yearlyChart,sidoChart;
 
-// 색상 헬퍼: 기준선 초과 여부로 색상 분기
-function colorByRate(rates, avg, colorHigh, colorLow, alpha = '99') {
-  return rates.map(r => r >= avg ? colorHigh + alpha : colorLow + alpha);
+async function load(){
+  try{D=await(await fetch('data/renewal-rate.json')).json();}
+  catch{try{D=await(await fetch('renewal-rate.json')).json();}catch{return;}}
+  init();
 }
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!D.sido[c])return;const b=document.createElement('button');b.textContent=D.sido[c].name;b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
+  const codes=SIDO_ORDER.filter(c=>D.sido[c]);
+  sidoChart=new Chart(document.getElementById('sidoChart'),{
+    type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:codes.map(c=>D.sido[c].renewalRate),backgroundColor:'#a5b4fccc',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
+  });
+  sel('11');
+}
+function sel(code){
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const s=D.sido[code];if(!s)return;
+  const col=C[code]||'#6366f1';
 
-// ─── 1. 서울 2026년 ───
-const seoulYearLabels = ['중랑구','송파구','서초구','강남구','강동구','강서구','성북구','마포구','서대문구','양천구','은평구','영등포구','동작구','구로구','용산구','노원구','성동구','중구','광진구','도봉구','종로구','금천구','관악구','강북구','동대문구'];
-const seoulYearData  = [60.3,56.4,56.3,52.6,52.5,51.7,51.5,51.1,50.7,49.6,49.3,48.4,47.3,46.2,45.8,45.3,41.9,40.4,37.3,36.7,35.7,35.4,35.0,34.3,34.1];
-const avg1 = 48.4;
+  document.getElementById('cL1').textContent=`${s.name} 갱신비율`;
+  document.getElementById('cV1').innerHTML=`${s.renewalRate}<span class="unit">%</span>`;
+  document.getElementById('cS1').textContent=`${fmt(s.total)}건 중 갱신 ${fmt(s.renewal)}건`;
+  document.getElementById('cV2').innerHTML=`${fmt(s.newContract)}<span class="unit"> 건</span>`;
+  document.getElementById('cS2').textContent=`${s.period.slice(0,4)}.${s.period.slice(4,6)}~${s.period.slice(7,11)}.${s.period.slice(11)}`;
+  document.getElementById('cV3').innerHTML=`${fmt(s.renewal)}<span class="unit"> 건</span>`;
+  document.getElementById('cS3').textContent=`전체의 ${s.renewalRate}%`;
 
-new Chart(document.getElementById('seoulYearChart'), {
-  type: 'bar',
-  data: {
-    labels: seoulYearLabels,
-    datasets: [{
-      label: '갱신비율 (%)',
-      data: seoulYearData,
-      backgroundColor: seoulYearData.map(r => r >= avg1 ? '#6366f1cc' : '#a5b4fccc'),
-      borderColor:     seoulYearData.map(r => r >= avg1 ? '#4f46e5' : '#818cf8'),
-      borderWidth: 1,
-      borderRadius: 4,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.raw}%  (평균 ${avg1}%)`
-        }
-      },
-      annotation: { /* 평균선은 아래 afterDraw로 처리 */ }
-    },
-    scales: {
-      x: {
-        min: 0, max: 70,
-        ticks: { callback: v => v + '%' },
-        grid: { color: '#f3f4f6' }
-      },
-      y: { grid: { display: false } }
-    }
-  },
-  plugins: [{
-    id: 'avgLine',
-    afterDraw(chart) {
-      const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
-      const xPos = x.getPixelForValue(avg1);
-      ctx.save();
-      ctx.beginPath();
-      ctx.setLineDash([5, 4]);
-      ctx.strokeStyle = '#6366f1';
-      ctx.lineWidth = 1.5;
-      ctx.moveTo(xPos, top);
-      ctx.lineTo(xPos, bottom);
-      ctx.stroke();
-      ctx.fillStyle = '#6366f1';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('평균 ' + avg1 + '%', xPos + 4, top + 12);
-      ctx.restore();
-    }
-  }]
-});
+  const areas=s.byArea.slice(0,30);
+  document.getElementById('t1').textContent=`${s.name} 읍면동별 갱신비율 TOP ${areas.length}`;
+  if(areaChart)areaChart.destroy();
+  areaChart=new Chart(document.getElementById('areaChart'),{
+    type:'bar',data:{labels:areas.map(r=>r.umdNm),datasets:[{
+      label:'갱신비율(%)',data:areas.map(r=>r.rate),
+      backgroundColor:areas.map(r=>r.rate>=s.renewalRate?col+'cc':col+'55'),
+      borderRadius:4
+    }]},
+    options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:ctx=>`${ctx.raw}%`,
+        afterLabel:ctx=>{const r=areas[ctx.dataIndex];return `갱신 ${fmt(r.renewal)} / 신규 ${fmt(r.newContract)} (총 ${fmt(r.total)}건)`;}
+      }}},
+      scales:{x:{min:0,max:Math.min(80,Math.max(...areas.map(r=>r.rate))+10),ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},
+        y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}
+  });
 
-// ─── 2. 서울 최근 3년 ───
-const seoul3yLabels = ['양천구','송파구','마포구','용산구','노원구','강남구','동작구','성북구','강서구','영등포구','성동구','광진구','서대문구','서초구','중구','강북구','도봉구','관악구','강동구','은평구','구로구','종로구','중랑구','동대문구','금천구'];
-const seoul3yData   = [43.3,42.1,40.4,40.0,39.3,39.0,38.6,38.3,38.2,38.2,37.9,37.9,37.2,36.2,36.1,36.1,36.0,35.4,35.4,35.3,35.3,35.1,34.2,31.1,30.9];
-const avg2 = 37.9;
+  const yearly=s.yearly.filter(y=>y.yr>='2020');
+  document.getElementById('t2').textContent=`${s.name} 연도별 갱신비율 추이`;
+  if(yearlyChart)yearlyChart.destroy();
+  yearlyChart=new Chart(document.getElementById('yearlyChart'),{
+    type:'line',data:{labels:yearly.map(y=>y.yr),datasets:[{
+      label:'갱신비율(%)',data:yearly.map(y=>y.rate),borderColor:col,backgroundColor:col+'20',fill:true,
+      tension:.3,pointRadius:6,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3
+    }]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+      scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
+  });
 
-new Chart(document.getElementById('seoul3yChart'), {
-  type: 'bar',
-  data: {
-    labels: seoul3yLabels,
-    datasets: [{
-      label: '갱신비율 (%)',
-      data: seoul3yData,
-      backgroundColor: seoul3yData.map(r => r >= avg2 ? '#3b82f6cc' : '#93c5fdcc'),
-      borderColor:     seoul3yData.map(r => r >= avg2 ? '#2563eb' : '#60a5fa'),
-      borderWidth: 1,
-      borderRadius: 4,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.raw}%  (평균 ${avg2}%)` } }
-    },
-    scales: {
-      x: {
-        min: 0, max: 55,
-        ticks: { callback: v => v + '%' },
-        grid: { color: '#f3f4f6' }
-      },
-      y: { grid: { display: false }, ticks: { font: { size: 13, weight: 'bold' } } }
-    }
-  },
-  plugins: [{
-    id: 'avgLine',
-    afterDraw(chart) {
-      const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
-      const xPos = x.getPixelForValue(avg2);
-      ctx.save();
-      ctx.beginPath();
-      ctx.setLineDash([5, 4]);
-      ctx.strokeStyle = '#3b82f6';
-      ctx.lineWidth = 1.5;
-      ctx.moveTo(xPos, top);
-      ctx.lineTo(xPos, bottom);
-      ctx.stroke();
-      ctx.fillStyle = '#3b82f6';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('평균 ' + avg2 + '%', xPos + 4, top + 12);
-      ctx.restore();
-    }
-  }]
-});
-
-// ─── 3. 부산 ───
-const busanLabels = ['해운대구','남구','북구','동래구','연제구','기장군','강서구','동구','수영구','서구','부산진구','금정구','사상구','사하구','영도구','중구'];
-const busanData   = [20.6,19.9,19.4,18.9,18.7,17.9,17.2,16.5,16.4,16.1,15.9,14.9,13.5,12.0,10.7,7.7];
-const avg3 = 17.3;
-
-new Chart(document.getElementById('busanChart'), {
-  type: 'bar',
-  data: {
-    labels: busanLabels,
-    datasets: [{
-      label: '갱신비율 (%)',
-      data: busanData,
-      backgroundColor: busanData.map(r => r >= avg3 ? '#f97316cc' : '#fdba74cc'),
-      borderColor:     busanData.map(r => r >= avg3 ? '#ea580c' : '#fb923c'),
-      borderWidth: 1,
-      borderRadius: 4,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.raw}%  (평균 ${avg3}%)` } }
-    },
-    scales: {
-      x: {
-        min: 0, max: 28,
-        ticks: { callback: v => v + '%' },
-        grid: { color: '#f3f4f6' }
-      },
-      y: { grid: { display: false }, ticks: { font: { size: 13, weight: 'bold' } } }
-    }
-  },
-  plugins: [{
-    id: 'avgLine',
-    afterDraw(chart) {
-      const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
-      const xPos = x.getPixelForValue(avg3);
-      ctx.save();
-      ctx.beginPath();
-      ctx.setLineDash([5, 4]);
-      ctx.strokeStyle = '#f97316';
-      ctx.lineWidth = 1.5;
-      ctx.moveTo(xPos, top);
-      ctx.lineTo(xPos, bottom);
-      ctx.stroke();
-      ctx.fillStyle = '#f97316';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('평균 ' + avg3 + '%', xPos + 4, top + 12);
-      ctx.restore();
-    }
-  }]
-});
+  const codes=SIDO_ORDER.filter(c=>D.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(C[c]||'#6366f1')+'cc':'#d1d5dbcc');
+  sidoChart.update();
+}
+load();
 </script>
 </body>
 </html>
