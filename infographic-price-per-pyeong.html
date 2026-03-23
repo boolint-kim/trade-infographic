@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>아파트 평당가 랭킹 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -137,6 +138,7 @@
 <script>
 Chart.defaults.font.family = "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
 const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+Chart.defaults.plugins.datalabels={display:false}; // 기본 끄고, 필요한 차트만 켬
 function fmt(n) { return n.toLocaleString('ko-KR'); }
 
 // 시도 순서 (인구 순)
@@ -217,7 +219,8 @@ function initSidoChart() {
       responsive: true,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.raw)} 만원/평` } }
+        tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.raw)} 만원/평` } },
+        datalabels: { display: true, anchor: 'end', align: 'end', font: { size: _m?9:11, weight: 'bold' }, formatter: v => fmt(v) }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 13 } } },

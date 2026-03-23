@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>아파트 전월세 갱신계약 비율 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
   .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
@@ -55,7 +56,7 @@
 </div>
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
-const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;Chart.defaults.plugins.datalabels={display:false};
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 const C={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
@@ -73,7 +74,7 @@ function init(){
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:codes.map(c=>D.sido[c].renewalRate),backgroundColor:'#a5b4fccc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
     scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
   });
   sel('11');
@@ -117,7 +118,7 @@ function sel(code){
       label:'갱신비율(%)',data:yearly.map(y=>y.rate),borderColor:col,backgroundColor:col+'20',fill:true,
       tension:.3,pointRadius:6,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3
     }]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
       scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
   });
 

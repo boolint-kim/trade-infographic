@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>아파트 신고가 경신 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
@@ -68,7 +69,7 @@
 </div>
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
-const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;Chart.defaults.plugins.datalabels={display:false};
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 let DATA,highChart,cur='11';
