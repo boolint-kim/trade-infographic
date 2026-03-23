@@ -43,7 +43,7 @@
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 서울 평균가 대비 각 시도 평균가 비율 | <span id="genDate"></span></div>
 </div>
 <script>
-Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";Chart.defaults.font.size=14;
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
@@ -84,7 +84,7 @@ function init(){
   const sortedCodes=[...codes].sort((a,b)=>(bySido[b][lastYr].vsSeoul||0)-(bySido[a][lastYr].vsSeoul||0));
   new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:sortedCodes.map(c=>SIDO_SHORT[c]),datasets:[{data:sortedCodes.map(c=>bySido[c][lastYr].vsSeoul),backgroundColor:sortedCodes.map(c=>c==='11'?'#6366f1cc':(C[c]||'#93c5fd')+'99'),borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`서울의 ${ctx.raw}% (${fmt(bySido[sortedCodes[ctx.dataIndex]][lastYr].avgPrice)}만원)`}}},
-    scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}});
+    scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 격차 변화
   const firstYr=years[0];
@@ -95,7 +95,7 @@ function init(){
 
   new Chart(document.getElementById('changeChart'),{type:'bar',data:{labels:changeData.map(d=>d.name),datasets:[{data:changeData.map(d=>d.change),backgroundColor:changeData.map(d=>d.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=changeData[ctx.dataIndex];return `${firstYr}년 ${d.before}% → ${lastYr}년 ${d.after}% (${d.change>=0?'+':''}${d.change}%p)`;}}}},
-    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}});
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 }
 load();
 </script>

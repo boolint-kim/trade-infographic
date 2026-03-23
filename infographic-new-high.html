@@ -68,7 +68,7 @@
 </div>
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
-Chart.defaults.font.size=14;
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 let DATA,highChart,cur='11';
@@ -125,7 +125,7 @@ function selectSido(code){
       {label:'신고가',data:recs.map(r=>r.price/10000),backgroundColor:'#ef4444cc',borderRadius:4}
     ]},options:{indexAxis:'y',responsive:true,
       plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toFixed(1)}억`}}},
-      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}
+      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}
   });
 
   // 테이블

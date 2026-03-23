@@ -212,7 +212,7 @@
 
 <script>
 Chart.defaults.font.family = "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
-Chart.defaults.font.size = 14;
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 
 // 색상 헬퍼: 기준선 초과 여부로 색상 분기
 function colorByRate(rates, avg, colorHigh, colorLow, alpha = '99') {
@@ -310,7 +310,7 @@ new Chart(document.getElementById('seoul3yChart'), {
         ticks: { callback: v => v + '%' },
         grid: { color: '#f3f4f6' }
       },
-      y: { grid: { display: false }, ticks: { font: { size: 15, weight: 'bold' } } }
+      y: { grid: { display: false }, ticks: { font: { size: 13, weight: 'bold' } } }
     }
   },
   plugins: [{
@@ -365,7 +365,7 @@ new Chart(document.getElementById('busanChart'), {
         ticks: { callback: v => v + '%' },
         grid: { color: '#f3f4f6' }
       },
-      y: { grid: { display: false }, ticks: { font: { size: 15, weight: 'bold' } } }
+      y: { grid: { display: false }, ticks: { font: { size: 13, weight: 'bold' } } }
     }
   },
   plugins: [{

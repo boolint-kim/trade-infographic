@@ -54,7 +54,7 @@
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | slerGbn(매도자구분)/buyerGbn(매수자구분) | <span id="genDate"></span></div>
 </div>
 <script>
-Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";Chart.defaults.font.size=14;
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};

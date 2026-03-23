@@ -136,7 +136,7 @@
 
 <script>
 Chart.defaults.font.family = "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
-Chart.defaults.font.size = 14;
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 function fmt(n) { return n.toLocaleString('ko-KR'); }
 
 // 시도 순서 (인구 순)
@@ -300,7 +300,7 @@ function selectSido(code) {
           ticks: { callback: v => fmt(v) },
           grid: { color: '#f3f4f6' }
         },
-        y: { grid: { display: false }, ticks: { font: { size: 15, weight: 'bold' } } }
+        y: { grid: { display: false }, ticks: { font: { size: _m?11:13, weight: 'bold' } } }
       }
     }
   });
