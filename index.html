@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부동산 실거래가 인포그래픽</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:40px 20px}
+  .container{max-width:900px;margin:0 auto}
+  .header{text-align:center;margin-bottom:40px}
+  .header h1{font-size:28px;font-weight:800;margin-bottom:8px}
+  .header p{font-size:14px;color:#6b7280;line-height:1.6}
+  .group{margin-bottom:32px}
+  .group-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-left:12px;border-left:4px solid #6366f1}
+  .group.periodic .group-title{border-color:#f97316}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
+  .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+  .card .tag{font-size:11px;font-weight:700;color:#6366f1;margin-bottom:8px;letter-spacing:.5px}
+  .group.periodic .card .tag{color:#f97316}
+  .card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+  .card p{font-size:13px;color:#6b7280;line-height:1.5}
+  .footer{text-align:center;font-size:12px;color:#9ca3af;margin-top:40px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>부동산 실거래가 인포그래픽</h1>
+    <p>국토교통부 실거래가 공개시스템 기반 | 3,000만건 데이터 분석 | 전국 17개 시도</p>
+  </div>
+
+  <div class="group evergreen">
+    <div class="group-title">상시 지표 (Evergreen)</div>
+    <div class="cards">
+      <a class="card" href="infographic-daily-trades.html">
+        <div class="tag">E1 · 일 1회 갱신</div>
+        <h3>오늘의 거래 현황</h3>
+        <p>이번 달 일별 거래 신고 건수, 시도별 현황, 고가 거래 TOP 5</p>
+      </a>
+      <a class="card" href="infographic-price-trend.html">
+        <div class="tag">E2 · 일 1회 갱신</div>
+        <h3>매매 평균가 10년 추이</h3>
+        <p>2016~2026 연도별 평균 거래가 + 거래량 콤보 차트</p>
+      </a>
+      <a class="card" href="infographic-price-per-pyeong.html">
+        <div class="tag">E3 · 일 1회 갱신</div>
+        <h3>평당가 랭킹</h3>
+        <p>시도별 단지 평당가 TOP 20, 전국 시도 비교</p>
+      </a>
+      <a class="card" href="infographic-jeonse-ratio.html">
+        <div class="tag">E4 · 일 1회 갱신</div>
+        <h3>전세가율 10년 추이</h3>
+        <p>매매 대비 전세 비율, 매매가 vs 전세가 갭 분석</p>
+      </a>
+      <a class="card" href="infographic-trade-volume.html">
+        <div class="tag">E5 · 일 1회 갱신</div>
+        <h3>거래량 추이</h3>
+        <p>10년 연도별 + 최근 15개월 월별 거래량</p>
+      </a>
+      <a class="card" href="infographic-new-high.html">
+        <div class="tag">E6 · 일 1회 갱신</div>
+        <h3>신고가 경신</h3>
+        <p>역대 최고가 갱신 거래, 전고점 대비 상승률</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group periodic">
+    <div class="group-title">월간 분석 (Periodic)</div>
+    <div class="cards">
+      <a class="card" href="infographic-renewal-rate.html">
+        <div class="tag">P1 · 월 1회 갱신</div>
+        <h3>갱신계약 비율</h3>
+        <p>전월세 계약갱신청구권 사용 비율, 구별 비교</p>
+      </a>
+      <a class="card" href="infographic-wolse-ratio.html">
+        <div class="tag">P2 · 월 1회 갱신</div>
+        <h3>전월세 전환율</h3>
+        <p>월세 비중 추이, 전세 vs 월세 건수 변화</p>
+      </a>
+      <a class="card" href="infographic-buyer-seller.html">
+        <div class="tag">P3 · 월 1회 갱신</div>
+        <h3>매수자 · 매도자 유형</h3>
+        <p>개인/법인/공공기관 거래 비율 (2024년~)</p>
+      </a>
+      <a class="card" href="infographic-cancel-rate.html">
+        <div class="tag">P4 · 월 1회 갱신</div>
+        <h3>계약 해제율</h3>
+        <p>매매 계약 해제 비율, 시장 불안 지표 (2020년~)</p>
+      </a>
+      <a class="card" href="infographic-size-compare.html">
+        <div class="tag">P5 · 월 1회 갱신</div>
+        <h3>면적대별 가격 비교</h3>
+        <p>소형/중형/대형/초대형 평균가 + 거래 건수 추이</p>
+      </a>
+      <a class="card" href="infographic-price-gap.html">
+        <div class="tag">P6 · 월 1회 갱신</div>
+        <h3>지역 간 가격 격차</h3>
+        <p>서울 대비 시도별 가격 비율, 격차 변화 추이</p>
+      </a>
+      <a class="card" href="infographic-floor-premium.html">
+        <div class="tag">P7 · 월 1회 갱신</div>
+        <h3>층별 프리미엄</h3>
+        <p>저층/중층/고층/초고층 평당가 비교</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    데이터 출처: 국토교통부 실거래가 공개시스템 (3,000만건)<br>
+    boolint &copy; 2026
+  </div>
+</div>
+</body>
+</html>

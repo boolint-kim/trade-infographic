@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 신고가 경신 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto}
+  .header{text-align:center;margin-bottom:28px}
+  .header h1{font-size:26px;font-weight:800;margin-bottom:8px}
+  .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#ef4444;color:#ef4444}
+  .selector button.active{background:#ef4444;border-color:#ef4444;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:220px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#ef4444} .card.b{border-color:#6366f1} .card.c{border-color:#f97316}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#ef4444} .card.b .value{color:#6366f1} .card.c .value{color:#f97316}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .trade-table{width:100%;border-collapse:collapse;font-size:13px}
+  .trade-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;white-space:nowrap}
+  .trade-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
+  .trade-table tr:hover{background:#fefce8}
+  .price{font-weight:800;color:#ef4444} .diff{font-weight:700;font-size:12px;color:#ef4444}
+  .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
+  .no-data{text-align:center;padding:40px;color:#9ca3af;font-size:14px}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>아파트 신고가 경신</h1>
+    <p id="periodText">동일 단지·동일 면적대 역대 최고가를 갱신한 거래</p>
+  </div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1">최고가 거래</div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">신고가 경신 건수</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">최대 상승폭</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="chartTitle">신고가 TOP 10</span></div>
+    <div class="section-sub" id="chartSub">전고점(회색) vs 신고가(빨강)</div>
+    <canvas id="highChart" height="480"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="tableTitle">상세 내역</span></div>
+    <div class="section-sub">전고점 대비 상승액·상승률 포함</div>
+    <div style="overflow-x:auto">
+      <table class="trade-table"><thead><tr><th>#</th><th>단지명</th><th>위치</th><th>신고가</th><th>전고점</th><th>상승</th><th>면적</th><th>층</th><th>거래일</th></tr></thead>
+      <tbody id="tableBody"></tbody></table>
+    </div>
+    <div class="no-data" id="noData" style="display:none">해당 시도에 신고가 경신 데이터가 없습니다.</div>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 동일 단지 + 동일 면적(±1m²) 기준 역대 최고 초과 | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+Chart.defaults.font.size=14;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+let DATA,highChart,cur='11';
+
+async function load(){
+  try{DATA=await(await fetch('data/new-high.json')).json();}catch{try{DATA=await(await fetch('new-high.json')).json();}catch{return;}}
+  init();
+}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>selectSido(c);bc.appendChild(b);});
+  selectSido('11');
+}
+function selectSido(code){
+  cur=code;
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const sido=DATA.sido[code];
+  if(!sido||sido.records.length===0){
+    document.getElementById('cV1').innerHTML='-';document.getElementById('cS1').textContent='';
+    document.getElementById('cV2').innerHTML='0<span class="unit"> 건</span>';document.getElementById('cS2').textContent='';
+    document.getElementById('cV3').innerHTML='-';document.getElementById('cS3').textContent='';
+    if(highChart)highChart.destroy();
+    highChart=new Chart(document.getElementById('highChart'),{type:'bar',data:{labels:[],datasets:[]},options:{responsive:true}});
+    document.getElementById('tableBody').innerHTML='';
+    document.getElementById('noData').style.display='block';
+    return;
+  }
+  document.getElementById('noData').style.display='none';
+  const recs=sido.records;
+  const top=recs[0];
+  document.getElementById('cL1').textContent=`${sido.name} 최고가`;
+  document.getElementById('cV1').innerHTML=`${(top.price/10000).toFixed(1)}<span class="unit"> 억</span>`;
+  document.getElementById('cS1').textContent=`${top.name} · ${top.umdNm}`;
+  document.getElementById('cV2').innerHTML=`${recs.length}<span class="unit"> 건</span>`;
+  document.getElementById('cS2').textContent=`${sido.name} 신고가 경신`;
+
+  const withPrev=recs.filter(r=>r.prevHigh&&r.prevHigh>0);
+  if(withPrev.length>0){
+    const maxJump=withPrev.reduce((m,r)=>{const p=(r.price-r.prevHigh)/r.prevHigh;return p>m.p?{r,p}:m;},{r:null,p:0});
+    if(maxJump.r){
+      document.getElementById('cV3').innerHTML=`+${(maxJump.p*100).toFixed(1)}<span class="unit">%</span>`;
+      document.getElementById('cS3').textContent=`${maxJump.r.name} (${(maxJump.r.prevHigh/10000).toFixed(1)}→${(maxJump.r.price/10000).toFixed(1)}억)`;
+    }
+  } else {document.getElementById('cV3').innerHTML='-';document.getElementById('cS3').textContent='';}
+
+  // 차트
+  document.getElementById('chartTitle').textContent=`${sido.name} 신고가 TOP ${recs.length}`;
+  if(highChart)highChart.destroy();
+  const labels=recs.map(r=>[r.name, r.umdNm]);
+  highChart=new Chart(document.getElementById('highChart'),{
+    type:'bar',data:{labels,datasets:[
+      {label:'전고점',data:recs.map(r=>r.prevHigh?r.prevHigh/10000:0),backgroundColor:'#e5e7ebcc',borderRadius:4},
+      {label:'신고가',data:recs.map(r=>r.price/10000),backgroundColor:'#ef4444cc',borderRadius:4}
+    ]},options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toFixed(1)}억`}}},
+      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}
+  });
+
+  // 테이블
+  const tbody=document.getElementById('tableBody');
+  tbody.innerHTML='';
+  recs.forEach((r,i)=>{
+    const prev=r.prevHigh||0;
+    const diff=r.price-prev;
+    const pct=prev>0?((diff/prev)*100).toFixed(1):'신규';
+    const pyeong=(parseFloat(r.area)*0.3025).toFixed(1);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="rank-num">${i+1}</td><td><strong>${r.name}</strong></td><td>${r.umdNm}</td>
+      <td class="price">${(r.price/10000).toFixed(1)}억</td><td style="color:#9ca3af">${prev>0?(prev/10000).toFixed(1)+'억':'-'}</td>
+      <td class="diff">${prev>0?'▲'+(diff/10000).toFixed(1)+'억 (+'+pct+'%)':'첫 거래'}</td>
+      <td class="area-info">${parseFloat(r.area).toFixed(1)}m² (${pyeong}평)</td><td>${r.floor}층</td><td>${r.dealDate.slice(5)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+load();
+</script>
+</body>
+</html>

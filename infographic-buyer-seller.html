@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 매수자·매도자 유형 분석 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#06b6d4;color:#06b6d4} .selector button.active{background:#06b6d4;border-color:#06b6d4;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#06b6d4} .card.b{border-color:#8b5cf6} .card.c{border-color:#f97316}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#06b6d4} .card.b .value{color:#8b5cf6} .card.c .value{color:#f97316}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>매수자 · 매도자 유형 분석</h1><p>개인/법인/공공기관/기타 거래 비율 | 2024년~ (유형 신고 시작)</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1">개인→개인</div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">법인 매도</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">법인 매수</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="grid2">
+    <div class="section">
+      <div class="section-title"><span class="dot" style="background:#06b6d4"></span><span id="t1">매수자 유형</span></div>
+      <div class="section-sub" id="s1">연도별</div>
+      <canvas id="buyerChart" height="300"></canvas>
+    </div>
+    <div class="section">
+      <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="t2">매도자 유형</span></div>
+      <div class="section-sub" id="s2">연도별</div>
+      <canvas id="sellerChart" height="300"></canvas>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#f97316"></span>시도별 법인 거래 비중</div>
+    <div class="section-sub" id="sidoSub">최신 연도 | 법인 매도 + 법인 매수 비율</div>
+    <canvas id="sidoChart" height="380"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | slerGbn(매도자구분)/buyerGbn(매수자구분) | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";Chart.defaults.font.size=14;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
+const TYPE_COLORS={'개인':'#3b82f6','법인':'#ef4444','공공기관':'#10b981','기타':'#9ca3af'};
+let D,ch1,ch2,sidoChart;
+async function load(){try{D=await(await fetch('data/buyer-seller.json')).json();}catch{try{D=await(await fetch('buyer-seller.json')).json();}catch{return;}} init();}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!D.sido[c])return;const b=document.createElement('button');b.textContent=SIDO_SHORT[c];b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
+  // 시도별 법인 비중
+  const codes=SIDO_ORDER.filter(c=>D.sido[c]);
+  const corpRatio=codes.map(c=>{
+    const s=D.sido[c];const years=[...new Set(s.buyers.map(r=>r.yr))].sort();const lastYr=years[years.length-1];
+    const totalB=s.buyers.filter(r=>r.yr===lastYr).reduce((s,r)=>s+r.cnt,0);
+    const corpB=s.buyers.filter(r=>r.yr===lastYr&&r.type==='법인').reduce((s,r)=>s+r.cnt,0);
+    const corpS=s.sellers.filter(r=>r.yr===lastYr&&r.type==='법인').reduce((s,r)=>s+r.cnt,0);
+    return totalB>0?Math.round((corpB+corpS)/totalB*1000)/10:0;
+  });
+  sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>SIDO_SHORT[c]),datasets:[{data:corpRatio,backgroundColor:'#f97316aa',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`법인 비중: ${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
+  sel('11');
+}
+function sel(code){
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const s=D.sido[code];if(!s)return;
+  const years=[...new Set(s.buyers.map(r=>r.yr))].sort();const lastYr=years[years.length-1];
+  const types=[...new Set(s.buyers.map(r=>r.type))];
+
+  // 요약: 최신 연도
+  const lastBuyers=s.buyers.filter(r=>r.yr===lastYr);
+  const lastSellers=s.sellers.filter(r=>r.yr===lastYr);
+  const totalB=lastBuyers.reduce((s,r)=>s+r.cnt,0);
+  const p2p=lastBuyers.filter(r=>r.type==='개인').reduce((s,r)=>s+r.cnt,0);
+  const corpBuy=lastBuyers.filter(r=>r.type==='법인').reduce((s,r)=>s+r.cnt,0);
+  const corpSell=lastSellers.filter(r=>r.type==='법인').reduce((s,r)=>s+r.cnt,0);
+
+  document.getElementById('cV1').innerHTML=`${totalB>0?Math.round(p2p/totalB*1000)/10:0}<span class="unit">%</span>`;
+  document.getElementById('cS1').textContent=`${fmt(p2p)}건 / ${fmt(totalB)}건 (${lastYr})`;
+  document.getElementById('cV2').innerHTML=`${fmt(corpSell)}<span class="unit"> 건</span>`;
+  document.getElementById('cS2').textContent=`${SIDO_SHORT[code]} ${lastYr}년`;
+  document.getElementById('cV3').innerHTML=`${fmt(corpBuy)}<span class="unit"> 건</span>`;
+  document.getElementById('cS3').textContent=`${SIDO_SHORT[code]} ${lastYr}년`;
+
+  // 매수자 차트
+  document.getElementById('t1').textContent=`${SIDO_SHORT[code]} 매수자 유형`;
+  if(ch1)ch1.destroy();
+  const buyerByType={};types.forEach(t=>{buyerByType[t]={};s.buyers.filter(r=>r.type===t).forEach(r=>buyerByType[t][r.yr]=r.cnt);});
+  ch1=new Chart(document.getElementById('buyerChart'),{type:'bar',data:{labels:years,datasets:types.map(t=>({
+    label:t,data:years.map(yr=>buyerByType[t][yr]||0),backgroundColor:(TYPE_COLORS[t]||'#9ca3af')+'99',borderRadius:3
+  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
+
+  // 매도자 차트
+  document.getElementById('t2').textContent=`${SIDO_SHORT[code]} 매도자 유형`;
+  if(ch2)ch2.destroy();
+  const sellerTypes=[...new Set(s.sellers.map(r=>r.type))];
+  const sellerByType={};sellerTypes.forEach(t=>{sellerByType[t]={};s.sellers.filter(r=>r.type===t).forEach(r=>sellerByType[t][r.yr]=r.cnt);});
+  ch2=new Chart(document.getElementById('sellerChart'),{type:'bar',data:{labels:years,datasets:sellerTypes.map(t=>({
+    label:t,data:years.map(yr=>sellerByType[t][yr]||0),backgroundColor:(TYPE_COLORS[t]||'#9ca3af')+'99',borderRadius:3
+  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
+
+  const codes=SIDO_ORDER.filter(c=>D.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?'#f97316cc':'#d1d5dbcc');
+  sidoChart.update();
+}
+load();
+</script>
+</body>
+</html>

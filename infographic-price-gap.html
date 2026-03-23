@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지역 간 아파트 가격 격차 — 서울 대비</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#6366f1} .card.b{border-color:#ef4444} .card.c{border-color:#10b981}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#6366f1} .card.b .value{color:#ef4444} .card.c .value{color:#10b981}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>지역 간 아파트 가격 격차</h1><p>서울 평균 거래가를 100으로 했을 때 각 시도의 상대 비율 | 10년 추이</p></div>
+  <div class="summary-cards" id="cards"></div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span>서울 대비 가격 비율 추이 — 주요 시도</div>
+    <div class="section-sub">서울=100% 기준 | 비율이 낮을수록 서울과 격차가 큼</div>
+    <canvas id="ratioChart" height="360"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#ef4444"></span>17개 시도 최신 가격 격차</div>
+    <div class="section-sub" id="barSub">서울 대비 비율(%) | 최신 연도 기준</div>
+    <canvas id="barChart" height="400"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#10b981"></span>격차 변화 — 2016 vs 최신</div>
+    <div class="section-sub">서울 대비 비율이 줄었으면 격차 확대, 늘었으면 격차 축소</div>
+    <canvas id="changeChart" height="400"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 서울 평균가 대비 각 시도 평균가 비율 | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";Chart.defaults.font.size=14;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
+const C={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let D;
+async function load(){try{D=await(await fetch('data/price-gap.json')).json();}catch{try{D=await(await fetch('price-gap.json')).json();}catch{return;}} init();}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  const data=D.data;
+  const years=[...new Set(data.map(r=>r.yr))].sort();
+  const lastYr=years[years.length-1];
+
+  // 시도별 최신/과거 데이터
+  const bySido={};
+  data.forEach(r=>{if(!bySido[r.sido])bySido[r.sido]={};bySido[r.sido][r.yr]=r;});
+  const codes=SIDO_ORDER.filter(c=>bySido[c]&&bySido[c][lastYr]);
+
+  // 요약 카드
+  const seoulLast=bySido['11'][lastYr];
+  const maxGap=codes.filter(c=>c!=='11').reduce((m,c)=>{const v=bySido[c][lastYr].vsSeoul;return v<m.v?{c,v}:m;},{c:'',v:100});
+  const minGap=codes.filter(c=>c!=='11').reduce((m,c)=>{const v=bySido[c][lastYr].vsSeoul;return v>m.v?{c,v}:m;},{c:'',v:0});
+
+  document.getElementById('cards').innerHTML=`
+    <div class="card a"><div class="label">서울 평균가 (${lastYr})</div><div class="value">${(seoulLast.avgPrice/10000).toFixed(1)}<span class="unit"> 억</span></div><div class="sub">기준 = 100%</div></div>
+    <div class="card b"><div class="label">격차 최대</div><div class="value">${maxGap.v}<span class="unit">%</span></div><div class="sub">${SIDO_SHORT[maxGap.c]} — 서울의 ${maxGap.v}% 수준</div></div>
+    <div class="card c"><div class="label">격차 최소</div><div class="value">${minGap.v}<span class="unit">%</span></div><div class="sub">${SIDO_SHORT[minGap.c]} — 서울에 가장 근접</div></div>`;
+
+  // 주요 시도 추이 (서울,경기,부산,대구,인천)
+  const mainCodes=['41','26','27','28','30'];
+  new Chart(document.getElementById('ratioChart'),{type:'line',data:{labels:years,datasets:mainCodes.filter(c=>bySido[c]).map(c=>({
+    label:SIDO_SHORT[c],data:years.map(yr=>bySido[c][yr]?bySido[c][yr].vsSeoul:null),borderColor:C[c],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:C[c],borderWidth:2.5,spanGaps:true
+  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 서울의 ${ctx.raw}%`}}},
+    scales:{x:{grid:{display:false}},y:{min:20,max:70,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    plugins:[{id:'seoulLine',beforeDraw(chart){const{ctx,chartArea:{left,right,top}}=chart;ctx.save();ctx.fillStyle='#6366f1';ctx.font='bold 12px sans-serif';ctx.fillText('서울 = 100%',left+10,top+16);ctx.restore();}}]
+  });
+
+  // 전체 시도 최신 비율
+  const sortedCodes=[...codes].sort((a,b)=>(bySido[b][lastYr].vsSeoul||0)-(bySido[a][lastYr].vsSeoul||0));
+  new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:sortedCodes.map(c=>SIDO_SHORT[c]),datasets:[{data:sortedCodes.map(c=>bySido[c][lastYr].vsSeoul),backgroundColor:sortedCodes.map(c=>c==='11'?'#6366f1cc':(C[c]||'#93c5fd')+'99'),borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`서울의 ${ctx.raw}% (${fmt(bySido[sortedCodes[ctx.dataIndex]][lastYr].avgPrice)}만원)`}}},
+    scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}});
+
+  // 격차 변화
+  const firstYr=years[0];
+  const changeData=codes.filter(c=>c!=='11'&&bySido[c][firstYr]).map(c=>({
+    name:SIDO_SHORT[c],before:bySido[c][firstYr].vsSeoul,after:bySido[c][lastYr].vsSeoul,
+    change:Math.round((bySido[c][lastYr].vsSeoul-bySido[c][firstYr].vsSeoul)*10)/10
+  })).sort((a,b)=>a.change-b.change);
+
+  new Chart(document.getElementById('changeChart'),{type:'bar',data:{labels:changeData.map(d=>d.name),datasets:[{data:changeData.map(d=>d.change),backgroundColor:changeData.map(d=>d.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=changeData[ctx.dataIndex];return `${firstYr}년 ${d.before}% → ${lastYr}년 ${d.after}% (${d.change>=0?'+':''}${d.change}%p)`;}}}},
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:15,weight:'bold'}}}}}});
+}
+load();
+</script>
+</body>
+</html>

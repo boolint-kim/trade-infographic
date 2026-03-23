@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>층별 프리미엄 분석 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#8b5cf6;color:#8b5cf6} .selector button.active{background:#8b5cf6;border-color:#8b5cf6;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:140px;background:#fff;border-radius:16px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.lo{border-color:#94a3b8} .card.mid{border-color:#3b82f6} .card.hi{border-color:#f97316} .card.ultra{border-color:#ef4444}
+  .card .label{font-size:11px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:28px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.lo .value{color:#94a3b8} .card.mid .value{color:#3b82f6} .card.hi .value{color:#f97316} .card.ultra .value{color:#ef4444}
+  .card .sub{font-size:11px;color:#9ca3af} .card .unit{font-size:12px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:45%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>층별 프리미엄 분석</h1><p>저층(1~3층) · 중층(4~10층) · 고층(11~20층) · 초고층(21층+) 평당가 비교</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card lo"><div class="label">저층 (1~3층)</div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card mid"><div class="label">중층 (4~10층)</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card hi"><div class="label">고층 (11~20층)</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+    <div class="card ultra"><div class="label">초고층 (21층+)</div><div class="value" id="cV4"></div><div class="sub" id="cS4"></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="t1">층별 평당가 추이</span></div>
+    <div class="section-sub" id="s1">연도별 | 단위: 만원/평</div>
+    <canvas id="trendChart" height="340"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t2">저층 대비 프리미엄</span></div>
+    <div class="section-sub" id="s2">저층(1~3층) 평당가를 100으로 했을 때 상대 비율</div>
+    <canvas id="premiumChart" height="300"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 평당가 = 거래금액 ÷ (전용면적×0.3025) | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";Chart.defaults.font.size=14;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const FLOOR_KEYS=['저층(1~3)','중층(4~10)','고층(11~20)','초고층(21+)'];
+const FLOOR_COLORS={'저층(1~3)':'#94a3b8','중층(4~10)':'#3b82f6','고층(11~20)':'#f97316','초고층(21+)':'#ef4444'};
+const FLOOR_SHORT={'저층(1~3)':'저층','중층(4~10)':'중층','고층(11~20)':'고층','초고층(21+)':'초고층'};
+let D,ch1,ch2;
+async function load(){try{D=await(await fetch('data/floor-premium.json')).json();}catch{try{D=await(await fetch('floor-premium.json')).json();}catch{return;}} init();}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!D.sido[c])return;const b=document.createElement('button');b.textContent=D.sido[c].name;b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
+  sel('11');
+}
+function sel(code){
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const s=D.sido[code];if(!s)return;
+  const data=s.data;
+  const years=[...new Set(data.map(r=>r.yr))].sort();
+  const groups={};
+  data.forEach(r=>{if(!groups[r.floorGrp])groups[r.floorGrp]={};groups[r.floorGrp][r.yr]=r;});
+
+  const lastYr=years[years.length-1];
+  const ids=['cV1','cV2','cV3','cV4'];const sids=['cS1','cS2','cS3','cS4'];
+  FLOOR_KEYS.forEach((k,i)=>{
+    const r=groups[k]&&groups[k][lastYr];
+    if(r){
+      document.getElementById(ids[i]).innerHTML=`${fmt(r.avgPpyeong)}<span class="unit"> 만원/평</span>`;
+      document.getElementById(sids[i]).textContent=`${fmt(r.cnt)}건 (${lastYr})`;
+    } else {document.getElementById(ids[i]).innerHTML='-';document.getElementById(sids[i]).textContent='';}
+  });
+
+  // 저층 대비 프리미엄 계산
+  const lowBase=groups['저층(1~3)']&&groups['저층(1~3)'][lastYr]?groups['저층(1~3)'][lastYr].avgPpyeong:1;
+
+  document.getElementById('t1').textContent=`${s.name} 층별 평당가 추이`;
+  if(ch1)ch1.destroy();
+  ch1=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:years,datasets:FLOOR_KEYS.filter(k=>groups[k]).map(k=>({
+    label:FLOOR_SHORT[k],data:years.map(yr=>groups[k][yr]?groups[k][yr].avgPpyeong:null),borderColor:FLOOR_COLORS[k],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:FLOOR_COLORS[k],borderWidth:2.5,spanGaps:true
+  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원/평':'-'}`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
+
+  // 프리미엄 차트
+  document.getElementById('t2').textContent=`${s.name} 저층 대비 프리미엄 (${lastYr})`;
+  if(ch2)ch2.destroy();
+  const premData=FLOOR_KEYS.filter(k=>groups[k]&&groups[k][lastYr]).map(k=>{
+    const v=groups[k][lastYr].avgPpyeong;
+    return {label:FLOOR_SHORT[k],value:Math.round(v/lowBase*100),color:FLOOR_COLORS[k]};
+  });
+  ch2=new Chart(document.getElementById('premiumChart'),{type:'bar',data:{labels:premData.map(d=>d.label),datasets:[{data:premData.map(d=>d.value),backgroundColor:premData.map(d=>d.color+'cc'),borderRadius:6}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`저층 대비 ${ctx.raw}%`}}},
+    scales:{x:{grid:{display:false}},y:{min:90,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
+}
+load();
+</script>
+</body>
+</html>
