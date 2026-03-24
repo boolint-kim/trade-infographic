@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>거래 증감 핫스팟 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#ef4444;color:#ef4444} .selector button.active{background:#ef4444;border-color:#ef4444;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#3b82f6} .card.b{border-color:#10b981} .card.c{border-color:#ef4444}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#3b82f6} .card.b .value{color:#10b981} .card.c .value{color:#ef4444}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>거래 증감 핫스팟</h1><p id="periodText">시군구별 전년 동기 대비 거래량 증감률 | 아파트 매매</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">증가 1위</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">감소 1위</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="grid2">
+    <div class="section">
+      <div class="section-title"><span class="dot" style="background:#10b981"></span><span id="t1">거래 급증 지역 TOP 10</span></div>
+      <div class="section-sub" id="s1">전년 동기 대비 증가율</div>
+      <canvas id="hotChart" height="400"></canvas>
+    </div>
+    <div class="section">
+      <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="t2">거래 급감 지역 TOP 10</span></div>
+      <div class="section-sub" id="s2">전년 동기 대비 감소율</div>
+      <canvas id="coldChart" height="400"></canvas>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t3">전체 시군구 증감 분포</span></div>
+    <div class="section-sub" id="s3">초록=증가 / 빨강=감소</div>
+    <canvas id="allChart" height="500"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 최근 3개월 vs 전년 동기 3개월 거래 건수 비교 | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const C={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let D,hotChart,coldChart,allChart;
+
+async function load(){try{D=await(await fetch('data/hotspot.json')).json();}catch{try{D=await(await fetch('hotspot.json')).json();}catch{return;}} init();}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  if(D.period)document.getElementById('periodText').textContent=`${D.period} | 시군구별 전년 동기 대비 거래량 증감률`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!D.sido[c])return;const b=document.createElement('button');b.textContent=D.sido[c].name;b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
+  sel('11');
+}
+function shortName(name){
+  // "서울 강남구" → "강남구"
+  return name.includes(' ')?name.split(' ').slice(1).join(' '):name;
+}
+function sel(code){
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const s=D.sido[code];if(!s)return;
+
+  document.getElementById('cL1').textContent=`${s.name} 전체 증감`;
+  const sign=s.totalChange>=0?'+':'';
+  document.getElementById('cV1').innerHTML=`${sign}${s.totalChange}<span class="unit">%</span>`;
+  document.getElementById('cS1').textContent=`${fmt(s.totalLastYear)}건 → ${fmt(s.totalRecent)}건`;
+
+  if(s.hot.length>0){
+    const h=s.hot[0];
+    document.getElementById('cV2').innerHTML=`+${h.change===999?'신규':h.change+'%'}`;
+    document.getElementById('cS2').textContent=`${shortName(h.name)} (${h.lastYear}→${h.recent}건)`;
+  } else {document.getElementById('cV2').innerHTML='-';document.getElementById('cS2').textContent='';}
+
+  if(s.cold.length>0){
+    const c=s.cold[0];
+    document.getElementById('cV3').innerHTML=`${c.change}%`;
+    document.getElementById('cS3').textContent=`${shortName(c.name)} (${c.lastYear}→${c.recent}건)`;
+  } else {document.getElementById('cV3').innerHTML='-';document.getElementById('cS3').textContent='';}
+
+  // 급증 TOP 10
+  document.getElementById('t1').textContent=`${s.name} 거래 급증 TOP ${Math.min(10,s.hot.length)}`;
+  if(hotChart)hotChart.destroy();
+  const hot=s.hot.filter(r=>r.change!==999).slice(0,10);
+  hotChart=new Chart(document.getElementById('hotChart'),{type:'bar',data:{labels:hot.map(r=>shortName(r.name)),datasets:[{data:hot.map(r=>r.change),backgroundColor:'#10b981cc',borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=hot[ctx.dataIndex];return `+${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    scales:{x:{ticks:{callback:v=>'+'+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
+
+  // 급감 TOP 10
+  document.getElementById('t2').textContent=`${s.name} 거래 급감 TOP ${Math.min(10,s.cold.length)}`;
+  if(coldChart)coldChart.destroy();
+  const cold=s.cold.filter(r=>r.change!==999).slice(0,10);
+  coldChart=new Chart(document.getElementById('coldChart'),{type:'bar',data:{labels:cold.map(r=>shortName(r.name)),datasets:[{data:cold.map(r=>r.change),backgroundColor:'#ef4444cc',borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=cold[ctx.dataIndex];return `${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    scales:{x:{ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
+
+  // 전체 분포
+  document.getElementById('t3').textContent=`${s.name} 전체 시군구 증감`;
+  if(allChart)allChart.destroy();
+  const all=s.all.filter(r=>r.change!==999);
+  allChart=new Chart(document.getElementById('allChart'),{type:'bar',data:{labels:all.map(r=>shortName(r.name)),datasets:[{data:all.map(r=>r.change),backgroundColor:all.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=all[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?10:12}}}}}});
+}
+load();
+</script>
+</body>
+</html>
