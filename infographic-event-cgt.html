@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>양도세 중과 유예 만료 — 거래 영향 분석</title>
+<title>양도세 중과 유예 만료 — 조정대상지역 거래 영향 분석</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
@@ -19,6 +19,8 @@
   .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
   .insight{background:#fef2f2;border-left:4px solid #ef4444;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7}
   .insight strong{color:#991b1b}
+  .reg-list{background:#fff7ed;border-left:4px solid #f97316;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.8}
+  .reg-list strong{color:#9a3412}
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
@@ -29,56 +31,61 @@
 </head>
 <body>
 <div class="container">
-  <div class="header"><h1>양도세 중과 유예 만료</h1><p>다주택자 양도소득세 중과 한시 유예 종료에 따른 거래 영향 분석</p></div>
+  <div class="header"><h1>양도세 중과 유예 만료</h1><p>다주택자 양도소득세 중과 한시 유예 종료 — 조정대상지역 거래 영향 분석</p></div>
 
   <div class="deadline-banner">
     다주택자 양도세 중과 유예 만료<br>
     <div class="date">2026. 05. 09</div>
-    <div class="sub">이후 계약분부터 다주택자 양도세 중과(기본세율 + 20~30%p) 적용</div>
+    <div class="sub">이후 계약분부터 다주택자 양도세 중과 (기본세율 + 20~30%p) 재적용</div>
   </div>
 
   <div class="summary-cards">
-    <div class="card a"><div class="label">고가 6구 거래 변화</div><div class="value" id="cV1"></div><div class="sub" id="cS1">강남·서초·송파·용산·성동·마포</div></div>
-    <div class="card b"><div class="label">저가 6구 거래 변화</div><div class="value" id="cV2"></div><div class="sub" id="cS2">노원·도봉·강북·중랑·금천·구로</div></div>
-    <div class="card c"><div class="label">서울 전체</div><div class="value" id="cV3"></div><div class="sub" id="cS3">전년 동기 대비</div></div>
+    <div class="card a"><div class="label">조정대상지역</div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">비조정지역</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">격차</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
   </div>
 
   <div class="insight">
-    <strong>양도세 중과란?</strong> 조정대상지역 다주택자가 주택 양도 시 기본세율에 20~30%p 가산. 2020년부터 한시 유예를 반복 연장해왔으나, <strong>2026.05.09 이후 계약분부터 중과 재적용</strong>. 데드라인 전 매도 러시 → 고가 지역 매물 증가, 가격 하락 압력 예상.
+    <strong>양도세 중과란?</strong> 조정대상지역 다주택자가 주택 양도 시 기본세율에 20~30%p 가산. 2020년부터 한시 유예를 반복 연장해왔으나, <strong>2026.05.09 이후 계약분부터 중과 재적용</strong>. 데드라인 전 매도 러시가 예상되며, 특히 조정대상지역에 집중됩니다.
+  </div>
+
+  <div class="reg-list">
+    <strong>조정대상지역 (2026.02 기준):</strong><br>
+    서울 25개 구 전체 | 경기 12곳: 과천 · 광명 · 성남(분당·수정·중원) · 수원(영통·장안·팔달) · 안양 동안 · 용인 수지 · 의왕 · 하남
   </div>
 
   <div class="section">
-    <div class="section-title"><span class="dot" style="background:#ef4444"></span>서울 고가 6구 vs 저가 6구 월별 거래량</div>
-    <div class="section-sub">2025.01~현재 | 고가=강남·서초·송파·용산·성동·마포, 저가=노원·도봉·강북·중랑·금천·구로</div>
-    <canvas id="groupChart" height="320"></canvas>
+    <div class="section-title"><span class="dot" style="background:#ef4444"></span>조정대상지역 vs 비조정지역 월별 거래량</div>
+    <div class="section-sub">2025.01~현재 | 전년 동기 대비 변화 추적</div>
+    <canvas id="regChart" height="320"></canvas>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span>서울 25개 구 거래량 증감</div>
-    <div class="section-sub">2026.01~03 vs 2025.01~03 | 전년 동기 대비</div>
+    <div class="section-sub">2026.01~현재 vs 2025 동기 | 전년 대비</div>
     <canvas id="guChart" height="640"></canvas>
   </div>
 
   <div class="grid2">
     <div class="section">
-      <div class="section-title"><span class="dot" style="background:#3b82f6"></span>전국 시도별 거래 변화</div>
-      <div class="section-sub">전년 동기 대비 증감률</div>
-      <canvas id="sidoChart" height="400"></canvas>
+      <div class="section-title"><span class="dot" style="background:#f97316"></span>경기 조정대상 12곳</div>
+      <div class="section-sub">전년 동기 대비 거래량 증감</div>
+      <canvas id="gyeonggiRegChart" height="380"></canvas>
     </div>
     <div class="section">
-      <div class="section-title"><span class="dot" style="background:#f97316"></span>경기도 시군구 거래 변화</div>
-      <div class="section-sub">상위/하위 각 10개 | 전년 동기 대비</div>
-      <canvas id="gyeonggiChart" height="400"></canvas>
+      <div class="section-title"><span class="dot" style="background:#10b981"></span>경기 조정 vs 비조정 월별</div>
+      <div class="section-sub">경기도 내 규제 12곳 vs 나머지</div>
+      <canvas id="gyeonggiCompChart" height="380"></canvas>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><span class="dot" style="background:#10b981"></span>서울 월별 평균 거래가</div>
+    <div class="section-title"><span class="dot" style="background:#8b5cf6"></span>서울 월별 평균 거래가</div>
     <div class="section-sub">2025.01~현재 | 매물 증가에 따른 가격 변동 추적</div>
     <canvas id="priceChart" height="280"></canvas>
   </div>
 
-  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 이벤트 분석: 양도세 중과 유예 만료 (2026.05.09) | <span id="genDate"></span></div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 조정대상지역: 서울 25구 + 경기 12곳 (2026.02 기준) | <span id="genDate"></span></div>
 </div>
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
@@ -93,53 +100,52 @@ async function load(){
 
 function init(){
   document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  const reg=D.summary.regulated;const non=D.summary.nonRegulated;
 
   // 요약 카드
-  const hm=D.highGroup.monthly;const lm=D.lowGroup.monthly;
-  const hTotal26=hm.filter(r=>r.ym>='202601').reduce((s,r)=>s+r.cnt,0);
-  const hTotal25=hm.filter(r=>r.ym<'202601').reduce((s,r)=>s+r.cnt,0)/12*3;
-  const lTotal26=lm.filter(r=>r.ym>='202601').reduce((s,r)=>s+r.cnt,0);
-  const lTotal25=lm.filter(r=>r.ym<'202601').reduce((s,r)=>s+r.cnt,0)/12*3;
+  document.getElementById('cV1').innerHTML=`${reg.change}<span class="unit">%</span>`;
+  document.getElementById('cS1').textContent=`${fmt(reg.y2025)}건 → ${fmt(reg.y2026)}건`;
+  document.getElementById('cV2').innerHTML=`${non.change>=0?'+':''}${non.change}<span class="unit">%</span>`;
+  document.getElementById('cS2').textContent=`${fmt(non.y2025)}건 → ${fmt(non.y2026)}건`;
+  const gap=Math.abs(reg.change-non.change);
+  document.getElementById('cV3').innerHTML=`${gap.toFixed(1)}<span class="unit">%p</span>`;
+  document.getElementById('cS3').textContent='조정 vs 비조정 격차';
 
-  const seoulAll=D.sidoChange.find(r=>r.code==='11');
-  document.getElementById('cV1').innerHTML=`${seoulAll?D.seoulGu.filter(r=>['강남구','서초구','송파구','용산구','성동구','마포구'].includes(r.name)).reduce((s,r)=>s+r.change,0)/6|0:''}%`;
-  document.getElementById('cV2').innerHTML=`${seoulAll?D.seoulGu.filter(r=>['노원구','도봉구','강북구','중랑구','금천구','구로구'].includes(r.name)).reduce((s,r)=>s+r.change,0)/6|0:''}%`;
-  document.getElementById('cV3').innerHTML=`${seoulAll?seoulAll.change:''}%`;
-  document.getElementById('cS3').textContent=`${fmt(seoulAll.y2025)}건 → ${fmt(seoulAll.y2026)}건`;
-
-  // 고가 vs 저가 월별
-  const allYm=[...new Set([...hm.map(r=>r.ym),...lm.map(r=>r.ym)])].sort();
-  const hmMap=new Map(hm.map(r=>[r.ym,r.cnt]));
-  const lmMap=new Map(lm.map(r=>[r.ym,r.cnt]));
-  new Chart(document.getElementById('groupChart'),{type:'line',data:{labels:allYm.map(fmtYM),datasets:[
-    {label:'고가 6구',data:allYm.map(ym=>hmMap.get(ym)||0),borderColor:'#ef4444',backgroundColor:'#ef444420',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#ef4444',borderWidth:2.5},
-    {label:'저가 6구',data:allYm.map(ym=>lmMap.get(ym)||0),borderColor:'#10b981',backgroundColor:'#10b98120',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#10b981',borderWidth:2.5}
+  // 조정 vs 비조정 월별
+  const rm=D.regMonthly;const nm=D.nonRegMonthly;
+  const allYm=[...new Set([...rm.map(r=>r.ym),...nm.map(r=>r.ym)])].sort();
+  const rmMap=new Map(rm.map(r=>[r.ym,r.cnt]));const nmMap=new Map(nm.map(r=>[r.ym,r.cnt]));
+  new Chart(document.getElementById('regChart'),{type:'line',data:{labels:allYm.map(fmtYM),datasets:[
+    {label:'조정대상지역',data:allYm.map(ym=>rmMap.get(ym)||0),borderColor:'#ef4444',backgroundColor:'#ef444420',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#ef4444',borderWidth:2.5},
+    {label:'비조정지역',data:allYm.map(ym=>nmMap.get(ym)||0),borderColor:'#10b981',backgroundColor:'#10b98120',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#10b981',borderWidth:2.5}
   ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
   // 서울 25개 구
   const gu=D.seoulGu;
   new Chart(document.getElementById('guChart'),{type:'bar',data:{labels:gu.map(r=>r.name),datasets:[{data:gu.map(r=>r.change),backgroundColor:gu.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=gu[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${fmt(r.y2025)}→${fmt(r.y2026)}건)`;}}}},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=gu[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${fmt(r.y2025)}→${fmt(r.y2026)}건) 평균가 ${r.avgPrice2026}억`;}}}},
     scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
-  // 시도별
-  const sido=D.sidoChange;
-  new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:sido.map(r=>r.name),datasets:[{data:sido.map(r=>r.change),backgroundColor:sido.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=sido[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${fmt(r.y2025)}→${fmt(r.y2026)}건)`;}}}},
+  // 경기 조정 12곳
+  const gr=D.gyeonggiReg.filter(r=>r.y2025>0);
+  new Chart(document.getElementById('gyeonggiRegChart'),{type:'bar',data:{labels:gr.map(r=>r.name),datasets:[{data:gr.map(r=>r.change),backgroundColor:gr.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=gr[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${fmt(r.y2025)}→${fmt(r.y2026)}건)`;}}}},
     scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
-  // 경기 상위/하위 10개
-  const gg=D.gyeonggiGu;
-  const ggTop=[...gg].sort((a,b)=>a.change-b.change);
-  const ggShow=[...ggTop.slice(0,10),...ggTop.slice(-10)].sort((a,b)=>a.change-b.change);
-  new Chart(document.getElementById('gyeonggiChart'),{type:'bar',data:{labels:ggShow.map(r=>r.name),datasets:[{data:ggShow.map(r=>r.change),backgroundColor:ggShow.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=ggShow[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${fmt(r.y2025)}→${fmt(r.y2026)}건)`;}}}},
-    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?10:12}}}}}});
+  // 경기 조정 vs 비조정 월별
+  const grm=D.gyeonggiRegMonthly;const gnm=D.gyeonggiNonRegMonthly;
+  const gYm=[...new Set([...grm.map(r=>r.ym),...gnm.map(r=>r.ym)])].sort();
+  const grmMap=new Map(grm.map(r=>[r.ym,r.cnt]));const gnmMap=new Map(gnm.map(r=>[r.ym,r.cnt]));
+  new Chart(document.getElementById('gyeonggiCompChart'),{type:'line',data:{labels:gYm.map(fmtYM),datasets:[
+    {label:'조정 12곳',data:gYm.map(ym=>grmMap.get(ym)||0),borderColor:'#f97316',backgroundColor:'#f9731620',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#f97316',borderWidth:2.5},
+    {label:'비조정 (나머지)',data:gYm.map(ym=>gnmMap.get(ym)||0),borderColor:'#3b82f6',backgroundColor:'#3b82f620',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#3b82f6',borderWidth:2.5}
+  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
-  // 월별 평균가
+  // 서울 월별 평균가
   const sm=D.seoulMonthly;
-  new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:sm.map(r=>fmtYM(r.ym)),datasets:[{label:'서울 평균 거래가(억)',data:sm.map(r=>r.avgPrice),borderColor:'#6366f1',backgroundColor:'#6366f120',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:'#6366f1',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
+  new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:sm.map(r=>fmtYM(r.ym)),datasets:[{label:'서울 평균 거래가(억)',data:sm.map(r=>r.avgPrice),borderColor:'#8b5cf6',backgroundColor:'#8b5cf620',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:'#8b5cf6',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
     options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}억`}}},
     scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}}}}});
 }
