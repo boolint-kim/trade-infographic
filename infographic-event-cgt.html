@@ -113,12 +113,7 @@ Chart.defaults.font.size = _m ? 11 : 13;
 const COLORS = ['#ef4444','#3b82f6','#10b981','#f59e0b','#8b5cf6'];
 const MAX_SELECT = 5;
 
-// 순별 키(YYYYMM + 1/2/3) → 표시 레이블
-const PERIOD_SUFFIX = { '1': '상', '2': '중', '3': '하' };
-function fmtPeriod(p) {
-  // p = "2025071" → "25.07상"
-  return p.slice(2, 4) + '.' + p.slice(4, 6) + PERIOD_SUFFIX[p.slice(6)];
-}
+function fmtYM(ym) { return ym.slice(2, 4) + '.' + ym.slice(4); }
 
 let D; // 전체 데이터
 let currentArea = 'All'; // 현재 면적대
@@ -200,13 +195,13 @@ function refreshCbStyles(groupKey, containerEl) {
 }
 
 // ── 차트 생성/업데이트 ──
-function getPeriods(groupKey) {
+function getMonths(groupKey) {
   const districts = D[groupKey];
   if (!districts || districts.length === 0) return [];
-  // 모든 시군구의 순별 키 합집합
-  const pSet = new Set();
-  districts.forEach(d => d.periods.forEach(m => pSet.add(m.period)));
-  return [...pSet].sort();
+  // 모든 시군구의 월 합집합
+  const ymSet = new Set();
+  districts.forEach(d => d.monthly.forEach(m => ymSet.add(m.ym)));
+  return [...ymSet].sort();
 }
 
 function updateChart(groupKey) {
@@ -214,7 +209,7 @@ function updateChart(groupKey) {
   const legendId = groupKey + 'Legend';
   const districts = D[groupKey];
   const sel = [...selected[groupKey]];
-  const periods = getPeriods(groupKey);
+  const periods = getMonths(groupKey);
   const pk = priceKey(currentArea);
   const ck = cntKey(currentArea);
 
@@ -222,7 +217,7 @@ function updateChart(groupKey) {
   const lineDatasets = sel.map((code, i) => {
     const dist = districts.find(d => d.code === code);
     if (!dist) return null;
-    const dataMap = new Map(dist.periods.map(m => [m.period, m[pk]]));
+    const dataMap = new Map(dist.monthly.map(m => [m.ym, m[pk]]));
     return {
       type: 'line',
       label: dist.name,
@@ -247,7 +242,7 @@ function updateChart(groupKey) {
     sel.forEach(code => {
       const dist = districts.find(d => d.code === code);
       if (!dist) return;
-      const m = dist.periods.find(m => m.period === p);
+      const m = dist.monthly.find(m => m.ym === p);
       if (m) sum += (m[ck] || 0);
     });
     return sum;
@@ -271,7 +266,7 @@ function updateChart(groupKey) {
     sel.forEach(code => {
       const dist = districts.find(d => d.code === code);
       if (!dist) return;
-      const m = dist.periods.find(m => m.period === p);
+      const m = dist.monthly.find(m => m.ym === p);
       if (m) sum += (m.cancelCnt || 0);
     });
     return sum;
@@ -298,7 +293,7 @@ function updateChart(groupKey) {
 
   charts[groupKey] = new Chart(document.getElementById(canvasId), {
     data: {
-      labels: periods.map(fmtPeriod),
+      labels: periods.map(fmtYM),
       datasets: allDatasets
     },
     options: {
