@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-03-24T06:54:22.986Z",
+    "generated": "2026-03-24T12:27:28.781Z",
     "event": "양도세 중과 유예 만료",
     "deadline": "2026-05-09",
     "startYM": "202507",
@@ -2710,117 +2710,108 @@
       ]
     },
     {
-      "code": "41133",
+      "code": "41135",
       "name": "성남 분당",
       "summary": {
-        "avgPrice": 7.9,
-        "totalCnt": 344
+        "avgPrice": 15.3,
+        "totalCnt": 634
       },
       "monthly": [
         {
           "ym": "202507",
-          "price84": 7.9,
-          "cnt84": 49,
-          "price59": 5.1,
-          "cnt59": 30,
-          "priceAll": 7,
-          "cntAll": 84,
-          "cancelCnt": 12
+          "price84": 12.7,
+          "cnt84": 85,
+          "price59": 7.7,
+          "cnt59": 65,
+          "priceAll": 12.9,
+          "cntAll": 213,
+          "cancelCnt": 25
         },
         {
           "ym": "202508",
-          "price84": 8.6,
-          "cnt84": 62,
-          "price59": 4.8,
-          "cnt59": 16,
-          "priceAll": 7.9,
-          "cntAll": 82,
-          "cancelCnt": 10
+          "price84": 13.8,
+          "cnt84": 127,
+          "price59": 8.1,
+          "cnt59": 112,
+          "priceAll": 12.9,
+          "cntAll": 316,
+          "cancelCnt": 31
         },
         {
           "ym": "202509",
-          "price84": 8.8,
-          "cnt84": 178,
-          "price59": 6.1,
-          "cnt59": 59,
-          "priceAll": 8.3,
-          "cntAll": 254,
-          "cancelCnt": 14
+          "price84": 14.1,
+          "cnt84": 391,
+          "price59": 8.7,
+          "cnt59": 302,
+          "priceAll": 14.1,
+          "cntAll": 978,
+          "cancelCnt": 73
         },
         {
           "ym": "202510",
-          "price84": 8.9,
-          "cnt84": 128,
-          "price59": 5.4,
-          "cnt59": 41,
-          "priceAll": 8.1,
-          "cntAll": 178,
-          "cancelCnt": 4
+          "price84": 15.5,
+          "cnt84": 228,
+          "price59": 9.1,
+          "cnt59": 163,
+          "priceAll": 15.4,
+          "cntAll": 597,
+          "cancelCnt": 45
         },
         {
           "ym": "202511",
-          "price84": 8.7,
-          "cnt84": 24,
-          "price59": 5.6,
-          "cnt59": 11,
-          "priceAll": 7.7,
-          "cntAll": 36,
-          "cancelCnt": 0
+          "price84": 14.7,
+          "cnt84": 41,
+          "price59": 9.5,
+          "cnt59": 24,
+          "priceAll": 13.8,
+          "cntAll": 85,
+          "cancelCnt": 4
         },
         {
           "ym": "202512",
-          "price84": 8.5,
-          "cnt84": 95,
-          "price59": 5.6,
-          "cnt59": 29,
-          "priceAll": 7.8,
-          "cntAll": 127,
-          "cancelCnt": 2
+          "price84": 14.7,
+          "cnt84": 106,
+          "price59": 9.6,
+          "cnt59": 67,
+          "priceAll": 15,
+          "cntAll": 253,
+          "cancelCnt": 13
         },
         {
           "ym": "202601",
-          "price84": 8.6,
-          "cnt84": 107,
-          "price59": 5.4,
-          "cnt59": 58,
-          "priceAll": 7.6,
-          "cntAll": 177,
-          "cancelCnt": 3
+          "price84": 15.5,
+          "cnt84": 142,
+          "price59": 11.1,
+          "cnt59": 124,
+          "priceAll": 15.1,
+          "cntAll": 344,
+          "cancelCnt": 8
         },
         {
           "ym": "202602",
-          "price84": 9.2,
-          "cnt84": 93,
-          "price59": 5.9,
-          "cnt59": 31,
-          "priceAll": 8.5,
-          "cntAll": 140,
+          "price84": 15.6,
+          "cnt84": 101,
+          "price59": 11.4,
+          "cnt59": 91,
+          "priceAll": 15.7,
+          "cntAll": 255,
           "cancelCnt": 2
         },
         {
           "ym": "202603",
-          "price84": 8.6,
-          "cnt84": 12,
-          "price59": 4.9,
-          "cnt59": 14,
-          "priceAll": 6.7,
-          "cntAll": 27,
-          "cancelCnt": 0
+          "price84": 15.7,
+          "cnt84": 8,
+          "price59": 11.1,
+          "cnt59": 20,
+          "priceAll": 14.2,
+          "cntAll": 35,
+          "cancelCnt": 1
         }
       ]
     },
     {
-      "code": "41130",
-      "name": "성남 수정",
-      "summary": {
-        "avgPrice": null,
-        "totalCnt": 0
-      },
-      "monthly": []
-    },
-    {
       "code": "41131",
-      "name": "성남 중원",
+      "name": "성남 수정",
       "summary": {
         "avgPrice": 11.4,
         "totalCnt": 342
@@ -2919,8 +2910,308 @@
       ]
     },
     {
-      "code": "41115",
+      "code": "41133",
+      "name": "성남 중원",
+      "summary": {
+        "avgPrice": 7.9,
+        "totalCnt": 344
+      },
+      "monthly": [
+        {
+          "ym": "202507",
+          "price84": 7.9,
+          "cnt84": 49,
+          "price59": 5.1,
+          "cnt59": 30,
+          "priceAll": 7,
+          "cntAll": 84,
+          "cancelCnt": 12
+        },
+        {
+          "ym": "202508",
+          "price84": 8.6,
+          "cnt84": 62,
+          "price59": 4.8,
+          "cnt59": 16,
+          "priceAll": 7.9,
+          "cntAll": 82,
+          "cancelCnt": 10
+        },
+        {
+          "ym": "202509",
+          "price84": 8.8,
+          "cnt84": 178,
+          "price59": 6.1,
+          "cnt59": 59,
+          "priceAll": 8.3,
+          "cntAll": 254,
+          "cancelCnt": 14
+        },
+        {
+          "ym": "202510",
+          "price84": 8.9,
+          "cnt84": 128,
+          "price59": 5.4,
+          "cnt59": 41,
+          "priceAll": 8.1,
+          "cntAll": 178,
+          "cancelCnt": 4
+        },
+        {
+          "ym": "202511",
+          "price84": 8.7,
+          "cnt84": 24,
+          "price59": 5.6,
+          "cnt59": 11,
+          "priceAll": 7.7,
+          "cntAll": 36,
+          "cancelCnt": 0
+        },
+        {
+          "ym": "202512",
+          "price84": 8.5,
+          "cnt84": 95,
+          "price59": 5.6,
+          "cnt59": 29,
+          "priceAll": 7.8,
+          "cntAll": 127,
+          "cancelCnt": 2
+        },
+        {
+          "ym": "202601",
+          "price84": 8.6,
+          "cnt84": 107,
+          "price59": 5.4,
+          "cnt59": 58,
+          "priceAll": 7.6,
+          "cntAll": 177,
+          "cancelCnt": 3
+        },
+        {
+          "ym": "202602",
+          "price84": 9.2,
+          "cnt84": 93,
+          "price59": 5.9,
+          "cnt59": 31,
+          "priceAll": 8.5,
+          "cntAll": 140,
+          "cancelCnt": 2
+        },
+        {
+          "ym": "202603",
+          "price84": 8.6,
+          "cnt84": 12,
+          "price59": 4.9,
+          "cnt59": 14,
+          "priceAll": 6.7,
+          "cntAll": 27,
+          "cancelCnt": 0
+        }
+      ]
+    },
+    {
+      "code": "41117",
       "name": "수원 영통",
+      "summary": {
+        "avgPrice": 7.2,
+        "totalCnt": 1157
+      },
+      "monthly": [
+        {
+          "ym": "202507",
+          "price84": 6.2,
+          "cnt84": 263,
+          "price59": 3.3,
+          "cnt59": 35,
+          "priceAll": 6.6,
+          "cntAll": 348,
+          "cancelCnt": 21
+        },
+        {
+          "ym": "202508",
+          "price84": 6.5,
+          "cnt84": 244,
+          "price59": 3.3,
+          "cnt59": 31,
+          "priceAll": 6.9,
+          "cntAll": 325,
+          "cancelCnt": 25
+        },
+        {
+          "ym": "202509",
+          "price84": 7.1,
+          "cnt84": 455,
+          "price59": 3.3,
+          "cnt59": 45,
+          "priceAll": 7.7,
+          "cntAll": 627,
+          "cancelCnt": 39
+        },
+        {
+          "ym": "202510",
+          "price84": 7.4,
+          "cnt84": 493,
+          "price59": 3.3,
+          "cnt59": 58,
+          "priceAll": 8,
+          "cntAll": 682,
+          "cancelCnt": 40
+        },
+        {
+          "ym": "202511",
+          "price84": 7.2,
+          "cnt84": 234,
+          "price59": 3.8,
+          "cnt59": 27,
+          "priceAll": 7.9,
+          "cntAll": 335,
+          "cancelCnt": 14
+        },
+        {
+          "ym": "202512",
+          "price84": 6.7,
+          "cnt84": 300,
+          "price59": 3.5,
+          "cnt59": 27,
+          "priceAll": 7.3,
+          "cntAll": 405,
+          "cancelCnt": 9
+        },
+        {
+          "ym": "202601",
+          "price84": 7,
+          "cnt84": 301,
+          "price59": 3.2,
+          "cnt59": 31,
+          "priceAll": 7.3,
+          "cntAll": 394,
+          "cancelCnt": 10
+        },
+        {
+          "ym": "202602",
+          "price84": 6.8,
+          "cnt84": 380,
+          "price59": 3.4,
+          "cnt59": 48,
+          "priceAll": 7.4,
+          "cntAll": 510,
+          "cancelCnt": 5
+        },
+        {
+          "ym": "202603",
+          "price84": 6,
+          "cnt84": 185,
+          "price59": 3.5,
+          "cnt59": 27,
+          "priceAll": 6.7,
+          "cntAll": 253,
+          "cancelCnt": 1
+        }
+      ]
+    },
+    {
+      "code": "41111",
+      "name": "수원 장안",
+      "summary": {
+        "avgPrice": 5.7,
+        "totalCnt": 455
+      },
+      "monthly": [
+        {
+          "ym": "202507",
+          "price84": 5.2,
+          "cnt84": 113,
+          "price59": 2.7,
+          "cnt59": 23,
+          "priceAll": 5,
+          "cntAll": 146,
+          "cancelCnt": 15
+        },
+        {
+          "ym": "202508",
+          "price84": 5.5,
+          "cnt84": 117,
+          "price59": 2.8,
+          "cnt59": 22,
+          "priceAll": 5.3,
+          "cntAll": 154,
+          "cancelCnt": 13
+        },
+        {
+          "ym": "202509",
+          "price84": 5.2,
+          "cnt84": 154,
+          "price59": 2.9,
+          "cnt59": 26,
+          "priceAll": 5.1,
+          "cntAll": 199,
+          "cancelCnt": 13
+        },
+        {
+          "ym": "202510",
+          "price84": 5.6,
+          "cnt84": 165,
+          "price59": 2.8,
+          "cnt59": 24,
+          "priceAll": 5.3,
+          "cntAll": 206,
+          "cancelCnt": 4
+        },
+        {
+          "ym": "202511",
+          "price84": 5.5,
+          "cnt84": 83,
+          "price59": 3.2,
+          "cnt59": 5,
+          "priceAll": 5.6,
+          "cntAll": 105,
+          "cancelCnt": 6
+        },
+        {
+          "ym": "202512",
+          "price84": 5.7,
+          "cnt84": 152,
+          "price59": 3.1,
+          "cnt59": 14,
+          "priceAll": 5.5,
+          "cntAll": 184,
+          "cancelCnt": 3
+        },
+        {
+          "ym": "202601",
+          "price84": 5.8,
+          "cnt84": 149,
+          "price59": 2.7,
+          "cnt59": 11,
+          "priceAll": 5.8,
+          "cntAll": 178,
+          "cancelCnt": 1
+        },
+        {
+          "ym": "202602",
+          "price84": 5.8,
+          "cnt84": 204,
+          "price59": 2.9,
+          "cnt59": 22,
+          "priceAll": 5.7,
+          "cntAll": 244,
+          "cancelCnt": 0
+        },
+        {
+          "ym": "202603",
+          "price84": 5,
+          "cnt84": 25,
+          "price59": 2.4,
+          "cnt59": 3,
+          "priceAll": 5.1,
+          "cntAll": 33,
+          "cancelCnt": 0
+        }
+      ]
+    },
+    {
+      "code": "41115",
+      "name": "수원 팔달",
       "summary": {
         "avgPrice": 6.2,
         "totalCnt": 497
@@ -3019,311 +3310,202 @@
       ]
     },
     {
-      "code": "41110",
-      "name": "수원 장안",
+      "code": "41173",
+      "name": "안양 동안",
       "summary": {
-        "avgPrice": null,
-        "totalCnt": 0
-      },
-      "monthly": []
-    },
-    {
-      "code": "41113",
-      "name": "수원 팔달",
-      "summary": {
-        "avgPrice": 4.7,
-        "totalCnt": 1031
+        "avgPrice": 8,
+        "totalCnt": 965
       },
       "monthly": [
         {
           "ym": "202507",
-          "price84": 4.3,
-          "cnt84": 175,
-          "price59": 2.7,
-          "cnt59": 21,
-          "priceAll": 4.4,
-          "cntAll": 218,
-          "cancelCnt": 23
+          "price84": 7.7,
+          "cnt84": 153,
+          "price59": 4.4,
+          "cnt59": 122,
+          "priceAll": 6.5,
+          "cntAll": 301,
+          "cancelCnt": 33
         },
         {
           "ym": "202508",
-          "price84": 4.7,
-          "cnt84": 181,
-          "price59": 2.6,
-          "cnt59": 22,
-          "priceAll": 4.6,
-          "cntAll": 229,
-          "cancelCnt": 14
-        },
-        {
-          "ym": "202509",
-          "price84": 4.7,
-          "cnt84": 227,
-          "price59": 3,
-          "cnt59": 16,
-          "priceAll": 4.7,
-          "cntAll": 265,
-          "cancelCnt": 25
-        },
-        {
-          "ym": "202510",
-          "price84": 4.7,
-          "cnt84": 307,
-          "price59": 2.7,
-          "cnt59": 37,
-          "priceAll": 4.6,
-          "cntAll": 373,
+          "price84": 7.6,
+          "cnt84": 169,
+          "price59": 4.4,
+          "cnt59": 90,
+          "priceAll": 7,
+          "cntAll": 290,
           "cancelCnt": 29
         },
         {
-          "ym": "202511",
-          "price84": 4.7,
-          "cnt84": 374,
-          "price59": 2.6,
-          "cnt59": 33,
-          "priceAll": 4.7,
-          "cntAll": 445,
-          "cancelCnt": 31
-        },
-        {
-          "ym": "202512",
-          "price84": 4.7,
-          "cnt84": 337,
-          "price59": 2.6,
-          "cnt59": 28,
-          "priceAll": 4.6,
-          "cntAll": 388,
-          "cancelCnt": 25
-        },
-        {
-          "ym": "202601",
-          "price84": 4.7,
-          "cnt84": 383,
-          "price59": 2.8,
-          "cnt59": 28,
-          "priceAll": 4.7,
-          "cntAll": 445,
-          "cancelCnt": 26
-        },
-        {
-          "ym": "202602",
-          "price84": 4.7,
-          "cnt84": 311,
-          "price59": 2.7,
-          "cnt59": 28,
-          "priceAll": 4.7,
-          "cntAll": 372,
-          "cancelCnt": 11
-        },
-        {
-          "ym": "202603",
-          "price84": 4.6,
-          "cnt84": 175,
-          "price59": 2.8,
-          "cnt59": 21,
-          "priceAll": 4.6,
-          "cntAll": 214,
-          "cancelCnt": 0
-        }
-      ]
-    },
-    {
-      "code": "41171",
-      "name": "안양 동안",
-      "summary": {
-        "avgPrice": 5.9,
-        "totalCnt": 664
-      },
-      "monthly": [
-        {
-          "ym": "202507",
-          "price84": 5.7,
-          "cnt84": 68,
-          "price59": 3.7,
-          "cnt59": 29,
-          "priceAll": 5.2,
-          "cntAll": 103,
-          "cancelCnt": 20
-        },
-        {
-          "ym": "202508",
-          "price84": 5.7,
-          "cnt84": 96,
-          "price59": 3.9,
-          "cnt59": 18,
-          "priceAll": 5.6,
-          "cntAll": 121,
-          "cancelCnt": 19
-        },
-        {
           "ym": "202509",
-          "price84": 5.9,
-          "cnt84": 135,
-          "price59": 3.9,
-          "cnt59": 33,
-          "priceAll": 5.6,
-          "cntAll": 178,
-          "cancelCnt": 24
+          "price84": 8.1,
+          "cnt84": 376,
+          "price59": 4.7,
+          "cnt59": 183,
+          "priceAll": 7.5,
+          "cntAll": 621,
+          "cancelCnt": 40
         },
         {
           "ym": "202510",
-          "price84": 6.5,
-          "cnt84": 211,
-          "price59": 4.2,
-          "cnt59": 46,
-          "priceAll": 6.1,
-          "cntAll": 266,
-          "cancelCnt": 16
+          "price84": 8.3,
+          "cnt84": 352,
+          "price59": 4.7,
+          "cnt59": 228,
+          "priceAll": 7.4,
+          "cntAll": 657,
+          "cancelCnt": 31
         },
         {
           "ym": "202511",
-          "price84": 6.1,
-          "cnt84": 162,
-          "price59": 4.1,
-          "cnt59": 49,
-          "priceAll": 5.8,
-          "cntAll": 224,
-          "cancelCnt": 16
+          "price84": 8.1,
+          "cnt84": 99,
+          "price59": 5,
+          "cnt59": 44,
+          "priceAll": 7.5,
+          "cntAll": 155,
+          "cancelCnt": 5
         },
         {
           "ym": "202512",
-          "price84": 6.6,
-          "cnt84": 150,
-          "price59": 4.4,
-          "cnt59": 46,
-          "priceAll": 6.3,
-          "cntAll": 211,
-          "cancelCnt": 16
+          "price84": 8.6,
+          "cnt84": 243,
+          "price59": 4.9,
+          "cnt59": 117,
+          "priceAll": 8,
+          "cntAll": 416,
+          "cancelCnt": 12
         },
         {
           "ym": "202601",
-          "price84": 6.4,
-          "cnt84": 242,
-          "price59": 4.2,
-          "cnt59": 68,
-          "priceAll": 6.1,
-          "cntAll": 328,
-          "cancelCnt": 13
+          "price84": 8.5,
+          "cnt84": 226,
+          "price59": 5,
+          "cnt59": 130,
+          "priceAll": 7.9,
+          "cntAll": 404,
+          "cancelCnt": 16
         },
         {
           "ym": "202602",
-          "price84": 6,
-          "cnt84": 164,
-          "price59": 4,
-          "cnt59": 49,
-          "priceAll": 5.6,
-          "cntAll": 221,
-          "cancelCnt": 14
+          "price84": 8.6,
+          "cnt84": 233,
+          "price59": 5.4,
+          "cnt59": 117,
+          "priceAll": 8,
+          "cntAll": 399,
+          "cancelCnt": 9
         },
         {
           "ym": "202603",
-          "price84": 6.1,
-          "cnt84": 82,
-          "price59": 4.7,
-          "cnt59": 27,
-          "priceAll": 5.9,
-          "cntAll": 115,
+          "price84": 8.6,
+          "cnt84": 97,
+          "price59": 5.4,
+          "cnt59": 42,
+          "priceAll": 8.4,
+          "cntAll": 162,
           "cancelCnt": 2
         }
       ]
     },
     {
-      "code": "41463",
+      "code": "41465",
       "name": "용인 수지",
       "summary": {
-        "avgPrice": 6.1,
-        "totalCnt": 1924
+        "avgPrice": 8.8,
+        "totalCnt": 1412
       },
       "monthly": [
         {
           "ym": "202507",
-          "price84": 5.4,
-          "cnt84": 198,
-          "price59": 3.2,
-          "cnt59": 10,
-          "priceAll": 5.7,
-          "cntAll": 288,
-          "cancelCnt": 29
+          "price84": 7.7,
+          "cnt84": 193,
+          "price59": 5.5,
+          "cnt59": 5,
+          "priceAll": 8.1,
+          "cntAll": 298,
+          "cancelCnt": 31
         },
         {
           "ym": "202508",
-          "price84": 5.6,
-          "cnt84": 220,
-          "price59": 3.6,
-          "cnt59": 10,
-          "priceAll": 5.7,
-          "cntAll": 297,
+          "price84": 8,
+          "cnt84": 285,
+          "price59": 5.2,
+          "cnt59": 8,
+          "priceAll": 8.3,
+          "cntAll": 415,
           "cancelCnt": 29
         },
         {
           "ym": "202509",
-          "price84": 5.8,
-          "cnt84": 356,
-          "price59": 3,
-          "cnt59": 25,
-          "priceAll": 5.9,
-          "cntAll": 485,
-          "cancelCnt": 36
+          "price84": 8.4,
+          "cnt84": 615,
+          "price59": 5.1,
+          "cnt59": 27,
+          "priceAll": 8.6,
+          "cntAll": 877,
+          "cancelCnt": 35
         },
         {
           "ym": "202510",
-          "price84": 6.1,
-          "cnt84": 510,
-          "price59": 4,
-          "cnt59": 31,
-          "priceAll": 6.2,
-          "cntAll": 666,
-          "cancelCnt": 45
+          "price84": 8.4,
+          "cnt84": 540,
+          "price59": 6.7,
+          "cnt59": 12,
+          "priceAll": 8.7,
+          "cntAll": 802,
+          "cancelCnt": 25
         },
         {
           "ym": "202511",
-          "price84": 5.9,
-          "cnt84": 459,
+          "price84": 8,
+          "cnt84": 165,
           "price59": 3.9,
-          "cnt59": 17,
-          "priceAll": 6,
-          "cntAll": 598,
-          "cancelCnt": 51
+          "cnt59": 8,
+          "priceAll": 8.2,
+          "cntAll": 255,
+          "cancelCnt": 8
         },
         {
           "ym": "202512",
-          "price84": 5.8,
-          "cnt84": 470,
-          "price59": 3.8,
-          "cnt59": 24,
-          "priceAll": 5.9,
-          "cntAll": 616,
-          "cancelCnt": 33
+          "price84": 8.2,
+          "cnt84": 379,
+          "price59": 4.8,
+          "cnt59": 14,
+          "priceAll": 8.5,
+          "cntAll": 570,
+          "cancelCnt": 15
         },
         {
           "ym": "202601",
-          "price84": 6,
-          "cnt84": 674,
+          "price84": 8.3,
+          "cnt84": 410,
           "price59": 3.9,
-          "cnt59": 42,
-          "priceAll": 6.2,
-          "cntAll": 952,
-          "cancelCnt": 36
+          "cnt59": 10,
+          "priceAll": 8.6,
+          "cntAll": 623,
+          "cancelCnt": 14
         },
         {
           "ym": "202602",
-          "price84": 6,
-          "cnt84": 472,
-          "price59": 3.9,
-          "cnt59": 31,
-          "priceAll": 6.1,
-          "cntAll": 646,
-          "cancelCnt": 23
+          "price84": 8.7,
+          "cnt84": 362,
+          "price59": 4.4,
+          "cnt59": 15,
+          "priceAll": 9,
+          "cntAll": 606,
+          "cancelCnt": 7
         },
         {
           "ym": "202603",
-          "price84": 5.5,
-          "cnt84": 237,
-          "price59": 3,
-          "cnt59": 13,
-          "priceAll": 5.6,
-          "cntAll": 326,
-          "cancelCnt": 4
+          "price84": 8.6,
+          "cnt84": 100,
+          "price59": 3.9,
+          "cnt59": 3,
+          "priceAll": 9.1,
+          "cntAll": 183,
+          "cancelCnt": 2
         }
       ]
     },
