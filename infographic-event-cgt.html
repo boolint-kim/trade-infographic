@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>양도세 중과 유예 만료 — 조정대상지역 시계열 분석</title>
+<title>양도세 중과 유예 만료 — 조정대상지역 가격·거래 분석</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:24px 16px;font-size:13px}
-  .container{max-width:1200px;margin:0 auto}
+  .container{max-width:1100px;margin:0 auto}
 
   /* 헤더 */
   .header{text-align:center;margin-bottom:20px}
@@ -19,49 +20,44 @@
   /* 조정대상지역 안내 */
   .reg-info{background:#fff7ed;border-left:3px solid #f97316;padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:20px;font-size:12px;line-height:1.7;color:#78350f}
 
-  /* 아코디언 — 대분류 */
-  .group{margin-bottom:12px}
-  .group-header{background:#1e293b;color:#fff;padding:12px 16px;border-radius:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;user-select:none}
-  .group-header:hover{background:#334155}
-  .group-header .arrow{transition:transform .2s;font-size:10px}
-  .group.open>.group-header .arrow{transform:rotate(90deg)}
-  .group-body{display:none;padding:4px 0 0}
-  .group.open>.group-body{display:block}
+  /* 면적 라디오 */
+  .area-selector{display:flex;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .area-selector label{display:flex;align-items:center;gap:4px;padding:6px 16px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;border:2px solid #e5e7eb;background:#fff;transition:all .15s}
+  .area-selector input{display:none}
+  .area-selector input:checked+span{color:#fff}
+  .area-selector label:has(input:checked){background:#1e293b;border-color:#1e293b;color:#fff}
 
-  /* 아코디언 — 시군구 */
-  .district{margin:4px 0;border-radius:8px;overflow:hidden;border:1px solid #e5e7eb}
-  .district-header{background:#fff;padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;user-select:none}
-  .district-header:hover{background:#f9fafb}
-  .district-header .arrow{transition:transform .2s;font-size:9px;color:#9ca3af}
-  .district.open>.district-header .arrow{transform:rotate(90deg)}
-  .district.open>.district-header{background:#f1f5f9;border-bottom:1px solid #e5e7eb}
-  .district-body{display:none;background:#fff;overflow-x:auto}
-  .district.open>.district-body{display:block}
-  .district-summary{color:#6b7280;font-size:12px;font-weight:400}
-  .district-summary .price{color:#1a1a2e;font-weight:700}
-  .district-summary .cnt{color:#6366f1;font-weight:600}
+  /* 섹션 */
+  .section{background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:20px}
+  .section-title{font-size:15px;font-weight:800;margin-bottom:12px}
 
-  /* 테이블 */
-  .data-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-  .data-table th{background:#f8fafc;padding:6px 10px;text-align:center;font-weight:600;color:#6b7280;border-bottom:1px solid #e5e7eb;position:sticky;left:0;z-index:1}
-  .data-table td{padding:5px 10px;text-align:right;border-bottom:1px solid #f3f4f6}
-  .data-table .row-label{text-align:left;font-weight:600;color:#374151;background:#f8fafc;position:sticky;left:0;z-index:1;min-width:60px}
-  .data-table tr:last-child td{border-bottom:none}
-  .data-table .ym-header{text-align:center;min-width:56px}
-  .up{color:#10b981} .down{color:#ef4444} .zero{color:#9ca3af}
-  .cnt-row td{color:#6366f1;font-weight:500}
-  .cnt-row .row-label{color:#6366f1}
+  /* 체크박스 목록 */
+  .cb-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .cb-item{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;border:1.5px solid #e5e7eb;background:#fff;transition:all .15s;user-select:none}
+  .cb-item:hover{border-color:#94a3b8}
+  .cb-item.checked{color:#fff;font-weight:700}
+  .cb-item.disabled{opacity:.35;cursor:not-allowed}
+  .cb-item .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0}
+  .cb-item.checked .dot{border-color:transparent}
+  .cb-limit{font-size:11px;color:#ef4444;margin-bottom:8px;display:none}
+
+  /* 차트 영역 */
+  .chart-wrap{position:relative;width:100%}
+  .chart-wrap canvas{width:100%!important}
+
+  /* 범례 */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;justify-content:center}
+  .legend-item{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600}
+  .legend-item .swatch{width:12px;height:3px;border-radius:2px}
 
   /* 푸터 */
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:16px;line-height:1.7}
 
   @media(max-width:700px){
-    body{padding:12px 8px;font-size:12px}
+    body{padding:12px 8px}
     .header h1{font-size:18px}
-    .group-header{font-size:13px;padding:10px 12px}
-    .district-header{font-size:12px;padding:8px 10px}
-    .data-table{font-size:11px}
-    .data-table th,.data-table td{padding:4px 6px}
+    .section{padding:14px}
+    .cb-item{font-size:11px;padding:3px 8px}
   }
 </style>
 </head>
@@ -69,7 +65,7 @@
 <div class="container">
   <div class="header">
     <h1>양도세 중과 유예 만료</h1>
-    <div class="sub">다주택자 양도소득세 중과 한시 유예 종료 — 조정대상지역 가격·거래 시계열 분석</div>
+    <div class="sub">다주택자 양도소득세 중과 한시 유예 종료 — 조정대상지역 가격·거래 영향 분석</div>
     <div class="deadline">2026. 05. 09</div>
     <div class="deadline-sub">이후 계약분부터 다주택자 양도세 중과 (기본세율 + 20~30%p) 재적용</div>
   </div>
@@ -79,103 +75,264 @@
     서울 25개 구 전체 | 경기 12곳: 과천 · 광명 · 성남(분당·수정·중원) · 수원(영통·장안·팔달) · 안양 동안 · 용인 수지 · 의왕 · 하남
   </div>
 
-  <div id="accordion"></div>
+  <!-- 면적 라디오 -->
+  <div class="area-selector">
+    <label><input type="radio" name="area" value="All" checked><span>전체</span></label>
+    <label><input type="radio" name="area" value="85"><span>85형 (≤85㎡)</span></label>
+    <label><input type="radio" name="area" value="59"><span>59형 (≤59㎡)</span></label>
+  </div>
+
+  <!-- 서울 -->
+  <div class="section">
+    <div class="section-title">서울특별시</div>
+    <div class="cb-limit" id="seoulLimit">최대 5개까지 선택할 수 있습니다</div>
+    <div class="cb-list" id="seoulCbs"></div>
+    <div class="chart-wrap"><canvas id="seoulChart" height="360"></canvas></div>
+    <div class="legend" id="seoulLegend"></div>
+  </div>
+
+  <!-- 경기 -->
+  <div class="section">
+    <div class="section-title">경기도 조정대상지역</div>
+    <div class="cb-limit" id="gyeonggiLimit">최대 5개까지 선택할 수 있습니다</div>
+    <div class="cb-list" id="gyeonggiCbs"></div>
+    <div class="chart-wrap"><canvas id="gyeonggiChart" height="360"></canvas></div>
+    <div class="legend" id="gyeonggiLegend"></div>
+  </div>
 
   <div class="footer">
-    데이터 출처: 국토교통부 실거래가 공개시스템 | 해제 거래 제외 | <span id="genDate"></span>
+    데이터 출처: 국토교통부 실거래가 공개시스템 | 해제 거래 제외 | 단위: 억원 | <span id="genDate"></span>
   </div>
 </div>
 
 <script>
+Chart.defaults.font.family = "'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+const _m = window.innerWidth < 700;
+Chart.defaults.font.size = _m ? 11 : 13;
+
+const COLORS = ['#ef4444','#3b82f6','#10b981','#f59e0b','#8b5cf6'];
+const MAX_SELECT = 5;
+
 function fmtYM(ym) { return ym.slice(2, 4) + '.' + ym.slice(4); }
-function fmtPrice(v) { return v !== null && v !== undefined ? v.toFixed(1) : '-'; }
-function fmtCnt(v) { return v !== null && v !== undefined ? v.toLocaleString('ko-KR') : '-'; }
 
-// 전월 대비 증감 클래스
-function chgClass(cur, prev) {
-  if (cur == null || prev == null) return '';
-  if (cur > prev) return 'up';
-  if (cur < prev) return 'down';
-  return 'zero';
-}
+let D; // 전체 데이터
+let currentArea = 'All'; // 현재 면적대
 
-function buildTable(monthly) {
-  if (!monthly || monthly.length === 0) return '<div style="padding:12px;color:#9ca3af">데이터 없음</div>';
+// 키 매핑: 면적 → price/cnt 필드명
+function priceKey(area) { return area === 'All' ? 'priceAll' : 'price' + area; }
+function cntKey(area) { return area === 'All' ? 'cntAll' : 'cnt' + area; }
 
-  const yms = monthly.map(m => m.ym);
-  let html = '<table class="data-table"><thead><tr><th class="row-label"></th>';
-  yms.forEach(ym => { html += `<th class="ym-header">${fmtYM(ym)}</th>`; });
-  html += '</tr></thead><tbody>';
+// ── 차트 인스턴스 관리 ──
+const charts = { seoul: null, gyeonggi: null };
+const selected = { seoul: new Set(), gyeonggi: new Set() };
 
-  // 85형 평균가
-  html += '<tr><td class="row-label">85형</td>';
-  monthly.forEach((m, i) => {
-    const cls = i > 0 ? chgClass(m.price85, monthly[i - 1].price85) : '';
-    html += `<td class="${cls}">${fmtPrice(m.price85)}</td>`;
+function buildCheckboxes(groupKey, districts, containerEl, limitEl) {
+  containerEl.innerHTML = '';
+  // 초기: 상위 3개 선택
+  const initial = districts.slice(0, 3).map(d => d.code);
+  selected[groupKey] = new Set(initial);
+
+  districts.forEach((d, i) => {
+    const el = document.createElement('div');
+    el.className = 'cb-item' + (initial.includes(d.code) ? ' checked' : '');
+    el.dataset.code = d.code;
+    el.dataset.group = groupKey;
+
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    const ci = initial.indexOf(d.code);
+    if (ci >= 0) {
+      const c = COLORS[ci];
+      el.style.background = c;
+      el.style.borderColor = c;
+      dot.style.background = c;
+    }
+    el.appendChild(dot);
+    el.appendChild(document.createTextNode(d.name));
+
+    el.addEventListener('click', () => toggleCb(groupKey, d.code, containerEl, limitEl));
+    containerEl.appendChild(el);
   });
-  html += '</tr>';
+}
 
-  // 59형 평균가
-  html += '<tr><td class="row-label">59형</td>';
-  monthly.forEach((m, i) => {
-    const cls = i > 0 ? chgClass(m.price59, monthly[i - 1].price59) : '';
-    html += `<td class="${cls}">${fmtPrice(m.price59)}</td>`;
+function toggleCb(groupKey, code, containerEl, limitEl) {
+  const sel = selected[groupKey];
+  if (sel.has(code)) {
+    sel.delete(code);
+  } else {
+    if (sel.size >= MAX_SELECT) {
+      limitEl.style.display = 'block';
+      setTimeout(() => limitEl.style.display = 'none', 2000);
+      return;
+    }
+    sel.add(code);
+  }
+  refreshCbStyles(groupKey, containerEl);
+  updateChart(groupKey);
+}
+
+function refreshCbStyles(groupKey, containerEl) {
+  const sel = [...selected[groupKey]];
+  containerEl.querySelectorAll('.cb-item').forEach(el => {
+    const code = el.dataset.code;
+    const ci = sel.indexOf(code);
+    const isChecked = ci >= 0;
+    el.classList.toggle('checked', isChecked);
+    el.classList.toggle('disabled', !isChecked && sel.length >= MAX_SELECT);
+    const dot = el.querySelector('.dot');
+    if (isChecked) {
+      const c = COLORS[ci];
+      el.style.background = c;
+      el.style.borderColor = c;
+      dot.style.background = c;
+    } else {
+      el.style.background = '';
+      el.style.borderColor = '';
+      dot.style.background = '';
+    }
   });
-  html += '</tr>';
+}
 
-  // 전체 평균가
-  html += '<tr><td class="row-label">전체</td>';
-  monthly.forEach((m, i) => {
-    const cls = i > 0 ? chgClass(m.priceAll, monthly[i - 1].priceAll) : '';
-    html += `<td class="${cls}">${fmtPrice(m.priceAll)}</td>`;
+// ── 차트 생성/업데이트 ──
+function getMonths(groupKey) {
+  const districts = D[groupKey];
+  if (!districts || districts.length === 0) return [];
+  // 모든 시군구의 월 합집합
+  const ymSet = new Set();
+  districts.forEach(d => d.monthly.forEach(m => ymSet.add(m.ym)));
+  return [...ymSet].sort();
+}
+
+function updateChart(groupKey) {
+  const canvasId = groupKey + 'Chart';
+  const legendId = groupKey + 'Legend';
+  const districts = D[groupKey];
+  const sel = [...selected[groupKey]];
+  const months = getMonths(groupKey);
+  const pk = priceKey(currentArea);
+  const ck = cntKey(currentArea);
+
+  // 가격 라인 datasets
+  const lineDatasets = sel.map((code, i) => {
+    const dist = districts.find(d => d.code === code);
+    if (!dist) return null;
+    const dataMap = new Map(dist.monthly.map(m => [m.ym, m[pk]]));
+    return {
+      type: 'line',
+      label: dist.name,
+      data: months.map(ym => dataMap.get(ym) || null),
+      borderColor: COLORS[i],
+      backgroundColor: COLORS[i] + '20',
+      borderWidth: 2.5,
+      pointRadius: _m ? 3 : 4,
+      pointBackgroundColor: COLORS[i],
+      pointBorderColor: '#fff',
+      pointBorderWidth: 1.5,
+      tension: 0.3,
+      yAxisID: 'yPrice',
+      spanGaps: true,
+      order: 1
+    };
+  }).filter(Boolean);
+
+  // 거래량 합산 dataset
+  const volumeData = months.map(ym => {
+    let sum = 0;
+    sel.forEach(code => {
+      const dist = districts.find(d => d.code === code);
+      if (!dist) return;
+      const m = dist.monthly.find(m => m.ym === ym);
+      if (m) sum += (m[ck] || 0);
+    });
+    return sum;
   });
-  html += '</tr>';
 
-  // 거래건수
-  html += '<tr class="cnt-row"><td class="row-label">건수</td>';
-  monthly.forEach(m => { html += `<td>${fmtCnt(m.cntAll)}</td>`; });
-  html += '</tr>';
+  const barDataset = {
+    type: 'bar',
+    label: '거래량',
+    data: volumeData,
+    backgroundColor: '#94a3b822',
+    borderColor: '#94a3b855',
+    borderWidth: 1,
+    borderRadius: 2,
+    yAxisID: 'yVolume',
+    order: 2
+  };
 
-  html += '</tbody></table>';
-  return html;
+  const allDatasets = [...lineDatasets, barDataset];
+
+  // 차트 파괴 후 재생성
+  if (charts[groupKey]) {
+    charts[groupKey].destroy();
+  }
+
+  charts[groupKey] = new Chart(document.getElementById(canvasId), {
+    data: {
+      labels: months.map(fmtYM),
+      datasets: allDatasets
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.type === 'bar') return `거래량: ${ctx.raw.toLocaleString('ko-KR')}건`;
+              return `${ctx.dataset.label}: ${ctx.raw}억`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        yPrice: {
+          position: 'left',
+          title: { display: true, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
+          grid: { color: '#f3f4f6' },
+          ticks: { callback: v => v + '억' }
+        },
+        yVolume: {
+          position: 'right',
+          title: { display: true, text: '거래량(건)', font: { size: 11, weight: 'bold' } },
+          grid: { display: false },
+          ticks: { callback: v => v.toLocaleString('ko-KR') },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // 범례 업데이트
+  const legendEl = document.getElementById(legendId);
+  legendEl.innerHTML = sel.map((code, i) => {
+    const dist = districts.find(d => d.code === code);
+    return `<div class="legend-item"><span class="swatch" style="background:${COLORS[i]}"></span>${dist ? dist.name : code}</div>`;
+  }).join('') + `<div class="legend-item"><span class="swatch" style="background:#94a3b8"></span>거래량(합산)</div>`;
 }
 
-function buildDistrict(d) {
-  const avgStr = d.summary.avgPrice ? d.summary.avgPrice.toFixed(1) + '억' : '-';
-  const cntStr = d.summary.totalCnt ? d.summary.totalCnt.toLocaleString('ko-KR') + '건' : '-';
-  return `
-    <div class="district" onclick="this.classList.toggle('open')">
-      <div class="district-header">
-        <span>${d.name} <span class="district-summary"><span class="price">${avgStr}</span> · <span class="cnt">${cntStr}</span></span></span>
-        <span class="arrow">▶</span>
-      </div>
-      <div class="district-body">${buildTable(d.monthly)}</div>
-    </div>`;
-}
+// ── 면적 라디오 이벤트 ──
+document.querySelectorAll('input[name="area"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    currentArea = radio.value;
+    updateChart('seoul');
+    updateChart('gyeonggi');
+  });
+});
 
-function buildGroup(title, districts, openByDefault) {
-  const cls = openByDefault ? 'group open' : 'group';
-  let inner = '';
-  districts.forEach(d => { inner += buildDistrict(d); });
-  return `
-    <div class="${cls}">
-      <div class="group-header" onclick="this.parentElement.classList.toggle('open')">
-        <span>${title} (${districts.length}곳)</span>
-        <span class="arrow">▶</span>
-      </div>
-      <div class="group-body">${inner}</div>
-    </div>`;
-}
-
+// ── 데이터 로드 ──
 async function load() {
-  let D;
   try { D = await (await fetch('data/event-cgt.json')).json(); }
   catch { try { D = await (await fetch('event-cgt.json')).json(); } catch { return; } }
 
   document.getElementById('genDate').textContent = `생성일: ${D.meta.generated.slice(0, 10)}`;
 
-  const el = document.getElementById('accordion');
-  el.innerHTML = buildGroup('서울특별시', D.seoul, true) + buildGroup('경기도 조정대상지역', D.gyeonggi, false);
+  buildCheckboxes('seoul', D.seoul, document.getElementById('seoulCbs'), document.getElementById('seoulLimit'));
+  buildCheckboxes('gyeonggi', D.gyeonggi, document.getElementById('gyeonggiCbs'), document.getElementById('gyeonggiLimit'));
+
+  updateChart('seoul');
+  updateChart('gyeonggi');
 }
 
 load();
