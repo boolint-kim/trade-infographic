@@ -31,6 +31,18 @@
   .price{font-weight:800;color:#ef4444} .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}}
+  @media(orientation:landscape) and (max-height:500px){
+    body{padding:16px 12px}
+    .header{margin-bottom:16px} .header h1{font-size:20px}
+    .summary-cards{gap:10px;margin-bottom:16px}
+    .card{padding:12px 16px;min-width:0} .card .value{font-size:22px}
+    .section{padding:16px 20px;margin-bottom:16px}
+    .selector{margin-bottom:20px} .selector button{padding:5px 12px;font-size:11px}
+  }
+  @media(orientation:landscape) and (min-height:501px) and (max-height:800px){
+    body{padding:20px 16px}
+    .section{padding:20px 24px;margin-bottom:18px}
+  }
 </style>
 </head>
 <body>
@@ -72,6 +84,15 @@
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
 const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+// 가로 모드 차트 높이 조정
+function adjustChartHeight(){
+  const vh=window.innerHeight;const isLand=window.innerWidth>window.innerHeight;
+  const dc=document.getElementById('dailyChart'),sc=document.getElementById('sidoChart');
+  if(isLand&&vh<=500){dc.height=160;sc.height=200;}
+  else if(isLand&&vh<=800){dc.height=220;sc.height=280;}
+  else{dc.height=280;sc.height=380;}
+}
+adjustChartHeight();
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
@@ -173,6 +194,8 @@ document.querySelectorAll('input[name="areaType"]').forEach(r=>{
   r.addEventListener('change',()=>{curArea=r.value;updateAreaRadioStyle();selectSido(cur);});
 });
 updateAreaRadioStyle();
+// 화면 회전 시 차트 높이 재조정
+window.addEventListener('orientationchange',()=>{setTimeout(()=>{adjustChartHeight();selectSido(cur);initSidoChart();selectSido(cur);},300);});
 load();
 </script>
 </body>
