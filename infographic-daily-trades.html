@@ -153,11 +153,10 @@ function selectSido(code){
   const tbody=document.getElementById('tableBody');
   tbody.innerHTML='';
   topTrades.forEach((t,i)=>{
-    const pyeong=(parseFloat(t.area)*0.3025).toFixed(1);
     const tr=document.createElement('tr');
     tr.innerHTML=`<td class="rank-num">${i+1}</td><td><strong>${t.name}</strong></td><td>${t.umdNm}</td>
       <td class="price">${(t.price/10000).toFixed(1)}억</td>
-      <td class="area-info">${parseFloat(t.area).toFixed(1)}m² (${pyeong}평)</td><td>${t.floor}층</td><td>${fmtDate(t.dealDate)}</td>`;
+      <td class="area-info">${parseFloat(t.area).toFixed(1)}m²</td><td>${t.floor}층</td><td>${fmtDate(t.dealDate)}</td>`;
     tbody.appendChild(tr);
   });
 }
