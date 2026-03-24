@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연립다세대 매매 거래량 추이 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f0f2f5; color:#1a1a2e; padding:32px 20px; }
+  .container { max-width:1100px; margin:0 auto; }
+  .header { text-align:center; margin-bottom:28px; }
+  .header h1 { font-size:26px; font-weight:800; margin-bottom:8px; }
+  .header p { font-size:13px; color:#6b7280; line-height:1.6; }
+  .selector { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+  .selector button { padding:8px 16px; border:2px solid #e5e7eb; border-radius:24px; background:#fff; font-size:13px; font-weight:600; color:#6b7280; cursor:pointer; transition:all .2s; }
+  .selector button:hover { border-color:#3b82f6; color:#3b82f6; }
+  .selector button.active { background:#3b82f6; border-color:#3b82f6; color:#fff; }
+  .summary-cards { display:flex; gap:16px; margin-bottom:28px; flex-wrap:wrap; }
+  .card { flex:1; min-width:200px; background:#fff; border-radius:16px; padding:20px 24px; box-shadow:0 2px 12px rgba(0,0,0,.07); border-top:4px solid; }
+  .card.a { border-color:#3b82f6; } .card.b { border-color:#6366f1; } .card.c { border-color:#10b981; }
+  .card .label { font-size:12px; font-weight:600; color:#6b7280; margin-bottom:4px; }
+  .card .value { font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
+  .card.a .value { color:#3b82f6; } .card.b .value { color:#6366f1; } .card.c .value { color:#10b981; }
+  .card .sub { font-size:12px; color:#9ca3af; }
+  .card .unit { font-size:14px; font-weight:600; color:#9ca3af; }
+  .section { background:#fff; border-radius:16px; padding:28px 32px; box-shadow:0 2px 12px rgba(0,0,0,.07); margin-bottom:24px; }
+  .section-title { font-size:16px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+  .section-sub { font-size:12px; color:#9ca3af; margin-bottom:20px; }
+  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .footer { text-align:center; font-size:11px; color:#9ca3af; margin-top:12px; line-height:1.8; }
+  @media(max-width:700px){ .card{min-width:100%;} .selector button{padding:6px 12px;font-size:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>연립다세대 매매 거래량 추이</h1>
+    <p id="periodText"></p>
+  </div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">최다 거래월</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">평균 거래가</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="chartTitle1">연도별 거래량</span></div>
+    <div class="section-sub" id="chartSub1"></div>
+    <canvas id="yearlyChart" height="280"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="chartTitle2">월별 거래량</span></div>
+    <div class="section-sub" id="chartSub2">최근 15개월</div>
+    <canvas id="monthlyChart" height="300"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#10b981"></span>전국 시도별 거래량 비교</div>
+    <div class="section-sub" id="sidoCompareSub"></div>
+    <canvas id="sidoChart" height="380"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let DATA,yearlyChart,monthlyChart,sidoChart,cur='11';
+
+async function load(){
+  try{ DATA=await(await fetch('data/multi-trade-volume.json')).json(); }
+  catch{ try{ DATA=await(await fetch('multi-trade-volume.json')).json(); }catch{ return; }}
+  init();
+}
+
+function init(){
+  document.getElementById('periodText').textContent=`국토부 실거래가 기반 | 전국 17개 시도 | 연도별 + 월별 추이`;
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  // 전국 버튼
+  const allBtn=document.createElement('button'); allBtn.textContent='전국'; allBtn.dataset.code='ALL';
+  allBtn.onclick=()=>selectSido('ALL'); bc.appendChild(allBtn);
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return; const b=document.createElement('button'); b.textContent=DATA.sido[c].name; b.dataset.code=c; b.onclick=()=>selectSido(c); bc.appendChild(b);});
+  initSidoChart();
+  selectSido('ALL');
+}
+
+function initSidoChart(){
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart=new Chart(document.getElementById('sidoChart'),{
+    type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#93c5fdcc',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+  });
+}
+
+function fmtYM(ym){ return ym.slice(2,4)+'.'+ym.slice(4); }
+
+function selectSido(code){
+  cur=code;
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+
+  let monthly, yearly, total, avgPrice, name;
+  if(code==='ALL'){
+    name='전국';monthly=DATA.national;
+    yearly=DATA.yearly;
+    total=DATA.national.reduce((s,r)=>s+r.cnt,0);
+    avgPrice=null;
+  } else {
+    const s=DATA.sido[code]; name=s.name;
+    monthly=s.monthly; total=s.total; avgPrice=s.avgPrice;
+    yearly=null; // 시도별 연도 데이터는 없으므로 월별만
+  }
+
+  // 요약 카드
+  document.getElementById('cL1').textContent=`${name} 최근 3개월`;
+  document.getElementById('cV1').innerHTML=`${fmt(total)}<span class="unit"> 건</span>`;
+  document.getElementById('cS1').textContent=`연립다세대 매매 신고`;
+
+  const peak=monthly.reduce((max,r)=>r.cnt>max.cnt?r:max,monthly[0]);
+  document.getElementById('cV2').innerHTML=`${fmt(peak.cnt)}<span class="unit"> 건</span>`;
+  document.getElementById('cS2').textContent=`${fmtYM(peak.ym)}`;
+
+  if(avgPrice){
+    document.getElementById('cV3').innerHTML=`${(avgPrice/10000).toFixed(1)}<span class="unit"> 억</span>`;
+    document.getElementById('cS3').textContent=`${name} 평균 거래가`;
+  } else {
+    document.getElementById('cV3').innerHTML=`-`;
+    document.getElementById('cS3').textContent='';
+  }
+
+  // 연도별 차트
+  document.getElementById('chartTitle1').textContent=`${name} 연도별 거래량`;
+  if(yearlyChart) yearlyChart.destroy();
+  if(yearly){
+    document.getElementById('chartSub1').textContent='2016~2026';
+    yearlyChart=new Chart(document.getElementById('yearlyChart'),{
+      type:'bar',data:{labels:yearly.map(r=>r.yr),datasets:[{data:yearly.map(r=>r.cnt),backgroundColor:'#3b82f6aa',borderRadius:4}]},
+      options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+    });
+  } else {
+    document.getElementById('chartSub1').textContent=`${name} — 시도별 연도 데이터는 월별 차트 참고`;
+    yearlyChart=new Chart(document.getElementById('yearlyChart'),{type:'bar',data:{labels:[],datasets:[{data:[]}]},options:{responsive:true}});
+  }
+
+  // 월별 차트
+  document.getElementById('chartTitle2').textContent=`${name} 월별 거래량`;
+  if(monthlyChart) monthlyChart.destroy();
+  const color=COLORS[code]||'#3b82f6';
+  monthlyChart=new Chart(document.getElementById('monthlyChart'),{
+    type:'line',data:{labels:monthly.map(r=>fmtYM(r.ym)),datasets:[{
+      label:name,data:monthly.map(r=>r.cnt),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5
+    }]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+  });
+
+  // 시도 비교 강조
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#3b82f6')+'cc':'#d1d5dbcc');
+  if(code==='ALL') sidoChart.data.datasets[0].backgroundColor=codes.map(c=>(COLORS[c]||'#3b82f6')+'99');
+  document.getElementById('sidoCompareSub').textContent=DATA.period.replace('~',' ~ ')+' | 단위: 건';
+  sidoChart.update();
+}
+load();
+</script>
+</body>
+</html>

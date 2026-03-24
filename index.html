@@ -14,6 +14,10 @@
   .group{margin-bottom:32px}
   .group-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-left:12px;border-left:4px solid #6366f1}
   .group.periodic .group-title{border-color:#f97316}
+  .group.office .group-title{border-color:#06b6d4}
+  .group.office .card .tag{color:#06b6d4}
+  .group.multi .group-title{border-color:#8b5cf6}
+  .group.multi .card .tag{color:#8b5cf6}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
   .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
   .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
@@ -119,6 +123,68 @@
         <div class="tag">P10 · 월 1회 갱신</div>
         <h3>거래 증감 핫스팟</h3>
         <p>시군구별 전년 동기 대비 거래량 급증/급감 지역</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group office">
+    <div class="group-title">오피스텔 (6개 지표)</div>
+    <div class="cards">
+      <a class="card" href="infographic-office-price-trend.html">
+        <div class="tag">O1 · 가격 추이</div>
+        <h3>오피스텔 매매 평균가 추이</h3>
+        <p>10년 연도별 평균 거래가 + 거래량</p>
+      </a>
+      <a class="card" href="infographic-office-trade-volume.html">
+        <div class="tag">O2 · 거래량</div>
+        <h3>오피스텔 거래량 추이</h3>
+        <p>연도별 + 월별 거래량, 시도별 비교</p>
+      </a>
+      <a class="card" href="infographic-office-price-per-pyeong.html">
+        <div class="tag">O3 · 평당가 랭킹</div>
+        <h3>오피스텔 평당가 랭킹</h3>
+        <p>시도별 단지 평당가 TOP 20</p>
+      </a>
+      <a class="card" href="infographic-office-jeonse-ratio.html">
+        <div class="tag">O4 · 전세가율</div>
+        <h3>오피스텔 전세가율</h3>
+        <p>매매 대비 전세 비율, 갭 분석</p>
+      </a>
+      <a class="card" href="infographic-office-wolse-ratio.html">
+        <div class="tag">O5 · 월세 비중</div>
+        <h3>오피스텔 월세 비중</h3>
+        <p>전세 vs 월세 건수 변화, 시도별 비교</p>
+      </a>
+      <a class="card" href="infographic-office-yield-rate.html">
+        <div class="tag">O6 · 수익률</div>
+        <h3>오피스텔 전월세 수익률</h3>
+        <p>매매가 대비 월세 연간 수익률, 은행금리 비교</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group multi">
+    <div class="group-title">연립다세대 (4개 지표)</div>
+    <div class="cards">
+      <a class="card" href="infographic-multi-price-trend.html">
+        <div class="tag">M1 · 가격 추이</div>
+        <h3>연립다세대 매매 평균가 추이</h3>
+        <p>10년 연도별 평균 거래가 + 거래량</p>
+      </a>
+      <a class="card" href="infographic-multi-trade-volume.html">
+        <div class="tag">M2 · 거래량</div>
+        <h3>연립다세대 거래량 추이</h3>
+        <p>연도별 + 월별 거래량, 시도별 비교</p>
+      </a>
+      <a class="card" href="infographic-multi-wolse-ratio.html">
+        <div class="tag">M3 · 월세 비중</div>
+        <h3>연립다세대 월세 비중</h3>
+        <p>전세 vs 월세 건수 변화, 시도별 비교</p>
+      </a>
+      <a class="card" href="infographic-multi-yield-rate.html">
+        <div class="tag">M4 · 수익률</div>
+        <h3>연립다세대 전월세 수익률</h3>
+        <p>매매가 대비 월세 연간 수익률</p>
       </a>
     </div>
   </div>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오피스텔 전세가율 10년 추이 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto}
+  .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#8b5cf6;color:#8b5cf6} .selector button.active{background:#8b5cf6;border-color:#8b5cf6;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#8b5cf6} .card.b{border-color:#3b82f6} .card.c{border-color:#ef4444}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .value{font-size:36px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#8b5cf6} .card.b .value{color:#3b82f6} .card.c .value{color:#ef4444}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:16px;font-weight:600;color:#9ca3af}
+  .insight{background:#fffbeb;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7}
+  .insight strong{color:#92400e}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .selector button{padding:6px 12px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>오피스텔 전세가율 10년 추이</h1><p>전세가율 = 전세 보증금 ÷ 매매가 × 100 | 갭투자·전세 안정성의 핵심 지표</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label" id="cL2">매매 평균가</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label" id="cL3">전세 평균가</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="insight"><strong>전세가율이란?</strong> 매매가 대비 전세 보증금 비율. <strong>높을수록</strong>(70%+) 갭투자 여력이 크지만 깡통전세 위험도 증가. <strong>낮을수록</strong>(50% 이하) 매수 부담이 큼.</div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="chartTitle1">전세가율 추이</span></div>
+    <div class="section-sub" id="chartSub1"></div>
+    <canvas id="ratioChart" height="320"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="chartTitle2">매매가 vs 전세가</span></div>
+    <div class="section-sub" id="chartSub2">두 선 사이 간격 = 갭</div>
+    <canvas id="gapChart" height="320"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#10b981"></span>전국 시도별 최신 전세가율</div>
+    <div class="section-sub" id="sidoSub"></div>
+    <canvas id="sidoChart" height="380"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 오피스텔 전세 | 지역 평균 기준 (단지 매칭 아님) | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let DATA,ratioChart,gapChart,sidoChart,cur='11';
+
+async function load(){
+  try{DATA=await(await fetch('data/office-jeonse-ratio.json')).json();}catch{try{DATA=await(await fetch('office-jeonse-ratio.json')).json();}catch{return;}}
+  init();
+}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>selectSido(c);bc.appendChild(b);});
+  initSidoChart();
+  selectSido('11');
+}
+function initSidoChart(){
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  const latestRatio=codes.map(c=>{const y=DATA.sido[c].yearly.filter(r=>r.ratio!==null);return y.length?y[y.length-1].ratio:0;});
+  sidoChart=new Chart(document.getElementById('sidoChart'),{
+    type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:latestRatio,backgroundColor:'#c4b5fdcc',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    plugins:[{id:'line70',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;const y70=y.getPixelForValue(70);ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.moveTo(left,y70);ctx.lineTo(right,y70);ctx.stroke();ctx.fillStyle='#f59e0b';ctx.font='10px sans-serif';ctx.fillText('70%',right-25,y70-6);ctx.setLineDash([]);ctx.restore();}}]
+  });
+}
+function selectSido(code){
+  cur=code;
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const sido=DATA.sido[code];if(!sido)return;
+  const yearly=sido.yearly.filter(y=>y.ratio!==null);
+  const last=yearly[yearly.length-1];
+  const first=yearly[0];
+  const color=COLORS[code]||'#8b5cf6';
+
+  document.getElementById('cL1').textContent=`${sido.name} 전세가율 (${last.yr})`;
+  document.getElementById('cV1').innerHTML=`${last.ratio}<span class="unit">%</span>`;
+  const change=last.ratio-first.ratio;
+  document.getElementById('cS1').textContent=`${first.yr}년 ${first.ratio}% 대비 ${change>=0?'+':''}${change.toFixed(1)}%p`;
+
+  document.getElementById('cV2').innerHTML=`${(last.avgDeal/10000).toFixed(1)}<span class="unit"> 억</span>`;
+  document.getElementById('cS2').textContent=`${sido.name} ${last.yr}년`;
+  document.getElementById('cV3').innerHTML=`${(last.avgDeposit/10000).toFixed(1)}<span class="unit"> 억</span>`;
+  document.getElementById('cS3').textContent=`갭: ${((last.avgDeal-last.avgDeposit)/10000).toFixed(1)}억`;
+
+  // 전세가율 추이
+  document.getElementById('chartTitle1').textContent=`${sido.name} 전세가율 추이`;
+  document.getElementById('chartSub1').textContent=`${first.yr}~${last.yr}`;
+  if(ratioChart)ratioChart.destroy();
+  ratioChart=new Chart(document.getElementById('ratioChart'),{
+    type:'line',data:{labels:yearly.map(y=>y.yr),datasets:[{label:'전세가율(%)',data:yearly.map(y=>y.ratio),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},
+    scales:{x:{grid:{display:false}},y:{min:Math.max(0,Math.min(...yearly.map(y=>y.ratio))-10),max:Math.min(110,Math.max(...yearly.map(y=>y.ratio))+10),ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    plugins:[{id:'dangerLine',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;if(Math.max(...yearly.map(y=>y.ratio))>=95){const y100=y.getPixelForValue(100);ctx.save();ctx.beginPath();ctx.setLineDash([6,4]);ctx.strokeStyle='#ef4444';ctx.lineWidth=1.5;ctx.moveTo(left,y100);ctx.lineTo(right,y100);ctx.stroke();ctx.fillStyle='#ef4444';ctx.font='bold 11px sans-serif';ctx.fillText('위험선 100%',right-80,y100-8);ctx.setLineDash([]);ctx.restore();}
+    const y70=y.getPixelForValue(70);if(y70>=chart.chartArea.top&&y70<=chart.chartArea.bottom){ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.moveTo(left,y70);ctx.lineTo(right,y70);ctx.stroke();ctx.fillStyle='#f59e0b';ctx.font='10px sans-serif';ctx.fillText('갭투자 기준 70%',right-100,y70-6);ctx.setLineDash([]);ctx.restore();}}}]
+  });
+
+  // 매매 vs 전세
+  document.getElementById('chartTitle2').textContent=`${sido.name} 매매가 vs 전세가`;
+  if(gapChart)gapChart.destroy();
+  gapChart=new Chart(document.getElementById('gapChart'),{
+    type:'line',data:{labels:yearly.map(y=>y.yr),datasets:[
+      {label:'매매 평균가',data:yearly.map(y=>y.avgDeal),borderColor:'#ef4444',backgroundColor:'#ef444415',fill:'+1',tension:.3,pointRadius:5,pointBackgroundColor:'#ef4444',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5},
+      {label:'전세 평균가',data:yearly.map(y=>y.avgDeposit),borderColor:'#3b82f6',backgroundColor:'transparent',tension:.3,pointRadius:5,pointBackgroundColor:'#3b82f6',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}
+    ]},
+    options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
+    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}}}}
+  });
+
+  // 시도 비교 강조
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#8b5cf6')+'cc':'#d1d5dbcc');
+  document.getElementById('sidoSub').textContent=`최신 연도 기준 | 선택: ${sido.name}`;
+  sidoChart.update();
+}
+load();
+</script>
+</body>
+</html>
