@@ -78,8 +78,8 @@
   <!-- 면적 라디오 -->
   <div class="area-selector">
     <label><input type="radio" name="area" value="All" checked><span>전체</span></label>
-    <label><input type="radio" name="area" value="85"><span>85형 (≤85㎡)</span></label>
-    <label><input type="radio" name="area" value="59"><span>59형 (≤59㎡)</span></label>
+    <label><input type="radio" name="area" value="84"><span>84형 (80~85㎡)</span></label>
+    <label><input type="radio" name="area" value="59"><span>59형 (55~60㎡)</span></label>
   </div>
 
   <!-- 서울 -->
@@ -121,6 +121,7 @@ let currentArea = 'All'; // 현재 면적대
 // 키 매핑: 면적 → price/cnt 필드명
 function priceKey(area) { return area === 'All' ? 'priceAll' : 'price' + area; }
 function cntKey(area) { return area === 'All' ? 'cntAll' : 'cnt' + area; }
+// area 값: 'All', '84', '59' → 필드: priceAll/price84/price59, cntAll/cnt84/cnt59
 
 // ── 차트 인스턴스 관리 ──
 const charts = { seoul: null, gyeonggi: null };
