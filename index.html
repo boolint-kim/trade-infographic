@@ -26,6 +26,9 @@
   .group.right .card .tag{color:#e11d48}
   .group.building .group-title{border-color:#78716c}
   .group.building .card .tag{color:#78716c}
+  .group.event .group-title{border-color:#dc2626}
+  .group.event .card .tag{color:#dc2626}
+  .group.event .card{border-left:3px solid #fca5a5}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
   .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
   .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
@@ -41,6 +44,17 @@
   <div class="header">
     <h1>부동산 실거래가 인포그래픽</h1>
     <p>국토교통부 실거래가 공개시스템 기반 | 3,000만건 데이터 분석 | 전국 17개 시도</p>
+  </div>
+
+  <div class="group event">
+    <div class="group-title">이벤트 분석 (Event-driven)</div>
+    <div class="cards">
+      <a class="card" href="infographic-event-cgt.html">
+        <div class="tag">2026.05.09 만료</div>
+        <h3>양도세 중과 유예 만료</h3>
+        <p>다주택자 매도 러시 영향 — 서울 고가 6구 vs 저가 6구, 시도별·구별 거래 증감</p>
+      </a>
+    </div>
   </div>
 
   <div class="group evergreen">
