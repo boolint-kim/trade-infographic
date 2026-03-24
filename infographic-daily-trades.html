@@ -114,7 +114,7 @@ function initSidoChart(){
   const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#6ee7b7cc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 }
@@ -158,7 +158,7 @@ function selectSido(code){
   dailyChart=new Chart(document.getElementById('dailyChart'),{
     type:'bar',data:{labels:daily.map(r=>fmtDate(r.dealDate)),datasets:[{data:daily.map(r=>r.cnt),
       backgroundColor:daily.map((r,i)=>i>=daily.length-3?'#d1d5dbcc':color+'aa'),borderRadius:3}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},ticks:{font:{size:_m?10:12},maxRotation:45}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 
