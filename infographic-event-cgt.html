@@ -257,15 +257,39 @@ function updateChart(groupKey) {
     type: 'bar',
     label: '거래량',
     data: volumeData,
-    backgroundColor: '#94a3b822',
-    borderColor: '#94a3b855',
+    backgroundColor: '#94a3b820',
+    borderColor: '#94a3b850',
+    borderWidth: 1,
+    borderRadius: 2,
+    yAxisID: 'yVolume',
+    order: 3
+  };
+
+  // 해제건수 합산 dataset
+  const cancelData = periods.map(p => {
+    let sum = 0;
+    sel.forEach(code => {
+      const dist = districts.find(d => d.code === code);
+      if (!dist) return;
+      const m = dist.periods.find(m => m.period === p);
+      if (m) sum += (m.cancelCnt || 0);
+    });
+    return sum;
+  });
+
+  const cancelDataset = {
+    type: 'bar',
+    label: '해제',
+    data: cancelData,
+    backgroundColor: '#ef444440',
+    borderColor: '#ef444480',
     borderWidth: 1,
     borderRadius: 2,
     yAxisID: 'yVolume',
     order: 2
   };
 
-  const allDatasets = [...lineDatasets, barDataset];
+  const allDatasets = [...lineDatasets, barDataset, cancelDataset];
 
   // 차트 파괴 후 재생성
   if (charts[groupKey]) {
@@ -285,6 +309,7 @@ function updateChart(groupKey) {
         tooltip: {
           callbacks: {
             label: ctx => {
+              if (ctx.dataset.label === '해제') return `해제: ${ctx.raw.toLocaleString('ko-KR')}건`;
               if (ctx.dataset.type === 'bar') return `거래량: ${ctx.raw.toLocaleString('ko-KR')}건`;
               return `${ctx.dataset.label}: ${ctx.raw}억`;
             }
@@ -315,7 +340,8 @@ function updateChart(groupKey) {
   legendEl.innerHTML = sel.map((code, i) => {
     const dist = districts.find(d => d.code === code);
     return `<div class="legend-item"><span class="swatch" style="background:${COLORS[i]}"></span>${dist ? dist.name : code}</div>`;
-  }).join('') + `<div class="legend-item"><span class="swatch" style="background:#94a3b8"></span>거래량(합산)</div>`;
+  }).join('') + `<div class="legend-item"><span class="swatch" style="background:#94a3b8"></span>거래량(합산)</div>` +
+    `<div class="legend-item"><span class="swatch" style="background:#ef4444"></span>해제(합산)</div>`;
 }
 
 // ── 면적 라디오 이벤트 ──
