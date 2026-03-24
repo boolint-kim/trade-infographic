@@ -285,8 +285,8 @@ function renderRank() {
   const mainColor = SIDO_COLORS[currentSido] || '#6366f1';
 
   const TAB_CONFIG = {
-    '84': { data: sido.rank84 || [], title: '국민 84형 TOP', sub: '전용 80~90m² (국민주택 34평형) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#3b82f6' },
-    '59': { data: sido.rank59 || [], title: '국민 59형 TOP', sub: '전용 55~65m² (국민주택 25평형) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#8b5cf6' },
+    '84': { data: sido.rank84 || [], title: '국민 84형 TOP', sub: '전용 80~85m² (국민주택 상한 85m² 이하) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#3b82f6' },
+    '59': { data: sido.rank59 || [], title: '국민 59형 TOP', sub: '전용 55~60m² (취득세 감면 60m² 이하) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#8b5cf6' },
     high: { data: sido.ranking, title: '고가 TOP', sub: '평당가 높은순 | 3건 이상 거래 단지', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: mainColor },
     low: { data: sido.rankLow || [], title: '저가 TOP', sub: '평당가 낮은순 | 3건 이상 거래 단지', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#10b981' },
     rise: { data: sido.rankRise || [], title: '상승률 TOP', sub: '전년 동기 대비 평당가 상승률', valueKey: 'riseRate', label: '상승률 (%)', fmt: v => '+' + v + '%', color: '#ef4444' },
