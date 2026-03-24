@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단독주택 대지 평당가 추이 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#059669;color:#059669} .selector button.active{background:#059669;border-color:#059669;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#059669} .card.b{border-color:#6366f1} .card.c{border-color:#ef4444}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#059669} .card.b .value{color:#6366f1} .card.c .value{color:#ef4444}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .insight{background:#ecfdf5;border-left:4px solid #059669;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7}
+  .insight strong{color:#065f46}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>단독주택 대지 평당가 추이</h1><p>대지면적 기준 평당 매매가 | 전국 17개 시도 | 10년 추이</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">평균 대지면적</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label" id="cL3"></div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="insight"><strong>대지 평당가란?</strong> 단독주택 매매가를 대지면적(plottageAr)으로 나눈 값. 아파트 전용면적 기준 평당가와 성격이 다르며, <strong>땅값</strong>을 반영합니다. 재건축·재개발 가치 판단에 핵심 지표.</div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#059669"></span><span id="t1">대지 평당가 추이</span></div>
+    <div class="section-sub" id="s1">연도별 | 막대=거래량, 선=평당가</div>
+    <canvas id="comboChart" height="320"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span>시도별 대지 평당가 비교</div>
+    <div class="section-sub" id="sidoSub">최신 연도 기준 | 단위: 만원/평</div>
+    <canvas id="sidoChart" height="380"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 평당가 = 매매금액 ÷ (대지면적m² × 0.3025) | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let DATA,comboChart,sidoChart;
+
+async function load(){try{DATA=await(await fetch('data/single-pyeong-price.json')).json();}catch{try{DATA=await(await fetch('single-pyeong-price.json')).json();}catch{return;}} init();}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  const latest=codes.map(c=>{const y=DATA.sido[c].yearly;return y[y.length-1].avgPpyeong;});
+  sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:latest,backgroundColor:'#6ee7b7cc',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}만원/평`}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
+  sel('11');
+}
+function sel(code){
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const s=DATA.sido[code];if(!s)return;
+  const y=s.yearly;const last=y[y.length-1];const first=y[0];const col=COLORS[code]||'#059669';
+
+  const rise=first.avgPpyeong>0?Math.round((last.avgPpyeong-first.avgPpyeong)/first.avgPpyeong*100):0;
+  document.getElementById('cL1').textContent=`${s.name} 대지 평당가 (${last.yr})`;
+  document.getElementById('cV1').innerHTML=`${fmt(last.avgPpyeong)}<span class="unit"> 만원/평</span>`;
+  document.getElementById('cS1').textContent=`${first.yr}년 대비 ${rise>=0?'+':''}${rise}%`;
+
+  document.getElementById('cV2').innerHTML=`${last.avgPyeong}<span class="unit"> 평</span>`;
+  document.getElementById('cS2').textContent=`${s.name} ${last.yr}년 평균`;
+
+  document.getElementById('cL3').textContent=`평균 매매가 (${last.yr})`;
+  document.getElementById('cV3').innerHTML=`${(last.avgPrice/10000).toFixed(1)}<span class="unit"> 억</span>`;
+  document.getElementById('cS3').textContent=`${fmt(last.cnt)}건 거래`;
+
+  document.getElementById('t1').textContent=`${s.name} 대지 평당가 추이`;
+  if(comboChart)comboChart.destroy();
+  comboChart=new Chart(document.getElementById('comboChart'),{type:'bar',data:{labels:y.map(r=>r.yr),datasets:[
+    {type:'bar',label:'거래량',data:y.map(r=>r.cnt),backgroundColor:col+'44',borderRadius:4,yAxisID:'y1',order:2},
+    {type:'line',label:'평당가(만원/평)',data:y.map(r=>r.avgPpyeong),borderColor:col,backgroundColor:col,pointRadius:5,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3,tension:.3,yAxisID:'y',order:1}
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y'?`평당가: ${fmt(ctx.raw)}만원/평`:`거래량: ${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false}},y:{position:'left',ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}},y1:{position:'right',ticks:{callback:v=>fmt(v)},grid:{display:false}}}}});
+
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#059669')+'cc':'#d1d5dbcc');
+  document.getElementById('sidoSub').textContent=`${last.yr}년 기준 | 선택: ${s.name}`;
+  sidoChart.update();
+}
+load();
+</script>
+</body>
+</html>

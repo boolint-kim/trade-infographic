@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단독주택 매매 평균가 10년 추이 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto}
+  .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#6366f1;color:#6366f1} .selector button.active{background:#6366f1;border-color:#6366f1;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#6366f1} .card.b{border-color:#ef4444} .card.c{border-color:#10b981}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#6366f1} .card.b .value{color:#ef4444} .card.c .value{color:#10b981}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:8px}
+  .badge.up{background:#fee2e2;color:#dc2626} .badge.green{background:#dcfce7;color:#16a34a}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .selector button{padding:6px 12px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>단독주택 매매 평균가 10년 추이</h1><p>국토부 실거래가 기반 | 2016~2026 연도별 평균 거래가격</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label" id="cL2"></div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">총 거래</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="chartTitle1">평균 거래가 + 거래량</span></div>
+    <div class="section-sub" id="chartSub1">연도별 | 막대=거래량, 선=평균가</div>
+    <canvas id="comboChart" height="320"></canvas>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#3b82f6"></span>전국 시도 비교 — 최신 평균가</div>
+    <div class="section-sub" id="sidoSub"></div>
+    <canvas id="sidoChart" height="380"></canvas>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 (단독주택) | <span id="genDate"></span></div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let DATA,comboChart,sidoChart,cur='11';
+
+async function load(){
+  try{DATA=await(await fetch('data/single-price-trend.json')).json();}catch{try{DATA=await(await fetch('single-price-trend.json')).json();}catch{return;}}
+  init();
+}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>selectSido(c);bc.appendChild(b);});
+  initSidoChart();
+  selectSido('11');
+}
+function initSidoChart(){
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  const latestAvg=codes.map(c=>{const y=DATA.sido[c].yearly;return y[y.length-1].avgPrice;});
+  sidoChart=new Chart(document.getElementById('sidoChart'),{
+    type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:latestAvg,backgroundColor:'#93c5fdcc',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
+    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}}}}
+  });
+}
+function selectSido(code){
+  cur=code;
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  const sido=DATA.sido[code]; if(!sido)return;
+  const yearly=sido.yearly;
+  const first=yearly.find(y=>y.avgPrice>0);
+  const last=yearly[yearly.length-1];
+  const prev=yearly.length>=2?yearly[yearly.length-2]:null;
+
+  // 10년 상승률
+  const rise=first?Math.round((last.avgPrice-first.avgPrice)/first.avgPrice*100):0;
+  document.getElementById('cL1').textContent=`${sido.name} ${first?first.yr:''}→${last.yr}`;
+  document.getElementById('cV1').innerHTML=`${rise>=0?'+':''}${rise}<span class="unit">%</span>`;
+  document.getElementById('cS1').textContent=`${first?(first.avgPrice/10000).toFixed(1):'-'}억 → ${(last.avgPrice/10000).toFixed(1)}억`;
+
+  // 최근 변동
+  if(prev){
+    const yoy=Math.round((last.avgPrice-prev.avgPrice)/prev.avgPrice*100);
+    document.getElementById('cL2').textContent=`${prev.yr}→${last.yr} 변동`;
+    document.getElementById('cV2').innerHTML=`${yoy>=0?'+':''}${yoy}<span class="unit">%</span>`;
+    document.getElementById('cS2').textContent=`${(prev.avgPrice/10000).toFixed(1)}억 → ${(last.avgPrice/10000).toFixed(1)}억`;
+  }
+
+  const totalCnt=yearly.reduce((s,y)=>s+y.cnt,0);
+  document.getElementById('cV3').innerHTML=`${fmt(totalCnt)}<span class="unit"> 건</span>`;
+  document.getElementById('cS3').textContent=`${sido.name} 전체 기간`;
+
+  // 콤보 차트
+  document.getElementById('chartTitle1').textContent=`${sido.name} 연도별 평균가 + 거래량`;
+  document.getElementById('chartSub1').textContent=`${first?first.yr:''}~${last.yr}`;
+  if(comboChart)comboChart.destroy();
+  const color=COLORS[code]||'#6366f1';
+  comboChart=new Chart(document.getElementById('comboChart'),{
+    type:'bar',data:{labels:yearly.map(y=>y.yr),datasets:[
+      {type:'bar',label:'거래량',data:yearly.map(y=>y.cnt),backgroundColor:color+'44',borderRadius:4,yAxisID:'y1',order:2},
+      {type:'line',label:'평균가(만원)',data:yearly.map(y=>y.avgPrice),borderColor:color,backgroundColor:color,pointRadius:5,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3,tension:.3,yAxisID:'y',order:1}
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y'?`평균가: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`:`거래량: ${fmt(ctx.raw)}건`}}},
+      scales:{x:{grid:{display:false}},y:{position:'left',ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}},y1:{position:'right',ticks:{callback:v=>fmt(v)},grid:{display:false}}}}
+  });
+
+  // 시도 비교 강조
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#6366f1')+'cc':'#d1d5dbcc');
+  document.getElementById('sidoSub').textContent=`${last.yr}년 기준 | 선택: ${sido.name}`;
+  sidoChart.update();
+}
+load();
+</script>
+</body>
+</html>
