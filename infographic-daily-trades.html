@@ -29,6 +29,7 @@
   .trade-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
   .trade-table tr:hover{background:#fefce8}
   .price{font-weight:800;color:#ef4444} .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}}
   @media(orientation:landscape) and (max-height:500px){
@@ -57,12 +58,12 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span><span id="chartTitle">일별 거래 신고</span></div>
     <div class="section-sub" id="chartSub">최근 3~5일은 신고 지연으로 건수 적음</div>
-    <canvas id="dailyChart" height="280"></canvas>
+    <div class="chart-wrap" id="dailyWrap"><canvas id="dailyChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span>시도별 이달 거래량</div>
     <div class="section-sub" id="sidoSub"></div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" id="sidoWrap"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="tableTitle">이달 고가 거래 TOP 5</span></div>
@@ -84,13 +85,13 @@
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
 const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
-// 가로 모드 차트 높이 조정
+// 가로 모드 차트 높이 조정 (컨테이너 높이로 제어)
 function adjustChartHeight(){
   const vh=window.innerHeight;const isLand=window.innerWidth>window.innerHeight;
-  const dc=document.getElementById('dailyChart'),sc=document.getElementById('sidoChart');
-  if(isLand&&vh<=500){dc.height=160;sc.height=200;}
-  else if(isLand&&vh<=800){dc.height=220;sc.height=280;}
-  else{dc.height=280;sc.height=380;}
+  const dw=document.getElementById('dailyWrap'),sw=document.getElementById('sidoWrap');
+  if(isLand&&vh<=500){dw.style.height='160px';sw.style.height='200px';}
+  else if(isLand&&vh<=800){dw.style.height='220px';sw.style.height='280px';}
+  else{dw.style.height='280px';sw.style.height='380px';}
 }
 adjustChartHeight();
 const fmt=n=>n.toLocaleString('ko-KR');
