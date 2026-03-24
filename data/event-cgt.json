@@ -1,745 +1,626 @@
 {
-  "generated": "2026-03-24T02:22:16.853Z",
+  "generated": "2026-03-24T02:33:30.606Z",
   "event": "양도세 중과 유예 만료",
   "deadline": "2026-05-09",
-  "summary": {
-    "regulated": {
-      "name": "조정대상지역 (서울+경기12)",
-      "y2025": 27346,
-      "y2026": 18809,
-      "change": -31.2,
-      "avgPrice2025": 12.6,
-      "avgPrice2026": 9.7
-    },
-    "nonRegulated": {
-      "name": "비조정지역 (그 외 전국)",
-      "y2025": 82085,
-      "y2026": 79921,
-      "change": -2.6,
-      "avgPrice2025": 3,
-      "avgPrice2026": 3.4
-    }
+  "period": {
+    "recent": "202601~202603",
+    "sixMonthAgo": "202507~202510"
   },
-  "regMonthly": [
+  "seoulPrice": [
     {
-      "ym": "202501",
-      "cnt": 4764,
-      "avgPrice": 11.2
-    },
-    {
-      "ym": "202502",
-      "cnt": 8885,
-      "avgPrice": 13
-    },
-    {
-      "ym": "202503",
-      "cnt": 13697,
-      "avgPrice": 12.7
-    },
-    {
-      "ym": "202504",
-      "cnt": 7965,
-      "avgPrice": 10.1
-    },
-    {
-      "ym": "202505",
-      "cnt": 11327,
-      "avgPrice": 10.7
-    },
-    {
-      "ym": "202506",
-      "cnt": 16894,
-      "avgPrice": 12
-    },
-    {
-      "ym": "202507",
-      "cnt": 6449,
-      "avgPrice": 11.2
-    },
-    {
-      "ym": "202508",
-      "cnt": 6594,
-      "avgPrice": 9.6
-    },
-    {
-      "ym": "202509",
-      "cnt": 12499,
-      "avgPrice": 11
-    },
-    {
-      "ym": "202510",
-      "cnt": 12382,
-      "avgPrice": 11.4
-    },
-    {
-      "ym": "202511",
-      "cnt": 5472,
-      "avgPrice": 10.7
-    },
-    {
-      "ym": "202512",
-      "cnt": 7397,
-      "avgPrice": 9.6
-    },
-    {
-      "ym": "202601",
-      "cnt": 8448,
-      "avgPrice": 10.1
-    },
-    {
-      "ym": "202602",
-      "cnt": 8159,
-      "avgPrice": 9.8
-    },
-    {
-      "ym": "202603",
-      "cnt": 2202,
-      "avgPrice": 8.3
-    }
-  ],
-  "nonRegMonthly": [
-    {
-      "ym": "202501",
-      "cnt": 20428,
-      "avgPrice": 3
-    },
-    {
-      "ym": "202502",
-      "cnt": 27742,
-      "avgPrice": 3
-    },
-    {
-      "ym": "202503",
-      "cnt": 33915,
-      "avgPrice": 3.1
-    },
-    {
-      "ym": "202504",
-      "cnt": 31195,
-      "avgPrice": 3.2
-    },
-    {
-      "ym": "202505",
-      "cnt": 31140,
-      "avgPrice": 3.2
-    },
-    {
-      "ym": "202506",
-      "cnt": 33291,
-      "avgPrice": 3.5
-    },
-    {
-      "ym": "202507",
-      "cnt": 26854,
-      "avgPrice": 3.2
-    },
-    {
-      "ym": "202508",
-      "cnt": 25394,
-      "avgPrice": 3.2
-    },
-    {
-      "ym": "202509",
-      "cnt": 30220,
-      "avgPrice": 3.3
-    },
-    {
-      "ym": "202510",
-      "cnt": 30389,
-      "avgPrice": 3.6
-    },
-    {
-      "ym": "202511",
-      "cnt": 34874,
-      "avgPrice": 3.6
-    },
-    {
-      "ym": "202512",
-      "cnt": 30740,
-      "avgPrice": 3.4
-    },
-    {
-      "ym": "202601",
-      "cnt": 35143,
-      "avgPrice": 3.5
-    },
-    {
-      "ym": "202602",
-      "cnt": 27890,
-      "avgPrice": 3.4
-    },
-    {
-      "ym": "202603",
-      "cnt": 16888,
-      "avgPrice": 3.1
-    }
-  ],
-  "seoulGu": [
-    {
-      "code": "11200",
-      "name": "성동구",
-      "y2025": 1261,
-      "y2026": 262,
-      "change": -79.2,
-      "avgPrice2025": 15,
-      "avgPrice2026": 17.3
-    },
-    {
-      "code": "11650",
-      "name": "서초구",
-      "y2025": 1447,
-      "y2026": 306,
-      "change": -78.9,
-      "avgPrice2025": 28.7,
-      "avgPrice2026": 24.7
-    },
-    {
-      "code": "11680",
-      "name": "강남구",
-      "y2025": 1768,
-      "y2026": 376,
-      "change": -78.7,
-      "avgPrice2025": 26.8,
-      "avgPrice2026": 25.8
-    },
-    {
-      "code": "11215",
-      "name": "광진구",
-      "y2025": 520,
-      "y2026": 145,
-      "change": -72.1,
-      "avgPrice2025": 14,
-      "avgPrice2026": 13.7
-    },
-    {
-      "code": "11440",
-      "name": "마포구",
-      "y2025": 1122,
-      "y2026": 337,
-      "change": -70,
-      "avgPrice2025": 14.2,
-      "avgPrice2026": 14
-    },
-    {
-      "code": "11170",
-      "name": "용산구",
-      "y2025": 540,
-      "y2026": 171,
-      "change": -68.3,
-      "avgPrice2025": 23.7,
-      "avgPrice2026": 23.2
-    },
-    {
-      "code": "11710",
-      "name": "송파구",
-      "y2025": 2032,
-      "y2026": 686,
-      "change": -66.2,
-      "avgPrice2025": 18.6,
-      "avgPrice2026": 19.1
-    },
-    {
-      "code": "11590",
-      "name": "동작구",
-      "y2025": 1053,
-      "y2026": 407,
-      "change": -61.3,
-      "avgPrice2025": 12.5,
-      "avgPrice2026": 13.9
-    },
-    {
-      "code": "11140",
       "name": "중구",
-      "y2025": 372,
-      "y2026": 148,
-      "change": -60.2,
-      "avgPrice2025": 11.3,
-      "avgPrice2026": 11.6
+      "priceRecent": 11.6,
+      "pricePrev": 12.4,
+      "priceChange": -6.5,
+      "cntRecent": 148
     },
     {
-      "code": "11740",
-      "name": "강동구",
-      "y2025": 1287,
-      "y2026": 592,
-      "change": -54,
-      "avgPrice2025": 11.9,
-      "avgPrice2026": 12.3
+      "name": "마포구",
+      "priceRecent": 14,
+      "pricePrev": 14.9,
+      "priceChange": -6,
+      "cntRecent": 337
     },
     {
-      "code": "11560",
-      "name": "영등포구",
-      "y2025": 1117,
-      "y2026": 623,
-      "change": -44.2,
-      "avgPrice2025": 13,
-      "avgPrice2026": 12.7
+      "name": "강남구",
+      "priceRecent": 25.8,
+      "pricePrev": 27.4,
+      "priceChange": -5.8,
+      "cntRecent": 376
     },
     {
-      "code": "11110",
-      "name": "종로구",
-      "y2025": 175,
-      "y2026": 107,
-      "change": -38.9,
-      "avgPrice2025": 13.1,
-      "avgPrice2026": 12.1
-    },
-    {
-      "code": "11470",
-      "name": "양천구",
-      "y2025": 838,
-      "y2026": 556,
-      "change": -33.7,
-      "avgPrice2025": 13.2,
-      "avgPrice2026": 12.7
-    },
-    {
-      "code": "11230",
-      "name": "동대문구",
-      "y2025": 856,
-      "y2026": 575,
-      "change": -32.8,
-      "avgPrice2025": 8.6,
-      "avgPrice2026": 9.8
-    },
-    {
-      "code": "11410",
       "name": "서대문구",
-      "y2025": 677,
-      "y2026": 541,
-      "change": -20.1,
-      "avgPrice2025": 10,
-      "avgPrice2026": 10.2
+      "priceRecent": 10.2,
+      "pricePrev": 10.8,
+      "priceChange": -5.6,
+      "cntRecent": 541
     },
     {
-      "code": "11500",
-      "name": "강서구",
-      "y2025": 901,
-      "y2026": 832,
-      "change": -7.7,
-      "avgPrice2025": 8.1,
-      "avgPrice2026": 9.2
+      "name": "광진구",
+      "priceRecent": 13.7,
+      "pricePrev": 14.5,
+      "priceChange": -5.5,
+      "cntRecent": 145
     },
     {
-      "code": "11290",
-      "name": "성북구",
-      "y2025": 910,
-      "y2026": 844,
-      "change": -7.3,
-      "avgPrice2025": 8.1,
-      "avgPrice2026": 9.3
+      "name": "강동구",
+      "priceRecent": 12.3,
+      "pricePrev": 13,
+      "priceChange": -5.4,
+      "cntRecent": 592
     },
     {
-      "code": "11620",
-      "name": "관악구",
-      "y2025": 498,
-      "y2026": 476,
-      "change": -4.4,
-      "avgPrice2025": 7.6,
-      "avgPrice2026": 8.6
+      "name": "서초구",
+      "priceRecent": 24.7,
+      "pricePrev": 25.7,
+      "priceChange": -3.9,
+      "cntRecent": 306
     },
     {
-      "code": "11530",
-      "name": "구로구",
-      "y2025": 723,
-      "y2026": 735,
-      "change": 1.7,
-      "avgPrice2025": 6.8,
-      "avgPrice2026": 7.6
+      "name": "양천구",
+      "priceRecent": 12.7,
+      "pricePrev": 12.9,
+      "priceChange": -1.6,
+      "cntRecent": 556
     },
     {
-      "code": "11320",
-      "name": "도봉구",
-      "y2025": 378,
-      "y2026": 405,
-      "change": 7.1,
-      "avgPrice2025": 5.2,
-      "avgPrice2026": 5.7
+      "name": "동대문구",
+      "priceRecent": 9.8,
+      "pricePrev": 9.9,
+      "priceChange": -1,
+      "cntRecent": 575
     },
     {
-      "code": "11260",
-      "name": "중랑구",
-      "y2025": 414,
-      "y2026": 464,
-      "change": 12.1,
-      "avgPrice2025": 6.5,
-      "avgPrice2026": 6.9
-    },
-    {
-      "code": "11380",
-      "name": "은평구",
-      "y2025": 564,
-      "y2026": 679,
-      "change": 20.4,
-      "avgPrice2025": 7.6,
-      "avgPrice2026": 8.6
-    },
-    {
-      "code": "11305",
-      "name": "강북구",
-      "y2025": 254,
-      "y2026": 318,
-      "change": 25.2,
-      "avgPrice2025": 6.1,
-      "avgPrice2026": 7.1
-    },
-    {
-      "code": "11545",
-      "name": "금천구",
-      "y2025": 201,
-      "y2026": 253,
-      "change": 25.9,
-      "avgPrice2025": 6.1,
-      "avgPrice2026": 6.6
-    },
-    {
-      "code": "11350",
       "name": "노원구",
-      "y2025": 1193,
-      "y2026": 1541,
-      "change": 29.2,
-      "avgPrice2025": 6,
-      "avgPrice2026": 6.4
+      "priceRecent": 6.4,
+      "pricePrev": 6.4,
+      "priceChange": 0,
+      "cntRecent": 1541
+    },
+    {
+      "name": "은평구",
+      "priceRecent": 8.6,
+      "pricePrev": 8.6,
+      "priceChange": 0,
+      "cntRecent": 679
+    },
+    {
+      "name": "송파구",
+      "priceRecent": 19.1,
+      "pricePrev": 18.8,
+      "priceChange": 1.6,
+      "cntRecent": 686
+    },
+    {
+      "name": "도봉구",
+      "priceRecent": 5.7,
+      "pricePrev": 5.6,
+      "priceChange": 1.8,
+      "cntRecent": 405
+    },
+    {
+      "name": "강서구",
+      "priceRecent": 9.2,
+      "pricePrev": 9,
+      "priceChange": 2.2,
+      "cntRecent": 832
+    },
+    {
+      "name": "관악구",
+      "priceRecent": 8.6,
+      "pricePrev": 8.4,
+      "priceChange": 2.4,
+      "cntRecent": 476
+    },
+    {
+      "name": "동작구",
+      "priceRecent": 13.9,
+      "pricePrev": 13.5,
+      "priceChange": 3,
+      "cntRecent": 407
+    },
+    {
+      "name": "영등포구",
+      "priceRecent": 12.7,
+      "pricePrev": 12.3,
+      "priceChange": 3.3,
+      "cntRecent": 623
+    },
+    {
+      "name": "구로구",
+      "priceRecent": 7.6,
+      "pricePrev": 7.3,
+      "priceChange": 4.1,
+      "cntRecent": 735
+    },
+    {
+      "name": "성동구",
+      "priceRecent": 17.3,
+      "pricePrev": 16.6,
+      "priceChange": 4.2,
+      "cntRecent": 262
+    },
+    {
+      "name": "금천구",
+      "priceRecent": 6.6,
+      "pricePrev": 6.3,
+      "priceChange": 4.8,
+      "cntRecent": 253
+    },
+    {
+      "name": "종로구",
+      "priceRecent": 12.1,
+      "pricePrev": 11.4,
+      "priceChange": 6.1,
+      "cntRecent": 107
+    },
+    {
+      "name": "성북구",
+      "priceRecent": 9.3,
+      "pricePrev": 8.5,
+      "priceChange": 9.4,
+      "cntRecent": 844
+    },
+    {
+      "name": "중랑구",
+      "priceRecent": 6.9,
+      "pricePrev": 6.3,
+      "priceChange": 9.5,
+      "cntRecent": 464
+    },
+    {
+      "name": "강북구",
+      "priceRecent": 7.1,
+      "pricePrev": 6.4,
+      "priceChange": 10.9,
+      "cntRecent": 318
+    },
+    {
+      "name": "용산구",
+      "priceRecent": 23.2,
+      "pricePrev": 18.4,
+      "priceChange": 26.1,
+      "cntRecent": 171
     }
   ],
-  "gyeonggiReg": [
+  "gyeonggiPrice": [
     {
-      "code": "41290",
-      "name": "과천",
-      "y2025": 342,
-      "y2026": 32,
-      "change": -90.6,
-      "avgPrice2025": 18.6,
-      "avgPrice2026": 22.9
-    },
-    {
-      "code": "41450",
-      "name": "하남",
-      "y2025": 968,
-      "y2026": 595,
-      "change": -38.5,
-      "avgPrice2025": 9.1,
-      "avgPrice2026": 10.5
-    },
-    {
-      "code": "41430",
-      "name": "의왕",
-      "y2025": 491,
-      "y2026": 348,
-      "change": -29.1,
-      "avgPrice2025": 6.8,
-      "avgPrice2026": 7.5
-    },
-    {
-      "code": "41111",
-      "name": "수원 장안",
-      "y2025": 583,
-      "y2026": 457,
-      "change": -21.6,
-      "avgPrice2025": 4.8,
-      "avgPrice2026": 5.7
-    },
-    {
-      "code": "41210",
-      "name": "광명",
-      "y2025": 822,
-      "y2026": 671,
-      "change": -18.4,
-      "avgPrice2025": 7.3,
-      "avgPrice2026": 8.5
-    },
-    {
-      "code": "41133",
-      "name": "성남 중원",
-      "y2025": 380,
-      "y2026": 352,
-      "change": -7.4,
-      "avgPrice2025": 7.1,
-      "avgPrice2026": 7.9
-    },
-    {
-      "code": "41135",
-      "name": "성남 분당",
-      "y2025": null,
-      "y2026": null,
-      "change": 0,
-      "avgPrice2025": null,
-      "avgPrice2026": null
-    },
-    {
-      "code": "41173",
-      "name": "안양 동안",
-      "y2025": null,
-      "y2026": null,
-      "change": 0,
-      "avgPrice2025": null,
-      "avgPrice2026": null
-    },
-    {
-      "code": "41131",
       "name": "성남 수정",
-      "y2025": 307,
-      "y2026": 346,
-      "change": 12.7,
-      "avgPrice2025": 10.7,
-      "avgPrice2026": 11.4
+      "priceRecent": 11.4,
+      "pricePrev": 12,
+      "priceChange": -5,
+      "cntRecent": 346
     },
     {
-      "code": "41115",
-      "name": "수원 영통",
-      "y2025": 399,
-      "y2026": 506,
-      "change": 26.8,
-      "avgPrice2025": 4.9,
-      "avgPrice2026": 6.2
+      "name": "성남 중원",
+      "priceRecent": 7.9,
+      "pricePrev": 8,
+      "priceChange": -1.2,
+      "cntRecent": 352
     },
     {
-      "code": "41113",
-      "name": "수원 팔달",
-      "y2025": 824,
-      "y2026": 1095,
-      "change": 32.9,
-      "avgPrice2025": 4.4,
-      "avgPrice2026": 4.7
+      "name": "의왕",
+      "priceRecent": 7.5,
+      "pricePrev": 7.5,
+      "priceChange": 0,
+      "cntRecent": 348
     },
     {
-      "code": "41463",
       "name": "용인 수지",
-      "y2025": 1129,
-      "y2026": 2028,
-      "change": 79.6,
-      "avgPrice2025": 5.4,
-      "avgPrice2026": 6.1
+      "priceRecent": 6.1,
+      "pricePrev": 6,
+      "priceChange": 1.7,
+      "cntRecent": 2028
+    },
+    {
+      "name": "수원 팔달",
+      "priceRecent": 4.7,
+      "pricePrev": 4.6,
+      "priceChange": 2.2,
+      "cntRecent": 1095
+    },
+    {
+      "name": "과천",
+      "priceRecent": 22.9,
+      "pricePrev": 22.4,
+      "priceChange": 2.2,
+      "cntRecent": 32
+    },
+    {
+      "name": "하남",
+      "priceRecent": 10.5,
+      "pricePrev": 10.2,
+      "priceChange": 2.9,
+      "cntRecent": 595
+    },
+    {
+      "name": "수원 영통",
+      "priceRecent": 6.2,
+      "pricePrev": 5.8,
+      "priceChange": 6.9,
+      "cntRecent": 506
+    },
+    {
+      "name": "수원 장안",
+      "priceRecent": 5.7,
+      "pricePrev": 5.2,
+      "priceChange": 9.6,
+      "cntRecent": 457
+    },
+    {
+      "name": "광명",
+      "priceRecent": 8.5,
+      "pricePrev": 7.6,
+      "priceChange": 11.8,
+      "cntRecent": 671
     }
   ],
   "seoulMonthly": [
     {
       "ym": "202501",
-      "cnt": 3589,
-      "avgPrice": 12.7
+      "avgPrice": 12.7,
+      "cnt": 3589
     },
     {
       "ym": "202502",
-      "cnt": 6818,
-      "avgPrice": 14.8
+      "avgPrice": 14.8,
+      "cnt": 6818
     },
     {
       "ym": "202503",
-      "cnt": 10694,
-      "avgPrice": 14.3
+      "avgPrice": 14.3,
+      "cnt": 10694
     },
     {
       "ym": "202504",
-      "cnt": 5757,
-      "avgPrice": 11.3
+      "avgPrice": 11.3,
+      "cnt": 5757
     },
     {
       "ym": "202505",
-      "cnt": 8560,
-      "avgPrice": 11.7
+      "avgPrice": 11.7,
+      "cnt": 8560
     },
     {
       "ym": "202506",
-      "cnt": 12612,
-      "avgPrice": 13.4
+      "avgPrice": 13.4,
+      "cnt": 12612
     },
     {
       "ym": "202507",
-      "cnt": 4633,
-      "avgPrice": 13
+      "avgPrice": 13,
+      "cnt": 4633
     },
     {
       "ym": "202508",
-      "cnt": 4611,
-      "avgPrice": 10.6
+      "avgPrice": 10.6,
+      "cnt": 4611
     },
     {
       "ym": "202509",
-      "cnt": 9072,
-      "avgPrice": 12.1
+      "avgPrice": 12.1,
+      "cnt": 9072
     },
     {
       "ym": "202510",
-      "cnt": 8931,
-      "avgPrice": 12.7
+      "avgPrice": 12.7,
+      "cnt": 8931
     },
     {
       "ym": "202511",
-      "cnt": 3515,
-      "avgPrice": 13.2
+      "avgPrice": 13.2,
+      "cnt": 3515
     },
     {
       "ym": "202512",
-      "cnt": 4917,
-      "avgPrice": 11
+      "avgPrice": 11,
+      "cnt": 4917
     },
     {
       "ym": "202601",
-      "cnt": 5443,
-      "avgPrice": 11.7
+      "avgPrice": 11.7,
+      "cnt": 5443
     },
     {
       "ym": "202602",
-      "cnt": 5586,
-      "avgPrice": 10.9
+      "avgPrice": 10.9,
+      "cnt": 5586
     },
     {
       "ym": "202603",
-      "cnt": 1350,
-      "avgPrice": 9.6
+      "avgPrice": 9.6,
+      "cnt": 1350
     }
   ],
   "gyeonggiRegMonthly": [
     {
       "ym": "202501",
-      "cnt": 1175,
-      "avgPrice": 6.8
+      "avgPrice": 6.8,
+      "cnt": 1175
     },
     {
       "ym": "202502",
-      "cnt": 2067,
-      "avgPrice": 7.3
+      "avgPrice": 7.3,
+      "cnt": 2067
     },
     {
       "ym": "202503",
-      "cnt": 3003,
-      "avgPrice": 7.3
+      "avgPrice": 7.3,
+      "cnt": 3003
     },
     {
       "ym": "202504",
-      "cnt": 2208,
-      "avgPrice": 6.7
+      "avgPrice": 6.7,
+      "cnt": 2208
     },
     {
       "ym": "202505",
-      "cnt": 2767,
-      "avgPrice": 7.4
+      "avgPrice": 7.4,
+      "cnt": 2767
     },
     {
       "ym": "202506",
-      "cnt": 4282,
-      "avgPrice": 7.7
+      "avgPrice": 7.7,
+      "cnt": 4282
     },
     {
       "ym": "202507",
-      "cnt": 1816,
-      "avgPrice": 6.7
+      "avgPrice": 6.7,
+      "cnt": 1816
     },
     {
       "ym": "202508",
-      "cnt": 1983,
-      "avgPrice": 7.3
+      "avgPrice": 7.3,
+      "cnt": 1983
     },
     {
       "ym": "202509",
-      "cnt": 3427,
-      "avgPrice": 8.1
+      "avgPrice": 8.1,
+      "cnt": 3427
     },
     {
       "ym": "202510",
-      "cnt": 3451,
-      "avgPrice": 8
+      "avgPrice": 8,
+      "cnt": 3451
     },
     {
       "ym": "202511",
-      "cnt": 1957,
-      "avgPrice": 6.4
+      "avgPrice": 6.4,
+      "cnt": 1957
     },
     {
       "ym": "202512",
-      "cnt": 2480,
-      "avgPrice": 7
+      "avgPrice": 7,
+      "cnt": 2480
     },
     {
       "ym": "202601",
-      "cnt": 3005,
-      "avgPrice": 7.1
+      "avgPrice": 7.1,
+      "cnt": 3005
     },
     {
       "ym": "202602",
-      "cnt": 2573,
-      "avgPrice": 7.3
+      "avgPrice": 7.3,
+      "cnt": 2573
     },
     {
       "ym": "202603",
-      "cnt": 852,
-      "avgPrice": 6.2
+      "avgPrice": 6.2,
+      "cnt": 852
     }
   ],
-  "gyeonggiNonRegMonthly": [
+  "seoulVolume": [
     {
-      "ym": "202501",
-      "cnt": 3586,
-      "avgPrice": 3.8
+      "name": "성동구",
+      "y2025": 1261,
+      "y2026": 262,
+      "change": -79.2
     },
     {
-      "ym": "202502",
-      "cnt": 5150,
-      "avgPrice": 3.8
+      "name": "서초구",
+      "y2025": 1447,
+      "y2026": 306,
+      "change": -78.9
     },
     {
-      "ym": "202503",
-      "cnt": 6694,
-      "avgPrice": 4
+      "name": "강남구",
+      "y2025": 1768,
+      "y2026": 376,
+      "change": -78.7
     },
     {
-      "ym": "202504",
-      "cnt": 5921,
-      "avgPrice": 3.9
+      "name": "광진구",
+      "y2025": 520,
+      "y2026": 145,
+      "change": -72.1
     },
     {
-      "ym": "202505",
-      "cnt": 6105,
-      "avgPrice": 3.9
+      "name": "마포구",
+      "y2025": 1122,
+      "y2026": 337,
+      "change": -70
     },
     {
-      "ym": "202506",
-      "cnt": 7607,
-      "avgPrice": 4.2
+      "name": "용산구",
+      "y2025": 540,
+      "y2026": 171,
+      "change": -68.3
     },
     {
-      "ym": "202507",
-      "cnt": 4688,
-      "avgPrice": 3.9
+      "name": "송파구",
+      "y2025": 2032,
+      "y2026": 686,
+      "change": -66.2
     },
     {
-      "ym": "202508",
-      "cnt": 4502,
-      "avgPrice": 4
+      "name": "동작구",
+      "y2025": 1053,
+      "y2026": 407,
+      "change": -61.3
     },
     {
-      "ym": "202509",
-      "cnt": 5338,
-      "avgPrice": 4.1
+      "name": "중구",
+      "y2025": 372,
+      "y2026": 148,
+      "change": -60.2
     },
     {
-      "ym": "202510",
-      "cnt": 6375,
-      "avgPrice": 4.5
+      "name": "강동구",
+      "y2025": 1287,
+      "y2026": 592,
+      "change": -54
     },
     {
-      "ym": "202511",
-      "cnt": 6736,
-      "avgPrice": 4.5
+      "name": "영등포구",
+      "y2025": 1117,
+      "y2026": 623,
+      "change": -44.2
     },
     {
-      "ym": "202512",
-      "cnt": 5766,
-      "avgPrice": 4.4
+      "name": "종로구",
+      "y2025": 175,
+      "y2026": 107,
+      "change": -38.9
     },
     {
-      "ym": "202601",
-      "cnt": 7434,
-      "avgPrice": 4.5
+      "name": "양천구",
+      "y2025": 838,
+      "y2026": 556,
+      "change": -33.7
     },
     {
-      "ym": "202602",
-      "cnt": 5777,
-      "avgPrice": 4.3
+      "name": "동대문구",
+      "y2025": 856,
+      "y2026": 575,
+      "change": -32.8
     },
     {
-      "ym": "202603",
-      "cnt": 3302,
-      "avgPrice": 4
+      "name": "서대문구",
+      "y2025": 677,
+      "y2026": 541,
+      "change": -20.1
+    },
+    {
+      "name": "강서구",
+      "y2025": 901,
+      "y2026": 832,
+      "change": -7.7
+    },
+    {
+      "name": "성북구",
+      "y2025": 910,
+      "y2026": 844,
+      "change": -7.3
+    },
+    {
+      "name": "관악구",
+      "y2025": 498,
+      "y2026": 476,
+      "change": -4.4
+    },
+    {
+      "name": "구로구",
+      "y2025": 723,
+      "y2026": 735,
+      "change": 1.7
+    },
+    {
+      "name": "도봉구",
+      "y2025": 378,
+      "y2026": 405,
+      "change": 7.1
+    },
+    {
+      "name": "중랑구",
+      "y2025": 414,
+      "y2026": 464,
+      "change": 12.1
+    },
+    {
+      "name": "은평구",
+      "y2025": 564,
+      "y2026": 679,
+      "change": 20.4
+    },
+    {
+      "name": "강북구",
+      "y2025": 254,
+      "y2026": 318,
+      "change": 25.2
+    },
+    {
+      "name": "금천구",
+      "y2025": 201,
+      "y2026": 253,
+      "change": 25.9
+    },
+    {
+      "name": "노원구",
+      "y2025": 1193,
+      "y2026": 1541,
+      "change": 29.2
+    }
+  ],
+  "gyeonggiVolume": [
+    {
+      "name": "과천",
+      "y2025": 342,
+      "y2026": 32,
+      "change": -90.6
+    },
+    {
+      "name": "하남",
+      "y2025": 968,
+      "y2026": 595,
+      "change": -38.5
+    },
+    {
+      "name": "의왕",
+      "y2025": 491,
+      "y2026": 348,
+      "change": -29.1
+    },
+    {
+      "name": "수원 장안",
+      "y2025": 583,
+      "y2026": 457,
+      "change": -21.6
+    },
+    {
+      "name": "광명",
+      "y2025": 822,
+      "y2026": 671,
+      "change": -18.4
+    },
+    {
+      "name": "성남 중원",
+      "y2025": 380,
+      "y2026": 352,
+      "change": -7.4
+    },
+    {
+      "name": "성남 수정",
+      "y2025": 307,
+      "y2026": 346,
+      "change": 12.7
+    },
+    {
+      "name": "수원 영통",
+      "y2025": 399,
+      "y2026": 506,
+      "change": 26.8
+    },
+    {
+      "name": "수원 팔달",
+      "y2025": 824,
+      "y2026": 1095,
+      "change": 32.9
+    },
+    {
+      "name": "용인 수지",
+      "y2025": 1129,
+      "y2026": 2028,
+      "change": 79.6
     }
   ]
 }
