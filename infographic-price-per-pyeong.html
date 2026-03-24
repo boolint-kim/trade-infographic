@@ -127,7 +127,9 @@
       <span id="chartTitle">평당가 TOP 20</span>
     </div>
     <div class="rank-tabs" id="rankTabs">
-      <button class="rank-tab active" data-tab="high">고가 TOP 20</button>
+      <button class="rank-tab active" data-tab="84">국민 84형</button>
+      <button class="rank-tab" data-tab="59">국민 59형</button>
+      <button class="rank-tab" data-tab="high">고가 TOP 20</button>
       <button class="rank-tab" data-tab="low">저가 TOP 20</button>
       <button class="rank-tab" data-tab="rise">상승률 TOP 20</button>
       <button class="rank-tab" data-tab="volume">거래량 TOP 20</button>
@@ -237,7 +239,7 @@ function initSidoChart() {
   });
 }
 
-let currentTab = 'high';
+let currentTab = '84';
 
 // 탭 이벤트
 document.querySelectorAll('.rank-tab').forEach(btn => {
@@ -283,6 +285,8 @@ function renderRank() {
   const mainColor = SIDO_COLORS[currentSido] || '#6366f1';
 
   const TAB_CONFIG = {
+    '84': { data: sido.rank84 || [], title: '국민 84형 TOP', sub: '전용 80~90m² (국민주택 34평형) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#3b82f6' },
+    '59': { data: sido.rank59 || [], title: '국민 59형 TOP', sub: '전용 55~65m² (국민주택 25평형) | 평당가 높은순', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#8b5cf6' },
     high: { data: sido.ranking, title: '고가 TOP', sub: '평당가 높은순 | 3건 이상 거래 단지', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: mainColor },
     low: { data: sido.rankLow || [], title: '저가 TOP', sub: '평당가 낮은순 | 3건 이상 거래 단지', valueKey: 'pricePerPyeong', label: '평당가 (만원)', fmt: v => fmt(v), color: '#10b981' },
     rise: { data: sido.rankRise || [], title: '상승률 TOP', sub: '전년 동기 대비 평당가 상승률', valueKey: 'riseRate', label: '상승률 (%)', fmt: v => '+' + v + '%', color: '#ef4444' },
