@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>오늘의 아파트 거래 현황 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
@@ -55,7 +54,14 @@
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="tableTitle">이달 고가 거래 TOP 5</span></div>
-    <div class="section-sub">거래금액 상위</div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#9ca3af">거래금액 상위</span>
+      <div style="display:flex;gap:6px" id="areaRadios">
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="All" checked style="display:none"><span>전체</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="84" style="display:none"><span>84형</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="59" style="display:none"><span>59형</span></label>
+      </div>
+    </div>
     <div style="overflow-x:auto">
       <table class="trade-table"><thead><tr><th>#</th><th>단지명</th><th>위치</th><th>거래가</th><th>면적</th><th>층</th><th>거래일</th></tr></thead>
       <tbody id="tableBody"></tbody></table>
@@ -65,11 +71,11 @@
 </div>
 <script>
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
-const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;Chart.defaults.plugins.datalabels={display:false};
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
 const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
-let DATA,dailyChart,sidoChart,cur='ALL';
+let DATA,dailyChart,sidoChart,cur='ALL',curArea='All';
 
 async function load(){
   try{DATA=await(await fetch('data/daily-trades.json')).json();}catch{try{DATA=await(await fetch('daily-trades.json')).json();}catch{return;}}
@@ -87,7 +93,7 @@ function initSidoChart(){
   const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#6ee7b7cc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>fmt(v)}},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 }
@@ -95,13 +101,15 @@ function fmtDate(d){return d?d.slice(5).replace('-','/'):''}
 function selectSido(code){
   cur=code;
   document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
-  let daily,total,avgPrice,topTrades,name;
+  let daily,total,avgPrice,name;
+  const topKey=curArea==='All'?'topTradesAll':curArea==='84'?'topTrades84':'topTrades59';
+  let topTrades=[];
   if(code==='ALL'){
-    name='전국';daily=DATA.nationalDaily;total=daily.reduce((s,r)=>s+r.cnt,0);avgPrice=null;topTrades=[];
+    name='전국';daily=DATA.nationalDaily;total=daily.reduce((s,r)=>s+r.cnt,0);avgPrice=null;
     // 전국 고가 = 서울 고가
-    if(DATA.sido['11']&&DATA.sido['11'].topTrades) topTrades=DATA.sido['11'].topTrades;
+    if(DATA.sido['11']&&DATA.sido['11'][topKey]) topTrades=DATA.sido['11'][topKey];
   } else {
-    const s=DATA.sido[code];name=s.name;daily=s.daily;total=s.total;avgPrice=s.avgPrice;topTrades=s.topTrades||[];
+    const s=DATA.sido[code];name=s.name;daily=s.daily;total=s.total;avgPrice=s.avgPrice;topTrades=s[topKey]||[];
   }
 
   document.getElementById('cL1').textContent=`${name} 이달 누적`;
@@ -129,7 +137,7 @@ function selectSido(code){
   dailyChart=new Chart(document.getElementById('dailyChart'),{
     type:'bar',data:{labels:daily.map(r=>fmtDate(r.dealDate)),datasets:[{data:daily.map(r=>r.cnt),
       backgroundColor:daily.map((r,i)=>i>=daily.length-3?'#d1d5dbcc':color+'aa'),borderRadius:3}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>fmt(v)}},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},ticks:{font:{size:_m?10:12},maxRotation:45}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 
@@ -140,7 +148,8 @@ function selectSido(code){
   sidoChart.update();
 
   // 고가 거래 테이블
-  document.getElementById('tableTitle').textContent=`${name} 이달 고가 거래 TOP 5`;
+  const areaLabel=curArea==='All'?'':curArea==='84'?' (84형)':' (59형)';
+  document.getElementById('tableTitle').textContent=`${name} 이달 고가 거래 TOP 5${areaLabel}`;
   const tbody=document.getElementById('tableBody');
   tbody.innerHTML='';
   topTrades.forEach((t,i)=>{
@@ -152,6 +161,19 @@ function selectSido(code){
     tbody.appendChild(tr);
   });
 }
+// 면적대 라디오 이벤트
+function updateAreaRadioStyle(){
+  document.querySelectorAll('#areaRadios label').forEach(l=>{
+    const checked=l.querySelector('input').checked;
+    l.style.background=checked?'#1e293b':'#fff';
+    l.style.borderColor=checked?'#1e293b':'#e5e7eb';
+    l.querySelector('span').style.color=checked?'#fff':'#374151';
+  });
+}
+document.querySelectorAll('input[name="areaType"]').forEach(r=>{
+  r.addEventListener('change',()=>{curArea=r.value;updateAreaRadioStyle();selectSido(cur);});
+});
+updateAreaRadioStyle();
 load();
 </script>
 </body>
