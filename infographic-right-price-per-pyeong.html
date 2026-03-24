@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분양권 평당가 랭킹 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: #f0f2f5; color: #1a1a2e; padding: 32px 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .header p { font-size: 13px; color: #6b7280; line-height: 1.6; }
+
+  /* 시도 선택 */
+  .selector {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .selector button {
+    padding: 8px 16px; border: 2px solid #e5e7eb; border-radius: 24px;
+    background: #fff; font-size: 13px; font-weight: 600; color: #6b7280;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .selector button:hover { border-color: #6366f1; color: #6366f1; }
+  .selector button.active {
+    background: #6366f1; border-color: #6366f1; color: #fff;
+  }
+
+  /* 요약 카드 */
+  .summary-cards { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .card {
+    flex: 1; min-width: 200px; background: #fff;
+    border-radius: 16px; padding: 20px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-top: 4px solid;
+  }
+  .card.a { border-color: #6366f1; }
+  .card.b { border-color: #3b82f6; }
+  .card.c { border-color: #10b981; }
+  .card .label { font-size: 12px; font-weight: 600; color: #6b7280; margin-bottom: 4px; }
+  .card .value { font-size: 32px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+  .card.a .value { color: #6366f1; }
+  .card.b .value { color: #3b82f6; }
+  .card.c .value { color: #10b981; }
+  .card .sub { font-size: 12px; color: #9ca3af; }
+  .card .unit { font-size: 14px; font-weight: 600; color: #9ca3af; }
+
+  /* 차트 섹션 */
+  .section {
+    background: #fff; border-radius: 16px; padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 16px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-sub { font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  /* 전국 시도 비교 */
+  .sido-compare { margin-bottom: 24px; }
+
+  .footer {
+    text-align: center; font-size: 11px; color: #9ca3af;
+    margin-top: 12px; line-height: 1.8;
+  }
+  @media (max-width: 700px) {
+    .card { min-width: 100%; }
+    .selector button { padding: 6px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>분양권 평당가 랭킹</h1>
+    <p id="periodText"></p>
+  </div>
+
+  <!-- 시도 선택 버튼 -->
+  <div class="selector" id="sidoButtons"></div>
+
+  <!-- 요약 카드 -->
+  <div class="summary-cards">
+    <div class="card a">
+      <div class="label" id="cardLabel1"></div>
+      <div class="value" id="cardValue1"></div>
+      <div class="sub" id="cardSub1"></div>
+    </div>
+    <div class="card b">
+      <div class="label">거래 건수</div>
+      <div class="value" id="cardValue2"></div>
+      <div class="sub" id="cardSub2"></div>
+    </div>
+    <div class="card c">
+      <div class="label">평균 거래가</div>
+      <div class="value" id="cardValue3"></div>
+      <div class="sub" id="cardSub3"></div>
+    </div>
+  </div>
+
+  <!-- 전국 시도 평균 평당가 비교 -->
+  <div class="section sido-compare">
+    <div class="section-title">
+      <span class="dot" style="background:#10b981"></span>
+      17개 시도 평균 평당가 비교
+    </div>
+    <div class="section-sub">선택한 시도 강조 표시 | 단위: 만원/평</div>
+    <div>
+      <canvas id="sidoChart" height="380"></canvas>
+    </div>
+  </div>
+
+  <!-- 선택 시도 TOP 20 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="dot" style="background:#6366f1"></span>
+      <span id="chartTitle">평당가 TOP 20</span>
+    </div>
+    <div class="section-sub" id="chartSub">3건 이상 거래 단지 | 단위: 만원/평</div>
+    <div>
+      <canvas id="rankChart" height="640"></canvas>
+    </div>
+  </div>
+
+  <div class="footer">
+    데이터 출처: 국토교통부 실거래가 공개시스템 분양권 | 평당가 = 거래금액 ÷ (전용면적m² × 0.3025)<br>
+    3건 미만 거래 단지는 신뢰도 이유로 제외 | <span id="genDate"></span>
+  </div>
+</div>
+
+<script>
+Chart.defaults.font.family = "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+function fmt(n) { return n.toLocaleString('ko-KR'); }
+
+// 시도 순서 (인구 순)
+const SIDO_ORDER = ['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const SIDO_COLORS = {
+  '11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981',
+  '30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7',
+  '52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'
+};
+
+let DATA = null;
+let rankChart = null;
+let sidoChart = null;
+let currentSido = '11';
+
+// JSON 데이터를 HTML에 인라인 삽입 (CF Pages 정적 배포용)
+// 실제 운영 시에는 fetch('right-pyeong-ranking.json')으로 대체 가능
+const DATA_URL = 'data/right-pyeong-ranking.json';
+
+async function loadData() {
+  try {
+    const res = await fetch(DATA_URL);
+    DATA = await res.json();
+  } catch (e) {
+    // fetch 실패 시 같은 디렉토리에서 시도
+    try {
+      const res2 = await fetch('right-pyeong-ranking.json');
+      DATA = await res2.json();
+    } catch (e2) {
+      document.querySelector('.container').innerHTML = '<p style="text-align:center;padding:60px;color:#ef4444;">데이터 로드 실패. right-pyeong-ranking.json 파일이 필요합니다.</p>';
+      return;
+    }
+  }
+  init();
+}
+
+function init() {
+  const period = DATA.period;
+  const startY = period.slice(0,4), startM = period.slice(4,6);
+  const endY = period.slice(7,11), endM = period.slice(11,13);
+  document.getElementById('periodText').textContent =
+    `국토부 실거래가 기반 | ${startY}.${startM}~${endY}.${endM} | 전국 17개 시도 | 3건 이상 거래 단지`;
+  document.getElementById('genDate').textContent = `생성일: ${DATA.generated.slice(0,10)}`;
+
+  // 버튼 생성
+  const btnContainer = document.getElementById('sidoButtons');
+  SIDO_ORDER.forEach(code => {
+    if (!DATA.sido[code]) return;
+    const btn = document.createElement('button');
+    btn.textContent = DATA.sido[code].short;
+    btn.dataset.code = code;
+    btn.onclick = () => selectSido(code);
+    btnContainer.appendChild(btn);
+  });
+
+  // 시도 비교 차트 초기화
+  initSidoChart();
+  selectSido('11');
+}
+
+function initSidoChart() {
+  const codes = SIDO_ORDER.filter(c => DATA.sido[c]);
+  const labels = codes.map(c => DATA.sido[c].short);
+  const values = codes.map(c => DATA.sido[c].avgPpyeong);
+
+  sidoChart = new Chart(document.getElementById('sidoChart'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '평균 평당가 (만원)',
+        data: values,
+        backgroundColor: codes.map(c => '#93c5fdcc'),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.raw)} 만원/평` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 13 } } },
+        y: { ticks: { callback: v => fmt(v) }, grid: { color: '#f3f4f6' } }
+      }
+    }
+  });
+}
+
+function selectSido(code) {
+  currentSido = code;
+  const sido = DATA.sido[code];
+  if (!sido) return;
+
+  // 버튼 활성화
+  document.querySelectorAll('.selector button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.code === code);
+  });
+
+  // 요약 카드 업데이트
+  const top1 = sido.ranking[0];
+  document.getElementById('cardLabel1').textContent = `${sido.short} 1위`;
+  document.getElementById('cardValue1').innerHTML = `${fmt(top1.pricePerPyeong)}<span class="unit"> 만원/평</span>`;
+  document.getElementById('cardSub1').textContent = `${top1.name} · ${top1.umdNm} (${top1.tradeCount}건)`;
+
+  document.getElementById('cardValue2').innerHTML = `${fmt(sido.totalTrades)}<span class="unit"> 건</span>`;
+  document.getElementById('cardSub2').textContent = `${sido.short} 분양권 거래`;
+
+  document.getElementById('cardValue3').innerHTML = `${(sido.avgPrice/10000).toFixed(1)}<span class="unit"> 억</span>`;
+  document.getElementById('cardSub3').textContent = `평균 평당가 ${fmt(sido.avgPpyeong)}만원`;
+
+  // 차트 제목
+  document.getElementById('chartTitle').textContent = `${sido.short} 평당가 TOP ${sido.ranking.length}`;
+  document.getElementById('chartSub').textContent = `3건 이상 거래 단지 | 단위: 만원/평`;
+
+  // 시도 비교 차트 색상 업데이트
+  const codes = SIDO_ORDER.filter(c => DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor = codes.map(c =>
+    c === code ? (SIDO_COLORS[c] || '#6366f1') + 'cc' : '#d1d5dbcc'
+  );
+  sidoChart.update();
+
+  // 랭킹 차트
+  const labels = sido.ranking.map(r => [r.name, r.umdNm]);
+  const data = sido.ranking.map(r => r.pricePerPyeong);
+  const mainColor = SIDO_COLORS[code] || '#6366f1';
+
+  if (rankChart) rankChart.destroy();
+
+  rankChart = new Chart(document.getElementById('rankChart'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '평당가 (만원)',
+        data: data,
+        backgroundColor: data.map((v, i) => i < 3 ? mainColor + 'cc' : mainColor + '77'),
+        borderColor: data.map((v, i) => i < 3 ? mainColor : mainColor + 'aa'),
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            afterLabel: ctx => {
+              const r = sido.ranking[ctx.dataIndex];
+              return `평균 ${(r.avgPrice/10000).toFixed(1)}억 · ${r.avgPyeong}평 · ${r.tradeCount}건`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0,
+          ticks: { callback: v => fmt(v) },
+          grid: { color: '#f3f4f6' }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: _m?11:13, weight: 'bold' } } }
+      }
+    }
+  });
+}
+
+loadData();
+</script>
+</body>
+</html>
