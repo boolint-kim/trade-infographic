@@ -113,7 +113,7 @@ function selectSido(code){
   } else {
     const s=DATA.sido[code]; name=s.name;
     monthly=s.monthly; total=s.total; avgPrice=s.avgPrice;
-    yearly=null; // 시도별 연도 데이터는 없으므로 월별만
+    yearly=s.yearly||null;
   }
 
   // 요약 카드
