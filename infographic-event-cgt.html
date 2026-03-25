@@ -54,10 +54,20 @@
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:16px;line-height:1.7}
 
   @media(max-width:700px){
-    body{padding:12px 8px}
-    .header h1{font-size:18px}
-    .section{padding:14px}
+    body{padding:8px 4px}
+    .header{margin-bottom:14px} .header h1{font-size:18px}
+    .header .sub{font-size:11px}
+    .deadline{padding:6px 18px;font-size:13px}
+    .reg-info{padding:8px 10px;margin-bottom:14px;font-size:11px}
+    .area-selector{gap:6px;margin-bottom:14px}
+    .area-selector label{padding:5px 12px;font-size:12px}
+    .section{padding:10px;margin-bottom:14px;border-radius:10px}
+    .section-title{font-size:14px;margin-bottom:8px}
+    .cb-list{gap:4px;margin-bottom:10px}
     .cb-item{font-size:11px;padding:3px 8px}
+    .chart-wrap{height:280px!important}
+    .legend{gap:6px;margin-top:6px}
+    .legend-item{font-size:10px}
   }
 </style>
 </head>
@@ -312,18 +322,18 @@ function updateChart(groupKey) {
         }
       },
       scales: {
-        x: { grid: { display: false } },
+        x: { grid: { display: false }, ticks: { font: { size: _m ? 10 : 12 }, maxRotation: 45 } },
         yPrice: {
           position: 'left',
-          title: { display: true, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
+          title: { display: !_m, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
           grid: { color: '#f3f4f6' },
-          ticks: { callback: v => v + '억' }
+          ticks: { callback: v => v + '억', font: { size: _m ? 10 : 12 } }
         },
         yVolume: {
           position: 'right',
-          title: { display: true, text: '거래량(건)', font: { size: 11, weight: 'bold' } },
+          title: { display: !_m, text: '거래량(건)', font: { size: 11, weight: 'bold' } },
           grid: { display: false },
-          ticks: { callback: v => v.toLocaleString('ko-KR') },
+          ticks: { callback: v => v >= 1000 ? (v/1000).toFixed(0) + 'k' : v, font: { size: _m ? 10 : 12 } },
           beginAtZero: true
         }
       }
