@@ -13,7 +13,6 @@
   /* 헤더 */
   .header{text-align:center;margin-bottom:20px}
   .header h1{font-size:22px;font-weight:800;margin-bottom:6px}
-  .header .sub{font-size:12px;color:#6b7280;line-height:1.5}
   .deadline{display:inline-block;background:linear-gradient(135deg,#991b1b,#dc2626);color:#fff;padding:8px 24px;border-radius:24px;font-size:14px;font-weight:800;letter-spacing:1px;margin:12px 0 6px}
   .deadline-sub{font-size:11px;color:#9ca3af;margin-bottom:16px}
 
@@ -56,7 +55,6 @@
   @media(max-width:700px){
     body{padding:8px 4px}
     .header{margin-bottom:14px} .header h1{font-size:18px}
-    .header .sub{font-size:11px}
     .deadline{padding:6px 18px;font-size:13px}
     .reg-info{padding:8px 10px;margin-bottom:14px;font-size:11px}
     .area-selector{gap:6px;margin-bottom:14px}
@@ -75,9 +73,8 @@
 <div class="container">
   <div class="header">
     <h1>양도세 중과 유예 만료</h1>
-    <div class="sub">다주택자 양도소득세 중과 한시 유예 종료 — 조정대상지역 가격·거래 영향 분석</div>
     <div class="deadline">2026. 05. 09</div>
-    <div class="deadline-sub">이후 계약분부터 다주택자 양도세 중과 (기본세율 + 20~30%p) 재적용</div>
+    <div class="deadline-sub">이후 계약분부터 다주택자 양도세 중과 재적용</div>
   </div>
 
   <div class="reg-info">
@@ -85,14 +82,12 @@
     서울 25개 구 전체 | 경기 12곳: 과천 · 광명 · 성남(분당·수정·중원) · 수원(영통·장안·팔달) · 안양 동안 · 용인 수지 · 의왕 · 하남
   </div>
 
-  <!-- 면적 라디오 -->
   <div class="area-selector">
     <label><input type="radio" name="area" value="All" checked><span>전체</span></label>
     <label><input type="radio" name="area" value="84"><span>84형 (59~85㎡)</span></label>
     <label><input type="radio" name="area" value="59"><span>59형 (≤59㎡)</span></label>
   </div>
 
-  <!-- 서울 -->
   <div class="section">
     <div class="section-title">서울특별시</div>
     <div class="cb-limit" id="seoulLimit">최대 5개까지 선택할 수 있습니다</div>
@@ -101,7 +96,6 @@
     <div class="legend" id="seoulLegend"></div>
   </div>
 
-  <!-- 경기 -->
   <div class="section">
     <div class="section-title">경기도 조정대상지역</div>
     <div class="cb-limit" id="gyeonggiLimit">최대 5개까지 선택할 수 있습니다</div>
