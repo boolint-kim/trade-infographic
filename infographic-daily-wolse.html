@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 아파트 월세 현황 — 전국 17개 시도</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto}
+  .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button:hover{border-color:#f97316;color:#f97316} .selector button.active{background:#f97316;border-color:#f97316;color:#fff}
+  .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card.a{border-color:#f97316} .card.b{border-color:#6366f1} .card.c{border-color:#ef4444}
+  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card.a .value{color:#f97316} .card.b .value{color:#6366f1} .card.c .value{color:#ef4444}
+  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
+  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .trade-table{width:100%;border-collapse:collapse;font-size:13px}
+  .trade-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;white-space:nowrap}
+  .trade-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
+  .trade-table tr:hover{background:#fefce8}
+  .price{font-weight:800;color:#ef4444} .deposit-col{font-weight:600;color:#6b7280} .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
+  .chart-wrap{position:relative;width:100%}
+  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  @media(max-width:700px){.card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}}
+  @media(orientation:landscape) and (max-height:500px){
+    body{padding:16px 12px}
+    .header{margin-bottom:16px} .header h1{font-size:20px}
+    .summary-cards{gap:10px;margin-bottom:16px}
+    .card{padding:12px 16px;min-width:0} .card .value{font-size:22px}
+    .section{padding:16px 20px;margin-bottom:16px}
+    .selector{margin-bottom:20px} .selector button{padding:5px 12px;font-size:11px}
+  }
+  @media(orientation:landscape) and (min-height:501px) and (max-height:800px){
+    body{padding:20px 16px}
+    .section{padding:20px 24px;margin-bottom:18px}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>오늘의 아파트 월세 현황</h1><p id="periodText">이번 달 일별 월세 신고 현황 | 신고일로부터 1~2일 지연 반영</p></div>
+  <div class="selector" id="sidoButtons"></div>
+  <div class="summary-cards">
+    <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
+    <div class="card b"><div class="label">일 최다 신고</div><div class="value" id="cV2"></div><div class="sub" id="cS2"></div></div>
+    <div class="card c"><div class="label">이달 최고 월세</div><div class="value" id="cV3"></div><div class="sub" id="cS3"></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#f97316"></span><span id="chartTitle">일별 월세 신고</span></div>
+    <div class="section-sub" id="chartSub">최근 3~5일은 신고 지연으로 건수 적음</div>
+    <div class="chart-wrap" id="dailyWrap"><canvas id="dailyChart"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#6366f1"></span>시도별 이달 월세 거래량</div>
+    <div class="section-sub" id="sidoSub"></div>
+    <div class="chart-wrap" id="sidoWrap"><canvas id="sidoChart"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="tableTitle">이달 고월세 TOP 5</span></div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#9ca3af">월세 상위</span>
+      <div style="display:flex;gap:6px" id="areaRadios">
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="All" checked style="display:none"><span>전체</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="84" style="display:none"><span>84형</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="59" style="display:none"><span>59형</span></label>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="trade-table"><thead><tr><th>#</th><th>단지명</th><th>위치</th><th>월세</th><th>보증금</th><th>면적</th><th>층</th><th>거래일</th></tr></thead>
+      <tbody id="tableBody"></tbody></table>
+    </div>
+  </div>
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 최근 3~5일은 신고 지연 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고 지연으로 최신 데이터가 반영되지 않을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+<script>
+Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;
+function adjustChartHeight(){
+  const vh=window.innerHeight;const isLand=window.innerWidth>window.innerHeight;
+  const dw=document.getElementById('dailyWrap'),sw=document.getElementById('sidoWrap');
+  if(isLand&&vh<=500){dw.style.height='160px';sw.style.height='200px';}
+  else if(isLand&&vh<=800){dw.style.height='220px';sw.style.height='280px';}
+  else{dw.style.height='280px';sw.style.height='380px';}
+}
+adjustChartHeight();
+const fmt=n=>n.toLocaleString('ko-KR');
+const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
+const COLORS={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
+let DATA,dailyChart,sidoChart,cur='ALL',curArea='All';
+
+async function load(){
+  try{DATA=await(await fetch('data/daily-wolse.json')).json();}catch{try{DATA=await(await fetch('daily-wolse.json')).json();}catch{return;}}
+  init();
+}
+function init(){
+  document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  const bc=document.getElementById('sidoButtons');
+  const allBtn=document.createElement('button');allBtn.textContent='전국';allBtn.dataset.code='ALL';allBtn.onclick=()=>selectSido('ALL');bc.appendChild(allBtn);
+  SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>selectSido(c);bc.appendChild(b);});
+  initSidoChart();
+  selectSido('ALL');
+}
+function initSidoChart(){
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart=new Chart(document.getElementById('sidoChart'),{
+    type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#fdba74cc',borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+  });
+}
+function fmtDate(d){return d?d.slice(5).replace('-','/'):''}
+function fmtDeposit(v){return v>=10000?(v/10000).toFixed(1)+'억':fmt(v)+'만'}
+function selectSido(code){
+  cur=code;
+  document.querySelectorAll('.selector button').forEach(b=>b.classList.toggle('active',b.dataset.code===code));
+  let daily,total,avgMonthlyRent,name;
+  const topKey=curArea==='All'?'topTradesAll':curArea==='84'?'topTrades84':'topTrades59';
+  let topTrades=[];
+  if(code==='ALL'){
+    name='전국';daily=DATA.nationalDaily;total=daily.reduce((s,r)=>s+r.cnt,0);avgMonthlyRent=null;
+    if(DATA.sido['11']&&DATA.sido['11'][topKey]) topTrades=DATA.sido['11'][topKey];
+  } else {
+    const s=DATA.sido[code];name=s.name;daily=s.daily;total=s.total;avgMonthlyRent=s.avgMonthlyRent;topTrades=s[topKey]||[];
+  }
+
+  document.getElementById('cL1').textContent=`${name} 이달 누적`;
+  document.getElementById('cV1').innerHTML=`${fmt(total)}<span class="unit"> 건</span>`;
+  document.getElementById('cS1').textContent='신고 진행 중 (잠정치)';
+
+  if(daily.length>0){
+    const peak=daily.reduce((m,r)=>r.cnt>m.cnt?r:m,daily[0]);
+    document.getElementById('cV2').innerHTML=`${fmt(peak.cnt)}<span class="unit"> 건</span>`;
+    document.getElementById('cS2').textContent=fmtDate(peak.dealDate);
+  }
+
+  if(topTrades.length>0){
+    const t=topTrades[0];
+    document.getElementById('cV3').innerHTML=`${fmt(t.monthlyRent)}<span class="unit"> 만원</span>`;
+    document.getElementById('cS3').textContent=`${t.name} · 보증금 ${fmtDeposit(t.deposit)}`;
+  } else {
+    document.getElementById('cV3').innerHTML='-';document.getElementById('cS3').textContent='';
+  }
+
+  // 일별 차트
+  document.getElementById('chartTitle').textContent=`${name} 일별 월세 신고`;
+  const color=COLORS[code]||'#f97316';
+  if(dailyChart)dailyChart.destroy();
+  dailyChart=new Chart(document.getElementById('dailyChart'),{
+    type:'bar',data:{labels:daily.map(r=>fmtDate(r.dealDate)),datasets:[{data:daily.map(r=>r.cnt),
+      backgroundColor:daily.map((r,i)=>i>=daily.length-3?'#d1d5dbcc':color+'aa'),borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:_m?10:12},maxRotation:45}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+  });
+
+  // 시도 비교 강조
+  const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#f97316')+'cc':code==='ALL'?'#fdba74cc':'#d1d5dbcc');
+  document.getElementById('sidoSub').textContent=`이달 기준 | 선택: ${name}`;
+  sidoChart.update();
+
+  // 고월세 테이블
+  const areaLabel=curArea==='All'?'':curArea==='84'?' (84형)':' (59형)';
+  document.getElementById('tableTitle').textContent=`${name} 이달 고월세 TOP 5${areaLabel}`;
+  const tbody=document.getElementById('tableBody');
+  tbody.innerHTML='';
+  topTrades.forEach((t,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="rank-num">${i+1}</td><td><strong>${t.name}</strong></td><td>${t.umdNm}</td>
+      <td class="price">${fmt(t.monthlyRent)}만원</td>
+      <td class="deposit-col">${fmtDeposit(t.deposit)}</td>
+      <td class="area-info">${parseFloat(t.area).toFixed(1)}m²</td><td>${t.floor}층</td><td>${fmtDate(t.dealDate)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+// 면적대 라디오 이벤트
+function updateAreaRadioStyle(){
+  document.querySelectorAll('#areaRadios label').forEach(l=>{
+    const checked=l.querySelector('input').checked;
+    l.style.background=checked?'#1e293b':'#fff';
+    l.style.borderColor=checked?'#1e293b':'#e5e7eb';
+    l.querySelector('span').style.color=checked?'#fff':'#374151';
+  });
+}
+document.querySelectorAll('input[name="areaType"]').forEach(r=>{
+  r.addEventListener('change',()=>{curArea=r.value;updateAreaRadioStyle();selectSido(cur);});
+});
+updateAreaRadioStyle();
+window.addEventListener('orientationchange',()=>{setTimeout(()=>{adjustChartHeight();selectSido(cur);initSidoChart();selectSido(cur);},300);});
+load();
+</script>
+</body>
+</html>
