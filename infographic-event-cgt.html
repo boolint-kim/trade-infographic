@@ -13,6 +13,7 @@
   /* 헤더 */
   .header{text-align:center;margin-bottom:20px}
   .header h1{font-size:22px;font-weight:800;margin-bottom:6px}
+  .header .sub{font-size:12px;color:#6b7280;line-height:1.5}
   .deadline{display:inline-block;background:linear-gradient(135deg,#991b1b,#dc2626);color:#fff;padding:8px 24px;border-radius:24px;font-size:14px;font-weight:800;letter-spacing:1px;margin:12px 0 6px}
   .deadline-sub{font-size:11px;color:#9ca3af;margin-bottom:16px}
 
@@ -53,19 +54,10 @@
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:16px;line-height:1.7}
 
   @media(max-width:700px){
-    body{padding:8px 4px}
-    .header{margin-bottom:14px} .header h1{font-size:18px}
-    .deadline{padding:6px 18px;font-size:13px}
-    .reg-info{padding:8px 10px;margin-bottom:14px;font-size:11px}
-    .area-selector{gap:6px;margin-bottom:14px}
-    .area-selector label{padding:5px 12px;font-size:12px}
-    .section{padding:10px;margin-bottom:14px;border-radius:10px}
-    .section-title{font-size:14px;margin-bottom:8px}
-    .cb-list{gap:4px;margin-bottom:10px}
+    body{padding:12px 8px}
+    .header h1{font-size:18px}
+    .section{padding:14px}
     .cb-item{font-size:11px;padding:3px 8px}
-    .chart-wrap{height:280px!important}
-    .legend{gap:6px;margin-top:6px}
-    .legend-item{font-size:10px}
   }
 </style>
 </head>
@@ -73,8 +65,9 @@
 <div class="container">
   <div class="header">
     <h1>양도세 중과 유예 만료</h1>
+    <div class="sub">다주택자 양도소득세 중과 한시 유예 종료 — 조정대상지역 가격·거래 영향 분석</div>
     <div class="deadline">2026. 05. 09</div>
-    <div class="deadline-sub">이후 계약분부터 다주택자 양도세 중과 재적용</div>
+    <div class="deadline-sub">이후 계약분부터 다주택자 양도세 중과 (기본세율 + 20~30%p) 재적용</div>
   </div>
 
   <div class="reg-info">
@@ -82,32 +75,33 @@
     서울 25개 구 전체 | 경기 12곳: 과천 · 광명 · 성남(분당·수정·중원) · 수원(영통·장안·팔달) · 안양 동안 · 용인 수지 · 의왕 · 하남
   </div>
 
+  <!-- 면적 라디오 -->
   <div class="area-selector">
     <label><input type="radio" name="area" value="All" checked><span>전체</span></label>
-    <label><input type="radio" name="area" value="84"><span>84형 (59~85㎡)</span></label>
-    <label><input type="radio" name="area" value="59"><span>59형 (≤59㎡)</span></label>
+    <label><input type="radio" name="area" value="84"><span>중형 (60~85㎡)</span></label>
+    <label><input type="radio" name="area" value="59"><span>소형 (≤59㎡)</span></label>
   </div>
 
+  <!-- 서울 -->
   <div class="section">
     <div class="section-title">서울특별시</div>
     <div class="cb-limit" id="seoulLimit">최대 5개까지 선택할 수 있습니다</div>
     <div class="cb-list" id="seoulCbs"></div>
-    <div class="chart-wrap" style="height:360px"><canvas id="seoulChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="seoulChart" height="360"></canvas></div>
     <div class="legend" id="seoulLegend"></div>
   </div>
 
+  <!-- 경기 -->
   <div class="section">
     <div class="section-title">경기도 조정대상지역</div>
     <div class="cb-limit" id="gyeonggiLimit">최대 5개까지 선택할 수 있습니다</div>
     <div class="cb-list" id="gyeonggiCbs"></div>
-    <div class="chart-wrap" style="height:360px"><canvas id="gyeonggiChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="gyeonggiChart" height="360"></canvas></div>
     <div class="legend" id="gyeonggiLegend"></div>
   </div>
 
   <div class="footer">
-    데이터 출처: 국토교통부 실거래가 공개시스템 | 해제 거래 제외 | 단위: 억원 | <span id="genDate"></span><br>
-    ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>
-    실거래 신고 지연으로 최신 데이터가 반영되지 않을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다.
+    데이터 출처: 국토교통부 실거래가 공개시스템 | 해제 거래 제외 | 단위: 억원 | <span id="genDate"></span>
   </div>
 </div>
 
@@ -303,7 +297,7 @@ function updateChart(groupKey) {
       datasets: allDatasets
     },
     options: {
-      responsive: true, maintainAspectRatio: false,
+      responsive: true,
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
@@ -318,18 +312,18 @@ function updateChart(groupKey) {
         }
       },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: _m ? 10 : 12 }, maxRotation: 45 } },
+        x: { grid: { display: false } },
         yPrice: {
           position: 'left',
-          title: { display: !_m, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
+          title: { display: true, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
           grid: { color: '#f3f4f6' },
-          ticks: { callback: v => v + '억', font: { size: _m ? 10 : 12 } }
+          ticks: { callback: v => v + '억' }
         },
         yVolume: {
           position: 'right',
-          title: { display: !_m, text: '거래량(건)', font: { size: 11, weight: 'bold' } },
+          title: { display: true, text: '거래량(건)', font: { size: 11, weight: 'bold' } },
           grid: { display: false },
-          ticks: { callback: v => v >= 1000 ? (v/1000).toFixed(0) + 'k' : v, font: { size: _m ? 10 : 12 } },
+          ticks: { callback: v => v.toLocaleString('ko-KR') },
           beginAtZero: true
         }
       }
