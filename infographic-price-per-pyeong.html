@@ -68,6 +68,7 @@
   .rank-tab{padding:6px 14px;border:2px solid #e5e7eb;border-radius:20px;background:#fff;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
   .rank-tab:hover{border-color:#6366f1;color:#6366f1}
   .rank-tab.active{background:#6366f1;border-color:#6366f1;color:#fff}
+  .chart-wrap{position:relative;width:100%}
   .footer {
     text-align: center; font-size: 11px; color: #9ca3af;
     margin-top: 12px; line-height: 1.8;
@@ -116,7 +117,7 @@
     </div>
     <div class="section-sub">선택한 시도 강조 표시 | 단위: 만원/평</div>
     <div>
-      <canvas id="sidoChart" height="380"></canvas>
+      <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
     </div>
   </div>
 
@@ -136,7 +137,7 @@
     </div>
     <div class="section-sub" id="chartSub">3건 이상 거래 단지 | 단위: 만원/평</div>
     <div>
-      <canvas id="rankChart" height="640"></canvas>
+      <div class="chart-wrap" style="height:640px"><canvas id="rankChart"></canvas></div>
     </div>
   </div>
 
@@ -226,7 +227,7 @@ function initSidoChart() {
       }]
     },
     options: {
-      responsive: true,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.raw)} 만원/평` } }
@@ -317,7 +318,7 @@ function renderRank() {
     },
     options: {
       indexAxis: 'y',
-      responsive: true,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         tooltip: {

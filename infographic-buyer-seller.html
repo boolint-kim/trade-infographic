@@ -22,6 +22,7 @@
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .grid2{grid-template-columns:1fr}}
 </style>
@@ -39,18 +40,18 @@
     <div class="section">
       <div class="section-title"><span class="dot" style="background:#06b6d4"></span><span id="t1">매수자 유형</span></div>
       <div class="section-sub" id="s1">연도별</div>
-      <canvas id="buyerChart" height="300"></canvas>
+      <div class="chart-wrap" style="height:300px"><canvas id="buyerChart"></canvas></div>
     </div>
     <div class="section">
       <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="t2">매도자 유형</span></div>
       <div class="section-sub" id="s2">연도별</div>
-      <canvas id="sellerChart" height="300"></canvas>
+      <div class="chart-wrap" style="height:300px"><canvas id="sellerChart"></canvas></div>
     </div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#f97316"></span>시도별 법인 거래 비중</div>
     <div class="section-sub" id="sidoSub">최신 연도 | 법인 매도 + 법인 매수 비율</div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | slerGbn(매도자구분)/buyerGbn(매수자구분) | <span id="genDate"></span></div>
 </div>
@@ -76,7 +77,7 @@ function init(){
     return totalB>0?Math.round((corpB+corpS)/totalB*1000)/10:0;
   });
   sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>SIDO_SHORT[c]),datasets:[{data:corpRatio,backgroundColor:'#f97316aa',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`법인 비중: ${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`법인 비중: ${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
   sel('11');
 }
 function sel(code){
@@ -106,7 +107,7 @@ function sel(code){
   const buyerByType={};types.forEach(t=>{buyerByType[t]={};s.buyers.filter(r=>r.type===t).forEach(r=>buyerByType[t][r.yr]=r.cnt);});
   ch1=new Chart(document.getElementById('buyerChart'),{type:'bar',data:{labels:years,datasets:types.map(t=>({
     label:t,data:years.map(yr=>buyerByType[t][yr]||0),backgroundColor:(TYPE_COLORS[t]||'#9ca3af')+'99',borderRadius:3
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
   // 매도자 차트
@@ -116,7 +117,7 @@ function sel(code){
   const sellerByType={};sellerTypes.forEach(t=>{sellerByType[t]={};s.sellers.filter(r=>r.type===t).forEach(r=>sellerByType[t][r.yr]=r.cnt);});
   ch2=new Chart(document.getElementById('sellerChart'),{type:'bar',data:{labels:years,datasets:sellerTypes.map(t=>({
     label:t,data:years.map(yr=>sellerByType[t][yr]||0),backgroundColor:(TYPE_COLORS[t]||'#9ca3af')+'99',borderRadius:3
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);

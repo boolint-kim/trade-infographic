@@ -23,6 +23,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%}}
 </style>
@@ -40,17 +41,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="t1">읍면동별 갱신비율</span></div>
     <div class="section-sub" id="s1">최근 1년 | 10건 이상 거래 지역만</div>
-    <canvas id="areaChart" height="640"></canvas>
+    <div class="chart-wrap" style="height:640px"><canvas id="areaChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t2">연도별 갱신비율 추이</span></div>
     <div class="section-sub" id="s2">contractType 신고분 기준</div>
-    <canvas id="yearlyChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="yearlyChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span>시도별 갱신비율 비교</div>
     <div class="section-sub" id="sidoSub">최근 1년 기준</div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | contractType(신규/갱신) 신고분만 집계, null 미분류 제외<br>계약갱신청구권: 2020년 8월 4일 시행 | <span id="genDate"></span></div>
 </div>
@@ -74,7 +75,7 @@ function init(){
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:codes.map(c=>D.sido[c].renewalRate),backgroundColor:'#a5b4fccc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
     scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
   });
   sel('11');
@@ -101,7 +102,7 @@ function sel(code){
       backgroundColor:areas.map(r=>r.rate>=s.renewalRate?col+'cc':col+'55'),
       borderRadius:4
     }]},
-    options:{indexAxis:'y',responsive:true,
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{
         label:ctx=>`${ctx.raw}%`,
         afterLabel:ctx=>{const r=areas[ctx.dataIndex];return `갱신 ${fmt(r.renewal)} / 신규 ${fmt(r.newContract)} (총 ${fmt(r.total)}건)`;}
@@ -118,7 +119,7 @@ function sel(code){
       label:'갱신비율(%)',data:yearly.map(y=>y.rate),borderColor:col,backgroundColor:col+'20',fill:true,
       tension:.3,pointRadius:6,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3
     }]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
       scales:{x:{grid:{display:false}},y:{min:0,max:60,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}
   });
 

@@ -20,6 +20,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:45%}}
 </style>
@@ -38,17 +39,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#f97316"></span><span id="t1">연식별 평당가 추이</span></div>
     <div class="section-sub" id="s1">연도별 | 단위: 만원/평</div>
-    <canvas id="trendChart" height="340"></canvas>
+    <div class="chart-wrap" style="height:340px"><canvas id="trendChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="t2">신축 프리미엄</span></div>
     <div class="section-sub" id="s2">30년+ 대비 배율 | 최신 연도 기준</div>
-    <canvas id="premiumChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="premiumChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span>시도별 신축 프리미엄 배율</div>
     <div class="section-sub" id="sidoSub">5년이내 평당가 ÷ 30년+ 평당가 | 최신 연도 기준</div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 평당가 = 거래금액 ÷ (전용면적×0.3025) | buildYear 기준 연식 분류 | <span id="genDate"></span></div>
 </div>
@@ -77,7 +78,7 @@ function init(){
     return oldP>0?Math.round(newP/oldP*10)/10:0;
   });
   sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:ratios,backgroundColor:'#fdba74cc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}배`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'배'},grid:{color:'#f3f4f6'}}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}배`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'배'},grid:{color:'#f3f4f6'}}}}});
   sel('11');
 }
 function sel(code){
@@ -102,7 +103,7 @@ function sel(code){
   if(ch1)ch1.destroy();
   ch1=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:years,datasets:AGE_KEYS.filter(k=>groups[k]).map(k=>({
     label:AGE_SHORT[k],data:years.map(yr=>groups[k][yr]?groups[k][yr].avgPpyeong:null),borderColor:AGE_COLORS[k],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:AGE_COLORS[k],borderWidth:2.5,spanGaps:true
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원/평':'-'}`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원/평':'-'}`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
   // 프리미엄 바 차트
@@ -114,7 +115,7 @@ function sel(code){
     return {label:AGE_SHORT[k],value:Math.round(v/oldBase*10)/10,ppyeong:v,color:AGE_COLORS[k]};
   });
   ch2=new Chart(document.getElementById('premiumChart'),{type:'bar',data:{labels:premData.map(d=>d.label),datasets:[{data:premData.map(d=>d.value),backgroundColor:premData.map(d=>d.color+'cc'),borderRadius:6}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=premData[ctx.dataIndex];return `30년+ 대비 ${ctx.raw}배 (${fmt(d.ppyeong)}만원/평)`;}}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=premData[ctx.dataIndex];return `30년+ 대비 ${ctx.raw}배 (${fmt(d.ppyeong)}만원/평)`;}}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'배'},grid:{color:'#f3f4f6'}}}}});
 
   // 시도 강조

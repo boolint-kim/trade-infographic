@@ -20,6 +20,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%}}
 </style>
@@ -36,17 +37,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#f97316"></span><span id="t1">월세 비중 추이</span></div>
     <div class="section-sub" id="s1"></div>
-    <canvas id="ratioChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="ratioChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t2">전세 vs 월세 건수</span></div>
     <div class="section-sub" id="s2">연도별 전세·월세 거래 건수</div>
-    <canvas id="countChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="countChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#8b5cf6"></span>시도별 월세 비중 비교</div>
     <div class="section-sub" id="sidoSub">최신 연도 기준</div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 월세=월세>0, 전세=월세=0 | <span id="genDate"></span></div>
 </div>
@@ -64,7 +65,7 @@ function init(){
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);
   const latest=codes.map(c=>{const y=D.sido[c].yearly;return y[y.length-1].wolseRatio;});
   sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:latest,backgroundColor:'#fdba74cc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,max:80,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,max:80,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
   sel('11');
 }
 function sel(code){
@@ -81,13 +82,13 @@ function sel(code){
   document.getElementById('s1').textContent=`${first.yr}~${last.yr}`;
   if(ch1)ch1.destroy();
   ch1=new Chart(document.getElementById('ratioChart'),{type:'line',data:{labels:y.map(r=>r.yr),datasets:[{label:'월세 비중(%)',data:y.map(r=>r.wolseRatio),borderColor:col,backgroundColor:col+'20',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,max:80,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,max:80,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
   document.getElementById('t2').textContent=`${s.name} 전세 vs 월세 건수`;
   if(ch2)ch2.destroy();
   ch2=new Chart(document.getElementById('countChart'),{type:'bar',data:{labels:y.map(r=>r.yr),datasets:[
     {label:'전세',data:y.map(r=>r.jeonse),backgroundColor:'#3b82f6aa',borderRadius:4},
     {label:'월세',data:y.map(r=>r.wolse),backgroundColor:'#f97316aa',borderRadius:4}
-  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);
   sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(C[c]||'#f97316')+'cc':'#d1d5dbcc');

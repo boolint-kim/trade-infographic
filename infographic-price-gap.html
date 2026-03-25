@@ -18,6 +18,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%}}
 </style>
@@ -29,17 +30,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span>서울 대비 가격 비율 추이 — 주요 시도</div>
     <div class="section-sub">서울=100% 기준 | 비율이 낮을수록 서울과 격차가 큼</div>
-    <canvas id="ratioChart" height="360"></canvas>
+    <div class="chart-wrap" style="height:360px"><canvas id="ratioChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#ef4444"></span>17개 시도 최신 가격 격차</div>
     <div class="section-sub" id="barSub">서울 대비 비율(%) | 최신 연도 기준</div>
-    <canvas id="barChart" height="400"></canvas>
+    <div class="chart-wrap" style="height:400px"><canvas id="barChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span>격차 변화 — 2016 vs 최신</div>
     <div class="section-sub">서울 대비 비율이 줄었으면 격차 확대, 늘었으면 격차 축소</div>
-    <canvas id="changeChart" height="400"></canvas>
+    <div class="chart-wrap" style="height:400px"><canvas id="changeChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 서울 평균가 대비 각 시도 평균가 비율 | <span id="genDate"></span></div>
 </div>
@@ -76,7 +77,7 @@ function init(){
   const mainCodes=['41','26','27','28','30'];
   new Chart(document.getElementById('ratioChart'),{type:'line',data:{labels:years,datasets:mainCodes.filter(c=>bySido[c]).map(c=>({
     label:SIDO_SHORT[c],data:years.map(yr=>bySido[c][yr]?bySido[c][yr].vsSeoul:null),borderColor:C[c],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:C[c],borderWidth:2.5,spanGaps:true
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 서울의 ${ctx.raw}%`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 서울의 ${ctx.raw}%`}}},
     scales:{x:{grid:{display:false}},y:{min:20,max:70,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
     plugins:[{id:'seoulLine',beforeDraw(chart){const{ctx,chartArea:{left,right,top}}=chart;ctx.save();ctx.fillStyle='#6366f1';ctx.font='bold 12px sans-serif';ctx.fillText('서울 = 100%',left+10,top+16);ctx.restore();}}]
   });
@@ -84,7 +85,7 @@ function init(){
   // 전체 시도 최신 비율
   const sortedCodes=[...codes].sort((a,b)=>(bySido[b][lastYr].vsSeoul||0)-(bySido[a][lastYr].vsSeoul||0));
   new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:sortedCodes.map(c=>SIDO_SHORT[c]),datasets:[{data:sortedCodes.map(c=>bySido[c][lastYr].vsSeoul),backgroundColor:sortedCodes.map(c=>c==='11'?'#6366f1cc':(C[c]||'#93c5fd')+'99'),borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`서울의 ${ctx.raw}% (${fmt(bySido[sortedCodes[ctx.dataIndex]][lastYr].avgPrice)}만원)`}}},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`서울의 ${ctx.raw}% (${fmt(bySido[sortedCodes[ctx.dataIndex]][lastYr].avgPrice)}만원)`}}},
     scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 격차 변화
@@ -95,7 +96,7 @@ function init(){
   })).sort((a,b)=>a.change-b.change);
 
   new Chart(document.getElementById('changeChart'),{type:'bar',data:{labels:changeData.map(d=>d.name),datasets:[{data:changeData.map(d=>d.change),backgroundColor:changeData.map(d=>d.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=changeData[ctx.dataIndex];return `${firstYr}년 ${d.before}% → ${lastYr}년 ${d.after}% (${d.change>=0?'+':''}${d.change}%p)`;}}}},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=changeData[ctx.dataIndex];return `${firstYr}년 ${d.before}% → ${lastYr}년 ${d.after}% (${d.change>=0?'+':''}${d.change}%p)`;}}}},
     scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 }
 load();

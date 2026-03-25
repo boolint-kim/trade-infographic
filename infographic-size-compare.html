@@ -21,6 +21,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:45%}}
 </style>
@@ -38,12 +39,12 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t1">면적대별 평균가 추이</span></div>
     <div class="section-sub" id="s1">연도별 | 단위: 만원</div>
-    <canvas id="trendChart" height="340"></canvas>
+    <div class="chart-wrap" style="height:340px"><canvas id="trendChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span><span id="t2">면적대별 거래 건수</span></div>
     <div class="section-sub" id="s2">연도별 | 적층 막대</div>
-    <canvas id="countChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="countChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 면적 = 전용면적 기준 | <span id="genDate"></span></div>
 </div>
@@ -90,7 +91,7 @@ function sel(code){
   if(ch1)ch1.destroy();
   ch1=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:years,datasets:['S','M','L','XL'].filter(g=>groups[g]).map(g=>({
     label:SIZE_NAMES[g],data:years.map(yr=>groups[g][yr]?groups[g][yr].avgPrice:null),borderColor:SIZE_COLORS[g],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:SIZE_COLORS[g],borderWidth:2.5,spanGaps:true
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원 ('+(ctx.raw/10000).toFixed(1)+'억)':'-'}`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원 ('+(ctx.raw/10000).toFixed(1)+'억)':'-'}`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}}}}});
 
   // 건수 차트
@@ -98,7 +99,7 @@ function sel(code){
   if(ch2)ch2.destroy();
   ch2=new Chart(document.getElementById('countChart'),{type:'bar',data:{labels:years,datasets:['S','M','L','XL'].filter(g=>groups[g]).map(g=>({
     label:SIZE_NAMES[g],data:years.map(yr=>groups[g][yr]?groups[g][yr].cnt:0),backgroundColor:SIZE_COLORS[g]+'99',borderRadius:3
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 }
 load();

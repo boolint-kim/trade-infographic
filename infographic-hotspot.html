@@ -21,6 +21,7 @@
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .grid2{grid-template-columns:1fr}}
 </style>
@@ -38,18 +39,18 @@
     <div class="section">
       <div class="section-title"><span class="dot" style="background:#10b981"></span><span id="t1">거래 급증 지역 TOP 10</span></div>
       <div class="section-sub" id="s1">전년 동기 대비 증가율</div>
-      <canvas id="hotChart" height="400"></canvas>
+      <div class="chart-wrap" style="height:400px"><canvas id="hotChart"></canvas></div>
     </div>
     <div class="section">
       <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="t2">거래 급감 지역 TOP 10</span></div>
       <div class="section-sub" id="s2">전년 동기 대비 감소율</div>
-      <canvas id="coldChart" height="400"></canvas>
+      <div class="chart-wrap" style="height:400px"><canvas id="coldChart"></canvas></div>
     </div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t3">전체 시군구 증감 분포</span></div>
     <div class="section-sub" id="s3">초록=증가 / 빨강=감소</div>
-    <canvas id="allChart" height="500"></canvas>
+    <div class="chart-wrap" style="height:500px"><canvas id="allChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 최근 3개월 vs 전년 동기 3개월 거래 건수 비교 | <span id="genDate"></span></div>
 </div>
@@ -98,7 +99,7 @@ function sel(code){
   if(hotChart)hotChart.destroy();
   const hot=s.hot.filter(r=>r.change!==999).slice(0,10);
   hotChart=new Chart(document.getElementById('hotChart'),{type:'bar',data:{labels:hot.map(r=>shortName(r.name)),datasets:[{data:hot.map(r=>r.change),backgroundColor:'#10b981cc',borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=hot[ctx.dataIndex];return `+${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=hot[ctx.dataIndex];return `+${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
     scales:{x:{ticks:{callback:v=>'+'+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 급감 TOP 10
@@ -106,7 +107,7 @@ function sel(code){
   if(coldChart)coldChart.destroy();
   const cold=s.cold.filter(r=>r.change!==999).slice(0,10);
   coldChart=new Chart(document.getElementById('coldChart'),{type:'bar',data:{labels:cold.map(r=>shortName(r.name)),datasets:[{data:cold.map(r=>r.change),backgroundColor:'#ef4444cc',borderRadius:4}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=cold[ctx.dataIndex];return `${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=cold[ctx.dataIndex];return `${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
     scales:{x:{ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 전체 분포
@@ -114,7 +115,7 @@ function sel(code){
   if(allChart)allChart.destroy();
   const all=s.all.filter(r=>r.change!==999);
   allChart=new Chart(document.getElementById('allChart'),{type:'bar',data:{labels:all.map(r=>shortName(r.name)),datasets:[{data:all.map(r=>r.change),backgroundColor:all.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:3}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=all[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=all[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
     scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?10:12}}}}}});
 }
 load();

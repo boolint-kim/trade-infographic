@@ -26,6 +26,7 @@
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
   .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .selector button{padding:6px 12px;font-size:12px}}
 </style>
@@ -42,12 +43,12 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="chartTitle1">평균 거래가 + 거래량</span></div>
     <div class="section-sub" id="chartSub1">연도별 | 막대=거래량, 선=평균가</div>
-    <canvas id="comboChart" height="320"></canvas>
+    <div class="chart-wrap" style="height:320px"><canvas id="comboChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span>전국 시도 비교 — 최신 평균가</div>
     <div class="section-sub" id="sidoSub"></div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 (토지) | <span id="genDate"></span></div>
 </div>
@@ -75,7 +76,7 @@ function initSidoChart(){
   const latestAvg=codes.map(c=>{const y=DATA.sido[c].yearly;return y[y.length-1].avgPrice;});
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:latestAvg,backgroundColor:'#93c5fdcc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
     scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}}}}
   });
 }
@@ -116,7 +117,7 @@ function selectSido(code){
       {type:'bar',label:'거래량',data:yearly.map(y=>y.cnt),backgroundColor:color+'44',borderRadius:4,yAxisID:'y1',order:2},
       {type:'line',label:'평균가(만원)',data:yearly.map(y=>y.avgPrice),borderColor:color,backgroundColor:color,pointRadius:5,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3,tension:.3,yAxisID:'y',order:1}
     ]},
-    options:{responsive:true,interaction:{mode:'index',intersect:false},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y'?`평균가: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`:`거래량: ${fmt(ctx.raw)}건`}}},
       scales:{x:{grid:{display:false}},y:{position:'left',ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}},y1:{position:'right',ticks:{callback:v=>fmt(v)},grid:{display:false}}}}
   });

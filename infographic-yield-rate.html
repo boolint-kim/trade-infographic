@@ -22,6 +22,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%}}
 </style>
@@ -39,17 +40,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span><span id="t1">수익률 추이</span></div>
     <div class="section-sub" id="s1">연도별 | 점선 = 은행금리 기준 3.5%</div>
-    <canvas id="yieldChart" height="320"></canvas>
+    <div class="chart-wrap" style="height:320px"><canvas id="yieldChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="t2">매매가 vs 연간 월세</span></div>
     <div class="section-sub" id="s2">매매 평균가와 월세 환산 연차임(월세×12) 비교</div>
-    <canvas id="compareChart" height="320"></canvas>
+    <div class="chart-wrap" style="height:320px"><canvas id="compareChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#f97316"></span>시도별 수익률 비교</div>
     <div class="section-sub" id="sidoSub">최신 연도 기준 | 점선 = 3.5%</div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 수익률 = (평균월세×12) ÷ 매매평균가 × 100 | 월세 > 0인 건만 집계 | <span id="genDate"></span></div>
 </div>
@@ -70,7 +71,7 @@ function init(){
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);
   const latest=codes.map(c=>{const y=D.sido[c].yearly.filter(r=>r.yieldRate!==null);return y.length?y[y.length-1].yieldRate:0;});
   sidoChart=new Chart(document.getElementById('sidoChart'),{type:'bar',data:{labels:codes.map(c=>D.sido[c].name),datasets:[{data:latest,backgroundColor:'#6ee7b7cc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
     plugins:[{id:'bankLine',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;const yv=y.getPixelForValue(BANK_RATE);ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#ef4444';ctx.moveTo(left,yv);ctx.lineTo(right,yv);ctx.stroke();ctx.fillStyle='#ef4444';ctx.font='10px sans-serif';ctx.fillText(`은행금리 ${BANK_RATE}%`,right-85,yv-6);ctx.setLineDash([]);ctx.restore();}}]
   });
   sel('11');
@@ -95,7 +96,7 @@ function sel(code){
   document.getElementById('t1').textContent=`${s.name} 수익률 추이`;
   if(ch1)ch1.destroy();
   ch1=new Chart(document.getElementById('yieldChart'),{type:'line',data:{labels:y.map(r=>r.yr),datasets:[{label:'수익률(%)',data:y.map(r=>r.yieldRate),borderColor:col,backgroundColor:col+'20',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:col,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
     plugins:[{id:'bankLine2',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;const yv=y.getPixelForValue(BANK_RATE);ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#ef4444';ctx.moveTo(left,yv);ctx.lineTo(right,yv);ctx.stroke();ctx.fillStyle='#ef4444';ctx.font='10px sans-serif';ctx.fillText(`은행금리 ${BANK_RATE}%`,right-85,yv-6);ctx.setLineDash([]);ctx.restore();}}]
   });
 
@@ -105,7 +106,7 @@ function sel(code){
   ch2=new Chart(document.getElementById('compareChart'),{type:'bar',data:{labels:y.map(r=>r.yr),datasets:[
     {type:'bar',label:'매매 평균가',data:y.map(r=>r.avgDeal),backgroundColor:'#6366f1'+'44',borderRadius:4,yAxisID:'y',order:2},
     {type:'line',label:'연간 월세(월세×12)',data:y.map(r=>r.avgMonthly*12),borderColor:'#f97316',backgroundColor:'#f97316',pointRadius:5,pointBackgroundColor:'#f97316',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:3,tension:.3,yAxisID:'y1',order:1}
-  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
     plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y'?`매매: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`:`연간 월세: ${fmt(ctx.raw)}만원`}}},
     scales:{x:{grid:{display:false}},y:{position:'left',ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}},y1:{position:'right',ticks:{callback:v=>fmt(v)+'만'},grid:{display:false}}}}
   });

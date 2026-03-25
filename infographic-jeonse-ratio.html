@@ -27,6 +27,7 @@
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
   .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .selector button{padding:6px 12px;font-size:12px}}
 </style>
@@ -44,17 +45,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="chartTitle1">전세가율 추이</span></div>
     <div class="section-sub" id="chartSub1"></div>
-    <canvas id="ratioChart" height="320"></canvas>
+    <div class="chart-wrap" style="height:320px"><canvas id="ratioChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="chartTitle2">매매가 vs 전세가</span></div>
     <div class="section-sub" id="chartSub2">두 선 사이 간격 = 갭</div>
-    <canvas id="gapChart" height="320"></canvas>
+    <div class="chart-wrap" style="height:320px"><canvas id="gapChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span>전국 시도별 최신 전세가율</div>
     <div class="section-sub" id="sidoSub"></div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 전세 = 월세 0원 순수전세만 | 지역 평균 기준 (단지 매칭 아님) | <span id="genDate"></span></div>
 </div>
@@ -82,7 +83,7 @@ function initSidoChart(){
   const latestRatio=codes.map(c=>{const y=DATA.sido[c].yearly.filter(r=>r.ratio!==null);return y.length?y[y.length-1].ratio:0;});
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:latestRatio,backgroundColor:'#c4b5fdcc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
     scales:{x:{grid:{display:false}},y:{min:0,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
     plugins:[{id:'line70',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;const y70=y.getPixelForValue(70);ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.moveTo(left,y70);ctx.lineTo(right,y70);ctx.stroke();ctx.fillStyle='#f59e0b';ctx.font='10px sans-serif';ctx.fillText('70%',right-25,y70-6);ctx.setLineDash([]);ctx.restore();}}]
   });
@@ -112,7 +113,7 @@ function selectSido(code){
   if(ratioChart)ratioChart.destroy();
   ratioChart=new Chart(document.getElementById('ratioChart'),{
     type:'line',data:{labels:yearly.map(y=>y.yr),datasets:[{label:'전세가율(%)',data:yearly.map(y=>y.ratio),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
     scales:{x:{grid:{display:false}},y:{min:Math.max(0,Math.min(...yearly.map(y=>y.ratio))-10),max:Math.min(110,Math.max(...yearly.map(y=>y.ratio))+10),ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
     plugins:[{id:'dangerLine',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;if(Math.max(...yearly.map(y=>y.ratio))>=95){const y100=y.getPixelForValue(100);ctx.save();ctx.beginPath();ctx.setLineDash([6,4]);ctx.strokeStyle='#ef4444';ctx.lineWidth=1.5;ctx.moveTo(left,y100);ctx.lineTo(right,y100);ctx.stroke();ctx.fillStyle='#ef4444';ctx.font='bold 11px sans-serif';ctx.fillText('위험선 100%',right-80,y100-8);ctx.setLineDash([]);ctx.restore();}
     const y70=y.getPixelForValue(70);if(y70>=chart.chartArea.top&&y70<=chart.chartArea.bottom){ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.moveTo(left,y70);ctx.lineTo(right,y70);ctx.stroke();ctx.fillStyle='#f59e0b';ctx.font='10px sans-serif';ctx.fillText('갭투자 기준 70%',right-100,y70-6);ctx.setLineDash([]);ctx.restore();}}}]
@@ -126,7 +127,7 @@ function selectSido(code){
       {label:'매매 평균가',data:yearly.map(y=>y.avgDeal),borderColor:'#ef4444',backgroundColor:'#ef444415',fill:'+1',tension:.3,pointRadius:5,pointBackgroundColor:'#ef4444',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5},
       {label:'전세 평균가',data:yearly.map(y=>y.avgDeposit),borderColor:'#3b82f6',backgroundColor:'transparent',tension:.3,pointRadius:5,pointBackgroundColor:'#3b82f6',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5}
     ]},
-    options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}만원 (${(ctx.raw/10000).toFixed(1)}억)`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#f3f4f6'}}}}
   });
 

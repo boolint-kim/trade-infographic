@@ -21,6 +21,7 @@
   .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
   .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .chart-wrap{position:relative;width:100%}
   .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:45%}}
 </style>
@@ -38,12 +39,12 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#8b5cf6"></span><span id="t1">층별 평당가 추이</span></div>
     <div class="section-sub" id="s1">연도별 | 단위: 만원/평</div>
-    <canvas id="trendChart" height="340"></canvas>
+    <div class="chart-wrap" style="height:340px"><canvas id="trendChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="t2">저층 대비 프리미엄</span></div>
     <div class="section-sub" id="s2">저층(1~3층) 평당가를 100으로 했을 때 상대 비율</div>
-    <canvas id="premiumChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="premiumChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 평당가 = 거래금액 ÷ (전용면적×0.3025) | <span id="genDate"></span></div>
 </div>
@@ -87,7 +88,7 @@ function sel(code){
   if(ch1)ch1.destroy();
   ch1=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:years,datasets:FLOOR_KEYS.filter(k=>groups[k]).map(k=>({
     label:FLOOR_SHORT[k],data:years.map(yr=>groups[k][yr]?groups[k][yr].avgPpyeong:null),borderColor:FLOOR_COLORS[k],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:FLOOR_COLORS[k],borderWidth:2.5,spanGaps:true
-  }))},options:{responsive:true,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원/평':'-'}`}}},
+  }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw?fmt(ctx.raw)+'만원/평':'-'}`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}});
 
   // 프리미엄 차트
@@ -98,7 +99,7 @@ function sel(code){
     return {label:FLOOR_SHORT[k],value:Math.round(v/lowBase*100),color:FLOOR_COLORS[k]};
   });
   ch2=new Chart(document.getElementById('premiumChart'),{type:'bar',data:{labels:premData.map(d=>d.label),datasets:[{data:premData.map(d=>d.value),backgroundColor:premData.map(d=>d.color+'cc'),borderRadius:6}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`저층 대비 ${ctx.raw}%`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`저층 대비 ${ctx.raw}%`}}},
     scales:{x:{grid:{display:false}},y:{min:90,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}}});
 }
 load();

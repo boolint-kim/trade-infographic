@@ -28,6 +28,7 @@
   .section-title { font-size:16px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
   .section-sub { font-size:12px; color:#9ca3af; margin-bottom:20px; }
   .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .chart-wrap{position:relative;width:100%}
   .footer { text-align:center; font-size:11px; color:#9ca3af; margin-top:12px; line-height:1.8; }
   @media(max-width:700px){ .card{min-width:100%;} .selector button{padding:6px 12px;font-size:12px;} }
 </style>
@@ -47,17 +48,17 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#3b82f6"></span><span id="chartTitle1">연도별 거래량</span></div>
     <div class="section-sub" id="chartSub1"></div>
-    <canvas id="yearlyChart" height="280"></canvas>
+    <div class="chart-wrap" style="height:280px"><canvas id="yearlyChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#6366f1"></span><span id="chartTitle2">월별 거래량</span></div>
     <div class="section-sub" id="chartSub2">최근 15개월</div>
-    <canvas id="monthlyChart" height="300"></canvas>
+    <div class="chart-wrap" style="height:300px"><canvas id="monthlyChart"></canvas></div>
   </div>
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#10b981"></span>전국 시도별 거래량 비교</div>
     <div class="section-sub" id="sidoCompareSub"></div>
-    <canvas id="sidoChart" height="380"></canvas>
+    <div class="chart-wrap" style="height:380px"><canvas id="sidoChart"></canvas></div>
   </div>
   <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | <span id="genDate"></span></div>
 </div>
@@ -91,7 +92,7 @@ function initSidoChart(){
   const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#93c5fdcc',borderRadius:4}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 }
@@ -138,7 +139,7 @@ function selectSido(code){
     document.getElementById('chartSub1').textContent='2016~2026';
     yearlyChart=new Chart(document.getElementById('yearlyChart'),{
       type:'bar',data:{labels:yearly.map(r=>r.yr),datasets:[{data:yearly.map(r=>r.cnt),backgroundColor:'#3b82f6aa',borderRadius:4}]},
-      options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
       scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
     });
   } else {
@@ -154,7 +155,7 @@ function selectSido(code){
     type:'line',data:{labels:monthly.map(r=>fmtYM(r.ym)),datasets:[{
       label:name,data:monthly.map(r=>r.cnt),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5
     }]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
     scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
   });
 
