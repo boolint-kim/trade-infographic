@@ -96,6 +96,7 @@ function sel(code){
 
   const areas=s.byArea.slice(0,30);
   document.getElementById('t1').textContent=`${s.name} 읍면동별 갱신비율 TOP ${areas.length}`;
+  document.getElementById('areaChart').parentElement.style.height=Math.max(640,areas.length*24)+'px';
   if(areaChart)areaChart.destroy();
   areaChart=new Chart(document.getElementById('areaChart'),{
     type:'bar',data:{labels:areas.map(r=>r.umdNm),datasets:[{
@@ -109,7 +110,7 @@ function sel(code){
         afterLabel:ctx=>{const r=areas[ctx.dataIndex];return `갱신 ${fmt(r.renewal)} / 신규 ${fmt(r.newContract)} (총 ${fmt(r.total)}건)`;}
       }}},
       scales:{x:{min:0,max:Math.min(80,Math.max(...areas.map(r=>r.rate))+10),ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},
-        y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}
+        y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}
   });
 
   const yearly=s.yearly.filter(y=>y.yr>='2020');

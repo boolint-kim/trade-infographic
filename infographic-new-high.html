@@ -119,6 +119,7 @@ function selectSido(code){
 
   // 차트
   document.getElementById('chartTitle').textContent=`${sido.name} 신고가 TOP ${recs.length}`;
+  document.getElementById('highChart').parentElement.style.height=Math.max(480,recs.length*40)+'px';
   if(highChart)highChart.destroy();
   const labels=recs.map(r=>[r.name, r.umdNm]);
   highChart=new Chart(document.getElementById('highChart'),{
@@ -127,7 +128,7 @@ function selectSido(code){
       {label:'신고가',data:recs.map(r=>r.price/10000),backgroundColor:'#ef4444cc',borderRadius:4}
     ]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toFixed(1)}억`}}},
-      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}
+      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}
   });
 
   // 테이블

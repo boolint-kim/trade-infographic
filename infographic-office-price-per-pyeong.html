@@ -302,6 +302,7 @@ function renderRank() {
 
   document.getElementById('chartTitle').textContent = `${sido.short} ${cfg.title} ${items.length}`;
   document.getElementById('chartSub').textContent = cfg.sub;
+  document.getElementById('rankChart').parentElement.style.height = Math.max(640, items.length * 36) + 'px';
 
   const labels = items.map(r => [r.name, r.umdNm]);
   const values = items.map(r => r[cfg.valueKey]);
@@ -339,7 +340,7 @@ function renderRank() {
       },
       scales: {
         x: { min: 0, ticks: { callback: v => currentTab === 'rise' ? v + '%' : fmt(v) }, grid: { color: '#f3f4f6' } },
-        y: { grid: { display: false }, ticks: { font: { size: _m ? 11 : 13, weight: 'bold' } } }
+        y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: _m ? 11 : 13, weight: 'bold' } } }
       }
     }
   });

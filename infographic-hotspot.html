@@ -101,7 +101,7 @@ function sel(code){
   const hot=s.hot.filter(r=>r.change!==999).slice(0,10);
   hotChart=new Chart(document.getElementById('hotChart'),{type:'bar',data:{labels:hot.map(r=>shortName(r.name)),datasets:[{data:hot.map(r=>r.change),backgroundColor:'#10b981cc',borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=hot[ctx.dataIndex];return `+${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
-    scales:{x:{ticks:{callback:v=>'+'+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
+    scales:{x:{ticks:{callback:v=>'+'+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 급감 TOP 10
   document.getElementById('t2').textContent=`${s.name} 거래 급감 TOP ${Math.min(10,s.cold.length)}`;
@@ -109,15 +109,16 @@ function sel(code){
   const cold=s.cold.filter(r=>r.change!==999).slice(0,10);
   coldChart=new Chart(document.getElementById('coldChart'),{type:'bar',data:{labels:cold.map(r=>shortName(r.name)),datasets:[{data:cold.map(r=>r.change),backgroundColor:'#ef4444cc',borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=cold[ctx.dataIndex];return `${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
-    scales:{x:{ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?11:13,weight:'bold'}}}}}});
+    scales:{x:{ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 전체 분포
   document.getElementById('t3').textContent=`${s.name} 전체 시군구 증감`;
   if(allChart)allChart.destroy();
   const all=s.all.filter(r=>r.change!==999);
+  document.getElementById('allChart').parentElement.style.height=Math.max(500,all.length*28)+'px';
   allChart=new Chart(document.getElementById('allChart'),{type:'bar',data:{labels:all.map(r=>shortName(r.name)),datasets:[{data:all.map(r=>r.change),backgroundColor:all.map(r=>r.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:3}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=all[ctx.dataIndex];return `${ctx.raw>=0?'+':''}${ctx.raw}% (${r.lastYear}→${r.recent}건)`;}}}},
-    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{font:{size:_m?10:12}}}}}});
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?10:12}}}}}});
 }
 load();
 </script>
