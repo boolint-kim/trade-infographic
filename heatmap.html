@@ -374,6 +374,11 @@ function initMap() {
 
   naver.maps.Event.addListener(map, 'click', onMapClick);
 
+  // 줌 변경 및 패닝 완료 후 캔버스 갱신
+  naver.maps.Event.addListener(map, 'idle', function() {
+    canvasLayer.draw();
+  });
+
   loadData();
 }
 
