@@ -283,13 +283,16 @@ function drawShape(ctx, shape, px, py, size, fillStyle) {
     ctx.arc(px, py, size, 0, Math.PI * 2);
     ctx.fill();
   } else if (shape === 'square') {
-    ctx.fillRect(px - size, py - size, size * 2, size * 2);
+    // 원에 내접하는 정사각형: 한 변 = r*√2, 반변 = r/√2
+    var half = size / Math.SQRT2;
+    ctx.fillRect(px - half, py - half, half * 2, half * 2);
   } else if (shape === 'triangle') {
-    var h = size * 1.8;
+    // 원에 내접하는 정삼각형: 외접원 반지름 = size
+    var sin60 = Math.sqrt(3) / 2; // ≈ 0.866
     ctx.beginPath();
-    ctx.moveTo(px, py - h * 0.6);
-    ctx.lineTo(px + size, py + h * 0.4);
-    ctx.lineTo(px - size, py + h * 0.4);
+    ctx.moveTo(px,              py - size);           // 상단 꼭짓점
+    ctx.lineTo(px + size * sin60, py + size * 0.5);  // 우하단 꼭짓점
+    ctx.lineTo(px - size * sin60, py + size * 0.5);  // 좌하단 꼭짓점
     ctx.closePath();
     ctx.fill();
   }
