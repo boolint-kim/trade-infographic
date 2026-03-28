@@ -42,8 +42,9 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 <div class="ctrl">
   <div class="ctrl-row">
     <button class="btn active" id="btnAll" onclick="setFilter('all')">전체</button>
-    <button class="btn" id="btnMid" onclick="setFilter('mid')">중형(84)</button>
-    <button class="btn" id="btnSmall" onclick="setFilter('small')">소형(59)</button>
+    <button class="btn" id="btnSmall" onclick="setFilter('small')">소형(&lt;60)</button>
+    <button class="btn" id="btnMid" onclick="setFilter('mid')">중형(60~85)</button>
+    <button class="btn" id="btnLarge" onclick="setFilter('large')">대형(85+)</button>
   </div>
   <div class="ctrl-row">
     <div class="ctrl-box">
@@ -61,9 +62,9 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 </div>
 
 <script>
-let map, canvasLayer, infoWindow, allData = [];
-let currentFilter = 'all';
-let currentPeriod = 'all';
+let map, canvasLayer, infoWindow, allData = [], allMonths = [];
+let currentFilter = 'all';  // all, small, mid, large
+let currentPeriod = 6;       // 최근 N개월 (1~6)
 let dataReady = false;
 const ZOOM_LABEL = 14;
 
@@ -117,20 +118,51 @@ function priceHex(p) {
 
 function fmt(n) { return n == null ? '-' : n.toLocaleString(); }
 
+// 선택된 기간의 월 목록 (최근 N개월)
+function getSelectedMonths() {
+  return allMonths.slice(-currentPeriod);
+}
+
+// 면적 필터 키
+function filterKey() {
+  if (currentFilter === 'large') return 'l';
+  if (currentFilter === 'mid') return 'm';
+  if (currentFilter === 'small') return 's';
+  return 'a';
+}
+
 function getPrice(d) {
-  if (currentPeriod !== 'all' && d.mo[currentPeriod]) {
-    if (currentFilter === 'mid') return d.m;
-    if (currentFilter === 'small') return d.s;
-    return d.mo[currentPeriod].avg;
+  var months = getSelectedMonths();
+  var fk = filterKey();
+  var sum = 0, cnt = 0;
+
+  // 기간 내 월별 데이터를 합산하여 가중 평균 계산
+  for (var i = 0; i < months.length; i++) {
+    var mo = d.mo[months[i]];
+    if (!mo) continue;
+    if (fk === 'a') {
+      sum += mo.a * mo.c;
+      cnt += mo.c;
+    } else {
+      // 면적대별: 해당 면적대 값이 있는 월만
+      if (mo[fk] != null) {
+        // 면적대별 건수는 없으므로 1건으로 가중
+        sum += mo[fk];
+        cnt += 1;
+      }
+    }
   }
-  if (currentFilter === 'mid') return d.m;
-  if (currentFilter === 'small') return d.s;
-  return d.a;
+  return cnt > 0 ? Math.round(sum / cnt) : null;
 }
 
 function getCount(d) {
-  if (currentPeriod !== 'all' && d.mo[currentPeriod]) return d.mo[currentPeriod].cnt;
-  return d.c;
+  var months = getSelectedMonths();
+  var total = 0;
+  for (var i = 0; i < months.length; i++) {
+    var mo = d.mo[months[i]];
+    if (mo) total += mo.c;
+  }
+  return total;
 }
 
 // --- Canvas 오버레이 ---
@@ -252,10 +284,11 @@ CanvasHeatLayer.prototype.draw = function() {
   }
 
   // 통계 업데이트
+  var filterLabel = {all:'전체 면적', small:'소형 <60㎡', mid:'중형 60~85㎡', large:'대형 85㎡+'}[currentFilter];
   document.getElementById('stats').innerHTML =
     '<div class="big">' + totalWithPrice.toLocaleString() + '</div>' +
     '<div class="sub">단지 (' + totalCount.toLocaleString() + '건)</div>' +
-    '<div class="sub">' + (currentFilter === 'mid' ? '중형 84㎡' : currentFilter === 'small' ? '소형 59㎡' : '전체 면적') + '</div>';
+    '<div class="sub">' + filterLabel + ' | 최근 ' + currentPeriod + '개월</div>';
 };
 
 // --- 클릭 처리: Canvas는 pointerEvents:none이므로 지도 클릭으로 처리 ---
@@ -296,8 +329,9 @@ function onMapClick(e) {
       '<div class="name">' + bestD.n + '</div>' +
       '<div class="loc">' + bestD.u + ' | ' + bestD.r + '</div>' +
       '<div class="row"><span class="label">전체 평당가</span><span class="val high">' + (bestD.a ? fmt(bestD.a) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">중형(84㎡)</span><span class="val">' + (bestD.m ? fmt(bestD.m) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">소형(59㎡)</span><span class="val">' + (bestD.s ? fmt(bestD.s) + '만' : '-') + '</span></div>' +
+      '<div class="row"><span class="label">대형(85㎡+)</span><span class="val">' + (bestD.l ? fmt(bestD.l) + '만' : '-') + '</span></div>' +
+      '<div class="row"><span class="label">중형(60~85㎡)</span><span class="val">' + (bestD.m ? fmt(bestD.m) + '만' : '-') + '</span></div>' +
+      '<div class="row"><span class="label">소형(&lt;60㎡)</span><span class="val">' + (bestD.s ? fmt(bestD.s) + '만' : '-') + '</span></div>' +
       '<div class="row"><span class="label">거래건수</span><span class="val">' + bestD.c + '건</span></div>' +
       '</div>');
     infoWindow.open(map, new naver.maps.LatLng(bestD.y, bestD.x));
@@ -308,12 +342,13 @@ function onMapClick(e) {
 function setFilter(f) {
   currentFilter = f;
   document.querySelectorAll('.ctrl-row:first-child .btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById(f === 'mid' ? 'btnMid' : f === 'small' ? 'btnSmall' : 'btnAll').classList.add('active');
+  var btnId = {all:'btnAll', small:'btnSmall', mid:'btnMid', large:'btnLarge'}[f];
+  document.getElementById(btnId).classList.add('active');
   canvasLayer.draw();
 }
 
 function setPeriod(v) {
-  currentPeriod = v;
+  currentPeriod = parseInt(v);
   canvasLayer.draw();
 }
 
@@ -347,15 +382,17 @@ function loadData() {
     .then(function(r) { return r.json(); })
     .then(function(json) {
       allData = json.data;
+      allMonths = json.months;
       dataReady = true;
       buildGrid(allData);
 
       var sel = document.getElementById('selPeriod');
-      sel.innerHTML = '<option value="all">전체 6개월</option>';
-      for (var i = 0; i < json.months.length; i++) {
-        var ym = json.months[i];
-        sel.innerHTML += '<option value="' + ym + '">' + ym.substring(0, 4) + '.' + ym.substring(4) + '</option>';
+      sel.innerHTML = '';
+      for (var i = 1; i <= allMonths.length; i++) {
+        var selected = (i === allMonths.length) ? ' selected' : '';
+        sel.innerHTML += '<option value="' + i + '"' + selected + '>최근 ' + i + '개월</option>';
       }
+      currentPeriod = allMonths.length;
 
       document.getElementById('loading').style.display = 'none';
       canvasLayer.draw();
