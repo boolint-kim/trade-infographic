@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>아파트 평당가 히트맵</title>
-<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzpp6ehncu&submodules=visualization"></script>
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zzpp6ehncu"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a1a2e}
 #map{width:100%;height:100vh}
-/* 컨트롤 패널 */
 .ctrl{position:absolute;top:12px;left:12px;z-index:100;display:flex;flex-direction:column;gap:8px}
 .ctrl-row{display:flex;gap:6px;align-items:center}
 .ctrl-box{background:rgba(255,255,255,.95);border-radius:10px;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:13px;font-weight:600;color:#333}
@@ -17,12 +16,10 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 .btn{padding:6px 14px;border:2px solid #e5e7eb;border-radius:20px;background:#fff;font-size:12px;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s}
 .btn:hover{border-color:#3b82f6;color:#3b82f6}
 .btn.active{background:#3b82f6;border-color:#3b82f6;color:#fff}
-/* 범례 */
 .legend{position:absolute;bottom:32px;left:12px;z-index:100;background:rgba(255,255,255,.95);border-radius:10px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .legend-title{font-size:11px;font-weight:700;color:#333;margin-bottom:6px}
 .legend-bar{width:200px;height:14px;border-radius:7px;background:linear-gradient(to right,#3b82f6,#10b981,#f59e0b,#ef4444,#7c3aed)}
 .legend-labels{display:flex;justify-content:space-between;font-size:10px;color:#6b7280;margin-top:2px}
-/* 정보창 */
 .info-wrap{font-size:13px;line-height:1.6;min-width:180px}
 .info-wrap .name{font-size:15px;font-weight:800;margin-bottom:4px;color:#1a1a2e}
 .info-wrap .loc{font-size:11px;color:#6b7280;margin-bottom:8px}
@@ -30,11 +27,9 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 .info-wrap .label{color:#6b7280;font-size:12px}
 .info-wrap .val{font-weight:800;color:#1a1a2e}
 .info-wrap .val.high{color:#ef4444}
-/* 로딩 */
 .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;background:rgba(255,255,255,.95);border-radius:16px;padding:24px 40px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .loading h3{font-size:16px;color:#333;margin-bottom:8px}
 .loading p{font-size:13px;color:#6b7280}
-/* 통계 바 */
 .stats{position:absolute;top:12px;right:12px;z-index:100;background:rgba(255,255,255,.95);border-radius:10px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:12px;color:#333;text-align:right}
 .stats .big{font-size:20px;font-weight:900;color:#3b82f6}
 .stats .sub{font-size:11px;color:#6b7280}
@@ -66,73 +61,123 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 </div>
 
 <script>
-// --- 전역 ---
-let map, heatmap, allData = [], markers = [], infoWindow;
-let currentFilter = 'all';  // all, mid, small
-let currentPeriod = 'all';  // all 또는 YYYYMM
+let map, allData = [], circles = [], markers = [], infoWindow;
+let currentFilter = 'all';
+let currentPeriod = 'all';
 let dataReady = false;
-const ZOOM_MARKER = 14;  // 이 줌 이상이면 마커 표시
+const ZOOM_LABEL = 14;  // 이 줌 이상이면 가격 라벨 마커 표시
 
-// --- 가격 → 색상 ---
-function priceColor(ppyeong) {
-  if (ppyeong >= 5000) return '#7c3aed';  // 보라
-  if (ppyeong >= 4000) return '#ef4444';  // 빨강
-  if (ppyeong >= 3000) return '#f59e0b';  // 주황
-  if (ppyeong >= 2000) return '#10b981';  // 초록
-  return '#3b82f6';                        // 파랑
+// 가격 → 색상
+function priceColor(p) {
+  if (p >= 5000) return '#7c3aed';
+  if (p >= 4000) return '#ef4444';
+  if (p >= 3000) return '#f59e0b';
+  if (p >= 2000) return '#10b981';
+  return '#3b82f6';
 }
 
-// --- 가격 → 히트맵 가중치 (0~1) ---
-function priceWeight(ppyeong) {
-  return Math.min(ppyeong / 5000, 1);
+// 가격 → 반투명 색상 (원형 오버레이용)
+function priceColorAlpha(p, a) {
+  if (p >= 5000) return `rgba(124,58,237,${a})`;
+  if (p >= 4000) return `rgba(239,68,68,${a})`;
+  if (p >= 3000) return `rgba(245,158,11,${a})`;
+  if (p >= 2000) return `rgba(16,185,129,${a})`;
+  return `rgba(59,130,246,${a})`;
 }
 
-// --- 숫자 포맷 ---
-function fmt(n) {
-  if (n == null) return '-';
-  return n.toLocaleString();
-}
+function fmt(n) { return n == null ? '-' : n.toLocaleString(); }
 
-// --- 데이터에서 표시할 평당가 추출 ---
 function getPrice(d) {
   if (currentPeriod !== 'all' && d.mo[currentPeriod]) {
-    const m = d.mo[currentPeriod];
-    if (currentFilter === 'mid') return d.m;  // 월별 면적대 분리 없음, 전체 기간 면적대 사용
+    if (currentFilter === 'mid') return d.m;
     if (currentFilter === 'small') return d.s;
-    return m.avg;
+    return d.mo[currentPeriod].avg;
   }
   if (currentFilter === 'mid') return d.m;
   if (currentFilter === 'small') return d.s;
   return d.a;
 }
 
-// --- 거래 건수 추출 ---
 function getCount(d) {
-  if (currentPeriod !== 'all' && d.mo[currentPeriod]) {
-    return d.mo[currentPeriod].cnt;
-  }
+  if (currentPeriod !== 'all' && d.mo[currentPeriod]) return d.mo[currentPeriod].cnt;
   return d.c;
 }
 
-// --- 히트맵 업데이트 ---
-function updateHeatmap() {
+// 줌 레벨에 따른 원형 반지름 (미터)
+function circleRadius(zoom) {
+  if (zoom >= 16) return 30;
+  if (zoom >= 15) return 60;
+  if (zoom >= 14) return 120;
+  if (zoom >= 13) return 250;
+  if (zoom >= 12) return 500;
+  if (zoom >= 11) return 1000;
+  if (zoom >= 10) return 2000;
+  if (zoom >= 9) return 4000;
+  if (zoom >= 8) return 8000;
+  return 15000;
+}
+
+// 화면 갱신
+function updateView() {
   if (!dataReady) return;
-  const points = [];
-  let totalCount = 0;
-  let totalWithPrice = 0;
+
+  // 기존 제거
+  for (const c of circles) c.setMap(null);
+  for (const m of markers) m.setMap(null);
+  circles = [];
+  markers = [];
+
+  const zoom = map.getZoom();
+  const bounds = map.getBounds();
+  const radius = circleRadius(zoom);
+  const showLabel = zoom >= ZOOM_LABEL;
+
+  let totalCount = 0, totalWithPrice = 0, rendered = 0;
 
   for (const d of allData) {
     const price = getPrice(d);
     if (price == null) continue;
     totalWithPrice++;
     totalCount += getCount(d);
-    points.push({
-      location: new naver.maps.LatLng(d.y, d.x),
-      weight: priceWeight(price)
-    });
-  }
 
-  heatmap.setData(points);
+    // 뷰포트 밖이면 건너뛰기
+    if (d.y < bounds.south() || d.y > bounds.north() || d.x < bounds.west() || d.x > bounds.east()) continue;
+    if (rendered >= 2000) continue;
+    rendered++;
+
+    const pos = new naver.maps.LatLng(d.y, d.x);
+
+    // 원형 오버레이 (히트맵 효과)
+    const circle = new naver.maps.Circle({
+      map: map,
+      center: pos,
+      radius: radius,
+      fillColor: priceColorAlpha(price, 0.45),
+      fillOpacity: 1,
+      strokeWeight: 0,
+      clickable: true
+    });
+
+    // 원형 클릭 → 정보창
+    naver.maps.Event.addListener(circle, 'click', () => showInfo(d, pos));
+    circles.push(circle);
+
+    // 줌인 시 가격 라벨 마커
+    if (showLabel) {
+      const color = priceColor(price);
+      const label = price >= 10000 ? (price / 10000).toFixed(1) + '억' : fmt(price);
+      const marker = new naver.maps.Marker({
+        position: pos,
+        map: map,
+        icon: {
+          content: `<div style="background:${color};color:#fff;padding:3px 7px;border-radius:12px;font-size:11px;font-weight:800;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.8)">${label}</div>`,
+          anchor: new naver.maps.Point(25, 12)
+        }
+      });
+      naver.maps.Event.addListener(marker, 'click', () => showInfo(d, pos));
+      markers.push(marker);
+    }
+  }
 
   // 통계
   document.getElementById('stats').innerHTML =
@@ -141,106 +186,38 @@ function updateHeatmap() {
     `<div class="sub">${currentFilter === 'mid' ? '중형 84㎡' : currentFilter === 'small' ? '소형 59㎡' : '전체 면적'}</div>`;
 }
 
-// --- 마커 표시 (현재 뷰포트 내) ---
-function updateMarkers() {
-  if (!dataReady) return;
-  // 마커 제거
-  for (const m of markers) m.setMap(null);
-  markers = [];
-
-  const zoom = map.getZoom();
-  if (zoom < ZOOM_MARKER) return;
-
-  const bounds = map.getBounds();
-  let count = 0;
-
-  for (const d of allData) {
-    if (count >= 500) break;  // 성능 제한
-    if (d.y < bounds.south() || d.y > bounds.north() || d.x < bounds.west() || d.x > bounds.east()) continue;
-
-    const price = getPrice(d);
-    if (price == null) continue;
-
-    const color = priceColor(price);
-    const label = price >= 10000 ? (price / 10000).toFixed(1) + '억' : fmt(price);
-
-    const marker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(d.y, d.x),
-      map: map,
-      icon: {
-        content: `<div style="background:${color};color:#fff;padding:3px 7px;border-radius:12px;font-size:11px;font-weight:800;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.8)">${label}</div>`,
-        anchor: new naver.maps.Point(25, 12)
-      }
-    });
-
-    // 클릭 시 정보창
-    naver.maps.Event.addListener(marker, 'click', () => {
-      const allP = d.a ? fmt(d.a) : '-';
-      const midP = d.m ? fmt(d.m) : '-';
-      const smlP = d.s ? fmt(d.s) : '-';
-      const content = `<div class="info-wrap">
-        <div class="name">${d.n}</div>
-        <div class="loc">${d.u} | ${d.r}</div>
-        <div class="row"><span class="label">전체 평당가</span><span class="val high">${allP}만</span></div>
-        <div class="row"><span class="label">중형(84㎡)</span><span class="val">${midP}만</span></div>
-        <div class="row"><span class="label">소형(59㎡)</span><span class="val">${smlP}만</span></div>
-        <div class="row"><span class="label">거래건수</span><span class="val">${d.c}건</span></div>
-      </div>`;
-      infoWindow.setContent(content);
-      infoWindow.open(map, marker);
-    });
-
-    markers.push(marker);
-    count++;
-  }
+function showInfo(d, pos) {
+  const content = `<div class="info-wrap">
+    <div class="name">${d.n}</div>
+    <div class="loc">${d.u} | ${d.r}</div>
+    <div class="row"><span class="label">전체 평당가</span><span class="val high">${d.a ? fmt(d.a) + '만' : '-'}</span></div>
+    <div class="row"><span class="label">중형(84㎡)</span><span class="val">${d.m ? fmt(d.m) + '만' : '-'}</span></div>
+    <div class="row"><span class="label">소형(59㎡)</span><span class="val">${d.s ? fmt(d.s) + '만' : '-'}</span></div>
+    <div class="row"><span class="label">거래건수</span><span class="val">${d.c}건</span></div>
+  </div>`;
+  infoWindow.setContent(content);
+  infoWindow.open(map, pos);
 }
 
-// --- 필터 변경 ---
 function setFilter(f) {
   currentFilter = f;
   document.querySelectorAll('.ctrl-row:first-child .btn').forEach(b => b.classList.remove('active'));
   document.getElementById(f === 'mid' ? 'btnMid' : f === 'small' ? 'btnSmall' : 'btnAll').classList.add('active');
-  updateHeatmap();
-  updateMarkers();
+  updateView();
 }
 
-// --- 기간 변경 ---
 function setPeriod(v) {
   currentPeriod = v;
-  updateHeatmap();
-  updateMarkers();
+  updateView();
 }
 
-// --- 화면 변경 시 마커 갱신 ---
-function onMapChange() {
-  const zoom = map.getZoom();
-  // 줌 레벨에 따라 히트맵 투명도 조절
-  if (zoom >= ZOOM_MARKER) {
-    heatmap.setOptions({ opacity: 0.4 });
-  } else {
-    heatmap.setOptions({ opacity: 0.7 });
-  }
-  updateMarkers();
-}
-
-// --- 초기화 ---
 function initMap() {
   map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(36.5, 127.5),
     zoom: 7,
     mapTypeControl: true,
     zoomControl: true,
-    zoomControlOptions: {
-      position: naver.maps.Position.RIGHT_CENTER
-    }
-  });
-
-  heatmap = new naver.maps.visualization.HeatMap({
-    map: map,
-    data: [],
-    opacity: 0.7,
-    radius: 15,
-    colorMap: naver.maps.visualization.SpectrumStyle.RAINBOW
+    zoomControlOptions: { position: naver.maps.Position.RIGHT_CENTER }
   });
 
   infoWindow = new naver.maps.InfoWindow({
@@ -255,13 +232,12 @@ function initMap() {
   let timer = null;
   naver.maps.Event.addListener(map, 'idle', () => {
     clearTimeout(timer);
-    timer = setTimeout(onMapChange, 200);
+    timer = setTimeout(updateView, 200);
   });
 
   loadData();
 }
 
-// --- 데이터 로딩 ---
 function loadData() {
   fetch('data/heatmap.json')
     .then(r => r.json())
@@ -269,34 +245,25 @@ function loadData() {
       allData = json.data;
       dataReady = true;
 
-      // 기간 선택 드롭다운 생성
       const sel = document.getElementById('selPeriod');
       sel.innerHTML = '<option value="all">전체 6개월</option>';
       for (const ym of json.months) {
-        const label = ym.substring(0, 4) + '.' + ym.substring(4);
-        sel.innerHTML += `<option value="${ym}">${label}</option>`;
+        sel.innerHTML += `<option value="${ym}">${ym.substring(0, 4)}.${ym.substring(4)}</option>`;
       }
 
       document.getElementById('loading').style.display = 'none';
-      updateHeatmap();
+      updateView();
     })
     .catch(err => {
       document.getElementById('loading').innerHTML = '<h3>데이터 로딩 실패</h3><p>' + err.message + '</p>';
     });
 }
 
-// --- 시작 (visualization 서브모듈 로딩 대기) ---
-function waitAndInit() {
-  if (typeof naver !== 'undefined' && naver.maps && naver.maps.visualization && naver.maps.visualization.HeatMap) {
-    initMap();
-  } else {
-    setTimeout(waitAndInit, 100);
-  }
-}
+// 시작
 if (document.readyState === 'complete') {
-  waitAndInit();
+  initMap();
 } else {
-  window.addEventListener('load', waitAndInit);
+  window.addEventListener('load', initMap);
 }
 </script>
 </body>
