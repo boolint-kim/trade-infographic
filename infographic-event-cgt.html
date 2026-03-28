@@ -323,7 +323,7 @@ function updateChart(groupKey) {
           position: 'left',
           title: { display: !_m, text: '평균가(억)', font: { size: 11, weight: 'bold' } },
           grid: { color: '#f3f4f6' },
-          ticks: { callback: v => v + '억', font: { size: _m ? 10 : 12 } }
+          ticks: { callback: v => parseFloat(v.toFixed(1)) + '억', font: { size: _m ? 10 : 12 } }
         },
         yVolume: {
           position: 'right',
