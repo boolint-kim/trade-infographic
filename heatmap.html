@@ -325,7 +325,7 @@ function onMapClick(e) {
   }
 
   if (bestD) {
-    infoWindow.setContent('<div class="info-wrap">' +
+    infoWindow.setContent('<div class="info-wrap" onclick="infoWindow.close()" style="cursor:pointer">' +
       '<div class="name">' + bestD.n + '</div>' +
       '<div class="loc">' + bestD.u + ' | ' + bestD.r + '</div>' +
       '<div class="row"><span class="label">전체 평당가</span><span class="val high">' + (bestD.a ? fmt(bestD.a) + '만' : '-') + '</span></div>' +
@@ -335,6 +335,9 @@ function onMapClick(e) {
       '<div class="row"><span class="label">거래건수</span><span class="val">' + bestD.c + '건</span></div>' +
       '</div>');
     infoWindow.open(map, new naver.maps.LatLng(bestD.y, bestD.x));
+  } else {
+    // 빈 공간 클릭 시 팝업 닫기
+    infoWindow.close();
   }
 }
 
