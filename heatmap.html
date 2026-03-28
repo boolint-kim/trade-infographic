@@ -285,8 +285,19 @@ function loadData() {
     });
 }
 
-// --- 시작 ---
-naver.maps.onJSContentLoaded = initMap;
+// --- 시작 (visualization 서브모듈 로딩 대기) ---
+function waitAndInit() {
+  if (typeof naver !== 'undefined' && naver.maps && naver.maps.visualization && naver.maps.visualization.HeatMap) {
+    initMap();
+  } else {
+    setTimeout(waitAndInit, 100);
+  }
+}
+if (document.readyState === 'complete') {
+  waitAndInit();
+} else {
+  window.addEventListener('load', waitAndInit);
+}
 </script>
 </body>
 </html>
