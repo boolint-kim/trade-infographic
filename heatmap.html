@@ -9,35 +9,88 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a1a2e}
 #map{width:100%;height:100vh}
+
 .ctrl{position:absolute;top:12px;left:12px;z-index:100;display:flex;flex-direction:column;gap:8px}
-.ctrl-row{display:flex;gap:6px;align-items:center}
+.ctrl-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .ctrl-box{background:rgba(255,255,255,.95);border-radius:10px;padding:8px 12px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:13px;font-weight:600;color:#333}
-.ctrl-box select{border:1px solid #ddd;border-radius:6px;padding:4px 8px;font-size:12px;font-weight:600;background:#fff;color:#333}
-.btn{padding:6px 14px;border:2px solid #e5e7eb;border-radius:20px;background:#fff;font-size:12px;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s}
+.ctrl-box select{border:1px solid #ddd;border-radius:6px;padding:4px 8px;font-size:12px;font-weight:600;background:#fff;color:#333;min-height:36px}
+
+/* ③ 터치 타겟 44px 이상 */
+.btn{min-height:44px;padding:0 16px;border:2px solid #e5e7eb;border-radius:22px;background:#fff;font-size:12px;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;justify-content:center}
 .btn:hover{border-color:#3b82f6;color:#3b82f6}
 .btn.active{background:#3b82f6;border-color:#3b82f6;color:#fff}
+
+/* ⑤ 현재 위치 버튼 */
+.loc-btn{position:absolute;right:12px;bottom:130px;z-index:100;width:44px;height:44px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px}
+.loc-btn:active{background:#f0f0f0}
+
 .legend{position:absolute;bottom:32px;left:12px;z-index:100;background:rgba(255,255,255,.95);border-radius:10px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .legend-title{font-size:11px;font-weight:700;color:#333;margin-bottom:6px}
 .legend-bar{width:200px;height:14px;border-radius:7px;background:linear-gradient(to right,#3b82f6,#10b981,#f59e0b,#ef4444,#7c3aed)}
 .legend-labels{display:flex;justify-content:space-between;font-size:10px;color:#6b7280;margin-top:2px}
+/* ⑨ 데이터 기준일 */
+.legend-period{font-size:10px;color:#9ca3af;margin-top:6px}
+
 .info-wrap{font-size:13px;line-height:1.6;min-width:180px}
 .info-wrap .name{font-size:15px;font-weight:800;margin-bottom:4px;color:#1a1a2e}
 .info-wrap .loc{font-size:11px;color:#6b7280;margin-bottom:8px}
-.info-wrap .row{display:flex;justify-content:space-between;gap:16px}
+.info-wrap .row{display:flex;justify-content:space-between;gap:16px;padding:2px 0;border-radius:6px}
 .info-wrap .label{color:#6b7280;font-size:12px}
 .info-wrap .val{font-weight:800;color:#1a1a2e}
 .info-wrap .val.high{color:#ef4444}
+/* ⑩ 현재 선택 면적 필터 하이라이트 */
+.info-wrap .row.active-filter{background:#eff6ff;margin:0 -4px;padding:2px 4px}
+.info-wrap .row.active-filter .label{color:#3b82f6;font-weight:700}
+.info-wrap .row.active-filter .val{color:#3b82f6}
+.info-wrap .hint{font-size:10px;color:#9ca3af;margin-top:6px;text-align:center}
+
 .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;background:rgba(255,255,255,.95);border-radius:16px;padding:24px 40px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .loading h3{font-size:16px;color:#333;margin-bottom:8px}
-.loading p{font-size:13px;color:#6b7280}
+.loading p{font-size:13px;color:#6b7280;margin-bottom:12px}
+/* ⑥ 재시도 버튼 */
+.retry-btn{min-height:44px;padding:0 24px;border:none;border-radius:22px;background:#3b82f6;color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.retry-btn:active{background:#2563eb}
+
 .stats{position:absolute;top:12px;right:12px;z-index:100;background:rgba(255,255,255,.95);border-radius:10px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:12px;color:#333;text-align:right}
 .stats .big{font-size:20px;font-weight:900;color:#3b82f6}
 .stats .sub{font-size:11px;color:#6b7280}
+
+/* ④ 토스트 */
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1}
+
+/* ⑦ 줌인 유도 힌트 */
+#hint{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(0,0,0,.65);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+#hint.hidden{opacity:0}
+
+/* ⑧ 반응형 레이아웃 */
+@media (max-width: 480px) {
+  .ctrl{top:8px;left:8px}
+  .btn{min-height:44px;padding:0 12px;font-size:11px}
+  .stats{top:8px;right:8px;padding:6px 10px}
+  .stats .big{font-size:16px}
+  .legend{bottom:16px;left:8px;padding:8px 12px}
+  .legend-bar{width:150px}
+  .legend-labels{font-size:9px}
+  .loc-btn{right:8px;bottom:110px}
+  #hint{bottom:70px;font-size:11px}
+  #toast{font-size:12px;padding:8px 16px}
+}
+@media (max-width: 360px) {
+  .ctrl-row{gap:4px}
+  .btn{padding:0 8px;font-size:10px}
+}
 </style>
 </head>
 <body>
 <div id="map"></div>
 <div class="loading" id="loading"><h3>데이터 로딩 중...</h3><p>아파트 단지별 평당가</p></div>
+
+<!-- ④ 토스트 -->
+<div id="toast"></div>
+
+<!-- ⑦ 줌인 유도 힌트 -->
+<div id="hint">확대하면 단지별 평당가를 확인할 수 있어요</div>
 
 <div class="ctrl">
   <div class="ctrl-row">
@@ -55,18 +108,26 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 
 <div class="stats" id="stats"></div>
 
+<!-- ⑤ 현재 위치 버튼 -->
+<button class="loc-btn" onclick="goToMyLocation()" title="현재 위치">📍</button>
+
 <div class="legend">
   <div class="legend-title">평당가 (만원)</div>
   <div class="legend-bar"></div>
   <div class="legend-labels"><span>~1,000</span><span>2,000</span><span>3,000</span><span>4,000</span><span>5,000+</span></div>
+  <!-- ⑨ 데이터 기준일 -->
+  <div class="legend-period" id="legendPeriod"></div>
 </div>
 
 <script>
 let map, canvasLayer, infoWindow, allData = [], allMonths = [];
 let currentFilter = 'all';  // all, small, mid, large
-let currentPeriod = 6;       // 최근 N개월 (1~6)
+let currentPeriod = 6;       // 최근 N개월
 let dataReady = false;
 const ZOOM_LABEL = 14;
+
+// ⑪ 통계 캐시 — 필터/기간 변경 시에만 재계산
+let statsCache = { withPrice: 0, count: 0, filter: null, period: null };
 
 // --- 공간 인덱스 (0.01도 그리드 ≈ 1km) ---
 const grid = new Map();
@@ -118,12 +179,10 @@ function priceHex(p) {
 
 function fmt(n) { return n == null ? '-' : n.toLocaleString(); }
 
-// 선택된 기간의 월 목록 (최근 N개월)
 function getSelectedMonths() {
   return allMonths.slice(-currentPeriod);
 }
 
-// 면적 필터 키
 function filterKey() {
   if (currentFilter === 'large') return 'l';
   if (currentFilter === 'mid') return 'm';
@@ -131,12 +190,10 @@ function filterKey() {
   return 'a';
 }
 
-function getPrice(d) {
+// ① 기간 필터를 반영한 가격 계산 (면적 키 직접 지정 가능)
+function getPriceByKey(d, fk) {
   var months = getSelectedMonths();
-  var fk = filterKey();
   var sum = 0, cnt = 0;
-
-  // 기간 내 월별 데이터를 합산하여 가중 평균 계산
   for (var i = 0; i < months.length; i++) {
     var mo = d.mo[months[i]];
     if (!mo) continue;
@@ -144,15 +201,14 @@ function getPrice(d) {
       sum += mo.a * mo.c;
       cnt += mo.c;
     } else {
-      // 면적대별: 해당 면적대 값이 있는 월만
-      if (mo[fk] != null) {
-        // 면적대별 건수는 없으므로 1건으로 가중
-        sum += mo[fk];
-        cnt += 1;
-      }
+      if (mo[fk] != null) { sum += mo[fk]; cnt += 1; }
     }
   }
   return cnt > 0 ? Math.round(sum / cnt) : null;
+}
+
+function getPrice(d) {
+  return getPriceByKey(d, filterKey());
 }
 
 function getCount(d) {
@@ -163,6 +219,44 @@ function getCount(d) {
     if (mo) total += mo.c;
   }
   return total;
+}
+
+// ⑪ 통계 재계산 — 캐시 미스 시에만 전체 순회
+function computeStats() {
+  if (statsCache.filter === currentFilter && statsCache.period === currentPeriod) return;
+  var withPrice = 0, total = 0;
+  for (var i = 0; i < allData.length; i++) {
+    var price = getPrice(allData[i]);
+    if (price != null) {
+      withPrice++;
+      total += getCount(allData[i]);
+    }
+  }
+  statsCache = { withPrice: withPrice, count: total, filter: currentFilter, period: currentPeriod };
+}
+
+// ④ 토스트 (스로틀: 연속 호출 방지)
+var toastTimer = null;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
+}
+
+// ⑦ 줌 레벨별 힌트 업데이트
+function updateHint(zoom) {
+  var hint = document.getElementById('hint');
+  if (zoom >= 12) {
+    hint.classList.add('hidden');
+  } else if (zoom >= 10) {
+    hint.textContent = '조금 더 확대하면 단지를 탭해 상세 정보를 볼 수 있어요';
+    hint.classList.remove('hidden');
+  } else {
+    hint.textContent = '확대하면 단지별 평당가를 확인할 수 있어요';
+    hint.classList.remove('hidden');
+  }
 }
 
 // --- Canvas 오버레이 ---
@@ -195,13 +289,13 @@ CanvasHeatLayer.prototype.draw = function() {
   var mapSize = this._map.getSize();
   var dpr = window.devicePixelRatio || 1;
 
-  // Canvas 크기 맞추기
+  // 캔버스 크기 맞추기
   this._canvas.width = mapSize.width * dpr;
   this._canvas.height = mapSize.height * dpr;
   this._canvas.style.width = mapSize.width + 'px';
   this._canvas.style.height = mapSize.height + 'px';
 
-  // Canvas 위치: 지도 뷰포트 좌상단에 맞추기
+  // 캔버스 위치: 지도 뷰포트 좌상단에 맞추기
   var mapBounds = this._map.getBounds();
   var topLeft = proj.fromCoordToOffset(new naver.maps.LatLng(mapBounds.north(), mapBounds.west()));
   this._canvas.style.left = topLeft.x + 'px';
@@ -229,16 +323,9 @@ CanvasHeatLayer.prototype.draw = function() {
 
   // 공간 인덱스로 뷰포트 내 데이터 추출
   var visibleIdx = getVisibleIndices(bounds);
-  var totalCount = 0, totalWithPrice = 0;
 
-  // 통계는 전체 데이터 기준
-  for (var i = 0; i < allData.length; i++) {
-    var price = getPrice(allData[i]);
-    if (price != null) {
-      totalWithPrice++;
-      totalCount += getCount(allData[i]);
-    }
-  }
+  // ⑪ 통계 캐시에서 사용 (draw마다 전체 순회 없음)
+  computeStats();
 
   // 원형 그리기
   var originCoord = new naver.maps.LatLng(mapBounds.north(), mapBounds.west());
@@ -283,22 +370,28 @@ CanvasHeatLayer.prototype.draw = function() {
     }
   }
 
-  // 통계 업데이트
+  // 통계 업데이트 (캐시 사용)
   var filterLabel = {all:'전체 면적', small:'소형 <60㎡', mid:'중형 60~85㎡', large:'대형 85㎡+'}[currentFilter];
   document.getElementById('stats').innerHTML =
-    '<div class="big">' + totalWithPrice.toLocaleString() + '</div>' +
-    '<div class="sub">단지 (' + totalCount.toLocaleString() + '건)</div>' +
+    '<div class="big">' + statsCache.withPrice.toLocaleString() + '</div>' +
+    '<div class="sub">단지 (' + statsCache.count.toLocaleString() + '건)</div>' +
     '<div class="sub">' + filterLabel + ' | 최근 ' + currentPeriod + '개월</div>';
+
+  // ⑦ 힌트 업데이트
+  updateHint(zoom);
 };
 
 // --- 클릭 처리: Canvas는 pointerEvents:none이므로 지도 클릭으로 처리 ---
 function onMapClick(e) {
   if (!dataReady) return;
   var zoom = map.getZoom();
-  if (zoom < 12) return; // 너무 줌아웃이면 클릭 무시
 
-  var clickLat = e.coord.lat();
-  var clickLng = e.coord.lng();
+  // ② zoom < 12에서도 팝업 닫기 + ④ 토스트 안내
+  if (zoom < 12) {
+    infoWindow.close();
+    showToast('단지 정보를 보려면 더 확대해 주세요');
+    return;
+  }
 
   // 클릭 지점에서 가장 가까운 단지 찾기 (화면 기준 30px 이내)
   var proj = canvasLayer.getProjection();
@@ -325,15 +418,31 @@ function onMapClick(e) {
   }
 
   if (bestD) {
-    infoWindow.setContent('<div class="info-wrap" onclick="infoWindow.close()" style="cursor:pointer">' +
-      '<div class="name">' + bestD.n + '</div>' +
-      '<div class="loc">' + bestD.u + ' | ' + bestD.r + '</div>' +
-      '<div class="row"><span class="label">전체 평당가</span><span class="val high">' + (bestD.a ? fmt(bestD.a) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">대형(85㎡+)</span><span class="val">' + (bestD.l ? fmt(bestD.l) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">중형(60~85㎡)</span><span class="val">' + (bestD.m ? fmt(bestD.m) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">소형(&lt;60㎡)</span><span class="val">' + (bestD.s ? fmt(bestD.s) + '만' : '-') + '</span></div>' +
-      '<div class="row"><span class="label">거래건수</span><span class="val">' + bestD.c + '건</span></div>' +
-      '</div>');
+    // ① 팝업 수치: 현재 기간 필터 반영 (getPriceByKey 사용)
+    // ⑩ 현재 선택 면적 필터 행 하이라이트
+    var fk = filterKey();
+    var pAll   = getPriceByKey(bestD, 'a');
+    var pLarge = getPriceByKey(bestD, 'l');
+    var pMid   = getPriceByKey(bestD, 'm');
+    var pSmall = getPriceByKey(bestD, 's');
+    var cnt    = getCount(bestD);
+
+    function rowCls(key) {
+      return fk === key ? 'row active-filter' : 'row';
+    }
+
+    infoWindow.setContent(
+      '<div class="info-wrap" onclick="infoWindow.close()" style="cursor:pointer">' +
+        '<div class="name">' + bestD.n + '</div>' +
+        '<div class="loc">' + bestD.u + ' | ' + bestD.r + '</div>' +
+        '<div class="' + rowCls('a') + '"><span class="label">전체 평당가</span><span class="val high">' + (pAll   ? fmt(pAll)   + '만' : '-') + '</span></div>' +
+        '<div class="' + rowCls('l') + '"><span class="label">대형(85㎡+)</span><span class="val">'    + (pLarge ? fmt(pLarge) + '만' : '-') + '</span></div>' +
+        '<div class="' + rowCls('m') + '"><span class="label">중형(60~85㎡)</span><span class="val">'  + (pMid   ? fmt(pMid)   + '만' : '-') + '</span></div>' +
+        '<div class="' + rowCls('s') + '"><span class="label">소형(&lt;60㎡)</span><span class="val">' + (pSmall ? fmt(pSmall) + '만' : '-') + '</span></div>' +
+        '<div class="row"><span class="label">거래건수</span><span class="val">' + cnt + '건</span></div>' +
+        '<div class="hint">탭하여 닫기</div>' +
+      '</div>'
+    );
     infoWindow.open(map, new naver.maps.LatLng(bestD.y, bestD.x));
   } else {
     // 빈 공간 클릭 시 팝업 닫기
@@ -344,6 +453,7 @@ function onMapClick(e) {
 // --- 필터/기간 ---
 function setFilter(f) {
   currentFilter = f;
+  statsCache.filter = null;  // ⑪ 캐시 무효화
   document.querySelectorAll('.ctrl-row:first-child .btn').forEach(function(b) { b.classList.remove('active'); });
   var btnId = {all:'btnAll', small:'btnSmall', mid:'btnMid', large:'btnLarge'}[f];
   document.getElementById(btnId).classList.add('active');
@@ -352,7 +462,25 @@ function setFilter(f) {
 
 function setPeriod(v) {
   currentPeriod = parseInt(v);
+  statsCache.period = null;  // ⑪ 캐시 무효화
   canvasLayer.draw();
+}
+
+// ⑤ 현재 위치로 이동
+function goToMyLocation() {
+  if (!navigator.geolocation) {
+    showToast('이 브라우저는 위치 서비스를 지원하지 않습니다');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      map.setCenter(new naver.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      map.setZoom(13);
+    },
+    function() {
+      showToast('위치 정보를 가져올 수 없습니다');
+    }
+  );
 }
 
 // --- 초기화 ---
@@ -386,6 +514,11 @@ function initMap() {
 }
 
 function loadData() {
+  // ⑥ 재시도 시 로딩 상태로 복원
+  var loading = document.getElementById('loading');
+  loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>아파트 단지별 평당가</p>';
+  loading.style.display = '';
+
   fetch('data/heatmap.json')
     .then(function(r) { return r.json(); })
     .then(function(json) {
@@ -402,11 +535,20 @@ function loadData() {
       }
       currentPeriod = allMonths.length;
 
-      document.getElementById('loading').style.display = 'none';
+      // ⑨ 데이터 기준일 표시 (heatmap.json의 period 필드 활용)
+      if (json.period) {
+        document.getElementById('legendPeriod').textContent = '기준: ' + json.period.replace('~', ' ~ ');
+      }
+
+      loading.style.display = 'none';
       canvasLayer.draw();
     })
     .catch(function(err) {
-      document.getElementById('loading').innerHTML = '<h3>데이터 로딩 실패</h3><p>' + err.message + '</p>';
+      // ⑥ 에러 시 재시도 버튼 포함
+      loading.innerHTML =
+        '<h3>데이터 로딩 실패</h3>' +
+        '<p>' + err.message + '</p>' +
+        '<button class="retry-btn" onclick="loadData()">다시 시도</button>';
     });
 }
 
