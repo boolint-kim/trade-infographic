@@ -386,14 +386,15 @@ CanvasHeatLayer.prototype.draw = function() {
   var showLabel = zoom >= ZOOM_LABEL;
 
   var dotSize;
-  if (zoom >= 16) dotSize = 18;
-  else if (zoom >= 15) dotSize = 14;
-  else if (zoom >= 14) dotSize = 11;
-  else if (zoom >= 13) dotSize = 8;
-  else if (zoom >= 12) dotSize = 6;
-  else if (zoom >= 11) dotSize = 5;
-  else if (zoom >= 10) dotSize = 4;
-  else if (zoom >= 9) dotSize = 3;
+  if (zoom >= 17) dotSize = 10;
+  else if (zoom >= 16) dotSize = 8;
+  else if (zoom >= 15) dotSize = 7;
+  else if (zoom >= 14) dotSize = 6;
+  else if (zoom >= 13) dotSize = 5;
+  else if (zoom >= 12) dotSize = 4;
+  else if (zoom >= 11) dotSize = 3;
+  else if (zoom >= 10) dotSize = 3;
+  else if (zoom >= 9)  dotSize = 2;
   else dotSize = 2;
 
   var originCoord = new naver.maps.LatLng(mapBounds.north(), mapBounds.west());
