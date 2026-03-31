@@ -1,13 +1,13 @@
 {
-  "generated": "2026-03-28T06:24:19.535Z",
+  "generated": "2026-03-31T09:46:06.134Z",
   "period": "202601~202603",
   "sido": {
     "11": {
       "name": "서울특별시",
       "short": "서울",
-      "totalTrades": 13207,
-      "avgPrice": 110425,
-      "avgPpyeong": 4909,
+      "totalTrades": 13192,
+      "avgPrice": 110704,
+      "avgPpyeong": 4912,
       "ranking": [
         {
           "name": "한양1차(영동한양)",
@@ -486,12 +486,12 @@
         {
           "name": "가락(1차)쌍용아파트",
           "umdNm": "가락동",
-          "tradeCount": 9,
-          "pricePerPyeong": 9968,
-          "avgPrice": 194667,
-          "avgPyeong": 19.8,
+          "tradeCount": 10,
+          "pricePerPyeong": 9972,
+          "avgPrice": 193350,
+          "avgPyeong": 19.6,
           "prevPpyeong": 6522,
-          "riseRate": 52.8
+          "riseRate": 52.9
         },
         {
           "name": "가락금호아파트",
@@ -578,18 +578,18 @@
         {
           "name": "롯데캐슬",
           "umdNm": "황학동",
-          "tradeCount": 42,
-          "pricePerPyeong": 4953,
-          "avgPrice": 109243,
-          "avgPyeong": 22.6
+          "tradeCount": 43,
+          "pricePerPyeong": 4942,
+          "avgPrice": 109377,
+          "avgPyeong": 22.7
         },
         {
           "name": "상계주공6(고층)",
           "umdNm": "상계동",
-          "tradeCount": 37,
-          "pricePerPyeong": 4142,
-          "avgPrice": 64884,
-          "avgPyeong": 15.8
+          "tradeCount": 36,
+          "pricePerPyeong": 4149,
+          "avgPrice": 64797,
+          "avgPyeong": 15.7
         },
         {
           "name": "중계무지개",
@@ -648,20 +648,20 @@
           "avgPyeong": 14.8
         },
         {
+          "name": "파크리오",
+          "umdNm": "신천동",
+          "tradeCount": 32,
+          "pricePerPyeong": 12214,
+          "avgPrice": 272181,
+          "avgPyeong": 22.9
+        },
+        {
           "name": "창동주공3단지(해등마을)",
           "umdNm": "창동",
           "tradeCount": 31,
           "pricePerPyeong": 3757,
           "avgPrice": 63097,
           "avgPyeong": 16.9
-        },
-        {
-          "name": "파크리오",
-          "umdNm": "신천동",
-          "tradeCount": 31,
-          "pricePerPyeong": 12218,
-          "avgPrice": 270961,
-          "avgPyeong": 22.8
         },
         {
           "name": "한마을",
@@ -852,9 +852,9 @@
         {
           "name": "파크리오",
           "umdNm": "신천동",
-          "tradeCount": 16,
-          "pricePerPyeong": 11652,
-          "avgPrice": 299144,
+          "tradeCount": 17,
+          "pricePerPyeong": 11678,
+          "avgPrice": 299782,
           "avgPyeong": 25.7
         }
       ],
@@ -1024,9 +1024,9 @@
     "26": {
       "name": "부산광역시",
       "short": "부산",
-      "totalTrades": 8166,
-      "avgPrice": 42656,
-      "avgPpyeong": 1807,
+      "totalTrades": 8149,
+      "avgPrice": 42632,
+      "avgPpyeong": 1806,
       "ranking": [
         {
           "name": "엘시티",
@@ -1141,28 +1141,12 @@
           "avgPyeong": 23.4
         },
         {
-          "name": "해운대 I PARK",
-          "umdNm": "우동",
-          "tradeCount": 14,
-          "pricePerPyeong": 4317,
-          "avgPrice": 158132,
-          "avgPyeong": 35.6
-        },
-        {
           "name": "레이카운티(1단지)",
           "umdNm": "거제동",
-          "tradeCount": 17,
-          "pricePerPyeong": 4298,
-          "avgPrice": 94782,
-          "avgPyeong": 22.1
-        },
-        {
-          "name": "대우마리나1",
-          "umdNm": "우동",
-          "tradeCount": 6,
-          "pricePerPyeong": 4290,
-          "avgPrice": 121600,
-          "avgPyeong": 29.5
+          "tradeCount": 16,
+          "pricePerPyeong": 4311,
+          "avgPrice": 94144,
+          "avgPyeong": 21.9
         },
         {
           "name": "쌍용예가디오션",
@@ -1187,6 +1171,22 @@
           "pricePerPyeong": 4255,
           "avgPrice": 115633,
           "avgPyeong": 27.2
+        },
+        {
+          "name": "대우마리나1",
+          "umdNm": "우동",
+          "tradeCount": 5,
+          "pricePerPyeong": 4249,
+          "avgPrice": 123020,
+          "avgPyeong": 30.3
+        },
+        {
+          "name": "해운대자이1단지",
+          "umdNm": "우동",
+          "tradeCount": 15,
+          "pricePerPyeong": 4236,
+          "avgPrice": 104187,
+          "avgPyeong": 25.2
         }
       ],
       "rankLow": [
@@ -1443,24 +1443,14 @@
           "riseRate": 24.2
         },
         {
-          "name": "대우마리나1",
-          "umdNm": "우동",
-          "tradeCount": 6,
-          "pricePerPyeong": 4290,
-          "avgPrice": 121600,
-          "avgPyeong": 29.5,
-          "prevPpyeong": 3485,
-          "riseRate": 23.1
-        },
-        {
           "name": "동래래미안아이파크",
           "umdNm": "온천동",
-          "tradeCount": 59,
-          "pricePerPyeong": 3816,
-          "avgPrice": 80307,
-          "avgPyeong": 21,
+          "tradeCount": 58,
+          "pricePerPyeong": 3825,
+          "avgPrice": 80209,
+          "avgPyeong": 20.9,
           "prevPpyeong": 3105,
-          "riseRate": 22.9
+          "riseRate": 23.2
         },
         {
           "name": "두산1차아파트",
@@ -1471,6 +1461,16 @@
           "avgPyeong": 21.9,
           "prevPpyeong": 1654,
           "riseRate": 22.5
+        },
+        {
+          "name": "대우마리나1",
+          "umdNm": "우동",
+          "tradeCount": 5,
+          "pricePerPyeong": 4249,
+          "avgPrice": 123020,
+          "avgPyeong": 30.3,
+          "prevPpyeong": 3485,
+          "riseRate": 21.9
         },
         {
           "name": "부산더샵센텀포레",
@@ -1535,12 +1535,12 @@
         {
           "name": "해운대센트럴푸르지오",
           "umdNm": "우동",
-          "tradeCount": 11,
-          "pricePerPyeong": 3836,
-          "avgPrice": 98155,
+          "tradeCount": 10,
+          "pricePerPyeong": 3842,
+          "avgPrice": 98270,
           "avgPyeong": 25.6,
           "prevPpyeong": 3241,
-          "riseRate": 18.4
+          "riseRate": 18.5
         },
         {
           "name": "달맞이유림노르웨이숲",
@@ -1557,18 +1557,18 @@
         {
           "name": "대연롯데캐슬레전드1단지",
           "umdNm": "대연동",
-          "tradeCount": 62,
-          "pricePerPyeong": 2800,
-          "avgPrice": 58587,
-          "avgPyeong": 20.3
+          "tradeCount": 61,
+          "pricePerPyeong": 2809,
+          "avgPrice": 58987,
+          "avgPyeong": 20.4
         },
         {
           "name": "동래래미안아이파크",
           "umdNm": "온천동",
-          "tradeCount": 59,
-          "pricePerPyeong": 3816,
-          "avgPrice": 80307,
-          "avgPyeong": 21
+          "tradeCount": 58,
+          "pricePerPyeong": 3825,
+          "avgPrice": 80209,
+          "avgPyeong": 20.9
         },
         {
           "name": "화명롯데캐슬카이저",
@@ -1595,14 +1595,6 @@
           "avgPyeong": 25
         },
         {
-          "name": "대림타운",
-          "umdNm": "화명동",
-          "tradeCount": 40,
-          "pricePerPyeong": 1103,
-          "avgPrice": 25394,
-          "avgPyeong": 23.4
-        },
-        {
           "name": "대연파크푸르지오",
           "umdNm": "대연동",
           "tradeCount": 40,
@@ -1611,11 +1603,19 @@
           "avgPyeong": 24.7
         },
         {
+          "name": "대림타운",
+          "umdNm": "화명동",
+          "tradeCount": 39,
+          "pricePerPyeong": 1105,
+          "avgPrice": 25576,
+          "avgPyeong": 23.5
+        },
+        {
           "name": "다대동롯데캐슬몰운대",
           "umdNm": "다대동",
-          "tradeCount": 39,
+          "tradeCount": 38,
           "pricePerPyeong": 939,
-          "avgPrice": 25721,
+          "avgPrice": 25779,
           "avgPyeong": 27.5
         },
         {
@@ -1686,17 +1686,9 @@
           "name": "동래3차SKVIEW",
           "umdNm": "온천동",
           "tradeCount": 29,
-          "pricePerPyeong": 2347,
-          "avgPrice": 51317,
+          "pricePerPyeong": 2351,
+          "avgPrice": 51403,
           "avgPyeong": 22.1
-        },
-        {
-          "name": "더 래디언트 금정산",
-          "umdNm": "만덕동",
-          "tradeCount": 28,
-          "pricePerPyeong": 1702,
-          "avgPrice": 34898,
-          "avgPyeong": 20.7
         },
         {
           "name": "두산위브더제니스하버시티",
@@ -1705,6 +1697,14 @@
           "pricePerPyeong": 2744,
           "avgPrice": 62079,
           "avgPyeong": 22.7
+        },
+        {
+          "name": "더 래디언트 금정산",
+          "umdNm": "만덕동",
+          "tradeCount": 27,
+          "pricePerPyeong": 1703,
+          "avgPrice": 34783,
+          "avgPyeong": 20.6
         },
         {
           "name": "동원로얄듀크",
@@ -1799,9 +1799,9 @@
         {
           "name": "대우마리나1",
           "umdNm": "우동",
-          "tradeCount": 5,
-          "pricePerPyeong": 4530,
-          "avgPrice": 115420,
+          "tradeCount": 4,
+          "pricePerPyeong": 4539,
+          "avgPrice": 115650,
           "avgPyeong": 25.5
         },
         {
@@ -1845,20 +1845,20 @@
           "avgPyeong": 25.7
         },
         {
+          "name": "레이카운티(1단지)",
+          "umdNm": "거제동",
+          "tradeCount": 8,
+          "pricePerPyeong": 4222,
+          "avgPrice": 108450,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "해운대자이1단지",
           "umdNm": "우동",
           "tradeCount": 7,
           "pricePerPyeong": 4215,
           "avgPrice": 107929,
           "avgPyeong": 25.6
-        },
-        {
-          "name": "레이카운티(1단지)",
-          "umdNm": "거제동",
-          "tradeCount": 9,
-          "pricePerPyeong": 4207,
-          "avgPrice": 108067,
-          "avgPyeong": 25.7
         },
         {
           "name": "쌍용예가디오션",
@@ -2043,8 +2043,8 @@
     "27": {
       "name": "대구광역시",
       "short": "대구",
-      "totalTrades": 6263,
-      "avgPrice": 39597,
+      "totalTrades": 6255,
+      "avgPrice": 39589,
       "avgPpyeong": 1612,
       "ranking": [
         {
@@ -2535,8 +2535,8 @@
           "name": "달성파크푸르지오힐스테이트",
           "umdNm": "달성동",
           "tradeCount": 37,
-          "pricePerPyeong": 2411,
-          "avgPrice": 53781,
+          "pricePerPyeong": 2410,
+          "avgPrice": 53770,
           "avgPyeong": 22.1,
           "prevPpyeong": 2120,
           "riseRate": 13.7
@@ -2617,8 +2617,8 @@
           "name": "달성파크푸르지오힐스테이트",
           "umdNm": "달성동",
           "tradeCount": 37,
-          "pricePerPyeong": 2411,
-          "avgPrice": 53781,
+          "pricePerPyeong": 2410,
+          "avgPrice": 53770,
           "avgPyeong": 22.1
         },
         {
@@ -2638,14 +2638,6 @@
           "avgPyeong": 26.4
         },
         {
-          "name": "청라힐스자이",
-          "umdNm": "남산동",
-          "tradeCount": 34,
-          "pricePerPyeong": 3120,
-          "avgPrice": 70697,
-          "avgPyeong": 22.8
-        },
-        {
           "name": "두류파크KCC스위첸",
           "umdNm": "두류동",
           "tradeCount": 33,
@@ -2654,20 +2646,28 @@
           "avgPyeong": 23
         },
         {
+          "name": "청라힐스자이",
+          "umdNm": "남산동",
+          "tradeCount": 33,
+          "pricePerPyeong": 3120,
+          "avgPrice": 70406,
+          "avgPyeong": 22.7
+        },
+        {
+          "name": "e편한세상범어",
+          "umdNm": "범어동",
+          "tradeCount": 32,
+          "pricePerPyeong": 2927,
+          "avgPrice": 72909,
+          "avgPyeong": 25
+        },
+        {
           "name": "서대구센트럴자이",
           "umdNm": "원대동3가",
           "tradeCount": 32,
           "pricePerPyeong": 2109,
           "avgPrice": 48670,
           "avgPyeong": 23.2
-        },
-        {
-          "name": "e편한세상범어",
-          "umdNm": "범어동",
-          "tradeCount": 31,
-          "pricePerPyeong": 2927,
-          "avgPrice": 72858,
-          "avgPyeong": 24.9
         },
         {
           "name": "교대역하늘채뉴센트원",
@@ -3062,9 +3062,9 @@
     "28": {
       "name": "인천광역시",
       "short": "인천",
-      "totalTrades": 6650,
-      "avgPrice": 41290,
-      "avgPpyeong": 1826,
+      "totalTrades": 6636,
+      "avgPrice": 41307,
+      "avgPpyeong": 1827,
       "ranking": [
         {
           "name": "송도더샵파크애비뉴",
@@ -3203,20 +3203,20 @@
           "avgPyeong": 19.3
         },
         {
+          "name": "송도더샵하버뷰(D15)",
+          "umdNm": "송도동",
+          "tradeCount": 3,
+          "pricePerPyeong": 3277,
+          "avgPrice": 105833,
+          "avgPyeong": 32.7
+        },
+        {
           "name": "송도아메리칸타운아이파크",
           "umdNm": "송도동",
           "tradeCount": 12,
-          "pricePerPyeong": 3252,
-          "avgPrice": 78675,
-          "avgPyeong": 24.2
-        },
-        {
-          "name": "송도더샵하버뷰(D15)",
-          "umdNm": "송도동",
-          "tradeCount": 4,
           "pricePerPyeong": 3248,
-          "avgPrice": 106450,
-          "avgPyeong": 33.1
+          "avgPrice": 78592,
+          "avgPyeong": 24.2
         },
         {
           "name": "청라국제금융단지한양수자인레이크블루",
@@ -3269,20 +3269,20 @@
           "avgPyeong": 18.4
         },
         {
-          "name": "세광엔리치빌1차",
-          "umdNm": "선원면 창리",
-          "tradeCount": 8,
-          "pricePerPyeong": 641,
-          "avgPrice": 16488,
-          "avgPyeong": 25.7
-        },
-        {
           "name": "인우",
           "umdNm": "산곡동",
           "tradeCount": 3,
           "pricePerPyeong": 641,
           "avgPrice": 12167,
           "avgPyeong": 19
+        },
+        {
+          "name": "세광엔리치빌1차",
+          "umdNm": "선원면 창리",
+          "tradeCount": 7,
+          "pricePerPyeong": 642,
+          "avgPrice": 16500,
+          "avgPyeong": 25.7
         },
         {
           "name": "신명2",
@@ -3705,20 +3705,20 @@
           "avgPyeong": 18.1
         },
         {
+          "name": "랜드마크시티센트럴더샵",
+          "umdNm": "송도동",
+          "tradeCount": 30,
+          "pricePerPyeong": 2428,
+          "avgPrice": 63936,
+          "avgPyeong": 26.4
+        },
+        {
           "name": "우성2",
           "umdNm": "연수동",
           "tradeCount": 30,
           "pricePerPyeong": 1857,
           "avgPrice": 30772,
           "avgPyeong": 16.4
-        },
-        {
-          "name": "랜드마크시티센트럴더샵",
-          "umdNm": "송도동",
-          "tradeCount": 29,
-          "pricePerPyeong": 2429,
-          "avgPrice": 64020,
-          "avgPyeong": 26.4
         },
         {
           "name": "인천영종한양수자인",
@@ -4081,8 +4081,8 @@
     "29": {
       "name": "광주광역시",
       "short": "광주",
-      "totalTrades": 3785,
-      "avgPrice": 29689,
+      "totalTrades": 3780,
+      "avgPrice": 29711,
       "avgPpyeong": 1253,
       "ranking": [
         {
@@ -4386,9 +4386,9 @@
         {
           "name": "중흥2차",
           "umdNm": "도천동",
-          "tradeCount": 12,
+          "tradeCount": 11,
           "pricePerPyeong": 516,
-          "avgPrice": 9329,
+          "avgPrice": 9336,
           "avgPyeong": 18.1
         },
         {
@@ -4432,9 +4432,9 @@
         {
           "name": "중흥2차",
           "umdNm": "도천동",
-          "tradeCount": 12,
+          "tradeCount": 11,
           "pricePerPyeong": 516,
-          "avgPrice": 9329,
+          "avgPrice": 9336,
           "avgPyeong": 18.1,
           "prevPpyeong": 444,
           "riseRate": 16.2
@@ -4654,10 +4654,10 @@
         {
           "name": "세계수영선수촌 중흥에스-클래스 센트럴",
           "umdNm": "우산동",
-          "tradeCount": 30,
-          "pricePerPyeong": 1440,
-          "avgPrice": 32630,
-          "avgPyeong": 22.7
+          "tradeCount": 29,
+          "pricePerPyeong": 1436,
+          "avgPrice": 32776,
+          "avgPyeong": 22.9
         },
         {
           "name": "계림아이파크에스케이뷰",
@@ -5100,8 +5100,8 @@
     "30": {
       "name": "대전광역시",
       "short": "대전",
-      "totalTrades": 4215,
-      "avgPrice": 36814,
+      "totalTrades": 4204,
+      "avgPrice": 36800,
       "avgPpyeong": 1552,
       "ranking": [
         {
@@ -5633,10 +5633,10 @@
         {
           "name": "경성큰마을",
           "umdNm": "갈마동",
-          "tradeCount": 75,
-          "pricePerPyeong": 1496,
-          "avgPrice": 32591,
-          "avgPyeong": 22
+          "tradeCount": 74,
+          "pricePerPyeong": 1498,
+          "avgPrice": 32562,
+          "avgPyeong": 21.9
         },
         {
           "name": "도마e편한세상포레나",
@@ -5997,9 +5997,9 @@
         {
           "name": "대전해모로더센트라",
           "umdNm": "선화동",
-          "tradeCount": 4,
-          "pricePerPyeong": 2512,
-          "avgPrice": 45575,
+          "tradeCount": 3,
+          "pricePerPyeong": 2504,
+          "avgPrice": 45433,
           "avgPyeong": 18.1
         },
         {
@@ -6119,9 +6119,9 @@
     "31": {
       "name": "울산광역시",
       "short": "울산",
-      "totalTrades": 3643,
-      "avgPrice": 35384,
-      "avgPpyeong": 1482,
+      "totalTrades": 3651,
+      "avgPrice": 35401,
+      "avgPpyeong": 1483,
       "ranking": [
         {
           "name": "문수로대공원에일린의뜰",
@@ -6328,9 +6328,9 @@
         {
           "name": "한솔그린빌",
           "umdNm": "웅촌면 대복리",
-          "tradeCount": 9,
-          "pricePerPyeong": 385,
-          "avgPrice": 5817,
+          "tradeCount": 10,
+          "pricePerPyeong": 380,
+          "avgPrice": 5735,
           "avgPyeong": 15.1
         },
         {
@@ -7138,9 +7138,9 @@
     "36": {
       "name": "세종특별자치시",
       "short": "세종",
-      "totalTrades": 1266,
-      "avgPrice": 53735,
-      "avgPpyeong": 2261,
+      "totalTrades": 1267,
+      "avgPrice": 53645,
+      "avgPpyeong": 2257,
       "ranking": [
         {
           "name": "나릿재마을2단지",
@@ -7273,9 +7273,9 @@
         {
           "name": "도램마을 14단지(한림풀에버)",
           "umdNm": "도담동",
-          "tradeCount": 8,
-          "pricePerPyeong": 2986,
-          "avgPrice": 90313,
+          "tradeCount": 7,
+          "pricePerPyeong": 2990,
+          "avgPrice": 90429,
           "avgPyeong": 30.2
         },
         {
@@ -7356,9 +7356,9 @@
           "name": "욱일아파트",
           "umdNm": "조치원읍 침산리",
           "tradeCount": 20,
-          "pricePerPyeong": 830,
-          "avgPrice": 18100,
-          "avgPyeong": 22.3
+          "pricePerPyeong": 819,
+          "avgPrice": 18180,
+          "avgPyeong": 22.7
         },
         {
           "name": "죽림우방유셀",
@@ -7379,10 +7379,10 @@
         {
           "name": "세종e편한세상",
           "umdNm": "조치원읍 신안리",
-          "tradeCount": 8,
-          "pricePerPyeong": 1002,
-          "avgPrice": 30838,
-          "avgPyeong": 31
+          "tradeCount": 9,
+          "pricePerPyeong": 993,
+          "avgPrice": 31300,
+          "avgPyeong": 31.8
         },
         {
           "name": "신흥대우푸르지오",
@@ -7395,18 +7395,18 @@
         {
           "name": "조치원죽림자이",
           "umdNm": "조치원읍 죽림리",
-          "tradeCount": 13,
-          "pricePerPyeong": 1078,
-          "avgPrice": 33115,
-          "avgPyeong": 30.9
+          "tradeCount": 14,
+          "pricePerPyeong": 1084,
+          "avgPrice": 32857,
+          "avgPyeong": 30.5
         },
         {
           "name": "조치원신흥e편한세상(아)",
           "umdNm": "조치원읍 신흥리",
-          "tradeCount": 6,
-          "pricePerPyeong": 1084,
-          "avgPrice": 42367,
-          "avgPyeong": 41.2
+          "tradeCount": 7,
+          "pricePerPyeong": 1089,
+          "avgPrice": 42029,
+          "avgPyeong": 40.4
         },
         {
           "name": "세종마루(CB5-3BL)",
@@ -7507,6 +7507,16 @@
           "riseRate": 16.8
         },
         {
+          "name": "조치원죽림자이",
+          "umdNm": "조치원읍 죽림리",
+          "tradeCount": 14,
+          "pricePerPyeong": 1084,
+          "avgPrice": 32857,
+          "avgPyeong": 30.5,
+          "prevPpyeong": 933,
+          "riseRate": 16.2
+        },
+        {
           "name": "한뜰마을6단지(중흥S클래스센텀뷰)",
           "umdNm": "어진동",
           "tradeCount": 8,
@@ -7524,16 +7534,6 @@
           "avgPrice": 98917,
           "avgPyeong": 28.3,
           "prevPpyeong": 3030,
-          "riseRate": 15.5
-        },
-        {
-          "name": "조치원죽림자이",
-          "umdNm": "조치원읍 죽림리",
-          "tradeCount": 13,
-          "pricePerPyeong": 1078,
-          "avgPrice": 33115,
-          "avgPyeong": 30.9,
-          "prevPpyeong": 933,
           "riseRate": 15.5
         },
         {
@@ -7597,6 +7597,16 @@
           "riseRate": 14.1
         },
         {
+          "name": "새샘마을8단지",
+          "umdNm": "소담동",
+          "tradeCount": 4,
+          "pricePerPyeong": 2843,
+          "avgPrice": 78750,
+          "avgPyeong": 27.7,
+          "prevPpyeong": 2498,
+          "riseRate": 13.8
+        },
+        {
           "name": "첫마을7단지(래미안)",
           "umdNm": "한솔동",
           "tradeCount": 15,
@@ -7627,13 +7637,13 @@
           "riseRate": 12.8
         },
         {
-          "name": "새샘마을8단지",
-          "umdNm": "소담동",
-          "tradeCount": 5,
-          "pricePerPyeong": 2818,
-          "avgPrice": 76940,
-          "avgPyeong": 27.3,
-          "prevPpyeong": 2498,
+          "name": "도램마을 14단지(한림풀에버)",
+          "umdNm": "도담동",
+          "tradeCount": 7,
+          "pricePerPyeong": 2990,
+          "avgPrice": 90429,
+          "avgPyeong": 30.2,
+          "prevPpyeong": 2651,
           "riseRate": 12.8
         },
         {
@@ -7654,16 +7664,6 @@
           "avgPrice": 40722,
           "avgPyeong": 21.5,
           "prevPpyeong": 1700,
-          "riseRate": 12.6
-        },
-        {
-          "name": "도램마을 14단지(한림풀에버)",
-          "umdNm": "도담동",
-          "tradeCount": 8,
-          "pricePerPyeong": 2986,
-          "avgPrice": 90313,
-          "avgPyeong": 30.2,
-          "prevPpyeong": 2651,
           "riseRate": 12.6
         }
       ],
@@ -7701,14 +7701,6 @@
           "avgPyeong": 24.8
         },
         {
-          "name": "가락마을6단지(중흥S클래스프라디움)",
-          "umdNm": "고운동",
-          "tradeCount": 21,
-          "pricePerPyeong": 2082,
-          "avgPrice": 37626,
-          "avgPyeong": 18.1
-        },
-        {
           "name": "새샘마을6단지(한신더휴펜타힐스)",
           "umdNm": "소담동",
           "tradeCount": 21,
@@ -7717,12 +7709,20 @@
           "avgPyeong": 19
         },
         {
+          "name": "가락마을6단지(중흥S클래스프라디움)",
+          "umdNm": "고운동",
+          "tradeCount": 20,
+          "pricePerPyeong": 2082,
+          "avgPrice": 37623,
+          "avgPyeong": 18.1
+        },
+        {
           "name": "욱일아파트",
           "umdNm": "조치원읍 침산리",
           "tradeCount": 20,
-          "pricePerPyeong": 830,
-          "avgPrice": 18100,
-          "avgPyeong": 22.3
+          "pricePerPyeong": 819,
+          "avgPrice": 18180,
+          "avgPyeong": 22.7
         },
         {
           "name": "새뜸마을10단지(더샵힐스테이트)",
@@ -8157,9 +8157,9 @@
     "41": {
       "name": "경기도",
       "short": "경기",
-      "totalTrades": 32500,
-      "avgPrice": 55793,
-      "avgPpyeong": 2454,
+      "totalTrades": 32502,
+      "avgPrice": 55838,
+      "avgPpyeong": 2457,
       "ranking": [
         {
           "name": "양지마을(5단지)(한양501-514)",
@@ -8244,9 +8244,9 @@
         {
           "name": "한솔마을(5단지)(주공)",
           "umdNm": "정자동",
-          "tradeCount": 32,
-          "pricePerPyeong": 9264,
-          "avgPrice": 126159,
+          "tradeCount": 33,
+          "pricePerPyeong": 9259,
+          "avgPrice": 125821,
           "avgPyeong": 13.7
         },
         {
@@ -8260,10 +8260,10 @@
         {
           "name": "한솔마을(6단지)(주공)",
           "umdNm": "정자동",
-          "tradeCount": 9,
-          "pricePerPyeong": 9094,
-          "avgPrice": 121778,
-          "avgPyeong": 13.6
+          "tradeCount": 10,
+          "pricePerPyeong": 9114,
+          "avgPrice": 120800,
+          "avgPyeong": 13.4
         },
         {
           "name": "시범한신",
@@ -8488,12 +8488,12 @@
         {
           "name": "한솔마을(5단지)(주공)",
           "umdNm": "정자동",
-          "tradeCount": 32,
-          "pricePerPyeong": 9264,
-          "avgPrice": 126159,
+          "tradeCount": 33,
+          "pricePerPyeong": 9259,
+          "avgPrice": 125821,
           "avgPyeong": 13.7,
           "prevPpyeong": 5195,
-          "riseRate": 78.3
+          "riseRate": 78.2
         },
         {
           "name": "시범한양",
@@ -8518,22 +8518,12 @@
         {
           "name": "한솔마을(6단지)(주공)",
           "umdNm": "정자동",
-          "tradeCount": 9,
-          "pricePerPyeong": 9094,
-          "avgPrice": 121778,
-          "avgPyeong": 13.6,
+          "tradeCount": 10,
+          "pricePerPyeong": 9114,
+          "avgPrice": 120800,
+          "avgPyeong": 13.4,
           "prevPpyeong": 5408,
-          "riseRate": 68.2
-        },
-        {
-          "name": "분당하우스토리",
-          "umdNm": "금곡동",
-          "tradeCount": 3,
-          "pricePerPyeong": 4535,
-          "avgPrice": 154667,
-          "avgPyeong": 35.2,
-          "prevPpyeong": 2708,
-          "riseRate": 67.5
+          "riseRate": 68.5
         },
         {
           "name": "효자촌(대창)",
@@ -8566,6 +8556,16 @@
           "riseRate": 59.7
         },
         {
+          "name": "무지개(5단지)(청구)",
+          "umdNm": "구미동",
+          "tradeCount": 11,
+          "pricePerPyeong": 6476,
+          "avgPrice": 126500,
+          "avgPyeong": 19.9,
+          "prevPpyeong": 4061,
+          "riseRate": 59.5
+        },
+        {
           "name": "한솔마을(4단지)(주공)",
           "umdNm": "정자동",
           "tradeCount": 16,
@@ -8574,16 +8574,6 @@
           "avgPyeong": 11.9,
           "prevPpyeong": 5171,
           "riseRate": 58.8
-        },
-        {
-          "name": "무지개(5단지)(청구)",
-          "umdNm": "구미동",
-          "tradeCount": 10,
-          "pricePerPyeong": 6445,
-          "avgPrice": 127150,
-          "avgPyeong": 20.1,
-          "prevPpyeong": 4061,
-          "riseRate": 58.7
         },
         {
           "name": "양지마을(5단지)(한양501-514)",
@@ -8676,6 +8666,16 @@
           "riseRate": 51
         },
         {
+          "name": "까치마을(4단지)(롯데)",
+          "umdNm": "구미동",
+          "tradeCount": 4,
+          "pricePerPyeong": 7760,
+          "avgPrice": 132375,
+          "avgPyeong": 17,
+          "prevPpyeong": 5187,
+          "riseRate": 49.6
+        },
+        {
           "name": "상록마을(우성)1",
           "umdNm": "정자동",
           "tradeCount": 5,
@@ -8706,10 +8706,10 @@
         {
           "name": "매교역푸르지오SKVIEW",
           "umdNm": "매교동",
-          "tradeCount": 94,
-          "pricePerPyeong": 3917,
-          "avgPrice": 83495,
-          "avgPyeong": 21.5
+          "tradeCount": 93,
+          "pricePerPyeong": 3919,
+          "avgPrice": 83672,
+          "avgPyeong": 21.6
         },
         {
           "name": "황골마을주공1",
@@ -8866,6 +8866,14 @@
           "avgPyeong": 25.7
         },
         {
+          "name": "양지마을(금호1)",
+          "umdNm": "수내동",
+          "tradeCount": 2,
+          "pricePerPyeong": 9296,
+          "avgPrice": 238750,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "시범한신",
           "umdNm": "서현동",
           "tradeCount": 3,
@@ -9000,14 +9008,6 @@
           "pricePerPyeong": 6822,
           "avgPrice": 174575,
           "avgPyeong": 25.6
-        },
-        {
-          "name": "샛별마을(우방)",
-          "umdNm": "분당동",
-          "tradeCount": 2,
-          "pricePerPyeong": 6817,
-          "avgPrice": 175250,
-          "avgPyeong": 25.7
         }
       ],
       "rank59": [
@@ -9176,8 +9176,8 @@
     "43": {
       "name": "충청북도",
       "short": "충북",
-      "totalTrades": 4692,
-      "avgPrice": 24207,
+      "totalTrades": 4687,
+      "avgPrice": 24192,
       "avgPpyeong": 1055,
       "ranking": [
         {
@@ -9191,10 +9191,10 @@
         {
           "name": "신영지웰시티1차",
           "umdNm": "복대동",
-          "tradeCount": 59,
-          "pricePerPyeong": 2751,
-          "avgPrice": 103068,
-          "avgPyeong": 37.3
+          "tradeCount": 58,
+          "pricePerPyeong": 2754,
+          "avgPrice": 102776,
+          "avgPyeong": 37.1
         },
         {
           "name": "청주가경아이파크3단지",
@@ -9351,6 +9351,14 @@
           "avgPyeong": 15.2
         },
         {
+          "name": "청우",
+          "umdNm": "대소읍 태생리",
+          "tradeCount": 3,
+          "pricePerPyeong": 207,
+          "avgPrice": 3717,
+          "avgPyeong": 17.9
+        },
+        {
           "name": "홍은모드니",
           "umdNm": "생극면 신양리",
           "tradeCount": 4,
@@ -9493,14 +9501,6 @@
           "pricePerPyeong": 325,
           "avgPrice": 5717,
           "avgPyeong": 17.6
-        },
-        {
-          "name": "대승산내들",
-          "umdNm": "이월면 송림리",
-          "tradeCount": 6,
-          "pricePerPyeong": 327,
-          "avgPrice": 4450,
-          "avgPyeong": 13.6
         }
       ],
       "rankRise": [
@@ -9515,16 +9515,6 @@
           "riseRate": 52.4
         },
         {
-          "name": "진달래아파트",
-          "umdNm": "삼성면 덕정리",
-          "tradeCount": 3,
-          "pricePerPyeong": 424,
-          "avgPrice": 8867,
-          "avgPyeong": 20.6,
-          "prevPpyeong": 334,
-          "riseRate": 26.9
-        },
-        {
           "name": "일진뜨리에",
           "umdNm": "증평읍 초중리",
           "tradeCount": 4,
@@ -9537,12 +9527,12 @@
         {
           "name": "신영지웰시티1차",
           "umdNm": "복대동",
-          "tradeCount": 59,
-          "pricePerPyeong": 2751,
-          "avgPrice": 103068,
-          "avgPyeong": 37.3,
+          "tradeCount": 58,
+          "pricePerPyeong": 2754,
+          "avgPrice": 102776,
+          "avgPyeong": 37.1,
           "prevPpyeong": 2222,
-          "riseRate": 23.8
+          "riseRate": 23.9
         },
         {
           "name": "대림",
@@ -9703,6 +9693,16 @@
           "avgPyeong": 10.1,
           "prevPpyeong": 536,
           "riseRate": 14.7
+        },
+        {
+          "name": "주공",
+          "umdNm": "단양읍 상진리",
+          "tradeCount": 3,
+          "pricePerPyeong": 446,
+          "avgPrice": 6033,
+          "avgPyeong": 13.5,
+          "prevPpyeong": 389,
+          "riseRate": 14.7
         }
       ],
       "rankVolume": [
@@ -9717,9 +9717,9 @@
         {
           "name": "청주모충LH트릴로채",
           "umdNm": "모충동",
-          "tradeCount": 73,
-          "pricePerPyeong": 1446,
-          "avgPrice": 33429,
+          "tradeCount": 72,
+          "pricePerPyeong": 1447,
+          "avgPrice": 33404,
           "avgPyeong": 23.2
         },
         {
@@ -9733,10 +9733,10 @@
         {
           "name": "신영지웰시티1차",
           "umdNm": "복대동",
-          "tradeCount": 59,
-          "pricePerPyeong": 2751,
-          "avgPrice": 103068,
-          "avgPyeong": 37.3
+          "tradeCount": 58,
+          "pricePerPyeong": 2754,
+          "avgPrice": 102776,
+          "avgPyeong": 37.1
         },
         {
           "name": "두산위브지웰시티2차",
@@ -10195,9 +10195,9 @@
     "44": {
       "name": "충청남도",
       "short": "충남",
-      "totalTrades": 5667,
-      "avgPrice": 21168,
-      "avgPpyeong": 954,
+      "totalTrades": 5703,
+      "avgPrice": 21200,
+      "avgPpyeong": 955,
       "ranking": [
         {
           "name": "천안불당지웰더샵",
@@ -10234,10 +10234,10 @@
         {
           "name": "신영한들물빛도시지웰시티센트럴푸르지오2단지",
           "umdNm": "탕정면 매곡리",
-          "tradeCount": 13,
-          "pricePerPyeong": 2734,
-          "avgPrice": 72185,
-          "avgPyeong": 26.4
+          "tradeCount": 12,
+          "pricePerPyeong": 2737,
+          "avgPrice": 71533,
+          "avgPyeong": 26.1
         },
         {
           "name": "신영한들물빛도시지웰시티센트럴푸르지오3단지",
@@ -10274,10 +10274,10 @@
         {
           "name": "불당호반써밋플레이스센터시티",
           "umdNm": "불당동",
-          "tradeCount": 7,
-          "pricePerPyeong": 2515,
-          "avgPrice": 71814,
-          "avgPyeong": 28.6
+          "tradeCount": 8,
+          "pricePerPyeong": 2503,
+          "avgPrice": 71825,
+          "avgPyeong": 28.7
         },
         {
           "name": "호반 베르디움 센트로 포레",
@@ -10322,10 +10322,10 @@
         {
           "name": "엘에이치천년나무7단지",
           "umdNm": "불당동",
-          "tradeCount": 6,
-          "pricePerPyeong": 2139,
-          "avgPrice": 37942,
-          "avgPyeong": 17.7
+          "tradeCount": 7,
+          "pricePerPyeong": 2126,
+          "avgPrice": 37807,
+          "avgPyeong": 17.8
         },
         {
           "name": "천안레이크타운3차푸르지오",
@@ -10344,20 +10344,20 @@
           "avgPyeong": 17.6
         },
         {
+          "name": "불당이안",
+          "umdNm": "불당동",
+          "tradeCount": 6,
+          "pricePerPyeong": 2046,
+          "avgPrice": 52550,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "한들물빛도시시티프라디움",
           "umdNm": "탕정면 매곡리",
           "tradeCount": 6,
           "pricePerPyeong": 2040,
           "avgPrice": 52433,
           "avgPyeong": 25.7
-        },
-        {
-          "name": "불당리더힐스",
-          "umdNm": "불당동",
-          "tradeCount": 9,
-          "pricePerPyeong": 2033,
-          "avgPrice": 39467,
-          "avgPyeong": 19.4
         }
       ],
       "rankLow": [
@@ -10626,22 +10626,12 @@
         {
           "name": "덕성그린시티빌",
           "umdNm": "신관동",
-          "tradeCount": 7,
-          "pricePerPyeong": 568,
-          "avgPrice": 6657,
-          "avgPyeong": 11.7,
+          "tradeCount": 6,
+          "pricePerPyeong": 566,
+          "avgPrice": 6717,
+          "avgPyeong": 11.8,
           "prevPpyeong": 495,
-          "riseRate": 14.7
-        },
-        {
-          "name": "예천한성필하우스",
-          "umdNm": "예천동",
-          "tradeCount": 10,
-          "pricePerPyeong": 1444,
-          "avgPrice": 40770,
-          "avgPyeong": 28.4,
-          "prevPpyeong": 1261,
-          "riseRate": 14.5
+          "riseRate": 14.3
         },
         {
           "name": "대아아이투빌",
@@ -10672,6 +10662,16 @@
           "avgPyeong": 21.9,
           "prevPpyeong": 472,
           "riseRate": 13.8
+        },
+        {
+          "name": "예천한성필하우스",
+          "umdNm": "예천동",
+          "tradeCount": 9,
+          "pricePerPyeong": 1433,
+          "avgPrice": 40878,
+          "avgPyeong": 28.7,
+          "prevPpyeong": 1261,
+          "riseRate": 13.6
         },
         {
           "name": "금강빌리지아파트",
@@ -10728,15 +10728,15 @@
         {
           "name": "두정역효성해링턴플레이스",
           "umdNm": "두정동",
-          "tradeCount": 62,
-          "pricePerPyeong": 1811,
-          "avgPrice": 35081,
-          "avgPyeong": 19.3
+          "tradeCount": 66,
+          "pricePerPyeong": 1809,
+          "avgPrice": 35122,
+          "avgPyeong": 19.4
         },
         {
           "name": "초원그린타운",
           "umdNm": "신방동",
-          "tradeCount": 59,
+          "tradeCount": 60,
           "pricePerPyeong": 635,
           "avgPrice": 7539,
           "avgPyeong": 11.9
@@ -10766,6 +10766,14 @@
           "avgPyeong": 17.6
         },
         {
+          "name": "신부 디 이스트",
+          "umdNm": "신부동",
+          "tradeCount": 32,
+          "pricePerPyeong": 1512,
+          "avgPrice": 33702,
+          "avgPyeong": 22.3
+        },
+        {
           "name": "힐스테이트천안신부",
           "umdNm": "신부동",
           "tradeCount": 31,
@@ -10790,20 +10798,12 @@
           "avgPyeong": 23.8
         },
         {
-          "name": "신부 디 이스트",
-          "umdNm": "신부동",
-          "tradeCount": 29,
-          "pricePerPyeong": 1509,
-          "avgPrice": 33260,
-          "avgPyeong": 22
-        },
-        {
           "name": "천안레이크타운2차푸르지오",
           "umdNm": "성성동",
-          "tradeCount": 28,
-          "pricePerPyeong": 1848,
-          "avgPrice": 45150,
-          "avgPyeong": 24.5
+          "tradeCount": 29,
+          "pricePerPyeong": 1855,
+          "avgPrice": 44938,
+          "avgPyeong": 24.3
         },
         {
           "name": "천안목천동우1차",
@@ -10992,19 +10992,19 @@
           "avgPyeong": 25.7
         },
         {
+          "name": "불당이안",
+          "umdNm": "불당동",
+          "tradeCount": 6,
+          "pricePerPyeong": 2046,
+          "avgPrice": 52550,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "한들물빛도시시티프라디움",
           "umdNm": "탕정면 매곡리",
           "tradeCount": 6,
           "pricePerPyeong": 2040,
           "avgPrice": 52433,
-          "avgPyeong": 25.7
-        },
-        {
-          "name": "불당이안",
-          "umdNm": "불당동",
-          "tradeCount": 5,
-          "pricePerPyeong": 2024,
-          "avgPrice": 51980,
           "avgPyeong": 25.7
         },
         {
@@ -11066,19 +11066,19 @@
           "avgPyeong": 18.1
         },
         {
-          "name": "엘에이치천년나무7단지",
-          "umdNm": "불당동",
-          "tradeCount": 5,
-          "pricePerPyeong": 2161,
-          "avgPrice": 39150,
-          "avgPyeong": 18.1
-        },
-        {
           "name": "요진와이시티",
           "umdNm": "배방읍 장재리",
           "tradeCount": 10,
           "pricePerPyeong": 2147,
           "avgPrice": 38910,
+          "avgPyeong": 18.1
+        },
+        {
+          "name": "엘에이치천년나무7단지",
+          "umdNm": "불당동",
+          "tradeCount": 6,
+          "pricePerPyeong": 2142,
+          "avgPrice": 38792,
           "avgPyeong": 18.1
         },
         {
@@ -11117,8 +11117,8 @@
           "name": "두정역효성해링턴플레이스",
           "umdNm": "두정동",
           "tradeCount": 36,
-          "pricePerPyeong": 1832,
-          "avgPrice": 33193,
+          "pricePerPyeong": 1830,
+          "avgPrice": 33151,
           "avgPyeong": 18.1
         },
         {
@@ -11144,6 +11144,14 @@
           "pricePerPyeong": 1686,
           "avgPrice": 30567,
           "avgPyeong": 18.1
+        },
+        {
+          "name": "청당서희스타힐스",
+          "umdNm": "청당동",
+          "tradeCount": 2,
+          "pricePerPyeong": 1625,
+          "avgPrice": 29250,
+          "avgPyeong": 18
         },
         {
           "name": "e편한세상서산예천",
@@ -11200,23 +11208,15 @@
           "pricePerPyeong": 1533,
           "avgPrice": 27750,
           "avgPyeong": 18.1
-        },
-        {
-          "name": "힐스테이트천안신부",
-          "umdNm": "신부동",
-          "tradeCount": 20,
-          "pricePerPyeong": 1532,
-          "avgPrice": 27510,
-          "avgPyeong": 18
         }
       ]
     },
     "46": {
       "name": "전라남도",
       "short": "전남",
-      "totalTrades": 3552,
-      "avgPrice": 20314,
-      "avgPpyeong": 857,
+      "totalTrades": 3547,
+      "avgPrice": 20298,
+      "avgPpyeong": 856,
       "ranking": [
         {
           "name": "중흥에스-클래스에듀하이10단지",
@@ -12233,9 +12233,9 @@
     "47": {
       "name": "경상북도",
       "short": "경북",
-      "totalTrades": 5030,
-      "avgPrice": 19443,
-      "avgPpyeong": 830,
+      "totalTrades": 5023,
+      "avgPrice": 19430,
+      "avgPpyeong": 829,
       "ranking": [
         {
           "name": "중산자이1단지",
@@ -12248,10 +12248,10 @@
         {
           "name": "구미아이파크더샵",
           "umdNm": "원평동",
-          "tradeCount": 21,
-          "pricePerPyeong": 2215,
-          "avgPrice": 45293,
-          "avgPyeong": 20.2
+          "tradeCount": 20,
+          "pricePerPyeong": 2223,
+          "avgPrice": 45708,
+          "avgPyeong": 20.3
         },
         {
           "name": "중산하늘채더퍼스트",
@@ -12336,10 +12336,10 @@
         {
           "name": "문성레이크자이",
           "umdNm": "고아읍 문성리",
-          "tradeCount": 10,
-          "pricePerPyeong": 1785,
-          "avgPrice": 43520,
-          "avgPyeong": 24.4
+          "tradeCount": 9,
+          "pricePerPyeong": 1783,
+          "avgPrice": 43800,
+          "avgPyeong": 24.6
         },
         {
           "name": "LG그린빌라",
@@ -12544,20 +12544,20 @@
           "avgPyeong": 18
         },
         {
+          "name": "오성타워맨션",
+          "umdNm": "약목면 복성리",
+          "tradeCount": 4,
+          "pricePerPyeong": 225,
+          "avgPrice": 4613,
+          "avgPyeong": 20
+        },
+        {
           "name": "동우비봉",
           "umdNm": "선산읍 교리",
           "tradeCount": 3,
           "pricePerPyeong": 233,
           "avgPrice": 5367,
           "avgPyeong": 23
-        },
-        {
-          "name": "오성타워맨션",
-          "umdNm": "약목면 복성리",
-          "tradeCount": 5,
-          "pricePerPyeong": 238,
-          "avgPrice": 5180,
-          "avgPyeong": 21.1
         }
       ],
       "rankRise": [
@@ -12722,6 +12722,16 @@
           "riseRate": 17.6
         },
         {
+          "name": "구미아이파크더샵",
+          "umdNm": "원평동",
+          "tradeCount": 20,
+          "pricePerPyeong": 2223,
+          "avgPrice": 45708,
+          "avgPyeong": 20.3,
+          "prevPpyeong": 1893,
+          "riseRate": 17.4
+        },
+        {
           "name": "영주가흥주공3단지",
           "umdNm": "가흥동",
           "tradeCount": 6,
@@ -12730,16 +12740,6 @@
           "avgPyeong": 15.6,
           "prevPpyeong": 925,
           "riseRate": 17.3
-        },
-        {
-          "name": "구미아이파크더샵",
-          "umdNm": "원평동",
-          "tradeCount": 21,
-          "pricePerPyeong": 2215,
-          "avgPrice": 45293,
-          "avgPyeong": 20.2,
-          "prevPpyeong": 1893,
-          "riseRate": 17
         },
         {
           "name": "송현2주공(316)",
@@ -12892,14 +12892,6 @@
           "avgPyeong": 26
         },
         {
-          "name": "구미아이파크더샵",
-          "umdNm": "원평동",
-          "tradeCount": 21,
-          "pricePerPyeong": 2215,
-          "avgPrice": 45293,
-          "avgPyeong": 20.2
-        },
-        {
           "name": "옥동3주공",
           "umdNm": "옥동",
           "tradeCount": 21,
@@ -12922,6 +12914,14 @@
           "pricePerPyeong": 1100,
           "avgPrice": 24240,
           "avgPyeong": 22.1
+        },
+        {
+          "name": "파라디아",
+          "umdNm": "공단동",
+          "tradeCount": 21,
+          "pricePerPyeong": 635,
+          "avgPrice": 15005,
+          "avgPyeong": 23.8
         }
       ],
       "rank84": [
@@ -13090,9 +13090,9 @@
         {
           "name": "구미아이파크더샵",
           "umdNm": "원평동",
-          "tradeCount": 15,
-          "pricePerPyeong": 2126,
-          "avgPrice": 38390,
+          "tradeCount": 14,
+          "pricePerPyeong": 2131,
+          "avgPrice": 38489,
           "avgPyeong": 18.1
         },
         {
@@ -13186,7 +13186,7 @@
         {
           "name": "센텀플로라1차",
           "umdNm": "정하동",
-          "tradeCount": 5,
+          "tradeCount": 4,
           "pricePerPyeong": 1340,
           "avgPrice": 24300,
           "avgPyeong": 18.1
@@ -13252,8 +13252,8 @@
     "48": {
       "name": "경상남도",
       "short": "경남",
-      "totalTrades": 8503,
-      "avgPrice": 26514,
+      "totalTrades": 8492,
+      "avgPrice": 26500,
       "avgPpyeong": 1138,
       "ranking": [
         {
@@ -13315,10 +13315,10 @@
         {
           "name": "대우",
           "umdNm": "상남동",
-          "tradeCount": 11,
-          "pricePerPyeong": 3269,
-          "avgPrice": 44682,
-          "avgPyeong": 13.7
+          "tradeCount": 10,
+          "pricePerPyeong": 3300,
+          "avgPrice": 44750,
+          "avgPyeong": 13.6
         },
         {
           "name": "롯데2단지",
@@ -13583,12 +13583,12 @@
         {
           "name": "대우",
           "umdNm": "상남동",
-          "tradeCount": 11,
-          "pricePerPyeong": 3269,
-          "avgPrice": 44682,
-          "avgPyeong": 13.7,
+          "tradeCount": 10,
+          "pricePerPyeong": 3300,
+          "avgPrice": 44750,
+          "avgPyeong": 13.6,
           "prevPpyeong": 2126,
-          "riseRate": 53.8
+          "riseRate": 55.2
         },
         {
           "name": "거제수창프라임시티",
@@ -13643,12 +13643,12 @@
         {
           "name": "삼익",
           "umdNm": "사파동",
-          "tradeCount": 13,
-          "pricePerPyeong": 2404,
-          "avgPrice": 42154,
-          "avgPyeong": 17.6,
+          "tradeCount": 12,
+          "pricePerPyeong": 2403,
+          "avgPrice": 41500,
+          "avgPyeong": 17.3,
           "prevPpyeong": 1873,
-          "riseRate": 28.4
+          "riseRate": 28.3
         },
         {
           "name": "은아",
@@ -13801,10 +13801,10 @@
         {
           "name": "대동",
           "umdNm": "상남동",
-          "tradeCount": 69,
-          "pricePerPyeong": 1505,
-          "avgPrice": 35480,
-          "avgPyeong": 24.1
+          "tradeCount": 68,
+          "pricePerPyeong": 1507,
+          "avgPrice": 35295,
+          "avgPyeong": 23.9
         },
         {
           "name": "창원메트로시티석전",
@@ -14221,9 +14221,9 @@
         {
           "name": "일동",
           "umdNm": "용호동",
-          "tradeCount": 12,
-          "pricePerPyeong": 2465,
-          "avgPrice": 44446,
+          "tradeCount": 11,
+          "pricePerPyeong": 2462,
+          "avgPrice": 44395,
           "avgPyeong": 18
         },
         {
@@ -14271,9 +14271,9 @@
     "50": {
       "name": "제주특별자치도",
       "short": "제주",
-      "totalTrades": 522,
-      "avgPrice": 30557,
-      "avgPpyeong": 1502,
+      "totalTrades": 520,
+      "avgPrice": 30583,
+      "avgPpyeong": 1504,
       "ranking": [
         {
           "name": "주공1",
@@ -14568,9 +14568,9 @@
         {
           "name": "부영(2차)",
           "umdNm": "외도일동",
-          "tradeCount": 11,
-          "pricePerPyeong": 1644,
-          "avgPrice": 42277,
+          "tradeCount": 10,
+          "pricePerPyeong": 1642,
+          "avgPrice": 42225,
           "avgPyeong": 25.7
         },
         {
@@ -14672,12 +14672,12 @@
         {
           "name": "부영(2차)",
           "umdNm": "외도일동",
-          "tradeCount": 11,
-          "pricePerPyeong": 1644,
-          "avgPrice": 42277,
+          "tradeCount": 10,
+          "pricePerPyeong": 1642,
+          "avgPrice": 42225,
           "avgPyeong": 25.7,
           "prevPpyeong": 1649,
-          "riseRate": -0.3
+          "riseRate": -0.4
         },
         {
           "name": "제주강정유승한내들퍼스트오션",
@@ -14818,9 +14818,9 @@
         {
           "name": "부영(2차)",
           "umdNm": "외도일동",
-          "tradeCount": 11,
-          "pricePerPyeong": 1644,
-          "avgPrice": 42277,
+          "tradeCount": 10,
+          "pricePerPyeong": 1642,
+          "avgPrice": 42225,
           "avgPyeong": 25.7
         },
         {
@@ -15076,9 +15076,9 @@
         {
           "name": "부영(2차)",
           "umdNm": "외도일동",
-          "tradeCount": 11,
-          "pricePerPyeong": 1644,
-          "avgPrice": 42277,
+          "tradeCount": 10,
+          "pricePerPyeong": 1642,
+          "avgPrice": 42225,
           "avgPyeong": 25.7
         },
         {
@@ -15216,9 +15216,9 @@
     "51": {
       "name": "강원특별자치도",
       "short": "강원",
-      "totalTrades": 3774,
-      "avgPrice": 22027,
-      "avgPpyeong": 988,
+      "totalTrades": 3763,
+      "avgPrice": 22045,
+      "avgPpyeong": 989,
       "ranking": [
         {
           "name": "춘천센트럴타워푸르지오",
@@ -15819,20 +15819,20 @@
           "avgPyeong": 21.1
         },
         {
-          "name": "입암6주공",
-          "umdNm": "입암동",
-          "tradeCount": 23,
-          "pricePerPyeong": 778,
-          "avgPrice": 13378,
-          "avgPyeong": 17.2
-        },
-        {
           "name": "금광포란재1단지",
           "umdNm": "태장동",
           "tradeCount": 22,
           "pricePerPyeong": 651,
           "avgPrice": 13739,
           "avgPyeong": 21.2
+        },
+        {
+          "name": "입암6주공",
+          "umdNm": "입암동",
+          "tradeCount": 22,
+          "pricePerPyeong": 776,
+          "avgPrice": 13305,
+          "avgPyeong": 17.1
         },
         {
           "name": "춘천더샵",
@@ -16235,8 +16235,8 @@
     "52": {
       "name": "전북특별자치도",
       "short": "전북",
-      "totalTrades": 4620,
-      "avgPrice": 23103,
+      "totalTrades": 4617,
+      "avgPrice": 23104,
       "avgPpyeong": 994,
       "ranking": [
         {
