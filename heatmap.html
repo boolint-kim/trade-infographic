@@ -178,11 +178,10 @@ var layerGrids = { apt: new Map(), office: new Map(), multi: new Map() };
 var layerReady = { apt: false, office: false, multi: false };
 var LAYER_KEYS = ['apt', 'office', 'multi'];
 
-var map, canvasLayer, infoWindow;
+var map, canvasLayer, infoWindow, myLocationMarker;
 var allMonths = [];
 var currentFilter = 'all';
 var currentPeriod = 6;
-var statsCache = { withPrice: 0, count: 0, filter: null, period: null, layers: null };
 var ZOOM_LABEL = 14;
 var GRID_SIZE = 0.01;
 var panelOpen = true;  // 패널 상태
@@ -233,6 +232,7 @@ function priceHex(p) {
 }
 
 function fmt(n) { return n == null ? '-' : n.toLocaleString(); }
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 
 function getSelectedMonths() {
   return allMonths.slice(-currentPeriod);
@@ -298,21 +298,20 @@ function drawShape(ctx, shape, px, py, size, fillStyle) {
   }
 }
 
-// --- 통계 캐시 ---
-function computeStats() {
-  var enabledKey = LAYER_KEYS.filter(function(k) { return LAYER_CFG[k].enabled; }).join(',');
-  if (statsCache.filter === currentFilter && statsCache.period === currentPeriod && statsCache.layers === enabledKey) return;
+// --- 통계 (화면 내 단지 기준) ---
+function computeViewportStats(bounds) {
   var withPrice = 0, total = 0;
   for (var ki = 0; ki < LAYER_KEYS.length; ki++) {
     var key = LAYER_KEYS[ki];
     if (!LAYER_CFG[key].enabled || !layerReady[key]) continue;
     var data = layerData[key];
-    for (var i = 0; i < data.length; i++) {
-      var price = getPrice(data[i]);
-      if (price != null) { withPrice++; total += getCount(data[i]); }
+    var visibleIdx = getVisibleLayerIndices(bounds, key);
+    for (var i = 0; i < visibleIdx.length; i++) {
+      var price = getPrice(data[visibleIdx[i]]);
+      if (price != null) { withPrice++; total += getCount(data[visibleIdx[i]]); }
     }
   }
-  statsCache = { withPrice: withPrice, count: total, filter: currentFilter, period: currentPeriod, layers: enabledKey };
+  return { withPrice: withPrice, count: total };
 }
 
 // --- 토스트 ---
@@ -440,14 +439,14 @@ CanvasHeatLayer.prototype.draw = function() {
     }
   }
 
-  // 통계 업데이트
-  computeStats();
+  // 통계 업데이트 (화면 내 단지 기준)
+  var vpStats = computeViewportStats(mapBounds);
   var filterLabel = {all:'전체 면적', small:'소형 <60㎡', mid:'중형 60~85㎡', large:'대형 85㎡+'}[currentFilter];
   var activeLabels = LAYER_KEYS.filter(function(k) { return LAYER_CFG[k].enabled && layerReady[k]; })
     .map(function(k) { return LAYER_CFG[k].label; }).join('+');
   document.getElementById('stats').innerHTML =
-    '<div class="big">' + statsCache.withPrice.toLocaleString() + '</div>' +
-    '<div class="sub">단지 (' + statsCache.count.toLocaleString() + '건)</div>' +
+    '<div class="big">' + vpStats.withPrice.toLocaleString() + '</div>' +
+    '<div class="sub">단지 (' + vpStats.count.toLocaleString() + '건)</div>' +
     '<div class="sub">' + filterLabel + ' | 최근 ' + currentPeriod + '개월</div>' +
     (activeLabels ? '<div class="sub" style="color:#3b82f6">' + activeLabels + '</div>' : '');
 
@@ -513,8 +512,8 @@ function onMapClick(e) {
     infoWindow.setContent(
       '<div class="info-wrap" onclick="infoWindow.close()" style="cursor:pointer">' +
         '<div class="type-badge">' + typeLabel + '</div>' +
-        '<div class="name">' + bestD.n + '</div>' +
-        '<div class="loc">' + bestD.u + ' | ' + bestD.r + '</div>' +
+        '<div class="name">' + esc(bestD.n) + '</div>' +
+        '<div class="loc">' + esc(bestD.u) + ' | ' + esc(bestD.r) + '</div>' +
         '<div class="' + rowCls('a') + '"><span class="label">전체 평당가</span><span class="val high">' + (pAll   ? fmt(pAll)   + '만' : '-') + '</span></div>' +
         '<div class="' + rowCls('l') + '"><span class="label">대형(85㎡+)</span><span class="val">'    + (pLarge ? fmt(pLarge) + '만' : '-') + '</span></div>' +
         '<div class="' + rowCls('m') + '"><span class="label">중형(60~85㎡)</span><span class="val">'  + (pMid   ? fmt(pMid)   + '만' : '-') + '</span></div>' +
@@ -558,14 +557,12 @@ function toggleLayer(key, enabled) {
     return;
   }
 
-  statsCache.layers = null; // 캐시 무효화
   canvasLayer.draw();
 }
 
 // --- 면적 필터 ---
 function setFilter(f) {
   currentFilter = f;
-  statsCache.filter = null;
   document.querySelectorAll('#filterRow .btn').forEach(function(b) { b.classList.remove('active'); });
   var btnId = {all:'btnAll', small:'btnSmall', mid:'btnMid', large:'btnLarge'}[f];
   document.getElementById(btnId).classList.add('active');
@@ -575,22 +572,52 @@ function setFilter(f) {
 // --- 기간 ---
 function setPeriod(v) {
   currentPeriod = parseInt(v);
-  statsCache.period = null;
+  // 범례 기간 텍스트 업데이트
+  var months = getSelectedMonths();
+  if (months.length > 0) {
+    var from = months[0], to = months[months.length - 1];
+    document.getElementById('legendPeriod').textContent =
+      '기준: ' + from.slice(0,4) + '.' + from.slice(4) + ' ~ ' + to.slice(0,4) + '.' + to.slice(4);
+  }
   canvasLayer.draw();
 }
 
 // --- 현재 위치 ---
+function showMyLocation(lat, lng) {
+  var latlng = new naver.maps.LatLng(lat, lng);
+  if (myLocationMarker) {
+    myLocationMarker.setPosition(latlng);
+  } else {
+    myLocationMarker = new naver.maps.Marker({
+      position: latlng,
+      map: map,
+      icon: {
+        content: '<div style="width:16px;height:16px;background:#3b82f6;border:3px solid #fff;border-radius:50%;box-shadow:0 0 6px rgba(59,130,246,.6)"></div>',
+        anchor: new naver.maps.Point(8, 8)
+      },
+      zIndex: 300
+    });
+  }
+  map.setCenter(latlng);
+  map.setZoom(14);
+}
+
 function goToMyLocation() {
   if (!navigator.geolocation) {
     showToast('이 브라우저는 위치 서비스를 지원하지 않습니다');
     return;
   }
+  showToast('위치 확인 중...');
+  // 캐시된 위치로 빠르게 이동 후, 정밀 위치로 보정
   navigator.geolocation.getCurrentPosition(
-    function(pos) {
-      map.setCenter(new naver.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      map.setZoom(13);
-    },
-    function() { showToast('위치 정보를 가져올 수 없습니다'); }
+    function(pos) { showMyLocation(pos.coords.latitude, pos.coords.longitude); },
+    function() {},
+    { maximumAge: 60000, timeout: 3000, enableHighAccuracy: false }
+  );
+  navigator.geolocation.getCurrentPosition(
+    function(pos) { showMyLocation(pos.coords.latitude, pos.coords.longitude); },
+    function() { showToast('위치 정보를 가져올 수 없습니다'); },
+    { maximumAge: 0, timeout: 10000, enableHighAccuracy: true }
   );
 }
 
@@ -648,7 +675,6 @@ function loadLayerData(key) {
       LAYER_CFG[key].loading = false;
       buildLayerGrid(key, layerData[key]);
       if (chip) chip.classList.remove('loading');
-      statsCache.layers = null;
       canvasLayer.draw();
       showToast(LAYER_CFG[key].label + ' ' + json.total.toLocaleString() + '개 단지 로드 완료');
     })
