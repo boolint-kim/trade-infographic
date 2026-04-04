@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-04-03T03:04:35.410Z",
+    "generated": "2026-04-04T16:20:32.616Z",
     "event": "양도세 중과 유예 만료",
     "deadline": "2026-05-09",
     "startYM": "202507",
@@ -11,8 +11,8 @@
       "code": "11680",
       "name": "강남구",
       "summary": {
-        "avgPrice": 25.6,
-        "totalCnt": 217
+        "avgPrice": 25.4,
+        "totalCnt": 223
       },
       "monthly": [
         {
@@ -97,12 +97,12 @@
         },
         {
           "ym": "202603",
-          "price84": 24.4,
-          "cnt84": 26,
-          "price59": 9.4,
-          "cnt59": 27,
-          "priceAll": 24.1,
-          "cntAll": 74,
+          "price84": 24.6,
+          "cnt84": 28,
+          "price59": 9.8,
+          "cnt59": 31,
+          "priceAll": 23.5,
+          "cntAll": 80,
           "cancelCnt": 1
         }
       ]
@@ -111,8 +111,8 @@
       "code": "11740",
       "name": "강동구",
       "summary": {
-        "avgPrice": 12.1,
-        "totalCnt": 415
+        "avgPrice": 12.2,
+        "totalCnt": 424
       },
       "monthly": [
         {
@@ -198,12 +198,22 @@
         {
           "ym": "202603",
           "price84": 12.6,
-          "cnt84": 89,
-          "price59": 7.2,
-          "cnt59": 39,
-          "priceAll": 11.2,
-          "cntAll": 139,
-          "cancelCnt": 2
+          "cnt84": 95,
+          "price59": 7.3,
+          "cnt59": 38,
+          "priceAll": 11.4,
+          "cntAll": 147,
+          "cancelCnt": 3
+        },
+        {
+          "ym": "202604",
+          "price84": null,
+          "cnt84": 0,
+          "price59": null,
+          "cnt59": 0,
+          "priceAll": 14.2,
+          "cntAll": 1,
+          "cancelCnt": 0
         }
       ]
     },
@@ -212,7 +222,7 @@
       "name": "강북구",
       "summary": {
         "avgPrice": 7.2,
-        "totalCnt": 246
+        "totalCnt": 249
       },
       "monthly": [
         {
@@ -298,11 +308,11 @@
         {
           "ym": "202603",
           "price84": 7.2,
-          "cnt84": 70,
+          "cnt84": 71,
           "price59": 4.2,
           "cnt59": 3,
           "priceAll": 7.4,
-          "cntAll": 89,
+          "cntAll": 92,
           "cancelCnt": 0
         }
       ]
@@ -312,7 +322,7 @@
       "name": "강서구",
       "summary": {
         "avgPrice": 9.1,
-        "totalCnt": 593
+        "totalCnt": 613
       },
       "monthly": [
         {
@@ -398,12 +408,22 @@
         {
           "ym": "202603",
           "price84": 9.8,
-          "cnt84": 116,
-          "price59": 6.3,
-          "cnt59": 67,
-          "priceAll": 9.1,
-          "cntAll": 205,
+          "cnt84": 122,
+          "price59": 6.4,
+          "cnt59": 77,
+          "priceAll": 9,
+          "cntAll": 223,
           "cancelCnt": 2
+        },
+        {
+          "ym": "202604",
+          "price84": null,
+          "cnt84": 0,
+          "price59": 6.5,
+          "cnt59": 1,
+          "priceAll": 9.4,
+          "cntAll": 2,
+          "cancelCnt": 0
         }
       ]
     },
@@ -412,7 +432,7 @@
       "name": "관악구",
       "summary": {
         "avgPrice": 8.7,
-        "totalCnt": 362
+        "totalCnt": 368
       },
       "monthly": [
         {
@@ -497,13 +517,23 @@
         },
         {
           "ym": "202603",
-          "price84": 8.6,
-          "cnt84": 110,
+          "price84": 8.5,
+          "cnt84": 111,
           "price59": 4.9,
           "cnt59": 13,
-          "priceAll": 8.7,
-          "cntAll": 149,
-          "cancelCnt": 1
+          "priceAll": 8.6,
+          "cntAll": 150,
+          "cancelCnt": 2
+        },
+        {
+          "ym": "202604",
+          "price84": 10.7,
+          "cnt84": 2,
+          "price59": 4,
+          "cnt59": 1,
+          "priceAll": 8.2,
+          "cntAll": 5,
+          "cancelCnt": 0
         }
       ]
     },
@@ -512,7 +542,7 @@
       "name": "광진구",
       "summary": {
         "avgPrice": 12.8,
-        "totalCnt": 109
+        "totalCnt": 113
       },
       "monthly": [
         {
@@ -597,12 +627,12 @@
         },
         {
           "ym": "202603",
-          "price84": 12.1,
-          "cnt84": 19,
+          "price84": 12.4,
+          "cnt84": 23,
           "price59": 5.8,
           "cnt59": 12,
-          "priceAll": 9.7,
-          "cntAll": 32,
+          "priceAll": 10.1,
+          "cntAll": 36,
           "cancelCnt": 0
         },
         {
@@ -622,7 +652,7 @@
       "name": "구로구",
       "summary": {
         "avgPrice": 7.5,
-        "totalCnt": 585
+        "totalCnt": 601
       },
       "monthly": [
         {
@@ -707,13 +737,23 @@
         },
         {
           "ym": "202603",
-          "price84": 8,
-          "cnt84": 163,
-          "price59": 4.5,
-          "cnt59": 37,
-          "priceAll": 7.5,
-          "cntAll": 220,
+          "price84": 7.9,
+          "cnt84": 174,
+          "price59": 4.2,
+          "cnt59": 40,
+          "priceAll": 7.4,
+          "cntAll": 235,
           "cancelCnt": 2
+        },
+        {
+          "ym": "202604",
+          "price84": 4.9,
+          "cnt84": 1,
+          "price59": null,
+          "cnt59": 0,
+          "priceAll": 4.9,
+          "cntAll": 1,
+          "cancelCnt": 0
         }
       ]
     },
@@ -722,7 +762,7 @@
       "name": "금천구",
       "summary": {
         "avgPrice": 6.6,
-        "totalCnt": 162
+        "totalCnt": 163
       },
       "monthly": [
         {
@@ -808,11 +848,11 @@
         {
           "ym": "202603",
           "price84": 6.4,
-          "cnt84": 44,
+          "cnt84": 45,
           "price59": 4.1,
           "cnt59": 12,
           "priceAll": 6.3,
-          "cntAll": 66,
+          "cntAll": 67,
           "cancelCnt": 0
         }
       ]
@@ -822,7 +862,7 @@
       "name": "노원구",
       "summary": {
         "avgPrice": 6.3,
-        "totalCnt": 1295
+        "totalCnt": 1335
       },
       "monthly": [
         {
@@ -908,21 +948,21 @@
         {
           "ym": "202603",
           "price84": 7.2,
-          "cnt84": 240,
+          "cnt84": 257,
           "price59": 4.9,
-          "cnt59": 225,
+          "cnt59": 238,
           "priceAll": 6.4,
-          "cntAll": 508,
-          "cancelCnt": 8
+          "cntAll": 540,
+          "cancelCnt": 9
         },
         {
           "ym": "202604",
-          "price84": 3.9,
-          "cnt84": 1,
-          "price59": null,
-          "cnt59": 0,
-          "priceAll": 3.9,
-          "cntAll": 1,
+          "price84": 5.8,
+          "cnt84": 6,
+          "price59": 3.2,
+          "cnt59": 3,
+          "priceAll": 4.9,
+          "cntAll": 9,
           "cancelCnt": 0
         }
       ]
@@ -932,7 +972,7 @@
       "name": "도봉구",
       "summary": {
         "avgPrice": 5.6,
-        "totalCnt": 345
+        "totalCnt": 368
       },
       "monthly": [
         {
@@ -1018,21 +1058,21 @@
         {
           "ym": "202603",
           "price84": 6.5,
-          "cnt84": 85,
-          "price59": 4,
-          "cnt59": 55,
+          "cnt84": 95,
+          "price59": 3.9,
+          "cnt59": 63,
           "priceAll": 5.6,
-          "cntAll": 148,
+          "cntAll": 167,
           "cancelCnt": 0
         },
         {
           "ym": "202604",
-          "price84": null,
-          "cnt84": 0,
-          "price59": 3.4,
-          "cnt59": 1,
-          "priceAll": 3.4,
-          "cntAll": 1,
+          "price84": 6.6,
+          "cnt84": 2,
+          "price59": 3.5,
+          "cnt59": 2,
+          "priceAll": 5.9,
+          "cntAll": 5,
           "cancelCnt": 0
         }
       ]
@@ -1042,7 +1082,7 @@
       "name": "동대문구",
       "summary": {
         "avgPrice": 9.5,
-        "totalCnt": 381
+        "totalCnt": 387
       },
       "monthly": [
         {
@@ -1128,21 +1168,21 @@
         {
           "ym": "202603",
           "price84": 10,
-          "cnt84": 82,
+          "cnt84": 86,
           "price59": 4,
           "cnt59": 45,
-          "priceAll": 8.6,
-          "cntAll": 153,
+          "priceAll": 8.7,
+          "cntAll": 157,
           "cancelCnt": 1
         },
         {
           "ym": "202604",
-          "price84": 5.4,
-          "cnt84": 1,
+          "price84": 6.3,
+          "cnt84": 2,
           "price59": null,
           "cnt59": 0,
-          "priceAll": 5.4,
-          "cntAll": 1,
+          "priceAll": 7,
+          "cntAll": 3,
           "cancelCnt": 0
         }
       ]
@@ -1151,8 +1191,8 @@
       "code": "11590",
       "name": "동작구",
       "summary": {
-        "avgPrice": 13.7,
-        "totalCnt": 267
+        "avgPrice": 13.6,
+        "totalCnt": 274
       },
       "monthly": [
         {
@@ -1237,12 +1277,12 @@
         },
         {
           "ym": "202603",
-          "price84": 14.6,
-          "cnt84": 57,
-          "price59": 9.3,
-          "cnt59": 12,
-          "priceAll": 14,
-          "cntAll": 87,
+          "price84": 14.3,
+          "cnt84": 63,
+          "price59": 9.5,
+          "cnt59": 13,
+          "priceAll": 13.9,
+          "cntAll": 94,
           "cancelCnt": 2
         }
       ]
@@ -1251,8 +1291,8 @@
       "code": "11440",
       "name": "마포구",
       "summary": {
-        "avgPrice": 13.5,
-        "totalCnt": 202
+        "avgPrice": 13.6,
+        "totalCnt": 205
       },
       "monthly": [
         {
@@ -1337,12 +1377,12 @@
         },
         {
           "ym": "202603",
-          "price84": 12.1,
-          "cnt84": 37,
+          "price84": 12.4,
+          "cnt84": 39,
           "price59": 6.1,
           "cnt59": 14,
-          "priceAll": 11.8,
-          "cntAll": 63,
+          "priceAll": 12.3,
+          "cntAll": 66,
           "cancelCnt": 4
         },
         {
@@ -1362,7 +1402,7 @@
       "name": "서대문구",
       "summary": {
         "avgPrice": 9.9,
-        "totalCnt": 374
+        "totalCnt": 387
       },
       "monthly": [
         {
@@ -1448,21 +1488,21 @@
         {
           "ym": "202603",
           "price84": 10,
-          "cnt84": 117,
+          "cnt84": 125,
           "price59": 6.4,
           "cnt59": 16,
           "priceAll": 9.9,
-          "cntAll": 155,
+          "cntAll": 165,
           "cancelCnt": 4
         },
         {
           "ym": "202604",
-          "price84": null,
-          "cnt84": 0,
+          "price84": 10.8,
+          "cnt84": 2,
           "price59": 10.3,
           "cnt59": 1,
-          "priceAll": 10.3,
-          "cntAll": 1,
+          "priceAll": 12.1,
+          "cntAll": 4,
           "cancelCnt": 0
         }
       ]
@@ -1471,8 +1511,8 @@
       "code": "11650",
       "name": "서초구",
       "summary": {
-        "avgPrice": 25.3,
-        "totalCnt": 193
+        "avgPrice": 25.2,
+        "totalCnt": 199
       },
       "monthly": [
         {
@@ -1557,12 +1597,12 @@
         },
         {
           "ym": "202603",
-          "price84": 24,
-          "cnt84": 27,
-          "price59": 6.2,
-          "cnt59": 17,
+          "price84": 23.4,
+          "cnt84": 29,
+          "price59": 5.9,
+          "cnt59": 19,
           "priceAll": 19.4,
-          "cntAll": 60,
+          "cntAll": 66,
           "cancelCnt": 1
         },
         {
@@ -1582,7 +1622,7 @@
       "name": "성동구",
       "summary": {
         "avgPrice": 16.9,
-        "totalCnt": 172
+        "totalCnt": 178
       },
       "monthly": [
         {
@@ -1668,12 +1708,22 @@
         {
           "ym": "202603",
           "price84": 16.3,
-          "cnt84": 45,
+          "cnt84": 48,
           "price59": 9.9,
           "cnt59": 4,
-          "priceAll": 16.5,
-          "cntAll": 57,
+          "priceAll": 16.6,
+          "cntAll": 62,
           "cancelCnt": 3
+        },
+        {
+          "ym": "202604",
+          "price84": null,
+          "cnt84": 0,
+          "price59": 13.5,
+          "cnt59": 1,
+          "priceAll": 13.5,
+          "cntAll": 1,
+          "cancelCnt": 0
         }
       ]
     },
@@ -1682,7 +1732,7 @@
       "name": "성북구",
       "summary": {
         "avgPrice": 9.3,
-        "totalCnt": 623
+        "totalCnt": 633
       },
       "monthly": [
         {
@@ -1767,13 +1817,23 @@
         },
         {
           "ym": "202603",
-          "price84": 8.9,
-          "cnt84": 165,
+          "price84": 9,
+          "cnt84": 171,
           "price59": 3.5,
           "cnt59": 13,
           "priceAll": 8.9,
-          "cntAll": 223,
+          "cntAll": 230,
           "cancelCnt": 2
+        },
+        {
+          "ym": "202604",
+          "price84": 9.8,
+          "cnt84": 3,
+          "price59": null,
+          "cnt59": 0,
+          "priceAll": 9.8,
+          "cntAll": 3,
+          "cancelCnt": 0
         }
       ]
     },
@@ -1781,8 +1841,8 @@
       "code": "11710",
       "name": "송파구",
       "summary": {
-        "avgPrice": 18.4,
-        "totalCnt": 412
+        "avgPrice": 18.5,
+        "totalCnt": 432
       },
       "monthly": [
         {
@@ -1867,13 +1927,23 @@
         },
         {
           "ym": "202603",
-          "price84": 18.7,
-          "cnt84": 83,
-          "price59": 10,
-          "cnt59": 41,
-          "priceAll": 17.6,
-          "cntAll": 152,
+          "price84": 19.3,
+          "cnt84": 95,
+          "price59": 9.9,
+          "cnt59": 43,
+          "priceAll": 18,
+          "cntAll": 168,
           "cancelCnt": 4
+        },
+        {
+          "ym": "202604",
+          "price84": 27.1,
+          "cnt84": 3,
+          "price59": 6.1,
+          "cnt59": 1,
+          "priceAll": 21.8,
+          "cntAll": 4,
+          "cancelCnt": 0
         }
       ]
     },
@@ -1881,8 +1951,8 @@
       "code": "11470",
       "name": "양천구",
       "summary": {
-        "avgPrice": 11.9,
-        "totalCnt": 394
+        "avgPrice": 11.8,
+        "totalCnt": 401
       },
       "monthly": [
         {
@@ -1967,13 +2037,13 @@
         },
         {
           "ym": "202603",
-          "price84": 9.8,
-          "cnt84": 98,
-          "price59": 9.2,
-          "cnt59": 30,
-          "priceAll": 11.3,
-          "cntAll": 149,
-          "cancelCnt": 1
+          "price84": 9.5,
+          "cnt84": 104,
+          "price59": 9,
+          "cnt59": 31,
+          "priceAll": 11,
+          "cntAll": 156,
+          "cancelCnt": 2
         },
         {
           "ym": "202604",
@@ -1991,8 +2061,8 @@
       "code": "11560",
       "name": "영등포구",
       "summary": {
-        "avgPrice": 12.7,
-        "totalCnt": 468
+        "avgPrice": 12.6,
+        "totalCnt": 482
       },
       "monthly": [
         {
@@ -2077,22 +2147,22 @@
         },
         {
           "ym": "202603",
-          "price84": 12.6,
-          "cnt84": 103,
+          "price84": 12.5,
+          "cnt84": 111,
           "price59": 5.3,
-          "cnt59": 40,
+          "cnt59": 42,
           "priceAll": 11.5,
-          "cntAll": 160,
+          "cntAll": 172,
           "cancelCnt": 3
         },
         {
           "ym": "202604",
           "price84": 11.5,
           "cnt84": 2,
-          "price59": null,
-          "cnt59": 0,
-          "priceAll": 11.5,
-          "cntAll": 2,
+          "price59": 2.1,
+          "cnt59": 1,
+          "priceAll": 10.8,
+          "cntAll": 4,
           "cancelCnt": 0
         }
       ]
@@ -2101,8 +2171,8 @@
       "code": "11170",
       "name": "용산구",
       "summary": {
-        "avgPrice": 24.1,
-        "totalCnt": 100
+        "avgPrice": 24.3,
+        "totalCnt": 104
       },
       "monthly": [
         {
@@ -2187,12 +2257,12 @@
         },
         {
           "ym": "202603",
-          "price84": 18.6,
-          "cnt84": 11,
+          "price84": 18.9,
+          "cnt84": 12,
           "price59": 10.2,
           "cnt59": 4,
-          "priceAll": 26.4,
-          "cntAll": 24,
+          "priceAll": 26.7,
+          "cntAll": 28,
           "cancelCnt": 0
         }
       ]
@@ -2202,7 +2272,7 @@
       "name": "은평구",
       "summary": {
         "avgPrice": 8.3,
-        "totalCnt": 523
+        "totalCnt": 542
       },
       "monthly": [
         {
@@ -2288,21 +2358,21 @@
         {
           "ym": "202603",
           "price84": 8.3,
-          "cnt84": 130,
+          "cnt84": 141,
           "price59": 3.9,
-          "cnt59": 48,
-          "priceAll": 7.3,
-          "cntAll": 197,
+          "cnt59": 49,
+          "priceAll": 7.4,
+          "cntAll": 209,
           "cancelCnt": 0
         },
         {
           "ym": "202604",
-          "price84": 9.4,
-          "cnt84": 1,
-          "price59": null,
-          "cnt59": 0,
-          "priceAll": 8.9,
-          "cntAll": 2,
+          "price84": 9,
+          "cnt84": 7,
+          "price59": 4.9,
+          "cnt59": 1,
+          "priceAll": 8.5,
+          "cntAll": 9,
           "cancelCnt": 0
         }
       ]
@@ -2311,8 +2381,8 @@
       "code": "11110",
       "name": "종로구",
       "summary": {
-        "avgPrice": 11.3,
-        "totalCnt": 83
+        "avgPrice": 11.4,
+        "totalCnt": 84
       },
       "monthly": [
         {
@@ -2397,12 +2467,12 @@
         },
         {
           "ym": "202603",
-          "price84": 12.3,
-          "cnt84": 14,
+          "price84": 12.5,
+          "cnt84": 15,
           "price59": 4.1,
           "cnt59": 12,
-          "priceAll": 10.8,
-          "cntAll": 33,
+          "priceAll": 10.9,
+          "cntAll": 34,
           "cancelCnt": 1
         },
         {
@@ -2421,8 +2491,8 @@
       "code": "11140",
       "name": "중구",
       "summary": {
-        "avgPrice": 10.8,
-        "totalCnt": 106
+        "avgPrice": 11,
+        "totalCnt": 109
       },
       "monthly": [
         {
@@ -2510,9 +2580,9 @@
           "price84": 11.2,
           "cnt84": 35,
           "price59": 3.2,
-          "cnt59": 9,
+          "cnt59": 10,
           "priceAll": 9.9,
-          "cntAll": 47,
+          "cntAll": 49,
           "cancelCnt": 3
         },
         {
@@ -2521,8 +2591,8 @@
           "cnt84": 0,
           "price59": 8.8,
           "cnt59": 1,
-          "priceAll": 8.8,
-          "cntAll": 1,
+          "priceAll": 23,
+          "cntAll": 2,
           "cancelCnt": 0
         }
       ]
@@ -2532,7 +2602,7 @@
       "name": "중랑구",
       "summary": {
         "avgPrice": 6.8,
-        "totalCnt": 369
+        "totalCnt": 373
       },
       "monthly": [
         {
@@ -2618,21 +2688,21 @@
         {
           "ym": "202603",
           "price84": 7,
-          "cnt84": 112,
-          "price59": 4.9,
-          "cnt59": 44,
+          "cnt84": 113,
+          "price59": 4.8,
+          "cnt59": 45,
           "priceAll": 6.7,
-          "cntAll": 170,
-          "cancelCnt": 5
+          "cntAll": 173,
+          "cancelCnt": 6
         },
         {
           "ym": "202604",
-          "price84": 8.2,
-          "cnt84": 1,
+          "price84": 7.6,
+          "cnt84": 2,
           "price59": 2.6,
           "cnt59": 2,
-          "priceAll": 4.4,
-          "cntAll": 3,
+          "priceAll": 5.1,
+          "cntAll": 4,
           "cancelCnt": 0
         }
       ]
@@ -2744,7 +2814,7 @@
       "name": "광명",
       "summary": {
         "avgPrice": 8.7,
-        "totalCnt": 482
+        "totalCnt": 492
       },
       "monthly": [
         {
@@ -2830,12 +2900,22 @@
         {
           "ym": "202603",
           "price84": 9.1,
-          "cnt84": 119,
+          "cnt84": 126,
           "price59": 6.1,
-          "cnt59": 56,
+          "cnt59": 57,
           "priceAll": 8.4,
-          "cntAll": 193,
+          "cntAll": 202,
           "cancelCnt": 1
+        },
+        {
+          "ym": "202604",
+          "price84": 12.5,
+          "cnt84": 1,
+          "price59": null,
+          "cnt59": 0,
+          "priceAll": 12.5,
+          "cntAll": 1,
+          "cancelCnt": 0
         }
       ]
     },
@@ -2844,7 +2924,7 @@
       "name": "성남 분당",
       "summary": {
         "avgPrice": 15.6,
-        "totalCnt": 378
+        "totalCnt": 388
       },
       "monthly": [
         {
@@ -2930,11 +3010,11 @@
         {
           "ym": "202603",
           "price84": 16.3,
-          "cnt84": 33,
-          "price59": 11.2,
-          "cnt59": 51,
-          "priceAll": 15.2,
-          "cntAll": 112,
+          "cnt84": 34,
+          "price59": 11.3,
+          "cnt59": 54,
+          "priceAll": 15.3,
+          "cntAll": 122,
           "cancelCnt": 1
         },
         {
@@ -2953,8 +3033,8 @@
       "code": "41131",
       "name": "성남 수정",
       "summary": {
-        "avgPrice": 11.2,
-        "totalCnt": 192
+        "avgPrice": 11.3,
+        "totalCnt": 196
       },
       "monthly": [
         {
@@ -3040,11 +3120,11 @@
         {
           "ym": "202603",
           "price84": 11.4,
-          "cnt84": 56,
+          "cnt84": 60,
           "price59": 2.8,
           "cnt59": 6,
           "priceAll": 10.9,
-          "cntAll": 69,
+          "cntAll": 73,
           "cancelCnt": 0
         },
         {
@@ -3063,8 +3143,8 @@
       "code": "41133",
       "name": "성남 중원",
       "summary": {
-        "avgPrice": 8,
-        "totalCnt": 214
+        "avgPrice": 8.1,
+        "totalCnt": 222
       },
       "monthly": [
         {
@@ -3150,11 +3230,11 @@
         {
           "ym": "202603",
           "price84": 8.1,
-          "cnt84": 38,
-          "price59": 5,
-          "cnt59": 27,
-          "priceAll": 7,
-          "cntAll": 69,
+          "cnt84": 41,
+          "price59": 5.3,
+          "cnt59": 30,
+          "priceAll": 7.2,
+          "cntAll": 77,
           "cancelCnt": 0
         }
       ]
@@ -3164,7 +3244,7 @@
       "name": "수원 영통",
       "summary": {
         "avgPrice": 7,
-        "totalCnt": 947
+        "totalCnt": 970
       },
       "monthly": [
         {
@@ -3250,21 +3330,21 @@
         {
           "ym": "202603",
           "price84": 6.1,
-          "cnt84": 317,
-          "price59": 3.4,
-          "cnt59": 48,
+          "cnt84": 331,
+          "price59": 3.5,
+          "cnt59": 49,
           "priceAll": 6.6,
-          "cntAll": 430,
+          "cntAll": 449,
           "cancelCnt": 5
         },
         {
           "ym": "202604",
-          "price84": 5.7,
-          "cnt84": 6,
-          "price59": null,
-          "cnt59": 0,
-          "priceAll": 5.8,
-          "cntAll": 7,
+          "price84": 5.5,
+          "cnt84": 8,
+          "price59": 2.3,
+          "cnt59": 1,
+          "priceAll": 5.6,
+          "cntAll": 11,
           "cancelCnt": 1
         }
       ]
@@ -3274,7 +3354,7 @@
       "name": "수원 장안",
       "summary": {
         "avgPrice": 5.6,
-        "totalCnt": 381
+        "totalCnt": 400
       },
       "monthly": [
         {
@@ -3359,12 +3439,12 @@
         },
         {
           "ym": "202603",
-          "price84": 5.2,
-          "cnt84": 96,
+          "price84": 5.4,
+          "cnt84": 113,
           "price59": 3.1,
-          "cnt59": 11,
-          "priceAll": 5.4,
-          "cntAll": 124,
+          "cnt59": 12,
+          "priceAll": 5.5,
+          "cntAll": 143,
           "cancelCnt": 2
         }
       ]
@@ -3374,7 +3454,7 @@
       "name": "수원 팔달",
       "summary": {
         "avgPrice": 6.4,
-        "totalCnt": 414
+        "totalCnt": 426
       },
       "monthly": [
         {
@@ -3460,21 +3540,21 @@
         {
           "ym": "202603",
           "price84": 6.7,
-          "cnt84": 110,
+          "cnt84": 118,
           "price59": 3.7,
-          "cnt59": 26,
+          "cnt59": 27,
           "priceAll": 6.2,
-          "cntAll": 147,
+          "cntAll": 156,
           "cancelCnt": 5
         },
         {
           "ym": "202604",
-          "price84": 5.5,
-          "cnt84": 1,
+          "price84": 6.6,
+          "cnt84": 4,
           "price59": null,
           "cnt59": 0,
-          "priceAll": 5.5,
-          "cntAll": 1,
+          "priceAll": 6.6,
+          "cntAll": 4,
           "cancelCnt": 0
         }
       ]
@@ -3484,7 +3564,7 @@
       "name": "안양 동안",
       "summary": {
         "avgPrice": 8.1,
-        "totalCnt": 733
+        "totalCnt": 755
       },
       "monthly": [
         {
@@ -3570,21 +3650,21 @@
         {
           "ym": "202603",
           "price84": 8.7,
-          "cnt84": 180,
+          "cnt84": 189,
           "price59": 5.2,
-          "cnt59": 95,
+          "cnt59": 104,
           "priceAll": 8.1,
-          "cntAll": 318,
+          "cntAll": 338,
           "cancelCnt": 4
         },
         {
           "ym": "202604",
           "price84": null,
           "cnt84": 0,
-          "price59": 5.5,
-          "cnt59": 1,
-          "priceAll": 5.5,
-          "cntAll": 1,
+          "price59": 4.6,
+          "cnt59": 3,
+          "priceAll": 4.6,
+          "cntAll": 3,
           "cancelCnt": 0
         }
       ]
@@ -3594,7 +3674,7 @@
       "name": "용인 수지",
       "summary": {
         "avgPrice": 9,
-        "totalCnt": 977
+        "totalCnt": 990
       },
       "monthly": [
         {
@@ -3680,21 +3760,21 @@
         {
           "ym": "202603",
           "price84": 8.9,
-          "cnt84": 200,
+          "cnt84": 205,
           "price59": 4.6,
           "cnt59": 8,
           "priceAll": 9.2,
-          "cntAll": 360,
+          "cntAll": 365,
           "cancelCnt": 4
         },
         {
           "ym": "202604",
-          "price84": null,
-          "cnt84": 0,
-          "price59": null,
-          "cnt59": 0,
-          "priceAll": 9.2,
-          "cntAll": 3,
+          "price84": 7.6,
+          "cnt84": 3,
+          "price59": 3,
+          "cnt59": 1,
+          "priceAll": 7.8,
+          "cntAll": 11,
           "cancelCnt": 0
         }
       ]
@@ -3704,7 +3784,7 @@
       "name": "의왕",
       "summary": {
         "avgPrice": 7.3,
-        "totalCnt": 253
+        "totalCnt": 262
       },
       "monthly": [
         {
@@ -3790,11 +3870,11 @@
         {
           "ym": "202603",
           "price84": 7,
-          "cnt84": 71,
-          "price59": 3.9,
-          "cnt59": 10,
+          "cnt84": 79,
+          "price59": 4,
+          "cnt59": 11,
           "priceAll": 7,
-          "cntAll": 89,
+          "cntAll": 98,
           "cancelCnt": 2
         },
         {
@@ -3814,7 +3894,7 @@
       "name": "하남",
       "summary": {
         "avgPrice": 10.4,
-        "totalCnt": 431
+        "totalCnt": 445
       },
       "monthly": [
         {
@@ -3899,22 +3979,22 @@
         },
         {
           "ym": "202603",
-          "price84": 9.9,
-          "cnt84": 99,
+          "price84": 9.8,
+          "cnt84": 107,
           "price59": 5.8,
-          "cnt59": 28,
+          "cnt59": 29,
           "priceAll": 9.7,
-          "cntAll": 153,
+          "cntAll": 166,
           "cancelCnt": 4
         },
         {
           "ym": "202604",
           "price84": 3.6,
           "cnt84": 1,
-          "price59": 1.7,
-          "cnt59": 1,
-          "priceAll": 2.6,
-          "cntAll": 2,
+          "price59": 3.3,
+          "cnt59": 2,
+          "priceAll": 3.4,
+          "cntAll": 3,
           "cancelCnt": 0
         }
       ]
