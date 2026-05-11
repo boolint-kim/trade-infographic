@@ -51,7 +51,7 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 .legend-period{font-size:10px;color:#9ca3af;margin-top:4px}
 
 /* 팝업 */
-.info-wrap{font-size:13px;line-height:1.6;min-width:180px}
+.info-wrap{font-size:13px;line-height:1.6;min-width:180px;padding:14px 16px}
 .info-wrap .name{font-size:15px;font-weight:800;margin-bottom:4px;color:#1a1a2e}
 .info-wrap .loc{font-size:11px;color:#6b7280;margin-bottom:8px}
 .info-wrap .type-badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:700;background:#1a1a2e;color:#fff;margin-bottom:6px}
@@ -715,7 +715,8 @@ function initMap() {
     borderColor: 'transparent',
     backgroundColor: '#fff',
     anchorSize: new naver.maps.Size(10, 10),
-    pixelOffset: new naver.maps.Point(0, -4)
+    pixelOffset: new naver.maps.Point(0, -4),
+    zIndex: 1000  // .ctrl/.stats/.legend/.loc-btn(z-index:100) 위에 표시
   });
 
   canvasLayer = new CanvasHeatLayer(map);
