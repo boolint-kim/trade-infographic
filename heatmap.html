@@ -84,6 +84,13 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 #hint{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);z-index:1;background:rgba(0,0,0,.65);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;pointer-events:none;transition:opacity .4s;white-space:nowrap}
 #hint.hidden{opacity:0}
 
+/* 인포윈도우 열린 동안 UI 카드/컨트롤 흐리게 — naver #map의 stacking context를 깰 수 없어 시각적으로만 양보 */
+body.popup-open .ctrl,
+body.popup-open .stats,
+body.popup-open .legend,
+body.popup-open .loc-btn,
+body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
+
 /* 반응형 — 태블릿/PC (모바일이 기본) */
 @media (min-width: 481px) {
   .ctrl{top:12px;left:12px;max-width:calc(100% - 130px)}
@@ -453,13 +460,24 @@ CanvasHeatLayer.prototype.draw = function() {
   updateHint(zoom);
 };
 
+// --- 인포윈도우 open/close 래퍼 (body.popup-open 토글) ---
+function openInfo(content, latlng) {
+  infoWindow.setContent(content);
+  infoWindow.open(map, latlng);
+  document.body.classList.add('popup-open');
+}
+function closeInfo() {
+  infoWindow.close();
+  document.body.classList.remove('popup-open');
+}
+
 // --- 클릭 처리 ---
 function onMapClick(e) {
   if (!layerReady.apt) return;
   var zoom = map.getZoom();
 
   if (zoom < 12) {
-    infoWindow.close();
+    closeInfo();
     showToast('단지 정보를 보려면 더 확대해 주세요');
     return;
   }
@@ -509,8 +527,8 @@ function onMapClick(e) {
       return fk === k ? 'row active-filter' : 'row';
     }
 
-    infoWindow.setContent(
-      '<div class="info-wrap" onclick="infoWindow.close()" style="cursor:pointer">' +
+    openInfo(
+      '<div class="info-wrap" onclick="closeInfo()" style="cursor:pointer">' +
         '<div class="type-badge">' + typeLabel + '</div>' +
         '<div class="name">' + esc(bestD.n) + '</div>' +
         '<div class="loc">' + esc(bestD.u) + ' | ' + esc(bestD.r) + '</div>' +
@@ -520,11 +538,11 @@ function onMapClick(e) {
         '<div class="' + rowCls('s') + '"><span class="label">소형(&lt;60㎡)</span><span class="val">' + (pSmall ? fmt(pSmall) + '만' : '-') + '</span></div>' +
         '<div class="row"><span class="label">거래건수</span><span class="val">' + cnt + '건</span></div>' +
         '<div class="hint">탭하여 닫기</div>' +
-      '</div>'
+      '</div>',
+      new naver.maps.LatLng(bestD.y, bestD.x)
     );
-    infoWindow.open(map, new naver.maps.LatLng(bestD.y, bestD.x));
   } else {
-    infoWindow.close();
+    closeInfo();
   }
 }
 
