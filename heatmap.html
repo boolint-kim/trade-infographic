@@ -80,8 +80,8 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
 #toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1}
 
-/* 힌트 */
-#hint{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(0,0,0,.65);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;pointer-events:none;transition:opacity .4s;white-space:nowrap}
+/* 힌트 — legend 위로 띄움 (겹침 방지) */
+#hint{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(0,0,0,.65);color:#fff;padding:8px 18px;border-radius:20px;font-size:12px;pointer-events:none;transition:opacity .4s;white-space:nowrap}
 #hint.hidden{opacity:0}
 
 /* 반응형 — 태블릿/PC (모바일이 기본) */
@@ -90,13 +90,14 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#1a
   .ctrl-toggle{min-height:36px;font-size:13px;padding:0 14px}
   .btn{padding:0 16px;font-size:12px}
   .layer-chip{min-height:36px;padding:0 12px;font-size:12px}
-  .stats{top:12px;right:12px;padding:10px 16px}
+  /* PC/태블릿: mapTypeControl(우상단)과 겹치지 않게 stats를 아래로 */
+  .stats{top:56px;right:12px;padding:10px 16px}
   .stats .big{font-size:20px}
   .stats .sub{font-size:11px}
   .legend{bottom:32px;left:12px;padding:12px 16px}
   .legend-bar{width:200px}
   .loc-btn{right:12px;bottom:130px}
-  #hint{bottom:100px}
+  #hint{bottom:170px}
 }
 @media (max-width: 360px) {
   .ctrl-row{gap:4px}
