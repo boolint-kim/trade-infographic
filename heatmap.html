@@ -174,6 +174,20 @@ body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
 </div>
 
 <script>
+// --- 거래 유형별 데이터 파일 매핑 (앱 임베드용 ?type=xxx 처리) ---
+var TYPE_TO_FILES = {
+  'apt-deal':    { primary: 'apt',    files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
+  'apt-rent':    { primary: 'apt',    files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } },
+  'office-deal': { primary: 'office', files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
+  'office-rent': { primary: 'office', files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } },
+  'multi-deal':  { primary: 'multi',  files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
+  'multi-rent':  { primary: 'multi',  files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } }
+};
+
+function resolveTypeConfig(type) {
+  return TYPE_TO_FILES[type] || TYPE_TO_FILES['apt-deal'];
+}
+
 // --- 레이어 설정 ---
 var LAYER_CFG = {
   apt:    { shape: 'circle',   label: '아파트',  url: 'data/heatmap.json',        enabled: true,  loading: false },
@@ -465,10 +479,17 @@ function openInfo(content, latlng) {
   infoWindow.setContent(content);
   infoWindow.open(map, latlng);
   document.body.classList.add('popup-open');
+  // 앱 임베드: 네이티브 컨트롤도 흐려지도록 알림
+  if (window.AndroidBridge && window.AndroidBridge.onPopupOpen) {
+    try { window.AndroidBridge.onPopupOpen(); } catch (e) {}
+  }
 }
 function closeInfo() {
   infoWindow.close();
   document.body.classList.remove('popup-open');
+  if (window.AndroidBridge && window.AndroidBridge.onPopupClose) {
+    try { window.AndroidBridge.onPopupClose(); } catch (e) {}
+  }
 }
 
 // --- 클릭 처리 ---
@@ -522,6 +543,26 @@ function onMapClick(e) {
     var pSmall = getPriceByKey(bestD, 's');
     var cnt    = getCount(bestD);
     var typeLabel = LAYER_CFG[bestKey].label;
+
+    // 앱 임베드: 단지 클릭 정보를 네이티브에 전달 (인포윈도우는 그대로 표시)
+    if (window.AndroidBridge && window.AndroidBridge.onComplexClick) {
+      try {
+        window.AndroidBridge.onComplexClick(JSON.stringify({
+          name: bestD.n,
+          regionCode: bestD.r,
+          umd: bestD.u,
+          lat: bestD.y,
+          lng: bestD.x,
+          layerKey: bestKey,
+          pricePerPyeong: getPrice(bestD),
+          priceAll: pAll,
+          priceLarge: pLarge,
+          priceMid: pMid,
+          priceSmall: pSmall,
+          count: cnt
+        }));
+      } catch (e) {}
+    }
 
     function rowCls(k) {
       return fk === k ? 'row active-filter' : 'row';
@@ -600,6 +641,37 @@ function setPeriod(v) {
   canvasLayer.draw();
 }
 
+// --- 앱 임베드용 외부 호출 함수 ---
+function focusLocation(lat, lng, zoom) {
+  if (!map) return false;
+  map.setCenter(new naver.maps.LatLng(lat, lng));
+  if (zoom) map.setZoom(zoom);
+  return true;
+}
+
+function focusComplex(name, regionCode) {
+  for (var li = 0; li < LAYER_KEYS.length; li++) {
+    var key = LAYER_KEYS[li];
+    if (!layerReady[key]) continue;
+    var data = layerData[key];
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].n === name && (!regionCode || data[i].r === regionCode)) {
+        focusLocation(data[i].y, data[i].x, 16);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+window.focusLocation = focusLocation;
+window.focusComplex = focusComplex;
+window.setFilter = setFilter;
+window.toggleLayer = toggleLayer;
+window.setPeriod = setPeriod;
+window.closeInfo = closeInfo;
+window.goToMyLocation = function() { goToMyLocation(); };
+
 // --- 현재 위치 ---
 function showMyLocation(lat, lng) {
   var latlng = new naver.maps.LatLng(lat, lng);
@@ -645,7 +717,7 @@ function loadAptData() {
   loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>아파트 단지별 평당가</p>';
   loading.style.display = '';
 
-  fetch('data/heatmap.json')
+  fetch(LAYER_CFG.apt.url)
     .then(function(r) { return r.json(); })
     .then(function(json) {
       layerData.apt = json.data;
@@ -683,7 +755,14 @@ function loadLayerData(key) {
   var chip = document.getElementById(chipId);
   if (chip) chip.classList.add('loading');
 
-  showToast(LAYER_CFG[key].label + ' 데이터 로딩 중...');
+  var isFirstLoad = allMonths.length === 0;
+  var loading = document.getElementById('loading');
+  if (isFirstLoad) {
+    loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>' + LAYER_CFG[key].label + ' 단지별 평당가</p>';
+    loading.style.display = '';
+  } else {
+    showToast(LAYER_CFG[key].label + ' 데이터 로딩 중...');
+  }
 
   fetch(LAYER_CFG[key].url)
     .then(function(r) { return r.json(); })
@@ -693,8 +772,27 @@ function loadLayerData(key) {
       LAYER_CFG[key].loading = false;
       buildLayerGrid(key, layerData[key]);
       if (chip) chip.classList.remove('loading');
+
+      // 첫 로드 시 기간 셀렉트박스와 범례 메타데이터 설정
+      if (isFirstLoad && json.months) {
+        allMonths = json.months;
+        var sel = document.getElementById('selPeriod');
+        sel.innerHTML = '';
+        for (var i = 1; i <= allMonths.length; i++) {
+          var selected = (i === allMonths.length) ? ' selected' : '';
+          sel.innerHTML += '<option value="' + i + '"' + selected + '>최근 ' + i + '개월</option>';
+        }
+        currentPeriod = allMonths.length;
+        if (json.period) {
+          document.getElementById('legendPeriod').textContent = '기준: ' + json.period.replace('~', ' ~ ');
+        }
+        loading.style.display = 'none';
+      }
+
       canvasLayer.draw();
-      showToast(LAYER_CFG[key].label + ' ' + json.total.toLocaleString() + '개 단지 로드 완료');
+      if (!isFirstLoad) {
+        showToast(LAYER_CFG[key].label + ' ' + json.total.toLocaleString() + '개 단지 로드 완료');
+      }
     })
     .catch(function(err) {
       LAYER_CFG[key].loading = false;
@@ -704,12 +802,65 @@ function loadLayerData(key) {
         chip.classList.remove('active');
         chip.querySelector('input').checked = false;
       }
-      showToast(LAYER_CFG[key].label + ' 로딩 실패');
+      if (isFirstLoad) {
+        loading.innerHTML =
+          '<h3>데이터 로딩 실패</h3><p>' + err.message + '</p>' +
+          '<button class="retry-btn" onclick="loadLayerData(\'' + key + '\')">다시 시도</button>';
+      } else {
+        showToast(LAYER_CFG[key].label + ' 로딩 실패');
+      }
     });
 }
 
 // --- 초기화 ---
 function initMap() {
+  // [앱 임베드] URL 파라미터 파싱
+  var params = new URLSearchParams(location.search);
+  var embedType = params.get('type');
+  var hideFilter = params.get('hideFilter') === '1';
+  var hideStats = params.get('hideStats') === '1';
+  var hideLegend = params.get('hideLegend') === '1';
+  var compact = params.get('compact') === '1';
+
+  // [앱 임베드] UI 요소 숨김 처리
+  if (hideFilter) {
+    var ctrl = document.querySelector('.ctrl');
+    if (ctrl) ctrl.style.display = 'none';
+  }
+  if (hideStats) {
+    var stats = document.querySelector('.stats');
+    if (stats) stats.style.display = 'none';
+  }
+  if (hideLegend) {
+    var legend = document.querySelector('.legend');
+    if (legend) legend.style.display = 'none';
+  }
+  if (compact) document.body.classList.add('compact');
+
+  // [앱 임베드] type 파라미터로 데이터 파일 및 primary 레이어 결정
+  var typeConfig = resolveTypeConfig(embedType);
+  LAYER_CFG.apt.url    = typeConfig.files.apt;
+  LAYER_CFG.office.url = typeConfig.files.office;
+  LAYER_CFG.multi.url  = typeConfig.files.multi;
+
+  if (typeConfig.primary !== 'apt') {
+    LAYER_CFG.apt.enabled = false;
+    LAYER_CFG[typeConfig.primary].enabled = true;
+    var chipApt = document.getElementById('chipApt');
+    if (chipApt) {
+      chipApt.classList.remove('active');
+      var aptCheckbox = chipApt.querySelector('input');
+      if (aptCheckbox) aptCheckbox.checked = false;
+    }
+    var primaryChipId = 'chip' + typeConfig.primary.charAt(0).toUpperCase() + typeConfig.primary.slice(1);
+    var primaryChip = document.getElementById(primaryChipId);
+    if (primaryChip) {
+      primaryChip.classList.add('active');
+      var primaryCheckbox = primaryChip.querySelector('input');
+      if (primaryCheckbox) primaryCheckbox.checked = true;
+    }
+  }
+
   // 모바일에서 패널 기본 접힘
   if (window.innerWidth <= 480) {
     panelOpen = false;
@@ -742,7 +893,12 @@ function initMap() {
   naver.maps.Event.addListener(map, 'click', onMapClick);
   naver.maps.Event.addListener(map, 'idle', function() { canvasLayer.draw(); });
 
-  loadAptData();
+  // primary 레이어 데이터 로드 (apt가 기본, 다른 type이면 해당 레이어 우선 로드)
+  if (typeConfig.primary === 'apt') {
+    loadAptData();
+  } else {
+    loadLayerData(typeConfig.primary);
+  }
 }
 
 if (document.readyState === 'complete') {
