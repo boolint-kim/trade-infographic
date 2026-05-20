@@ -23,7 +23,7 @@
   .card .value{font-size:36px;font-weight:900;line-height:1;margin-bottom:4px}
   .card.a .value{color:#8b5cf6} .card.b .value{color:#3b82f6} .card.c .value{color:#ef4444}
   .card .sub{font-size:12px;color:var(--text-faint)} .card .unit{font-size:16px;font-weight:600;color:var(--text-faint)}
-  .insight{background:#fffbeb;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7}
+  .insight{background:#fffbeb;border-left:4px solid #f59e0b;padding:16px 20px;border-radius:0 12px 12px 0;margin-bottom:24px;font-size:13px;line-height:1.7;color:#78350f}
   .insight strong{color:#92400e}
   .section{background:var(--card-bg);border-radius:16px;padding:28px 32px;box-shadow:var(--shadow);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
@@ -117,7 +117,7 @@ function selectSido(code){
   ratioChart=new Chart(document.getElementById('ratioChart'),{
     type:'line',data:{labels:yearly.map(y=>y.yr),datasets:[{label:'전세가율(%)',data:yearly.map(y=>y.ratio),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:color,pointBorderColor:chartTheme.pointBorder(),pointBorderWidth:2,borderWidth:2.5}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}},datalabels:{display:true,anchor:'end',align:'end',font:{size:_m?9:11,weight:'bold'},formatter:v=>v+'%'}},
-    scales:{x:{grid:{display:false}},y:{min:Math.max(0,Math.min(...yearly.map(y=>y.ratio))-10),max:Math.min(110,Math.max(...yearly.map(y=>y.ratio))+10),ticks:{callback:v=>v+'%'},grid:{color:chartTheme.grid()}}}},
+    scales:{x:{grid:{display:false}},y:{min:Math.max(0,Math.floor((Math.min(...yearly.map(y=>y.ratio))-10)/5)*5),max:Math.min(110,Math.ceil((Math.max(...yearly.map(y=>y.ratio))+10)/5)*5),ticks:{stepSize:5,callback:v=>v+'%'},grid:{color:chartTheme.grid()}}}},
     plugins:[{id:'dangerLine',beforeDraw(chart){const{ctx,chartArea:{left,right},scales:{y}}=chart;if(Math.max(...yearly.map(y=>y.ratio))>=95){const y100=y.getPixelForValue(100);ctx.save();ctx.beginPath();ctx.setLineDash([6,4]);ctx.strokeStyle='#ef4444';ctx.lineWidth=1.5;ctx.moveTo(left,y100);ctx.lineTo(right,y100);ctx.stroke();ctx.fillStyle='#ef4444';ctx.font='bold 11px sans-serif';ctx.fillText('위험선 100%',right-80,y100-8);ctx.setLineDash([]);ctx.restore();}
     const y70=y.getPixelForValue(70);if(y70>=chart.chartArea.top&&y70<=chart.chartArea.bottom){ctx.save();ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.moveTo(left,y70);ctx.lineTo(right,y70);ctx.stroke();ctx.fillStyle='#f59e0b';ctx.font='10px sans-serif';ctx.fillText('갭투자 기준 70%',right-100,y70-6);ctx.setLineDash([]);ctx.restore();}}}]
   });
