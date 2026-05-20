@@ -1,0 +1,43 @@
+/* 인포그래픽 공통 색상 토큰 + 다크모드 자동 추종 */
+/* 사용: <link rel="stylesheet" href="common.css"> */
+
+:root{
+  --bg:#f0f2f5;
+  --text:#1a1a2e;
+  --text-muted:#6b7280;
+  --text-faint:#9ca3af;
+  --card-bg:#fff;
+  --card-bg-soft:#f8fafc;
+  --border:#e5e7eb;
+  --border-soft:#f3f4f6;
+  --row-hover:#fefce8;
+  --shadow:0 2px 12px rgba(0,0,0,.07);
+  --shadow-hover:0 8px 24px rgba(0,0,0,.12);
+  /* 차트 전용 */
+  --chart-grid:#f3f4f6;
+  --chart-axis:#6b7280;
+  --chart-point-border:#fff;
+  --chart-muted:#d1d5dbcc;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f1419;
+    --text:#e5e7eb;
+    --text-muted:#9ca3af;
+    --text-faint:#6b7280;
+    --card-bg:#1c232e;
+    --card-bg-soft:#161c25;
+    --border:#2d3748;
+    --border-soft:#252d3a;
+    --row-hover:#2a2f1a;
+    --shadow:0 2px 12px rgba(0,0,0,.4);
+    --shadow-hover:0 8px 24px rgba(0,0,0,.6);
+    --chart-grid:#2d3748;
+    --chart-axis:#9ca3af;
+    --chart-point-border:#1c232e;
+    --chart-muted:#374151cc;
+  }
+}
+
+html{color-scheme:light dark}
