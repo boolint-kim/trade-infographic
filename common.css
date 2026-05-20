@@ -18,6 +18,10 @@
   --chart-axis:#6b7280;
   --chart-point-border:#fff;
   --chart-muted:#d1d5dbcc;
+  /* 지도 위 떠 있는 패널 (heatmap 등) */
+  --panel-bg:rgba(255,255,255,.95);
+  --panel-shadow:0 2px 8px rgba(0,0,0,.2);
+  --panel-shadow-lg:0 4px 20px rgba(0,0,0,.3);
 }
 
 @media (prefers-color-scheme: dark){
@@ -37,6 +41,9 @@
     --chart-axis:#9ca3af;
     --chart-point-border:#1c232e;
     --chart-muted:#374151cc;
+    --panel-bg:rgba(28,35,46,.95);
+    --panel-shadow:0 2px 8px rgba(0,0,0,.5);
+    --panel-shadow-lg:0 4px 20px rgba(0,0,0,.7);
   }
 }
 
