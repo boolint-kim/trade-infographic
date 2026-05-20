@@ -6,20 +6,22 @@
 <title>지역 간 아파트 가격 격차 — 서울 대비</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<script src="chart-defaults.js"></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
-  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  *{box-sizing:border-box;margin:0;padding:0} body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:32px 20px}
+  .container{max-width:1100px;margin:0 auto} .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:var(--text-muted);line-height:1.6}
   .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
-  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card{flex:1;min-width:200px;background:var(--card-bg);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);border-top:4px solid}
   .card.a{border-color:#6366f1} .card.b{border-color:#ef4444} .card.c{border-color:#10b981}
-  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .card .label{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px} .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
   .card.a .value{color:#6366f1} .card.b .value{color:#ef4444} .card.c .value{color:#10b981}
-  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
-  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .card .sub{font-size:12px;color:var(--text-faint)} .card .unit{font-size:14px;font-weight:600;color:var(--text-faint)}
+  .section{background:var(--card-bg);border-radius:16px;padding:28px 32px;box-shadow:var(--shadow);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .section-sub{font-size:12px;color:var(--text-faint);margin-bottom:20px} .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
   .chart-wrap{position:relative;width:100%}
-  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  .footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
   @media(max-width:700px){body{padding:12px 6px} .section{padding:14px;margin-bottom:14px;border-radius:10px} .header{margin-bottom:16px} .header h1{font-size:18px} .card{min-width:100%}
 </style>
 </head>
@@ -79,7 +81,7 @@ function init(){
   new Chart(document.getElementById('ratioChart'),{type:'line',data:{labels:years,datasets:mainCodes.filter(c=>bySido[c]).map(c=>({
     label:SIDO_SHORT[c],data:years.map(yr=>bySido[c][yr]?bySido[c][yr].vsSeoul:null),borderColor:C[c],backgroundColor:'transparent',tension:.3,pointRadius:4,pointBackgroundColor:C[c],borderWidth:2.5,spanGaps:true
   }))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: 서울의 ${ctx.raw}%`}}},
-    scales:{x:{grid:{display:false}},y:{min:20,max:70,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}}}},
+    scales:{x:{grid:{display:false}},y:{min:20,max:70,ticks:{callback:v=>v+'%'},grid:{color:chartTheme.grid()}}}},
     plugins:[{id:'seoulLine',beforeDraw(chart){const{ctx,chartArea:{left,right,top}}=chart;ctx.save();ctx.fillStyle='#6366f1';ctx.font='bold 12px sans-serif';ctx.fillText('서울 = 100%',left+10,top+16);ctx.restore();}}]
   });
 
@@ -87,7 +89,7 @@ function init(){
   const sortedCodes=[...codes].sort((a,b)=>(bySido[b][lastYr].vsSeoul||0)-(bySido[a][lastYr].vsSeoul||0));
   new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:sortedCodes.map(c=>SIDO_SHORT[c]),datasets:[{data:sortedCodes.map(c=>bySido[c][lastYr].vsSeoul),backgroundColor:sortedCodes.map(c=>c==='11'?'#6366f1cc':(C[c]||'#93c5fd')+'99'),borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`서울의 ${ctx.raw}% (${fmt(bySido[sortedCodes[ctx.dataIndex]][lastYr].avgPrice)}만원)`}}},
-    scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
+    scales:{x:{min:0,max:110,ticks:{callback:v=>v+'%'},grid:{color:chartTheme.grid()}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
 
   // 격차 변화
   const firstYr=years[0];
@@ -98,7 +100,7 @@ function init(){
 
   new Chart(document.getElementById('changeChart'),{type:'bar',data:{labels:changeData.map(d=>d.name),datasets:[{data:changeData.map(d=>d.change),backgroundColor:changeData.map(d=>d.change>=0?'#10b981cc':'#ef4444cc'),borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=changeData[ctx.dataIndex];return `${firstYr}년 ${d.before}% → ${lastYr}년 ${d.after}% (${d.change>=0?'+':''}${d.change}%p)`;}}}},
-    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
+    scales:{x:{ticks:{callback:v=>(v>=0?'+':'')+v+'%p'},grid:{color:chartTheme.grid()}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}});
 }
 load();
 </script>

@@ -5,37 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>아파트 신고가 경신 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<script src="chart-defaults.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:32px 20px}
   .container{max-width:1100px;margin:0 auto}
   .header{text-align:center;margin-bottom:28px}
   .header h1{font-size:26px;font-weight:800;margin-bottom:8px}
-  .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .header p{font-size:13px;color:var(--text-muted);line-height:1.6}
   .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
-  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button{padding:8px 16px;border:2px solid var(--border);border-radius:24px;background:var(--card-bg);font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .2s}
   .selector button:hover{border-color:#ef4444;color:#ef4444}
   .selector button.active{background:#ef4444;border-color:#ef4444;color:#fff}
   .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
-  .card{flex:1;min-width:220px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card{flex:1;min-width:220px;background:var(--card-bg);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);border-top:4px solid}
   .card.a{border-color:#ef4444} .card.b{border-color:#6366f1} .card.c{border-color:#f97316}
-  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .label{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
   .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
   .card.a .value{color:#ef4444} .card.b .value{color:#6366f1} .card.c .value{color:#f97316}
-  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
-  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .card .sub{font-size:12px;color:var(--text-faint)} .card .unit{font-size:14px;font-weight:600;color:var(--text-faint)}
+  .section{background:var(--card-bg);border-radius:16px;padding:28px 32px;box-shadow:var(--shadow);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .section-sub{font-size:12px;color:var(--text-faint);margin-bottom:20px}
   .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
   .trade-table{width:100%;border-collapse:collapse;font-size:13px}
-  .trade-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;white-space:nowrap}
-  .trade-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
-  .trade-table tr:hover{background:#fefce8}
+  .trade-table th{background:var(--card-bg-soft);padding:10px 12px;text-align:left;font-weight:700;color:var(--text-muted);border-bottom:2px solid var(--border);white-space:nowrap}
+  .trade-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft)}
+  .trade-table tr:hover{background:var(--row-hover)}
   .price{font-weight:800;color:#ef4444} .diff{font-weight:700;font-size:12px;color:#ef4444}
-  .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
-  .no-data{text-align:center;padding:40px;color:#9ca3af;font-size:14px}
+  .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:var(--text-faint)}
+  .no-data{text-align:center;padding:40px;color:var(--text-faint);font-size:14px}
   .chart-wrap{position:relative;width:100%}
-  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  .footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
   @media(max-width:700px){body{padding:12px 6px} .section{padding:14px;margin-bottom:14px;border-radius:10px} .header{margin-bottom:16px} .header h1{font-size:18px} .card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}
 </style>
 </head>
@@ -124,11 +126,11 @@ function selectSido(code){
   const labels=recs.map(r=>[r.name, r.umdNm]);
   highChart=new Chart(document.getElementById('highChart'),{
     type:'bar',data:{labels,datasets:[
-      {label:'전고점',data:recs.map(r=>r.prevHigh?r.prevHigh/10000:0),backgroundColor:'#e5e7ebcc',borderRadius:4},
+      {label:'전고점',data:recs.map(r=>r.prevHigh?r.prevHigh/10000:0),backgroundColor:chartTheme.muted(),borderRadius:4},
       {label:'신고가',data:recs.map(r=>r.price/10000),backgroundColor:'#ef4444cc',borderRadius:4}
     ]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'top',labels:{usePointStyle:true,padding:16}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw.toFixed(1)}억`}}},
-      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:'#f3f4f6'}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}
+      scales:{x:{ticks:{callback:v=>v+'억'},grid:{color:chartTheme.grid()}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:_m?11:13,weight:'bold'}}}}}
   });
 
   // 테이블
@@ -140,7 +142,7 @@ function selectSido(code){
     const pct=prev>0?((diff/prev)*100).toFixed(1):'신규';
     const tr=document.createElement('tr');
     tr.innerHTML=`<td class="rank-num">${i+1}</td><td><strong>${r.name}</strong></td><td>${r.umdNm}</td>
-      <td class="price">${(r.price/10000).toFixed(1)}억</td><td style="color:#9ca3af">${prev>0?(prev/10000).toFixed(1)+'억':'-'}</td>
+      <td class="price">${(r.price/10000).toFixed(1)}억</td><td style="color:var(--text-faint)">${prev>0?(prev/10000).toFixed(1)+'억':'-'}</td>
       <td class="diff">${prev>0?'▲'+(diff/10000).toFixed(1)+'억 (+'+pct+'%)':'첫 거래'}</td>
       <td class="area-info">${parseFloat(r.area).toFixed(1)}m²</td><td>${r.floor}층</td><td>${r.dealDate.slice(5)}</td>`;
     tbody.appendChild(tr);

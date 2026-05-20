@@ -5,31 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>연립다세대 매매 거래량 추이 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<script src="chart-defaults.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:#f0f2f5; color:#1a1a2e; padding:32px 20px; }
+  body { font-family: 'Apple SD Gothic Neo','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); padding:32px 20px; }
   .container { max-width:1100px; margin:0 auto; }
   .header { text-align:center; margin-bottom:28px; }
   .header h1 { font-size:26px; font-weight:800; margin-bottom:8px; }
-  .header p { font-size:13px; color:#6b7280; line-height:1.6; }
+  .header p { font-size:13px; color:var(--text-muted); line-height:1.6; }
   .selector { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
-  .selector button { padding:8px 16px; border:2px solid #e5e7eb; border-radius:24px; background:#fff; font-size:13px; font-weight:600; color:#6b7280; cursor:pointer; transition:all .2s; }
+  .selector button { padding:8px 16px; border:2px solid var(--border); border-radius:24px; background:var(--card-bg); font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all .2s; }
   .selector button:hover { border-color:#3b82f6; color:#3b82f6; }
   .selector button.active { background:#3b82f6; border-color:#3b82f6; color:#fff; }
   .summary-cards { display:flex; gap:16px; margin-bottom:28px; flex-wrap:wrap; }
-  .card { flex:1; min-width:200px; background:#fff; border-radius:16px; padding:20px 24px; box-shadow:0 2px 12px rgba(0,0,0,.07); border-top:4px solid; }
+  .card { flex:1; min-width:200px; background:var(--card-bg); border-radius:16px; padding:20px 24px; box-shadow:var(--shadow); border-top:4px solid; }
   .card.a { border-color:#3b82f6; } .card.b { border-color:#6366f1; } .card.c { border-color:#10b981; }
-  .card .label { font-size:12px; font-weight:600; color:#6b7280; margin-bottom:4px; }
+  .card .label { font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:4px; }
   .card .value { font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
   .card.a .value { color:#3b82f6; } .card.b .value { color:#6366f1; } .card.c .value { color:#10b981; }
-  .card .sub { font-size:12px; color:#9ca3af; }
-  .card .unit { font-size:14px; font-weight:600; color:#9ca3af; }
-  .section { background:#fff; border-radius:16px; padding:28px 32px; box-shadow:0 2px 12px rgba(0,0,0,.07); margin-bottom:24px; }
+  .card .sub { font-size:12px; color:var(--text-faint); }
+  .card .unit { font-size:14px; font-weight:600; color:var(--text-faint); }
+  .section { background:var(--card-bg); border-radius:16px; padding:28px 32px; box-shadow:var(--shadow); margin-bottom:24px; }
   .section-title { font-size:16px; font-weight:800; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
-  .section-sub { font-size:12px; color:#9ca3af; margin-bottom:20px; }
+  .section-sub { font-size:12px; color:var(--text-faint); margin-bottom:20px; }
   .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
   .chart-wrap{position:relative;width:100%}
-  .footer { text-align:center; font-size:11px; color:#9ca3af; margin-top:12px; line-height:1.8; }
+  .footer { text-align:center; font-size:11px; color:var(--text-faint); margin-top:12px; line-height:1.8; }
   @media(max-width:700px){body{padding:12px 6px} .section{padding:14px;margin-bottom:14px;border-radius:10px} .header{margin-bottom:16px} .header h1{font-size:18px}  .card{min-width:100%;} .selector button{padding:6px 12px;font-size:12px;} }
 </style>
 </head>
@@ -94,7 +96,7 @@ function initSidoChart(){
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#93c5fdcc',borderRadius:4}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
-    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:chartTheme.grid()}}}}
   });
 }
 
@@ -141,7 +143,7 @@ function selectSido(code){
     yearlyChart=new Chart(document.getElementById('yearlyChart'),{
       type:'bar',data:{labels:yearly.map(r=>r.yr),datasets:[{data:yearly.map(r=>r.cnt),backgroundColor:'#3b82f6aa',borderRadius:4}]},
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
-      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:chartTheme.grid()}}}}
     });
   } else {
     document.getElementById('chartSub1').textContent=`${name} — 시도별 연도 데이터는 월별 차트 참고`;
@@ -154,15 +156,15 @@ function selectSido(code){
   const color=COLORS[code]||'#3b82f6';
   monthlyChart=new Chart(document.getElementById('monthlyChart'),{
     type:'line',data:{labels:monthly.map(r=>fmtYM(r.ym)),datasets:[{
-      label:name,data:monthly.map(r=>r.cnt),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2.5
+      label:name,data:monthly.map(r=>r.cnt),borderColor:color,backgroundColor:color+'20',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:color,pointBorderColor:chartTheme.pointBorder(),pointBorderWidth:2,borderWidth:2.5
     }]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
-    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+    scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:chartTheme.grid()}}}}
   });
 
   // 시도 비교 강조
   const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
-  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#3b82f6')+'cc':'#d1d5dbcc');
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#3b82f6')+'cc':chartTheme.muted());
   if(code==='ALL') sidoChart.data.datasets[0].backgroundColor=codes.map(c=>(COLORS[c]||'#3b82f6')+'99');
   document.getElementById('sidoCompareSub').textContent=DATA.period.replace('~',' ~ ')+' | 단위: 건';
   sidoChart.update();

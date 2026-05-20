@@ -5,32 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>오늘의 아파트 거래 현황 — 전국 17개 시도</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<script src="chart-defaults.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:32px 20px}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:32px 20px}
   .container{max-width:1100px;margin:0 auto}
-  .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:#6b7280;line-height:1.6}
+  .header{text-align:center;margin-bottom:28px} .header h1{font-size:26px;font-weight:800;margin-bottom:8px} .header p{font-size:13px;color:var(--text-muted);line-height:1.6}
   .selector{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
-  .selector button{padding:8px 16px;border:2px solid #e5e7eb;border-radius:24px;background:#fff;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .2s}
+  .selector button{padding:8px 16px;border:2px solid var(--border);border-radius:24px;background:var(--card-bg);font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .2s}
   .selector button:hover{border-color:#10b981;color:#10b981} .selector button.active{background:#10b981;border-color:#10b981;color:#fff}
   .summary-cards{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
-  .card{flex:1;min-width:200px;background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border-top:4px solid}
+  .card{flex:1;min-width:200px;background:var(--card-bg);border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);border-top:4px solid}
   .card.a{border-color:#10b981} .card.b{border-color:#6366f1} .card.c{border-color:#ef4444}
-  .card .label{font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px}
+  .card .label{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px}
   .card .value{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
   .card.a .value{color:#10b981} .card.b .value{color:#6366f1} .card.c .value{color:#ef4444}
-  .card .sub{font-size:12px;color:#9ca3af} .card .unit{font-size:14px;font-weight:600;color:#9ca3af}
-  .section{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px}
+  .card .sub{font-size:12px;color:var(--text-faint)} .card .unit{font-size:14px;font-weight:600;color:var(--text-faint)}
+  .section{background:var(--card-bg);border-radius:16px;padding:28px 32px;box-shadow:var(--shadow);margin-bottom:24px}
   .section-title{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-  .section-sub{font-size:12px;color:#9ca3af;margin-bottom:20px}
+  .section-sub{font-size:12px;color:var(--text-faint);margin-bottom:20px}
   .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
   .trade-table{width:100%;border-collapse:collapse;font-size:13px}
-  .trade-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;white-space:nowrap}
-  .trade-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6}
-  .trade-table tr:hover{background:#fefce8}
-  .price{font-weight:800;color:#ef4444} .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:#9ca3af}
+  .trade-table th{background:var(--card-bg-soft);padding:10px 12px;text-align:left;font-weight:700;color:var(--text-muted);border-bottom:2px solid var(--border);white-space:nowrap}
+  .trade-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft)}
+  .trade-table tr:hover{background:var(--row-hover)}
+  .price{font-weight:800;color:#ef4444} .rank-num{font-weight:900;color:#6366f1;font-size:16px} .area-info{font-size:11px;color:var(--text-faint)}
   .chart-wrap{position:relative;width:100%}
-  .footer{text-align:center;font-size:11px;color:#9ca3af;margin-top:12px;line-height:1.8}
+  .footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
   @media(max-width:700px){.card{min-width:100%} .trade-table{font-size:12px} .trade-table th,.trade-table td{padding:8px 6px}}
   @media(orientation:landscape) and (max-height:500px){
     body{padding:16px 12px}
@@ -68,11 +70,11 @@
   <div class="section">
     <div class="section-title"><span class="dot" style="background:#ef4444"></span><span id="tableTitle">이달 고가 거래 TOP 5</span></div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap">
-      <span style="font-size:12px;color:#9ca3af">거래금액 상위</span>
+      <span style="font-size:12px;color:var(--text-faint)">거래금액 상위</span>
       <div style="display:flex;gap:6px" id="areaRadios">
-        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="All" checked style="display:none"><span>전체</span></label>
-        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="84" style="display:none"><span>84형</span></label>
-        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff"><input type="radio" name="areaType" value="59" style="display:none"><span>59형</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid var(--border);background:var(--card-bg)"><input type="radio" name="areaType" value="All" checked style="display:none"><span>전체</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid var(--border);background:var(--card-bg)"><input type="radio" name="areaType" value="84" style="display:none"><span>84형</span></label>
+        <label style="display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:12px;border:1.5px solid var(--border);background:var(--card-bg)"><input type="radio" name="areaType" value="59" style="display:none"><span>59형</span></label>
       </div>
     </div>
     <div style="overflow-x:auto">
@@ -117,7 +119,7 @@ function initSidoChart(){
   sidoChart=new Chart(document.getElementById('sidoChart'),{
     type:'bar',data:{labels:codes.map(c=>DATA.sido[c].name),datasets:[{data:codes.map(c=>DATA.sido[c].total),backgroundColor:'#6ee7b7cc',borderRadius:4}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
-    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+    scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:chartTheme.grid()}}}}
   });
 }
 function fmtDate(d){return d?d.slice(5).replace('-','/'):''}
@@ -159,14 +161,14 @@ function selectSido(code){
   if(dailyChart)dailyChart.destroy();
   dailyChart=new Chart(document.getElementById('dailyChart'),{
     type:'bar',data:{labels:daily.map(r=>fmtDate(r.dealDate)),datasets:[{data:daily.map(r=>r.cnt),
-      backgroundColor:daily.map((r,i)=>i>=daily.length-3?'#d1d5dbcc':color+'aa'),borderRadius:3}]},
+      backgroundColor:daily.map((r,i)=>i>=daily.length-3?chartTheme.muted():color+'aa'),borderRadius:3}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},
-    scales:{x:{grid:{display:false},ticks:{font:{size:_m?10:12},maxRotation:45}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:'#f3f4f6'}}}}
+    scales:{x:{grid:{display:false},ticks:{font:{size:_m?10:12},maxRotation:45}},y:{min:0,ticks:{callback:v=>fmt(v)},grid:{color:chartTheme.grid()}}}}
   });
 
   // 시도 비교 강조
   const codes=SIDO_ORDER.filter(c=>DATA.sido[c]);
-  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#10b981')+'cc':code==='ALL'?'#6ee7b7cc':'#d1d5dbcc');
+  sidoChart.data.datasets[0].backgroundColor=codes.map(c=>c===code?(COLORS[c]||'#10b981')+'cc':code==='ALL'?'#6ee7b7cc':chartTheme.muted());
   document.getElementById('sidoSub').textContent=`이달 기준 | 선택: ${name}`;
   sidoChart.update();
 
@@ -187,9 +189,9 @@ function selectSido(code){
 function updateAreaRadioStyle(){
   document.querySelectorAll('#areaRadios label').forEach(l=>{
     const checked=l.querySelector('input').checked;
-    l.style.background=checked?'#1e293b':'#fff';
-    l.style.borderColor=checked?'#1e293b':'#e5e7eb';
-    l.querySelector('span').style.color=checked?'#fff':'#374151';
+    const _cs=getComputedStyle(document.documentElement),_tT=_cs.getPropertyValue('--text').trim(),_tC=_cs.getPropertyValue('--card-bg').trim(),_tB=_cs.getPropertyValue('--border').trim(),_tM=_cs.getPropertyValue('--text-muted').trim();l.style.background=checked?_tT:_tC;
+    l.style.borderColor=checked?_tT:_tB;
+    l.querySelector('span').style.color=checked?_tC:_tM;
   });
 }
 document.querySelectorAll('input[name="areaType"]').forEach(r=>{
