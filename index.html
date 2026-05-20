@@ -4,13 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>부동산 실거래가 인포그래픽</title>
+<meta name="color-scheme" content="light dark">
 <style>
+  /* 라이트모드 기본 토큰 */
+  :root{
+    --bg:#f0f2f5;
+    --text:#1a1a2e;
+    --text-muted:#6b7280;
+    --text-faint:#9ca3af;
+    --card-bg:#fff;
+    --card-shadow:0 2px 12px rgba(0,0,0,.07);
+    --card-shadow-hover:0 8px 24px rgba(0,0,0,.12);
+  }
+  /* 다크모드 토큰 (시스템 설정 자동 추종) */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1419;
+      --text:#e5e7eb;
+      --text-muted:#9ca3af;
+      --text-faint:#6b7280;
+      --card-bg:#1c232e;
+      --card-shadow:0 2px 12px rgba(0,0,0,.4);
+      --card-shadow-hover:0 8px 24px rgba(0,0,0,.6);
+    }
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f2f5;color:#1a1a2e;padding:40px 20px}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px}
   .container{max-width:900px;margin:0 auto}
   .header{text-align:center;margin-bottom:40px}
   .header h1{font-size:28px;font-weight:800;margin-bottom:8px}
-  .header p{font-size:14px;color:#6b7280;line-height:1.6}
+  .header p{font-size:14px;color:var(--text-muted);line-height:1.6}
   .group{margin-bottom:32px}
   .group-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-left:12px;border-left:4px solid #6366f1}
   .group.periodic .group-title{border-color:#f97316}
@@ -30,13 +53,20 @@
   .group.event .card .tag{color:#dc2626}
   .group.event .card{border-left:3px solid #fca5a5}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
-  .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+  .card{background:var(--card-bg);border-radius:16px;padding:24px;box-shadow:var(--card-shadow);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--card-shadow-hover)}
   .card .tag{font-size:11px;font-weight:700;color:#6366f1;margin-bottom:8px;letter-spacing:.5px}
   .group.periodic .card .tag{color:#f97316}
   .card h3{font-size:16px;font-weight:700;margin-bottom:6px}
-  .card p{font-size:13px;color:#6b7280;line-height:1.5}
-  .footer{text-align:center;font-size:12px;color:#9ca3af;margin-top:40px;line-height:1.8}
+  .card p{font-size:13px;color:var(--text-muted);line-height:1.5}
+  .footer{text-align:center;font-size:12px;color:var(--text-faint);margin-top:40px;line-height:1.8}
+  /* 다크모드에서 단색 액센트 살짝 밝게 */
+  @media (prefers-color-scheme: dark){
+    .group.single .group-title, .group.single .card .tag{color:#10b981 !important}
+    .group.land .group-title, .group.land .card .tag{color:#f59e0b !important}
+    .group.building .group-title, .group.building .card .tag{color:#a8a29e !important}
+    .group.single .group-title, .group.land .group-title, .group.building .group-title{border-color:currentColor}
+  }
 </style>
 </head>
 <body>
