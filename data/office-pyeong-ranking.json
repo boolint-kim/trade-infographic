@@ -1,13 +1,13 @@
 {
-  "generated": "2026-05-27T09:07:33.364Z",
+  "generated": "2026-05-29T02:22:05.329Z",
   "period": "202603~202605",
   "sido": {
     "11": {
       "name": "서울",
       "short": "서울",
-      "totalTrades": 2885,
-      "avgPrice": 32415,
-      "avgPpyeong": 2872,
+      "totalTrades": 2962,
+      "avgPrice": 32417,
+      "avgPpyeong": 2867,
       "ranking": [
         {
           "name": "브라이튼 여의도",
@@ -56,6 +56,14 @@
           "pricePerPyeong": 7003,
           "avgPrice": 187700,
           "avgPyeong": 26.7
+        },
+        {
+          "name": "여의도 the샾 아일랜드 파크",
+          "umdNm": "여의도동",
+          "tradeCount": 3,
+          "pricePerPyeong": 6646,
+          "avgPrice": 247500,
+          "avgPyeong": 37.8
         },
         {
           "name": "목동파라곤",
@@ -114,6 +122,14 @@
           "avgPyeong": 10.3
         },
         {
+          "name": "해링턴 타워 서초",
+          "umdNm": "서초동",
+          "tradeCount": 3,
+          "pricePerPyeong": 5480,
+          "avgPrice": 76667,
+          "avgPyeong": 14
+        },
+        {
           "name": "건대입구역자이엘라",
           "umdNm": "자양동",
           "tradeCount": 5,
@@ -140,10 +156,10 @@
         {
           "name": "여의도파크센터",
           "umdNm": "여의도동",
-          "tradeCount": 5,
-          "pricePerPyeong": 5215,
-          "avgPrice": 172784,
-          "avgPyeong": 33.8
+          "tradeCount": 6,
+          "pricePerPyeong": 5211,
+          "avgPrice": 177487,
+          "avgPyeong": 34.6
         },
         {
           "name": "힐스테이트 천호역 젠트리스",
@@ -152,22 +168,6 @@
           "pricePerPyeong": 5190,
           "avgPrice": 45550,
           "avgPyeong": 8.8
-        },
-        {
-          "name": "현대썬앤빌 삼성역",
-          "umdNm": "삼성동",
-          "tradeCount": 3,
-          "pricePerPyeong": 5082,
-          "avgPrice": 33267,
-          "avgPyeong": 6.7
-        },
-        {
-          "name": "래미안 용산 더 센트럴",
-          "umdNm": "한강로2가",
-          "tradeCount": 5,
-          "pricePerPyeong": 5080,
-          "avgPrice": 78600,
-          "avgPyeong": 15.5
         }
       ],
       "rankLow": [
@@ -276,6 +276,14 @@
           "avgPyeong": 7.1
         },
         {
+          "name": "효성 인텔리안 오피스텔",
+          "umdNm": "수유동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1353,
+          "avgPrice": 12400,
+          "avgPyeong": 9.2
+        },
+        {
           "name": "토마토파르코",
           "umdNm": "상계동",
           "tradeCount": 4,
@@ -322,14 +330,6 @@
           "pricePerPyeong": 1396,
           "avgPrice": 11833,
           "avgPyeong": 8.5
-        },
-        {
-          "name": "북한산현대렉시온오피스텔",
-          "umdNm": "방학동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1399,
-          "avgPrice": 12475,
-          "avgPyeong": 9
         }
       ],
       "rankRise": [
@@ -362,6 +362,16 @@
           "avgPyeong": 7.7,
           "prevPpyeong": 3007,
           "riseRate": 20.6
+        },
+        {
+          "name": "여의도 the샾 아일랜드 파크",
+          "umdNm": "여의도동",
+          "tradeCount": 3,
+          "pricePerPyeong": 6646,
+          "avgPrice": 247500,
+          "avgPyeong": 37.8,
+          "prevPpyeong": 5569,
+          "riseRate": 19.3
         },
         {
           "name": "우림필유",
@@ -436,12 +446,12 @@
         {
           "name": "경원오피스텔",
           "umdNm": "청담동",
-          "tradeCount": 7,
-          "pricePerPyeong": 3992,
-          "avgPrice": 27500,
+          "tradeCount": 8,
+          "pricePerPyeong": 3974,
+          "avgPrice": 27375,
           "avgPyeong": 6.9,
           "prevPpyeong": 3529,
-          "riseRate": 13.1
+          "riseRate": 12.6
         },
         {
           "name": "동인트루빌오피스텔",
@@ -476,12 +486,12 @@
         {
           "name": "주건축물제1동",
           "umdNm": "황학동",
-          "tradeCount": 8,
-          "pricePerPyeong": 2827,
-          "avgPrice": 24613,
-          "avgPyeong": 9,
+          "tradeCount": 7,
+          "pricePerPyeong": 2818,
+          "avgPrice": 25157,
+          "avgPyeong": 9.2,
           "prevPpyeong": 2555,
-          "riseRate": 10.6
+          "riseRate": 10.3
         },
         {
           "name": "우성캐릭터199",
@@ -504,6 +514,16 @@
           "riseRate": 8.7
         },
         {
+          "name": "여의도파라곤",
+          "umdNm": "여의도동",
+          "tradeCount": 3,
+          "pricePerPyeong": 3392,
+          "avgPrice": 57500,
+          "avgPyeong": 15.9,
+          "prevPpyeong": 3160,
+          "riseRate": 7.3
+        },
+        {
           "name": "동광동대문베르빌",
           "umdNm": "신설동",
           "tradeCount": 4,
@@ -512,26 +532,6 @@
           "avgPyeong": 8.7,
           "prevPpyeong": 1847,
           "riseRate": 7
-        },
-        {
-          "name": "신동아하이팰리스",
-          "umdNm": "양평동2가",
-          "tradeCount": 10,
-          "pricePerPyeong": 2477,
-          "avgPrice": 62450,
-          "avgPyeong": 25.3,
-          "prevPpyeong": 2320,
-          "riseRate": 6.8
-        },
-        {
-          "name": "목동파라곤",
-          "umdNm": "목동",
-          "tradeCount": 10,
-          "pricePerPyeong": 6330,
-          "avgPrice": 187580,
-          "avgPyeong": 29.6,
-          "prevPpyeong": 5933,
-          "riseRate": 6.7
         }
       ],
       "rankVolume": [
@@ -552,6 +552,14 @@
           "avgPyeong": 8.4
         },
         {
+          "name": "파크하비오",
+          "umdNm": "문정동",
+          "tradeCount": 52,
+          "pricePerPyeong": 3063,
+          "avgPrice": 42719,
+          "avgPyeong": 13.6
+        },
+        {
           "name": "벨리움  장안",
           "umdNm": "장안동",
           "tradeCount": 48,
@@ -560,19 +568,11 @@
           "avgPyeong": 9
         },
         {
-          "name": "파크하비오",
-          "umdNm": "문정동",
-          "tradeCount": 48,
-          "pricePerPyeong": 3080,
-          "avgPrice": 43494,
-          "avgPyeong": 13.8
-        },
-        {
           "name": "리치팰리스",
           "umdNm": "영등포동2가",
-          "tradeCount": 46,
-          "pricePerPyeong": 4142,
-          "avgPrice": 27478,
+          "tradeCount": 47,
+          "pricePerPyeong": 4154,
+          "avgPrice": 27466,
           "avgPyeong": 6.7
         },
         {
@@ -616,6 +616,14 @@
           "avgPyeong": 7.8
         },
         {
+          "name": "퀸즈파크 구일",
+          "umdNm": "구로동",
+          "tradeCount": 20,
+          "pricePerPyeong": 2465,
+          "avgPrice": 12948,
+          "avgPyeong": 5.3
+        },
+        {
           "name": "송파한화오벨리스크",
           "umdNm": "문정동",
           "tradeCount": 19,
@@ -624,12 +632,12 @@
           "avgPyeong": 9.1
         },
         {
-          "name": "퀸즈파크 구일",
-          "umdNm": "구로동",
-          "tradeCount": 19,
-          "pricePerPyeong": 2464,
-          "avgPrice": 12939,
-          "avgPyeong": 5.3
+          "name": "송파푸르지오시티",
+          "umdNm": "문정동",
+          "tradeCount": 17,
+          "pricePerPyeong": 2491,
+          "avgPrice": 21447,
+          "avgPyeong": 8.6
         },
         {
           "name": "힐스테이트 도봉역 웰가",
@@ -648,12 +656,12 @@
           "avgPyeong": 24.2
         },
         {
-          "name": "송파푸르지오시티",
+          "name": "송파 아이파크",
           "umdNm": "문정동",
-          "tradeCount": 15,
-          "pricePerPyeong": 2536,
-          "avgPrice": 21907,
-          "avgPyeong": 8.7
+          "tradeCount": 14,
+          "pricePerPyeong": 2892,
+          "avgPrice": 27875,
+          "avgPyeong": 9.6
         },
         {
           "name": "강남 지웰홈스",
@@ -670,14 +678,6 @@
           "pricePerPyeong": 2367,
           "avgPrice": 19758,
           "avgPyeong": 8.2
-        },
-        {
-          "name": "송파 아이파크",
-          "umdNm": "문정동",
-          "tradeCount": 13,
-          "pricePerPyeong": 2886,
-          "avgPrice": 27950,
-          "avgPyeong": 9.6
         },
         {
           "name": "SK 허브수",
@@ -928,17 +928,17 @@
     "26": {
       "name": "부산",
       "short": "부산",
-      "totalTrades": 921,
-      "avgPrice": 13841,
-      "avgPpyeong": 1196,
+      "totalTrades": 965,
+      "avgPrice": 13972,
+      "avgPpyeong": 1207,
       "ranking": [
         {
           "name": "광안청일디오브오션뷰",
           "umdNm": "광안동",
-          "tradeCount": 10,
-          "pricePerPyeong": 3345,
-          "avgPrice": 24785,
-          "avgPyeong": 7.4
+          "tradeCount": 12,
+          "pricePerPyeong": 3308,
+          "avgPrice": 24004,
+          "avgPyeong": 7.3
         },
         {
           "name": "센텀리더스마크",
@@ -991,9 +991,9 @@
         {
           "name": "위어뮤즈디광안",
           "umdNm": "광안동",
-          "tradeCount": 25,
-          "pricePerPyeong": 1816,
-          "avgPrice": 19186,
+          "tradeCount": 26,
+          "pricePerPyeong": 1822,
+          "avgPrice": 19130,
           "avgPyeong": 10.4
         },
         {
@@ -1021,6 +1021,14 @@
           "avgPyeong": 7.6
         },
         {
+          "name": "세종하나빌 명장26",
+          "umdNm": "명장동",
+          "tradeCount": 20,
+          "pricePerPyeong": 1587,
+          "avgPrice": 14005,
+          "avgPyeong": 8.8
+        },
+        {
           "name": "센텀스퀘어",
           "umdNm": "우동",
           "tradeCount": 3,
@@ -1029,20 +1037,28 @@
           "avgPyeong": 20.3
         },
         {
-          "name": "동래 3차 SK VIEW",
-          "umdNm": "온천동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1409,
-          "avgPrice": 17125,
-          "avgPyeong": 12.6
-        },
-        {
           "name": "다온채",
           "umdNm": "민락동",
           "tradeCount": 26,
           "pricePerPyeong": 1408,
           "avgPrice": 12227,
           "avgPyeong": 8.7
+        },
+        {
+          "name": "동래 3차 SK VIEW",
+          "umdNm": "온천동",
+          "tradeCount": 5,
+          "pricePerPyeong": 1353,
+          "avgPrice": 15640,
+          "avgPyeong": 11.8
+        },
+        {
+          "name": "보람 스퀘어",
+          "umdNm": "광안동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1264,
+          "avgPrice": 14667,
+          "avgPyeong": 13.1
         },
         {
           "name": "더킹페로스아파트",
@@ -1075,22 +1091,6 @@
           "pricePerPyeong": 1197,
           "avgPrice": 18667,
           "avgPyeong": 15.3
-        },
-        {
-          "name": "센텀우성스마트시티뷰",
-          "umdNm": "반여동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1123,
-          "avgPrice": 23533,
-          "avgPyeong": 21
-        },
-        {
-          "name": "부산명지 대방디엠시티 센텀오션2차",
-          "umdNm": "명지동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1082,
-          "avgPrice": 13500,
-          "avgPyeong": 12.2
         }
       ],
       "rankLow": [
@@ -1287,16 +1287,6 @@
           "riseRate": 6.1
         },
         {
-          "name": "동래 3차 SK VIEW",
-          "umdNm": "온천동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1409,
-          "avgPrice": 17125,
-          "avgPyeong": 12.6,
-          "prevPpyeong": 1341,
-          "riseRate": 5.1
-        },
-        {
           "name": "유원골든타워오피스텔",
           "umdNm": "부전동",
           "tradeCount": 6,
@@ -1327,24 +1317,14 @@
           "riseRate": 2.6
         },
         {
-          "name": "투모로우 오피스텔",
-          "umdNm": "좌동",
-          "tradeCount": 4,
-          "pricePerPyeong": 917,
-          "avgPrice": 7375,
-          "avgPyeong": 8,
-          "prevPpyeong": 899,
-          "riseRate": 2
-        },
-        {
-          "name": "21 센츄리시티 오피스텔",
-          "umdNm": "대연동",
-          "tradeCount": 3,
-          "pricePerPyeong": 905,
-          "avgPrice": 12617,
-          "avgPyeong": 13.9,
-          "prevPpyeong": 904,
-          "riseRate": 0.1
+          "name": "동래 3차 SK VIEW",
+          "umdNm": "온천동",
+          "tradeCount": 5,
+          "pricePerPyeong": 1353,
+          "avgPrice": 15640,
+          "avgPyeong": 11.8,
+          "prevPpyeong": 1341,
+          "riseRate": 0.9
         },
         {
           "name": "연산역 유성해네스타워",
@@ -1355,6 +1335,26 @@
           "avgPyeong": 9.1,
           "prevPpyeong": 893,
           "riseRate": -0.1
+        },
+        {
+          "name": "투모로우 오피스텔",
+          "umdNm": "좌동",
+          "tradeCount": 5,
+          "pricePerPyeong": 897,
+          "avgPrice": 7260,
+          "avgPyeong": 8,
+          "prevPpyeong": 899,
+          "riseRate": -0.2
+        },
+        {
+          "name": "21 센츄리시티 오피스텔",
+          "umdNm": "대연동",
+          "tradeCount": 4,
+          "pricePerPyeong": 896,
+          "avgPrice": 11800,
+          "avgPyeong": 13.1,
+          "prevPpyeong": 904,
+          "riseRate": -0.9
         },
         {
           "name": "하모니타워마브러스",
@@ -1509,10 +1509,18 @@
         {
           "name": "위어뮤즈디광안",
           "umdNm": "광안동",
-          "tradeCount": 25,
-          "pricePerPyeong": 1816,
-          "avgPrice": 19186,
+          "tradeCount": 26,
+          "pricePerPyeong": 1822,
+          "avgPrice": 19130,
           "avgPyeong": 10.4
+        },
+        {
+          "name": "세종하나빌 명장26",
+          "umdNm": "명장동",
+          "tradeCount": 20,
+          "pricePerPyeong": 1587,
+          "avgPrice": 14005,
+          "avgPyeong": 8.8
         },
         {
           "name": "다인 로얄팰리스",
@@ -1521,6 +1529,14 @@
           "pricePerPyeong": 705,
           "avgPrice": 10272,
           "avgPyeong": 14.6
+        },
+        {
+          "name": "광안청일디오브오션뷰",
+          "umdNm": "광안동",
+          "tradeCount": 12,
+          "pricePerPyeong": 3308,
+          "avgPrice": 24004,
+          "avgPyeong": 7.3
         },
         {
           "name": "금양시티",
@@ -1537,14 +1553,6 @@
           "pricePerPyeong": 904,
           "avgPrice": 9605,
           "avgPyeong": 10.4
-        },
-        {
-          "name": "광안청일디오브오션뷰",
-          "umdNm": "광안동",
-          "tradeCount": 10,
-          "pricePerPyeong": 3345,
-          "avgPrice": 24785,
-          "avgPyeong": 7.4
         },
         {
           "name": "명지 삼정그린코아 웨스트",
@@ -1609,14 +1617,6 @@
           "pricePerPyeong": 892,
           "avgPrice": 8079,
           "avgPyeong": 9.1
-        },
-        {
-          "name": "부산 명지 제나우스 블루오션 오피스텔",
-          "umdNm": "명지동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1227,
-          "avgPrice": 10050,
-          "avgPyeong": 8.1
         }
       ],
       "rank84": [
@@ -1671,6 +1671,14 @@
           "avgPyeong": 18.1
         },
         {
+          "name": "센텀 센트레빌 플래비뉴",
+          "umdNm": "재송동",
+          "tradeCount": 2,
+          "pricePerPyeong": 1633,
+          "avgPrice": 28500,
+          "avgPyeong": 17.4
+        },
+        {
           "name": "센텀펠리시아",
           "umdNm": "반여동",
           "tradeCount": 2,
@@ -1707,10 +1715,18 @@
     "27": {
       "name": "대구",
       "short": "대구",
-      "totalTrades": 164,
-      "avgPrice": 14972,
-      "avgPpyeong": 1060,
+      "totalTrades": 174,
+      "avgPrice": 15365,
+      "avgPpyeong": 1125,
       "ranking": [
+        {
+          "name": "대경엘리시아",
+          "umdNm": "대흥동",
+          "tradeCount": 5,
+          "pricePerPyeong": 3436,
+          "avgPrice": 28000,
+          "avgPyeong": 8.2
+        },
         {
           "name": "수성 범어W",
           "umdNm": "범어동",
@@ -1814,6 +1830,14 @@
           "pricePerPyeong": 835,
           "avgPrice": 7667,
           "avgPyeong": 9.1
+        },
+        {
+          "name": "노마즈하우스",
+          "umdNm": "교동",
+          "tradeCount": 3,
+          "pricePerPyeong": 822,
+          "avgPrice": 4733,
+          "avgPyeong": 5.8
         },
         {
           "name": "MH엘퍼스트 오페라",
@@ -1850,6 +1874,14 @@
           "avgPyeong": 9.2
         },
         {
+          "name": "노마즈하우스",
+          "umdNm": "교동",
+          "tradeCount": 3,
+          "pricePerPyeong": 822,
+          "avgPrice": 4733,
+          "avgPyeong": 5.8
+        },
+        {
           "name": "주건축물제1동(210-0)",
           "umdNm": "다사읍 죽곡리",
           "tradeCount": 3,
@@ -1952,6 +1984,14 @@
           "pricePerPyeong": 2352,
           "avgPrice": 58180,
           "avgPyeong": 24.7
+        },
+        {
+          "name": "대경엘리시아",
+          "umdNm": "대흥동",
+          "tradeCount": 5,
+          "pricePerPyeong": 3436,
+          "avgPrice": 28000,
+          "avgPyeong": 8.2
         }
       ],
       "rankRise": [
@@ -2048,6 +2088,14 @@
           "avgPyeong": 9.2
         },
         {
+          "name": "대경엘리시아",
+          "umdNm": "대흥동",
+          "tradeCount": 5,
+          "pricePerPyeong": 3436,
+          "avgPrice": 28000,
+          "avgPyeong": 8.2
+        },
+        {
           "name": "동성로 하우스디어반",
           "umdNm": "남일동",
           "tradeCount": 5,
@@ -2086,6 +2134,14 @@
           "pricePerPyeong": 932,
           "avgPrice": 10775,
           "avgPyeong": 12.3
+        },
+        {
+          "name": "노마즈하우스",
+          "umdNm": "교동",
+          "tradeCount": 3,
+          "pricePerPyeong": 822,
+          "avgPrice": 4733,
+          "avgPyeong": 5.8
         },
         {
           "name": "대구 동문동 현대썬앤빌 중앙로역 오피스텔",
@@ -2183,9 +2239,9 @@
     "28": {
       "name": "인천",
       "short": "인천",
-      "totalTrades": 853,
-      "avgPrice": 17126,
-      "avgPpyeong": 1083,
+      "totalTrades": 886,
+      "avgPrice": 17043,
+      "avgPpyeong": 1084,
       "ranking": [
         {
           "name": "롯데몰 송도 캐슬파크",
@@ -2204,20 +2260,20 @@
           "avgPyeong": 11.6
         },
         {
-          "name": "송도지웰푸르지오시티",
-          "umdNm": "송도동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1919,
-          "avgPrice": 15000,
-          "avgPyeong": 7.8
-        },
-        {
           "name": "청라국제도시역 푸르지오시티",
           "umdNm": "청라동",
-          "tradeCount": 9,
-          "pricePerPyeong": 1893,
-          "avgPrice": 17333,
-          "avgPyeong": 9
+          "tradeCount": 10,
+          "pricePerPyeong": 1906,
+          "avgPrice": 17800,
+          "avgPyeong": 9.2
+        },
+        {
+          "name": "송도지웰푸르지오시티",
+          "umdNm": "송도동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1861,
+          "avgPrice": 20925,
+          "avgPyeong": 11.6
         },
         {
           "name": "리베라움 더레이크",
@@ -2228,20 +2284,20 @@
           "avgPyeong": 15.6
         },
         {
-          "name": "센트럴시티뷰",
-          "umdNm": "가좌동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1793,
-          "avgPrice": 11578,
-          "avgPyeong": 6.5
-        },
-        {
           "name": "힐스테이트 송도 더스카이",
           "umdNm": "송도동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1783,
-          "avgPrice": 32333,
+          "tradeCount": 4,
+          "pricePerPyeong": 1776,
+          "avgPrice": 32200,
           "avgPyeong": 18.1
+        },
+        {
+          "name": "센트럴시티뷰",
+          "umdNm": "가좌동",
+          "tradeCount": 6,
+          "pricePerPyeong": 1767,
+          "avgPrice": 11515,
+          "avgPyeong": 6.5
         },
         {
           "name": "DS Tower",
@@ -2284,6 +2340,14 @@
           "avgPyeong": 6.7
         },
         {
+          "name": "부평역 해링턴 플레이스",
+          "umdNm": "부평동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1663,
+          "avgPrice": 24719,
+          "avgPyeong": 14.8
+        },
+        {
           "name": "e편한세상시티 부평역",
           "umdNm": "부평동",
           "tradeCount": 7,
@@ -2310,10 +2374,18 @@
         {
           "name": "힐스테이트 송도 더테라스",
           "umdNm": "송도동",
-          "tradeCount": 23,
-          "pricePerPyeong": 1546,
-          "avgPrice": 39461,
+          "tradeCount": 24,
+          "pricePerPyeong": 1549,
+          "avgPrice": 39525,
           "avgPyeong": 25.5
+        },
+        {
+          "name": "부평구청역대명벨리온",
+          "umdNm": "부평동",
+          "tradeCount": 6,
+          "pricePerPyeong": 1528,
+          "avgPrice": 14667,
+          "avgPyeong": 9.7
         },
         {
           "name": "인하대역 헤리움 메트로 타워",
@@ -2330,22 +2402,6 @@
           "pricePerPyeong": 1497,
           "avgPrice": 16950,
           "avgPyeong": 11.6
-        },
-        {
-          "name": "부평구청역대명벨리온",
-          "umdNm": "부평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1485,
-          "avgPrice": 14280,
-          "avgPyeong": 9.7
-        },
-        {
-          "name": "솔리움센텀스카이",
-          "umdNm": "운서동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1457,
-          "avgPrice": 9633,
-          "avgPyeong": 6.6
         }
       ],
       "rankLow": [
@@ -2392,10 +2448,18 @@
         {
           "name": "이리옴3빌딩",
           "umdNm": "연수동",
-          "tradeCount": 3,
-          "pricePerPyeong": 576,
-          "avgPrice": 4167,
+          "tradeCount": 4,
+          "pricePerPyeong": 594,
+          "avgPrice": 4275,
           "avgPyeong": 7.2
+        },
+        {
+          "name": "골드코스트호텔인천",
+          "umdNm": "논현동",
+          "tradeCount": 5,
+          "pricePerPyeong": 598,
+          "avgPrice": 3600,
+          "avgPyeong": 6
         },
         {
           "name": "더휴펠리스",
@@ -2438,6 +2502,14 @@
           "avgPyeong": 5.1
         },
         {
+          "name": "스카이홈",
+          "umdNm": "부평동",
+          "tradeCount": 4,
+          "pricePerPyeong": 718,
+          "avgPrice": 12450,
+          "avgPyeong": 17.3
+        },
+        {
           "name": "파티마오피스텔",
           "umdNm": "연수동",
           "tradeCount": 6,
@@ -2452,14 +2524,6 @@
           "pricePerPyeong": 721,
           "avgPrice": 9350,
           "avgPyeong": 12.6
-        },
-        {
-          "name": "스카이홈",
-          "umdNm": "부평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 735,
-          "avgPrice": 13033,
-          "avgPyeong": 17.7
         },
         {
           "name": "부티크 646",
@@ -2494,32 +2558,34 @@
           "avgPyeong": 20.8
         },
         {
-          "name": "제스트빌",
-          "umdNm": "심곡동",
+          "name": "딜라이트타워",
+          "umdNm": "청라동",
           "tradeCount": 3,
-          "pricePerPyeong": 775,
-          "avgPrice": 6367,
-          "avgPyeong": 8.4
-        },
-        {
-          "name": "신원아침도시 비",
-          "umdNm": "간석동",
-          "tradeCount": 5,
-          "pricePerPyeong": 786,
-          "avgPrice": 24060,
-          "avgPyeong": 30.4
+          "pricePerPyeong": 764,
+          "avgPrice": 6767,
+          "avgPyeong": 8.9
         }
       ],
       "rankRise": [
         {
           "name": "힐스테이트 송도 더테라스",
           "umdNm": "송도동",
-          "tradeCount": 23,
-          "pricePerPyeong": 1546,
-          "avgPrice": 39461,
+          "tradeCount": 24,
+          "pricePerPyeong": 1549,
+          "avgPrice": 39525,
           "avgPyeong": 25.5,
           "prevPpyeong": 1479,
-          "riseRate": 4.5
+          "riseRate": 4.7
+        },
+        {
+          "name": "부평구청역대명벨리온",
+          "umdNm": "부평동",
+          "tradeCount": 6,
+          "pricePerPyeong": 1528,
+          "avgPrice": 14667,
+          "avgPyeong": 9.7,
+          "prevPpyeong": 1482,
+          "riseRate": 3.1
         },
         {
           "name": "송도센트럴파크 푸르지오 시티",
@@ -2552,16 +2618,6 @@
           "riseRate": 1.7
         },
         {
-          "name": "푸르지오시티",
-          "umdNm": "논현동",
-          "tradeCount": 5,
-          "pricePerPyeong": 929,
-          "avgPrice": 13960,
-          "avgPyeong": 15,
-          "prevPpyeong": 915,
-          "riseRate": 1.5
-        },
-        {
           "name": "부평한라비발디",
           "umdNm": "부평동",
           "tradeCount": 5,
@@ -2570,6 +2626,16 @@
           "avgPyeong": 8.7,
           "prevPpyeong": 1669,
           "riseRate": 1
+        },
+        {
+          "name": "푸르지오시티",
+          "umdNm": "논현동",
+          "tradeCount": 6,
+          "pricePerPyeong": 923,
+          "avgPrice": 13883,
+          "avgPyeong": 15,
+          "prevPpyeong": 915,
+          "riseRate": 0.9
         },
         {
           "name": "라이즈빌",
@@ -2582,16 +2648,6 @@
           "riseRate": 0.6
         },
         {
-          "name": "부평구청역대명벨리온",
-          "umdNm": "부평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1485,
-          "avgPrice": 14280,
-          "avgPyeong": 9.7,
-          "prevPpyeong": 1482,
-          "riseRate": 0.2
-        },
-        {
           "name": "계양 우림카이저팰리스 1단지",
           "umdNm": "작전동",
           "tradeCount": 7,
@@ -2602,23 +2658,23 @@
           "riseRate": -0.2
         },
         {
-          "name": "센트럴시티뷰",
-          "umdNm": "가좌동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1793,
-          "avgPrice": 11578,
-          "avgPyeong": 6.5,
-          "prevPpyeong": 1805,
+          "name": "청라린스트라우스",
+          "umdNm": "청라동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1375,
+          "avgPrice": 24950,
+          "avgPyeong": 18.1,
+          "prevPpyeong": 1385,
           "riseRate": -0.7
         },
         {
-          "name": "청라린스트라우스",
-          "umdNm": "청라동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1356,
-          "avgPrice": 24600,
-          "avgPyeong": 18.1,
-          "prevPpyeong": 1385,
+          "name": "센트럴시티뷰",
+          "umdNm": "가좌동",
+          "tradeCount": 6,
+          "pricePerPyeong": 1767,
+          "avgPrice": 11515,
+          "avgPyeong": 6.5,
+          "prevPpyeong": 1805,
           "riseRate": -2.1
         },
         {
@@ -2682,16 +2738,6 @@
           "riseRate": -4.8
         },
         {
-          "name": "스카이홈",
-          "umdNm": "부평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 735,
-          "avgPrice": 13033,
-          "avgPyeong": 17.7,
-          "prevPpyeong": 774,
-          "riseRate": -5
-        },
-        {
           "name": "대덕 노바체",
           "umdNm": "계산동",
           "tradeCount": 4,
@@ -2710,6 +2756,16 @@
           "avgPyeong": 8.1,
           "prevPpyeong": 433,
           "riseRate": -5.1
+        },
+        {
+          "name": "지웰 에스테이트",
+          "umdNm": "청라동",
+          "tradeCount": 5,
+          "pricePerPyeong": 1070,
+          "avgPrice": 6500,
+          "avgPyeong": 6.1,
+          "prevPpyeong": 1144,
+          "riseRate": -6.5
         }
       ],
       "rankVolume": [
@@ -2740,9 +2796,9 @@
         {
           "name": "힐스테이트 송도 더테라스",
           "umdNm": "송도동",
-          "tradeCount": 23,
-          "pricePerPyeong": 1546,
-          "avgPrice": 39461,
+          "tradeCount": 24,
+          "pricePerPyeong": 1549,
+          "avgPrice": 39525,
           "avgPyeong": 25.5
         },
         {
@@ -2772,10 +2828,18 @@
         {
           "name": "e편한세상 시티 인하대역",
           "umdNm": "용현동",
-          "tradeCount": 9,
-          "pricePerPyeong": 1337,
-          "avgPrice": 22244,
+          "tradeCount": 10,
+          "pricePerPyeong": 1324,
+          "avgPrice": 22170,
           "avgPyeong": 17.5
+        },
+        {
+          "name": "청라국제도시역 푸르지오시티",
+          "umdNm": "청라동",
+          "tradeCount": 10,
+          "pricePerPyeong": 1906,
+          "avgPrice": 17800,
+          "avgPyeong": 9.2
         },
         {
           "name": "도화 두손지젤시티",
@@ -2800,14 +2864,6 @@
           "pricePerPyeong": 1093,
           "avgPrice": 9400,
           "avgPyeong": 8.8
-        },
-        {
-          "name": "청라국제도시역 푸르지오시티",
-          "umdNm": "청라동",
-          "tradeCount": 9,
-          "pricePerPyeong": 1893,
-          "avgPrice": 17333,
-          "avgPyeong": 9
         },
         {
           "name": "호반 써밋 송도",
@@ -2902,9 +2958,9 @@
         {
           "name": "힐스테이트 송도 더테라스",
           "umdNm": "송도동",
-          "tradeCount": 23,
-          "pricePerPyeong": 1546,
-          "avgPrice": 39461,
+          "tradeCount": 24,
+          "pricePerPyeong": 1549,
+          "avgPrice": 39525,
           "avgPyeong": 25.5
         },
         {
@@ -2992,9 +3048,9 @@
         {
           "name": "힐스테이트 송도 더스카이",
           "umdNm": "송도동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1783,
-          "avgPrice": 32333,
+          "tradeCount": 4,
+          "pricePerPyeong": 1776,
+          "avgPrice": 32200,
           "avgPyeong": 18.1
         },
         {
@@ -3016,9 +3072,9 @@
         {
           "name": "청라린스트라우스",
           "umdNm": "청라동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1356,
-          "avgPrice": 24600,
+          "tradeCount": 4,
+          "pricePerPyeong": 1375,
+          "avgPrice": 24950,
           "avgPyeong": 18.1
         },
         {
@@ -3032,9 +3088,9 @@
         {
           "name": "e편한세상 시티 인하대역",
           "umdNm": "용현동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1192,
-          "avgPrice": 21150,
+          "tradeCount": 5,
+          "pricePerPyeong": 1196,
+          "avgPrice": 21220,
           "avgPyeong": 17.7
         },
         {
@@ -3082,9 +3138,9 @@
     "29": {
       "name": "광주",
       "short": "광주",
-      "totalTrades": 75,
-      "avgPrice": 11786,
-      "avgPpyeong": 823,
+      "totalTrades": 81,
+      "avgPrice": 11839,
+      "avgPpyeong": 817,
       "ranking": [
         {
           "name": "S-클래스 더 제니스",
@@ -3093,6 +3149,22 @@
           "pricePerPyeong": 1098,
           "avgPrice": 16688,
           "avgPyeong": 15.1
+        },
+        {
+          "name": "유탑 유블레스 트윈시티",
+          "umdNm": "치평동",
+          "tradeCount": 3,
+          "pricePerPyeong": 891,
+          "avgPrice": 22900,
+          "avgPyeong": 25.7
+        },
+        {
+          "name": "광산엘리체 레이크시티",
+          "umdNm": "지죽동",
+          "tradeCount": 3,
+          "pricePerPyeong": 824,
+          "avgPrice": 21167,
+          "avgPyeong": 25.7
         },
         {
           "name": "광주대우디오빌",
@@ -3125,6 +3197,14 @@
           "pricePerPyeong": 537,
           "avgPrice": 6100,
           "avgPyeong": 11.4
+        },
+        {
+          "name": "중흥동 도나우타운",
+          "umdNm": "중흥동",
+          "tradeCount": 3,
+          "pricePerPyeong": 422,
+          "avgPrice": 6333,
+          "avgPyeong": 15
         },
         {
           "name": "제일오피스텔",
@@ -3145,6 +3225,14 @@
           "avgPyeong": 8.3
         },
         {
+          "name": "중흥동 도나우타운",
+          "umdNm": "중흥동",
+          "tradeCount": 3,
+          "pricePerPyeong": 422,
+          "avgPrice": 6333,
+          "avgPyeong": 15
+        },
+        {
           "name": "랜드피아오피스텔",
           "umdNm": "치평동",
           "tradeCount": 5,
@@ -3175,6 +3263,22 @@
           "pricePerPyeong": 819,
           "avgPrice": 10733,
           "avgPyeong": 13
+        },
+        {
+          "name": "광산엘리체 레이크시티",
+          "umdNm": "지죽동",
+          "tradeCount": 3,
+          "pricePerPyeong": 824,
+          "avgPrice": 21167,
+          "avgPyeong": 25.7
+        },
+        {
+          "name": "유탑 유블레스 트윈시티",
+          "umdNm": "치평동",
+          "tradeCount": 3,
+          "pricePerPyeong": 891,
+          "avgPrice": 22900,
+          "avgPyeong": 25.7
         },
         {
           "name": "S-클래스 더 제니스",
@@ -3225,6 +3329,16 @@
           "avgPyeong": 9.1,
           "prevPpyeong": 871,
           "riseRate": -6.8
+        },
+        {
+          "name": "광산엘리체 레이크시티",
+          "umdNm": "지죽동",
+          "tradeCount": 3,
+          "pricePerPyeong": 824,
+          "avgPrice": 21167,
+          "avgPyeong": 25.7,
+          "prevPpyeong": 903,
+          "riseRate": -8.7
         }
       ],
       "rankVolume": [
@@ -3269,12 +3383,36 @@
           "avgPyeong": 8.3
         },
         {
+          "name": "광산엘리체 레이크시티",
+          "umdNm": "지죽동",
+          "tradeCount": 3,
+          "pricePerPyeong": 824,
+          "avgPrice": 21167,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "광주대우디오빌",
           "umdNm": "치평동",
           "tradeCount": 3,
           "pricePerPyeong": 819,
           "avgPrice": 10733,
           "avgPyeong": 13
+        },
+        {
+          "name": "유탑 유블레스 트윈시티",
+          "umdNm": "치평동",
+          "tradeCount": 3,
+          "pricePerPyeong": 891,
+          "avgPrice": 22900,
+          "avgPyeong": 25.7
+        },
+        {
+          "name": "중흥동 도나우타운",
+          "umdNm": "중흥동",
+          "tradeCount": 3,
+          "pricePerPyeong": 422,
+          "avgPrice": 6333,
+          "avgPyeong": 15
         }
       ],
       "rank84": [
@@ -3289,9 +3427,9 @@
         {
           "name": "유탑 유블레스 트윈시티",
           "umdNm": "치평동",
-          "tradeCount": 2,
-          "pricePerPyeong": 899,
-          "avgPrice": 23100,
+          "tradeCount": 3,
+          "pricePerPyeong": 891,
+          "avgPrice": 22900,
           "avgPyeong": 25.7
         },
         {
@@ -3305,9 +3443,9 @@
         {
           "name": "광산엘리체 레이크시티",
           "umdNm": "지죽동",
-          "tradeCount": 2,
-          "pricePerPyeong": 749,
-          "avgPrice": 19250,
+          "tradeCount": 3,
+          "pricePerPyeong": 824,
+          "avgPrice": 21167,
           "avgPyeong": 25.7
         }
       ],
@@ -3333,9 +3471,9 @@
     "30": {
       "name": "대전",
       "short": "대전",
-      "totalTrades": 186,
-      "avgPrice": 20923,
-      "avgPpyeong": 1108,
+      "totalTrades": 189,
+      "avgPrice": 20694,
+      "avgPpyeong": 1103,
       "ranking": [
         {
           "name": "스마트시티리버뷰",
@@ -3364,18 +3502,18 @@
         {
           "name": "(802)",
           "umdNm": "관평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1303,
-          "avgPrice": 10880,
+          "tradeCount": 4,
+          "pricePerPyeong": 1323,
+          "avgPrice": 11075,
           "avgPyeong": 8.4
         },
         {
           "name": "메종 드 세이",
           "umdNm": "관평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1168,
-          "avgPrice": 8100,
-          "avgPyeong": 6.9
+          "tradeCount": 4,
+          "pricePerPyeong": 1201,
+          "avgPrice": 8550,
+          "avgPyeong": 7.1
         },
         {
           "name": "유성 푸르지오 시티",
@@ -3434,20 +3572,20 @@
           "avgPyeong": 13.7
         },
         {
-          "name": "넥서스밸리",
-          "umdNm": "둔산동",
-          "tradeCount": 11,
-          "pricePerPyeong": 632,
-          "avgPrice": 5870,
-          "avgPyeong": 9.3
-        },
-        {
           "name": "케이티 그랜드 뷰",
           "umdNm": "둔산동",
           "tradeCount": 4,
           "pricePerPyeong": 629,
           "avgPrice": 6475,
           "avgPyeong": 10.2
+        },
+        {
+          "name": "넥서스밸리",
+          "umdNm": "둔산동",
+          "tradeCount": 12,
+          "pricePerPyeong": 626,
+          "avgPrice": 5727,
+          "avgPyeong": 9.2
         },
         {
           "name": "엑스포오피스텔1차",
@@ -3532,20 +3670,20 @@
           "avgPyeong": 12.5
         },
         {
+          "name": "넥서스밸리",
+          "umdNm": "둔산동",
+          "tradeCount": 12,
+          "pricePerPyeong": 626,
+          "avgPrice": 5727,
+          "avgPyeong": 9.2
+        },
+        {
           "name": "케이티 그랜드 뷰",
           "umdNm": "둔산동",
           "tradeCount": 4,
           "pricePerPyeong": 629,
           "avgPrice": 6475,
           "avgPyeong": 10.2
-        },
-        {
-          "name": "넥서스밸리",
-          "umdNm": "둔산동",
-          "tradeCount": 11,
-          "pricePerPyeong": 632,
-          "avgPrice": 5870,
-          "avgPyeong": 9.3
         },
         {
           "name": "디티비안W 오피스텔",
@@ -3606,17 +3744,17 @@
         {
           "name": "메종 드 세이",
           "umdNm": "관평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1168,
-          "avgPrice": 8100,
-          "avgPyeong": 6.9
+          "tradeCount": 4,
+          "pricePerPyeong": 1201,
+          "avgPrice": 8550,
+          "avgPyeong": 7.1
         },
         {
           "name": "(802)",
           "umdNm": "관평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1303,
-          "avgPrice": 10880,
+          "tradeCount": 4,
+          "pricePerPyeong": 1323,
+          "avgPrice": 11075,
           "avgPyeong": 8.4
         },
         {
@@ -3688,12 +3826,12 @@
         {
           "name": "(802)",
           "umdNm": "관평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1303,
-          "avgPrice": 10880,
+          "tradeCount": 4,
+          "pricePerPyeong": 1323,
+          "avgPrice": 11075,
           "avgPyeong": 8.4,
           "prevPpyeong": 1251,
-          "riseRate": 4.2
+          "riseRate": 5.8
         },
         {
           "name": "홍인오피스텔",
@@ -3716,6 +3854,16 @@
           "riseRate": 2.7
         },
         {
+          "name": "메종 드 세이",
+          "umdNm": "관평동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1201,
+          "avgPrice": 8550,
+          "avgPyeong": 7.1,
+          "prevPpyeong": 1194,
+          "riseRate": 0.6
+        },
+        {
           "name": "유성 푸르지오 시티",
           "umdNm": "봉명동",
           "tradeCount": 15,
@@ -3724,16 +3872,6 @@
           "avgPyeong": 7.5,
           "prevPpyeong": 1073,
           "riseRate": 0.5
-        },
-        {
-          "name": "메종 드 세이",
-          "umdNm": "관평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1168,
-          "avgPrice": 8100,
-          "avgPyeong": 6.9,
-          "prevPpyeong": 1194,
-          "riseRate": -2.2
         },
         {
           "name": "대전 둔산지구 우림필유",
@@ -3758,12 +3896,12 @@
         {
           "name": "넥서스밸리",
           "umdNm": "둔산동",
-          "tradeCount": 11,
-          "pricePerPyeong": 632,
-          "avgPrice": 5870,
-          "avgPyeong": 9.3,
+          "tradeCount": 12,
+          "pricePerPyeong": 626,
+          "avgPrice": 5727,
+          "avgPyeong": 9.2,
           "prevPpyeong": 660,
-          "riseRate": -4.2
+          "riseRate": -5.2
         },
         {
           "name": "매그놀리아",
@@ -3796,10 +3934,10 @@
         {
           "name": "넥서스밸리",
           "umdNm": "둔산동",
-          "tradeCount": 11,
-          "pricePerPyeong": 632,
-          "avgPrice": 5870,
-          "avgPyeong": 9.3
+          "tradeCount": 12,
+          "pricePerPyeong": 626,
+          "avgPrice": 5727,
+          "avgPyeong": 9.2
         },
         {
           "name": "리세스빌",
@@ -3824,14 +3962,6 @@
           "pricePerPyeong": 273,
           "avgPrice": 2842,
           "avgPyeong": 10.4
-        },
-        {
-          "name": "(802)",
-          "umdNm": "관평동",
-          "tradeCount": 5,
-          "pricePerPyeong": 1303,
-          "avgPrice": 10880,
-          "avgPyeong": 8.4
         },
         {
           "name": "DTVan 오피스텔",
@@ -3874,6 +4004,22 @@
           "avgPyeong": 7.6
         },
         {
+          "name": "(802)",
+          "umdNm": "관평동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1323,
+          "avgPrice": 11075,
+          "avgPyeong": 8.4
+        },
+        {
+          "name": "메종 드 세이",
+          "umdNm": "관평동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1201,
+          "avgPrice": 8550,
+          "avgPyeong": 7.1
+        },
+        {
           "name": "케이티 그랜드 뷰",
           "umdNm": "둔산동",
           "tradeCount": 4,
@@ -3904,14 +4050,6 @@
           "pricePerPyeong": 670,
           "avgPrice": 9100,
           "avgPyeong": 13.7
-        },
-        {
-          "name": "메종 드 세이",
-          "umdNm": "관평동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1168,
-          "avgPrice": 8100,
-          "avgPyeong": 6.9
         },
         {
           "name": "엑스포오피스텔1차",
@@ -3969,9 +4107,9 @@
     "31": {
       "name": "울산",
       "short": "울산",
-      "totalTrades": 144,
-      "avgPrice": 14236,
-      "avgPpyeong": 1047,
+      "totalTrades": 150,
+      "avgPrice": 14205,
+      "avgPpyeong": 1048,
       "ranking": [
         {
           "name": "울산 태화강 아이파크",
@@ -3992,26 +4130,26 @@
         {
           "name": "타워더모스트 우정혁신도시",
           "umdNm": "우정동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1344,
-          "avgPrice": 9178,
+          "tradeCount": 7,
+          "pricePerPyeong": 1378,
+          "avgPrice": 9410,
           "avgPyeong": 6.8
         },
         {
           "name": "시티파라다이스 오피스텔 주건축물제1동",
           "umdNm": "신정동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1309,
-          "avgPrice": 9633,
-          "avgPyeong": 7.4
+          "tradeCount": 4,
+          "pricePerPyeong": 1327,
+          "avgPrice": 11850,
+          "avgPyeong": 8.9
         },
         {
           "name": "나인파크 삼산 오피스텔",
           "umdNm": "삼산동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1224,
-          "avgPrice": 15942,
-          "avgPyeong": 13.1
+          "tradeCount": 7,
+          "pricePerPyeong": 1232,
+          "avgPrice": 15479,
+          "avgPyeong": 12.7
         },
         {
           "name": "태화강엑소디움",
@@ -4162,25 +4300,25 @@
         {
           "name": "나인파크 삼산 오피스텔",
           "umdNm": "삼산동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1224,
-          "avgPrice": 15942,
-          "avgPyeong": 13.1
+          "tradeCount": 7,
+          "pricePerPyeong": 1232,
+          "avgPrice": 15479,
+          "avgPyeong": 12.7
         },
         {
           "name": "시티파라다이스 오피스텔 주건축물제1동",
           "umdNm": "신정동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1309,
-          "avgPrice": 9633,
-          "avgPyeong": 7.4
+          "tradeCount": 4,
+          "pricePerPyeong": 1327,
+          "avgPrice": 11850,
+          "avgPyeong": 8.9
         },
         {
           "name": "타워더모스트 우정혁신도시",
           "umdNm": "우정동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1344,
-          "avgPrice": 9178,
+          "tradeCount": 7,
+          "pricePerPyeong": 1378,
+          "avgPrice": 9410,
           "avgPyeong": 6.8
         },
         {
@@ -4224,12 +4362,12 @@
         {
           "name": "나인파크 삼산 오피스텔",
           "umdNm": "삼산동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1224,
-          "avgPrice": 15942,
-          "avgPyeong": 13.1,
+          "tradeCount": 7,
+          "pricePerPyeong": 1232,
+          "avgPrice": 15479,
+          "avgPyeong": 12.7,
           "prevPpyeong": 1201,
-          "riseRate": 1.9
+          "riseRate": 2.6
         },
         {
           "name": "코아루 벨라채",
@@ -4244,12 +4382,12 @@
         {
           "name": "타워더모스트 우정혁신도시",
           "umdNm": "우정동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1344,
-          "avgPrice": 9178,
+          "tradeCount": 7,
+          "pricePerPyeong": 1378,
+          "avgPrice": 9410,
           "avgPyeong": 6.8,
           "prevPpyeong": 1383,
-          "riseRate": -2.8
+          "riseRate": -0.4
         },
         {
           "name": "스위첸 웰츠타워 2단지",
@@ -4292,17 +4430,17 @@
         {
           "name": "나인파크 삼산 오피스텔",
           "umdNm": "삼산동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1224,
-          "avgPrice": 15942,
-          "avgPyeong": 13.1
+          "tradeCount": 7,
+          "pricePerPyeong": 1232,
+          "avgPrice": 15479,
+          "avgPyeong": 12.7
         },
         {
           "name": "타워더모스트 우정혁신도시",
           "umdNm": "우정동",
-          "tradeCount": 6,
-          "pricePerPyeong": 1344,
-          "avgPrice": 9178,
+          "tradeCount": 7,
+          "pricePerPyeong": 1378,
+          "avgPrice": 9410,
           "avgPyeong": 6.8
         },
         {
@@ -4328,6 +4466,14 @@
           "pricePerPyeong": 1083,
           "avgPrice": 12280,
           "avgPyeong": 11.3
+        },
+        {
+          "name": "시티파라다이스 오피스텔 주건축물제1동",
+          "umdNm": "신정동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1327,
+          "avgPrice": 11850,
+          "avgPyeong": 8.9
         },
         {
           "name": "울산 태화강 아이파크",
@@ -4360,14 +4506,6 @@
           "pricePerPyeong": 967,
           "avgPrice": 13800,
           "avgPyeong": 15.8
-        },
-        {
-          "name": "시티파라다이스 오피스텔 주건축물제1동",
-          "umdNm": "신정동",
-          "tradeCount": 3,
-          "pricePerPyeong": 1309,
-          "avgPrice": 9633,
-          "avgPyeong": 7.4
         },
         {
           "name": "온리원오피스텔",
@@ -4426,9 +4564,9 @@
     "36": {
       "name": "세종",
       "short": "세종",
-      "totalTrades": 46,
-      "avgPrice": 9165,
-      "avgPpyeong": 1101,
+      "totalTrades": 48,
+      "avgPrice": 9096,
+      "avgPpyeong": 1098,
       "ranking": [
         {
           "name": "더리치세종의아침",
@@ -4441,10 +4579,10 @@
         {
           "name": "푸르지오시티",
           "umdNm": "어진동",
-          "tradeCount": 19,
-          "pricePerPyeong": 1148,
-          "avgPrice": 9263,
-          "avgPyeong": 8.1
+          "tradeCount": 20,
+          "pricePerPyeong": 1146,
+          "avgPrice": 9200,
+          "avgPyeong": 8
         },
         {
           "name": "2차푸르지오시티",
@@ -4467,10 +4605,10 @@
         {
           "name": "푸르지오시티",
           "umdNm": "어진동",
-          "tradeCount": 19,
-          "pricePerPyeong": 1148,
-          "avgPrice": 9263,
-          "avgPyeong": 8.1
+          "tradeCount": 20,
+          "pricePerPyeong": 1146,
+          "avgPrice": 9200,
+          "avgPyeong": 8
         },
         {
           "name": "더리치세종의아침",
@@ -4485,12 +4623,12 @@
         {
           "name": "푸르지오시티",
           "umdNm": "어진동",
-          "tradeCount": 19,
-          "pricePerPyeong": 1148,
-          "avgPrice": 9263,
-          "avgPyeong": 8.1,
+          "tradeCount": 20,
+          "pricePerPyeong": 1146,
+          "avgPrice": 9200,
+          "avgPyeong": 8,
           "prevPpyeong": 1206,
-          "riseRate": -4.8
+          "riseRate": -5
         },
         {
           "name": "2차푸르지오시티",
@@ -4507,10 +4645,10 @@
         {
           "name": "푸르지오시티",
           "umdNm": "어진동",
-          "tradeCount": 19,
-          "pricePerPyeong": 1148,
-          "avgPrice": 9263,
-          "avgPyeong": 8.1
+          "tradeCount": 20,
+          "pricePerPyeong": 1146,
+          "avgPrice": 9200,
+          "avgPyeong": 8
         },
         {
           "name": "2차푸르지오시티",
@@ -4535,8 +4673,8 @@
     "41": {
       "name": "경기",
       "short": "경기",
-      "totalTrades": 2947,
-      "avgPrice": 28416,
+      "totalTrades": 3019,
+      "avgPrice": 28457,
       "avgPpyeong": 1785,
       "ranking": [
         {
@@ -4558,10 +4696,10 @@
         {
           "name": "위례 지웰푸르지오",
           "umdNm": "학암동",
-          "tradeCount": 12,
-          "pricePerPyeong": 3948,
-          "avgPrice": 97458,
-          "avgPyeong": 24.6
+          "tradeCount": 13,
+          "pricePerPyeong": 3958,
+          "avgPrice": 98023,
+          "avgPyeong": 24.7
         },
         {
           "name": "포레나 광교",
@@ -4580,20 +4718,20 @@
           "avgPyeong": 11.2
         },
         {
-          "name": "힐스테이트 과천 중앙",
-          "umdNm": "중앙동",
-          "tradeCount": 3,
-          "pricePerPyeong": 3779,
-          "avgPrice": 85500,
-          "avgPyeong": 22.6
-        },
-        {
           "name": "타임브릿지",
           "umdNm": "정자동",
-          "tradeCount": 5,
-          "pricePerPyeong": 3749,
-          "avgPrice": 195400,
-          "avgPyeong": 52.5
+          "tradeCount": 6,
+          "pricePerPyeong": 3761,
+          "avgPrice": 191417,
+          "avgPyeong": 51.2
+        },
+        {
+          "name": "힐스테이트 과천 중앙",
+          "umdNm": "중앙동",
+          "tradeCount": 4,
+          "pricePerPyeong": 3680,
+          "avgPrice": 85875,
+          "avgPyeong": 23.4
         },
         {
           "name": "분당두산위브파빌리온",
@@ -4622,18 +4760,26 @@
         {
           "name": "위례 한화 오벨리스크 센트럴스퀘어",
           "umdNm": "창곡동",
-          "tradeCount": 7,
-          "pricePerPyeong": 3466,
-          "avgPrice": 60743,
-          "avgPyeong": 17.1
+          "tradeCount": 8,
+          "pricePerPyeong": 3467,
+          "avgPrice": 61775,
+          "avgPyeong": 17.5
         },
         {
           "name": "힐스테이트 수지구청역",
           "umdNm": "풍덕천동",
-          "tradeCount": 25,
-          "pricePerPyeong": 3365,
-          "avgPrice": 73304,
-          "avgPyeong": 21.7
+          "tradeCount": 26,
+          "pricePerPyeong": 3342,
+          "avgPrice": 73215,
+          "avgPyeong": 21.8
+        },
+        {
+          "name": "더샵 분당파크리버",
+          "umdNm": "정자동",
+          "tradeCount": 7,
+          "pricePerPyeong": 3323,
+          "avgPrice": 85429,
+          "avgPyeong": 25.7
         },
         {
           "name": "현대판테온I오피스텔",
@@ -4652,22 +4798,6 @@
           "avgPyeong": 10.3
         },
         {
-          "name": "더샵 분당파크리버",
-          "umdNm": "정자동",
-          "tradeCount": 6,
-          "pricePerPyeong": 3293,
-          "avgPrice": 84667,
-          "avgPyeong": 25.7
-        },
-        {
-          "name": "남위례역 푸르지오 시티",
-          "umdNm": "창곡동",
-          "tradeCount": 3,
-          "pricePerPyeong": 3276,
-          "avgPrice": 41833,
-          "avgPyeong": 12.6
-        },
-        {
           "name": "백궁 동양파라곤",
           "umdNm": "정자동",
           "tradeCount": 13,
@@ -4682,6 +4812,14 @@
           "pricePerPyeong": 3238,
           "avgPrice": 62142,
           "avgPyeong": 19
+        },
+        {
+          "name": "남위례역 푸르지오 시티",
+          "umdNm": "창곡동",
+          "tradeCount": 4,
+          "pricePerPyeong": 3222,
+          "avgPrice": 41575,
+          "avgPyeong": 12.8
         },
         {
           "name": "코오롱트리폴리스Ⅰ",
@@ -4704,10 +4842,10 @@
         {
           "name": "마도지구유통업무및지원시설",
           "umdNm": "마도면 쌍송리",
-          "tradeCount": 3,
-          "pricePerPyeong": 322,
-          "avgPrice": 3767,
-          "avgPyeong": 11.8
+          "tradeCount": 4,
+          "pricePerPyeong": 318,
+          "avgPrice": 3800,
+          "avgPyeong": 12
         },
         {
           "name": "오딧세이",
@@ -4798,6 +4936,14 @@
           "avgPyeong": 12.1
         },
         {
+          "name": "프리빌 오피스텔",
+          "umdNm": "안양동",
+          "tradeCount": 3,
+          "pricePerPyeong": 709,
+          "avgPrice": 9300,
+          "avgPyeong": 13.2
+        },
+        {
           "name": "현대타운빌",
           "umdNm": "장항동",
           "tradeCount": 3,
@@ -4824,10 +4970,18 @@
         {
           "name": "평택스마트빌포레",
           "umdNm": "포승읍 도곡리",
+          "tradeCount": 4,
+          "pricePerPyeong": 768,
+          "avgPrice": 7863,
+          "avgPyeong": 10.2
+        },
+        {
+          "name": "화정건영캐스빌플러스",
+          "umdNm": "화정동",
           "tradeCount": 3,
-          "pricePerPyeong": 771,
-          "avgPrice": 7683,
-          "avgPyeong": 10
+          "pricePerPyeong": 782,
+          "avgPrice": 9133,
+          "avgPyeong": 11.8
         },
         {
           "name": "(872-2)",
@@ -4844,22 +4998,6 @@
           "pricePerPyeong": 803,
           "avgPrice": 4788,
           "avgPyeong": 6
-        },
-        {
-          "name": "대주파크빌",
-          "umdNm": "매산로2가",
-          "tradeCount": 4,
-          "pricePerPyeong": 804,
-          "avgPrice": 17000,
-          "avgPyeong": 21.5
-        },
-        {
-          "name": "양우드라마시티",
-          "umdNm": "장항동",
-          "tradeCount": 3,
-          "pricePerPyeong": 809,
-          "avgPrice": 8317,
-          "avgPyeong": 10.3
         }
       ],
       "rankRise": [
@@ -4886,12 +5024,12 @@
         {
           "name": "위례 지웰푸르지오",
           "umdNm": "학암동",
-          "tradeCount": 12,
-          "pricePerPyeong": 3948,
-          "avgPrice": 97458,
-          "avgPyeong": 24.6,
+          "tradeCount": 13,
+          "pricePerPyeong": 3958,
+          "avgPrice": 98023,
+          "avgPyeong": 24.7,
           "prevPpyeong": 3294,
-          "riseRate": 19.9
+          "riseRate": 20.2
         },
         {
           "name": "힐스테이트 에코 덕은",
@@ -4906,12 +5044,12 @@
         {
           "name": "힐스테이트 수지구청역",
           "umdNm": "풍덕천동",
-          "tradeCount": 25,
-          "pricePerPyeong": 3365,
-          "avgPrice": 73304,
-          "avgPyeong": 21.7,
+          "tradeCount": 26,
+          "pricePerPyeong": 3342,
+          "avgPrice": 73215,
+          "avgPyeong": 21.8,
           "prevPpyeong": 2956,
-          "riseRate": 13.8
+          "riseRate": 13.1
         },
         {
           "name": "민락2지구 제일풍경채 센텀-애비뉴모나코",
@@ -4984,16 +5122,6 @@
           "riseRate": 7.8
         },
         {
-          "name": "분당 트라팰리스",
-          "umdNm": "수내동",
-          "tradeCount": 7,
-          "pricePerPyeong": 2539,
-          "avgPrice": 45714,
-          "avgPyeong": 17.8,
-          "prevPpyeong": 2360,
-          "riseRate": 7.6
-        },
-        {
           "name": "e편한세상 시티 과천",
           "umdNm": "별양동",
           "tradeCount": 3,
@@ -5024,6 +5152,26 @@
           "riseRate": 5.6
         },
         {
+          "name": "트윈렉스1",
+          "umdNm": "덕풍동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1337,
+          "avgPrice": 13600,
+          "avgPyeong": 10.2,
+          "prevPpyeong": 1267,
+          "riseRate": 5.5
+        },
+        {
+          "name": "분당 트라팰리스",
+          "umdNm": "수내동",
+          "tradeCount": 8,
+          "pricePerPyeong": 2473,
+          "avgPrice": 43750,
+          "avgPyeong": 17.4,
+          "prevPpyeong": 2360,
+          "riseRate": 4.8
+        },
+        {
           "name": "웅진베어스빌",
           "umdNm": "태평동",
           "tradeCount": 5,
@@ -5052,16 +5200,6 @@
           "avgPyeong": 6.8,
           "prevPpyeong": 2167,
           "riseRate": 4.2
-        },
-        {
-          "name": "광명역 지웰 에스테이트",
-          "umdNm": "일직동",
-          "tradeCount": 4,
-          "pricePerPyeong": 2042,
-          "avgPrice": 25575,
-          "avgPyeong": 12.1,
-          "prevPpyeong": 1967,
-          "riseRate": 3.8
         }
       ],
       "rankVolume": [
@@ -5116,34 +5254,34 @@
         {
           "name": "힐스테이트미사역그랑파사쥬(12-1BL)",
           "umdNm": "망월동",
-          "tradeCount": 27,
-          "pricePerPyeong": 2420,
-          "avgPrice": 49330,
-          "avgPyeong": 19.7
+          "tradeCount": 28,
+          "pricePerPyeong": 2445,
+          "avgPrice": 50418,
+          "avgPyeong": 19.9
         },
         {
           "name": "힐스테이트 수지구청역",
           "umdNm": "풍덕천동",
-          "tradeCount": 25,
-          "pricePerPyeong": 3365,
-          "avgPrice": 73304,
-          "avgPyeong": 21.7
+          "tradeCount": 26,
+          "pricePerPyeong": 3342,
+          "avgPrice": 73215,
+          "avgPyeong": 21.8
         },
         {
           "name": "분당풍림아이원플러스오피스텔",
           "umdNm": "서현동",
-          "tradeCount": 23,
-          "pricePerPyeong": 1967,
-          "avgPrice": 32346,
-          "avgPyeong": 16.2
+          "tradeCount": 25,
+          "pricePerPyeong": 2013,
+          "avgPrice": 33438,
+          "avgPyeong": 16.4
         },
         {
           "name": "성남 센트럴 푸르지오 시티",
           "umdNm": "성남동",
-          "tradeCount": 20,
-          "pricePerPyeong": 2313,
-          "avgPrice": 18135,
-          "avgPyeong": 7.9
+          "tradeCount": 21,
+          "pricePerPyeong": 2312,
+          "avgPrice": 17933,
+          "avgPyeong": 7.8
         },
         {
           "name": "펠리시티",
@@ -5164,10 +5302,18 @@
         {
           "name": "광교엘포트아이파크",
           "umdNm": "이의동",
-          "tradeCount": 15,
-          "pricePerPyeong": 2650,
-          "avgPrice": 24328,
-          "avgPyeong": 9
+          "tradeCount": 16,
+          "pricePerPyeong": 2637,
+          "avgPrice": 23808,
+          "avgPyeong": 8.8
+        },
+        {
+          "name": "위브더스테이트",
+          "umdNm": "중동",
+          "tradeCount": 16,
+          "pricePerPyeong": 1590,
+          "avgPrice": 52619,
+          "avgPyeong": 33.3
         },
         {
           "name": "분당두산위브파빌리온",
@@ -5178,20 +5324,20 @@
           "avgPyeong": 20.6
         },
         {
-          "name": "위브더스테이트",
-          "umdNm": "중동",
-          "tradeCount": 15,
-          "pricePerPyeong": 1593,
-          "avgPrice": 52560,
-          "avgPyeong": 33.2
-        },
-        {
           "name": "힐스테이트 삼송역",
           "umdNm": "삼송동",
           "tradeCount": 15,
           "pricePerPyeong": 2441,
           "avgPrice": 59955,
           "avgPyeong": 24.6
+        },
+        {
+          "name": "정자동3차 푸르지오 시티",
+          "umdNm": "정자동",
+          "tradeCount": 14,
+          "pricePerPyeong": 3009,
+          "avgPrice": 28621,
+          "avgPyeong": 9.1
         },
         {
           "name": "효성헤링턴타워퍼스트 미사역",
@@ -5210,20 +5356,12 @@
           "avgPyeong": 7
         },
         {
-          "name": "백궁 동양파라곤",
-          "umdNm": "정자동",
+          "name": "메트하임가동",
+          "umdNm": "김량장동",
           "tradeCount": 13,
-          "pricePerPyeong": 3261,
-          "avgPrice": 38046,
-          "avgPyeong": 11.5
-        },
-        {
-          "name": "분당인텔리지2",
-          "umdNm": "정자동",
-          "tradeCount": 13,
-          "pricePerPyeong": 2543,
-          "avgPrice": 32600,
-          "avgPyeong": 12.4
+          "pricePerPyeong": 1219,
+          "avgPrice": 7954,
+          "avgPyeong": 6.6
         }
       ],
       "rank84": [
@@ -5238,9 +5376,9 @@
         {
           "name": "위례 지웰푸르지오",
           "umdNm": "학암동",
-          "tradeCount": 8,
-          "pricePerPyeong": 4080,
-          "avgPrice": 104438,
+          "tradeCount": 9,
+          "pricePerPyeong": 4081,
+          "avgPrice": 104478,
           "avgPyeong": 25.6
         },
         {
@@ -5252,11 +5390,11 @@
           "avgPyeong": 25.6
         },
         {
-          "name": "힐스테이트 수지구청역",
-          "umdNm": "풍덕천동",
-          "tradeCount": 8,
-          "pricePerPyeong": 3375,
-          "avgPrice": 86563,
+          "name": "힐스테이트 과천 중앙",
+          "umdNm": "중앙동",
+          "tradeCount": 2,
+          "pricePerPyeong": 3588,
+          "avgPrice": 92250,
           "avgPyeong": 25.7
         },
         {
@@ -5270,9 +5408,17 @@
         {
           "name": "더샵 분당파크리버",
           "umdNm": "정자동",
-          "tradeCount": 6,
-          "pricePerPyeong": 3293,
-          "avgPrice": 84667,
+          "tradeCount": 7,
+          "pricePerPyeong": 3323,
+          "avgPrice": 85429,
+          "avgPyeong": 25.7
+        },
+        {
+          "name": "힐스테이트 수지구청역",
+          "umdNm": "풍덕천동",
+          "tradeCount": 9,
+          "pricePerPyeong": 3307,
+          "avgPrice": 84833,
           "avgPyeong": 25.7
         },
         {
@@ -5334,9 +5480,9 @@
         {
           "name": "힐스테이트미사역그랑파사쥬(12-1BL)",
           "umdNm": "망월동",
-          "tradeCount": 16,
-          "pricePerPyeong": 2536,
-          "avgPrice": 65044,
+          "tradeCount": 17,
+          "pricePerPyeong": 2570,
+          "avgPrice": 65912,
           "avgPyeong": 25.6
         },
         {
@@ -5356,6 +5502,14 @@
           "avgPyeong": 25.5
         },
         {
+          "name": "힐스테이트 일산",
+          "umdNm": "대화동",
+          "tradeCount": 12,
+          "pricePerPyeong": 2342,
+          "avgPrice": 59533,
+          "avgPyeong": 25.4
+        },
+        {
           "name": "미래센트럴타워",
           "umdNm": "관양동",
           "tradeCount": 2,
@@ -5364,28 +5518,12 @@
           "avgPyeong": 24.6
         },
         {
-          "name": "힐스테이트 일산",
-          "umdNm": "대화동",
-          "tradeCount": 9,
-          "pricePerPyeong": 2306,
-          "avgPrice": 58622,
-          "avgPyeong": 25.4
-        },
-        {
           "name": "평촌아크로타워",
           "umdNm": "관양동",
           "tradeCount": 3,
           "pricePerPyeong": 2289,
           "avgPrice": 57733,
           "avgPyeong": 25.2
-        },
-        {
-          "name": "일산 더샵 그라비스타",
-          "umdNm": "대화동",
-          "tradeCount": 9,
-          "pricePerPyeong": 2273,
-          "avgPrice": 58156,
-          "avgPyeong": 25.6
         }
       ],
       "rank59": [
@@ -5478,20 +5616,20 @@
           "avgPyeong": 18.1
         },
         {
+          "name": "분당풍림아이원플러스오피스텔",
+          "umdNm": "서현동",
+          "tradeCount": 6,
+          "pricePerPyeong": 2157,
+          "avgPrice": 39150,
+          "avgPyeong": 18.1
+        },
+        {
           "name": "e편한세상 시티 삼송2차",
           "umdNm": "동산동",
           "tradeCount": 3,
           "pricePerPyeong": 2083,
           "avgPrice": 36500,
           "avgPyeong": 17.5
-        },
-        {
-          "name": "분당풍림아이원플러스오피스텔",
-          "umdNm": "서현동",
-          "tradeCount": 4,
-          "pricePerPyeong": 1968,
-          "avgPrice": 35725,
-          "avgPyeong": 18.1
         },
         {
           "name": "한영타워",
@@ -5554,9 +5692,9 @@
     "43": {
       "name": "충북",
       "short": "충북",
-      "totalTrades": 90,
-      "avgPrice": 8914,
-      "avgPpyeong": 827,
+      "totalTrades": 94,
+      "avgPrice": 8858,
+      "avgPpyeong": 835,
       "ranking": [
         {
           "name": "대농지구 롯데캐슬시티",
@@ -5569,17 +5707,17 @@
         {
           "name": "신해블루지움",
           "umdNm": "강서동",
-          "tradeCount": 6,
-          "pricePerPyeong": 986,
-          "avgPrice": 6767,
-          "avgPyeong": 6.9
+          "tradeCount": 7,
+          "pricePerPyeong": 1002,
+          "avgPrice": 6843,
+          "avgPyeong": 6.8
         },
         {
           "name": "두산위브 센티움",
           "umdNm": "오송읍 연제리",
-          "tradeCount": 13,
-          "pricePerPyeong": 895,
-          "avgPrice": 7235,
+          "tradeCount": 15,
+          "pricePerPyeong": 890,
+          "avgPrice": 7177,
           "avgPyeong": 8
         },
         {
@@ -5667,18 +5805,18 @@
         {
           "name": "두산위브 센티움",
           "umdNm": "오송읍 연제리",
-          "tradeCount": 13,
-          "pricePerPyeong": 895,
-          "avgPrice": 7235,
+          "tradeCount": 15,
+          "pricePerPyeong": 890,
+          "avgPrice": 7177,
           "avgPyeong": 8
         },
         {
           "name": "신해블루지움",
           "umdNm": "강서동",
-          "tradeCount": 6,
-          "pricePerPyeong": 986,
-          "avgPrice": 6767,
-          "avgPyeong": 6.9
+          "tradeCount": 7,
+          "pricePerPyeong": 1002,
+          "avgPrice": 6843,
+          "avgPyeong": 6.8
         },
         {
           "name": "대농지구 롯데캐슬시티",
@@ -5703,12 +5841,12 @@
         {
           "name": "신해블루지움",
           "umdNm": "강서동",
-          "tradeCount": 6,
-          "pricePerPyeong": 986,
-          "avgPrice": 6767,
-          "avgPyeong": 6.9,
+          "tradeCount": 7,
+          "pricePerPyeong": 1002,
+          "avgPrice": 6843,
+          "avgPyeong": 6.8,
           "prevPpyeong": 955,
-          "riseRate": 3.2
+          "riseRate": 4.9
         },
         {
           "name": "청주 강서 동광모닝스카이",
@@ -5723,12 +5861,12 @@
         {
           "name": "두산위브 센티움",
           "umdNm": "오송읍 연제리",
-          "tradeCount": 13,
-          "pricePerPyeong": 895,
-          "avgPrice": 7235,
+          "tradeCount": 15,
+          "pricePerPyeong": 890,
+          "avgPrice": 7177,
           "avgPyeong": 8,
           "prevPpyeong": 899,
-          "riseRate": -0.4
+          "riseRate": -1
         },
         {
           "name": "대농지구 롯데캐슬시티",
@@ -5773,18 +5911,18 @@
         {
           "name": "두산위브 센티움",
           "umdNm": "오송읍 연제리",
-          "tradeCount": 13,
-          "pricePerPyeong": 895,
-          "avgPrice": 7235,
+          "tradeCount": 15,
+          "pricePerPyeong": 890,
+          "avgPrice": 7177,
           "avgPyeong": 8
         },
         {
           "name": "신해블루지움",
           "umdNm": "강서동",
-          "tradeCount": 6,
-          "pricePerPyeong": 986,
-          "avgPrice": 6767,
-          "avgPyeong": 6.9
+          "tradeCount": 7,
+          "pricePerPyeong": 1002,
+          "avgPrice": 6843,
+          "avgPyeong": 6.8
         },
         {
           "name": "청주 강서 동광모닝스카이",
@@ -5833,9 +5971,9 @@
     "44": {
       "name": "충남",
       "short": "충남",
-      "totalTrades": 158,
-      "avgPrice": 13785,
-      "avgPpyeong": 896,
+      "totalTrades": 166,
+      "avgPrice": 13804,
+      "avgPpyeong": 901,
       "ranking": [
         {
           "name": "코아루 테크노시티 오피스텔",
@@ -5856,9 +5994,9 @@
         {
           "name": "천안불당 시티프라디움 3차",
           "umdNm": "불당동",
-          "tradeCount": 13,
-          "pricePerPyeong": 1227,
-          "avgPrice": 31535,
+          "tradeCount": 14,
+          "pricePerPyeong": 1236,
+          "avgPrice": 31768,
           "avgPyeong": 25.7
         },
         {
@@ -5886,6 +6024,14 @@
           "avgPyeong": 25.7
         },
         {
+          "name": "불당아리스타팰리스",
+          "umdNm": "불당동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1113,
+          "avgPrice": 7773,
+          "avgPyeong": 6.9
+        },
+        {
           "name": "천안아산역 더리브",
           "umdNm": "배방읍 장재리",
           "tradeCount": 4,
@@ -5904,9 +6050,9 @@
         {
           "name": "불당 호반써밋플레이스 센터시티",
           "umdNm": "불당동",
-          "tradeCount": 6,
-          "pricePerPyeong": 973,
-          "avgPrice": 25017,
+          "tradeCount": 7,
+          "pricePerPyeong": 967,
+          "avgPrice": 24857,
           "avgPyeong": 25.7
         },
         {
@@ -5916,14 +6062,6 @@
           "pricePerPyeong": 951,
           "avgPrice": 6030,
           "avgPyeong": 6.3
-        },
-        {
-          "name": "불당아리스타팰리스",
-          "umdNm": "불당동",
-          "tradeCount": 3,
-          "pricePerPyeong": 916,
-          "avgPrice": 6300,
-          "avgPyeong": 6.9
         },
         {
           "name": "아크로텔천안두정",
@@ -5968,9 +6106,9 @@
         {
           "name": "(966)",
           "umdNm": "신부동",
-          "tradeCount": 12,
-          "pricePerPyeong": 757,
-          "avgPrice": 7875,
+          "tradeCount": 13,
+          "pricePerPyeong": 756,
+          "avgPrice": 7869,
           "avgPyeong": 10.4
         },
         {
@@ -6018,10 +6156,10 @@
         {
           "name": "천안 랜드마크타워",
           "umdNm": "신부동",
-          "tradeCount": 5,
-          "pricePerPyeong": 517,
-          "avgPrice": 6156,
-          "avgPyeong": 12
+          "tradeCount": 6,
+          "pricePerPyeong": 522,
+          "avgPrice": 6180,
+          "avgPyeong": 11.9
         },
         {
           "name": "(999)",
@@ -6058,9 +6196,9 @@
         {
           "name": "(966)",
           "umdNm": "신부동",
-          "tradeCount": 12,
-          "pricePerPyeong": 757,
-          "avgPrice": 7875,
+          "tradeCount": 13,
+          "pricePerPyeong": 756,
+          "avgPrice": 7869,
           "avgPyeong": 10.4
         },
         {
@@ -6104,14 +6242,6 @@
           "avgPyeong": 7.1
         },
         {
-          "name": "불당아리스타팰리스",
-          "umdNm": "불당동",
-          "tradeCount": 3,
-          "pricePerPyeong": 916,
-          "avgPrice": 6300,
-          "avgPyeong": 6.9
-        },
-        {
           "name": "천안 백석 하우스토리 엔시티",
           "umdNm": "백석동",
           "tradeCount": 5,
@@ -6122,9 +6252,9 @@
         {
           "name": "불당 호반써밋플레이스 센터시티",
           "umdNm": "불당동",
-          "tradeCount": 6,
-          "pricePerPyeong": 973,
-          "avgPrice": 25017,
+          "tradeCount": 7,
+          "pricePerPyeong": 967,
+          "avgPrice": 24857,
           "avgPyeong": 25.7
         },
         {
@@ -6142,6 +6272,14 @@
           "pricePerPyeong": 995,
           "avgPrice": 23988,
           "avgPyeong": 23.9
+        },
+        {
+          "name": "불당아리스타팰리스",
+          "umdNm": "불당동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1113,
+          "avgPrice": 7773,
+          "avgPyeong": 6.9
         },
         {
           "name": "천안불당 시티프라디움 4차",
@@ -6162,6 +6300,16 @@
       ],
       "rankRise": [
         {
+          "name": "불당아리스타팰리스",
+          "umdNm": "불당동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1113,
+          "avgPrice": 7773,
+          "avgPyeong": 6.9,
+          "prevPpyeong": 1061,
+          "riseRate": 4.9
+        },
+        {
           "name": "천안 불당 지웰시티푸르지오 1단지",
           "umdNm": "불당동",
           "tradeCount": 3,
@@ -6174,22 +6322,22 @@
         {
           "name": "(966)",
           "umdNm": "신부동",
-          "tradeCount": 12,
-          "pricePerPyeong": 757,
-          "avgPrice": 7875,
+          "tradeCount": 13,
+          "pricePerPyeong": 756,
+          "avgPrice": 7869,
           "avgPyeong": 10.4,
           "prevPpyeong": 732,
-          "riseRate": 3.4
+          "riseRate": 3.3
         },
         {
           "name": "천안불당 시티프라디움 3차",
           "umdNm": "불당동",
-          "tradeCount": 13,
-          "pricePerPyeong": 1227,
-          "avgPrice": 31535,
+          "tradeCount": 14,
+          "pricePerPyeong": 1236,
+          "avgPrice": 31768,
           "avgPyeong": 25.7,
           "prevPpyeong": 1231,
-          "riseRate": -0.3
+          "riseRate": 0.4
         },
         {
           "name": "1동",
@@ -6234,12 +6382,12 @@
         {
           "name": "불당 호반써밋플레이스 센터시티",
           "umdNm": "불당동",
-          "tradeCount": 6,
-          "pricePerPyeong": 973,
-          "avgPrice": 25017,
+          "tradeCount": 7,
+          "pricePerPyeong": 967,
+          "avgPrice": 24857,
           "avgPyeong": 25.7,
           "prevPpyeong": 1009,
-          "riseRate": -3.6
+          "riseRate": -4.2
         },
         {
           "name": "천안불당2차 중흥S-클래스 프라디움레이크",
@@ -6252,6 +6400,16 @@
           "riseRate": -4.2
         },
         {
+          "name": "천안 랜드마크타워",
+          "umdNm": "신부동",
+          "tradeCount": 6,
+          "pricePerPyeong": 522,
+          "avgPrice": 6180,
+          "avgPyeong": 11.9,
+          "prevPpyeong": 547,
+          "riseRate": -4.6
+        },
+        {
           "name": "천안 불당 지웰시티푸르지오 2단지",
           "umdNm": "불당동",
           "tradeCount": 4,
@@ -6260,16 +6418,6 @@
           "avgPyeong": 25.7,
           "prevPpyeong": 1246,
           "riseRate": -4.8
-        },
-        {
-          "name": "천안 랜드마크타워",
-          "umdNm": "신부동",
-          "tradeCount": 5,
-          "pricePerPyeong": 517,
-          "avgPrice": 6156,
-          "avgPyeong": 12,
-          "prevPpyeong": 547,
-          "riseRate": -5.5
         },
         {
           "name": "펜타폴리스 오피스텔",
@@ -6312,16 +6460,6 @@
           "riseRate": -13.2
         },
         {
-          "name": "불당아리스타팰리스",
-          "umdNm": "불당동",
-          "tradeCount": 3,
-          "pricePerPyeong": 916,
-          "avgPrice": 6300,
-          "avgPyeong": 6.9,
-          "prevPpyeong": 1061,
-          "riseRate": -13.7
-        },
-        {
           "name": "천안비즈타워",
           "umdNm": "차암동",
           "tradeCount": 3,
@@ -6336,17 +6474,17 @@
         {
           "name": "천안불당 시티프라디움 3차",
           "umdNm": "불당동",
-          "tradeCount": 13,
-          "pricePerPyeong": 1227,
-          "avgPrice": 31535,
+          "tradeCount": 14,
+          "pricePerPyeong": 1236,
+          "avgPrice": 31768,
           "avgPyeong": 25.7
         },
         {
           "name": "(966)",
           "umdNm": "신부동",
-          "tradeCount": 12,
-          "pricePerPyeong": 757,
-          "avgPrice": 7875,
+          "tradeCount": 13,
+          "pricePerPyeong": 756,
+          "avgPrice": 7869,
           "avgPyeong": 10.4
         },
         {
@@ -6358,6 +6496,14 @@
           "avgPyeong": 7.1
         },
         {
+          "name": "불당 호반써밋플레이스 센터시티",
+          "umdNm": "불당동",
+          "tradeCount": 7,
+          "pricePerPyeong": 967,
+          "avgPrice": 24857,
+          "avgPyeong": 25.7
+        },
+        {
           "name": "빌앤더스오피스텔",
           "umdNm": "홍북읍 신경리",
           "tradeCount": 7,
@@ -6366,12 +6512,12 @@
           "avgPyeong": 7
         },
         {
-          "name": "불당 호반써밋플레이스 센터시티",
-          "umdNm": "불당동",
+          "name": "천안 랜드마크타워",
+          "umdNm": "신부동",
           "tradeCount": 6,
-          "pricePerPyeong": 973,
-          "avgPrice": 25017,
-          "avgPyeong": 25.7
+          "pricePerPyeong": 522,
+          "avgPrice": 6180,
+          "avgPyeong": 11.9
         },
         {
           "name": "빅토리아빌",
@@ -6380,14 +6526,6 @@
           "pricePerPyeong": 1186,
           "avgPrice": 13020,
           "avgPyeong": 11.2
-        },
-        {
-          "name": "천안 랜드마크타워",
-          "umdNm": "신부동",
-          "tradeCount": 5,
-          "pricePerPyeong": 517,
-          "avgPrice": 6156,
-          "avgPyeong": 12
         },
         {
           "name": "천안 백석 하우스토리 엔시티",
@@ -6412,6 +6550,14 @@
           "pricePerPyeong": 978,
           "avgPrice": 25140,
           "avgPyeong": 25.7
+        },
+        {
+          "name": "불당아리스타팰리스",
+          "umdNm": "불당동",
+          "tradeCount": 4,
+          "pricePerPyeong": 1113,
+          "avgPrice": 7773,
+          "avgPyeong": 6.9
         },
         {
           "name": "천안 불당 지웰시티푸르지오 2단지",
@@ -6452,14 +6598,6 @@
           "pricePerPyeong": 794,
           "avgPrice": 4900,
           "avgPyeong": 6.2
-        },
-        {
-          "name": "불당아리스타팰리스",
-          "umdNm": "불당동",
-          "tradeCount": 3,
-          "pricePerPyeong": 916,
-          "avgPrice": 6300,
-          "avgPyeong": 6.9
         },
         {
           "name": "쉐리움",
@@ -6506,9 +6644,9 @@
         {
           "name": "천안불당 시티프라디움 3차",
           "umdNm": "불당동",
-          "tradeCount": 13,
-          "pricePerPyeong": 1227,
-          "avgPrice": 31535,
+          "tradeCount": 14,
+          "pricePerPyeong": 1236,
+          "avgPrice": 31768,
           "avgPyeong": 25.7
         },
         {
@@ -6554,9 +6692,9 @@
         {
           "name": "불당 호반써밋플레이스 센터시티",
           "umdNm": "불당동",
-          "tradeCount": 6,
-          "pricePerPyeong": 973,
-          "avgPrice": 25017,
+          "tradeCount": 7,
+          "pricePerPyeong": 967,
+          "avgPrice": 24857,
           "avgPyeong": 25.7
         }
       ],
@@ -6565,9 +6703,9 @@
     "46": {
       "name": "전남",
       "short": "전남",
-      "totalTrades": 103,
-      "avgPrice": 9559,
-      "avgPpyeong": 598,
+      "totalTrades": 106,
+      "avgPrice": 9367,
+      "avgPpyeong": 590,
       "ranking": [
         {
           "name": "포레나 여수 웅천 디 아일랜드",
@@ -6624,6 +6762,14 @@
           "pricePerPyeong": 531,
           "avgPrice": 5263,
           "avgPyeong": 10.1
+        },
+        {
+          "name": "남악도휘에드가2차오피스텔",
+          "umdNm": "삼향읍 남악리",
+          "tradeCount": 4,
+          "pricePerPyeong": 458,
+          "avgPrice": 4975,
+          "avgPyeong": 10.9
         },
         {
           "name": "달동 M타운",
@@ -6698,6 +6844,14 @@
           "pricePerPyeong": 393,
           "avgPrice": 5375,
           "avgPyeong": 13.9
+        },
+        {
+          "name": "남악도휘에드가2차오피스텔",
+          "umdNm": "삼향읍 남악리",
+          "tradeCount": 4,
+          "pricePerPyeong": 458,
+          "avgPrice": 4975,
+          "avgPyeong": 10.9
         },
         {
           "name": "달동 M타운",
@@ -6884,6 +7038,14 @@
           "avgPyeong": 9.7
         },
         {
+          "name": "남악도휘에드가2차오피스텔",
+          "umdNm": "삼향읍 남악리",
+          "tradeCount": 4,
+          "pricePerPyeong": 458,
+          "avgPrice": 4975,
+          "avgPyeong": 10.9
+        },
+        {
           "name": "달동 M타운",
           "umdNm": "달동",
           "tradeCount": 4,
@@ -6939,9 +7101,9 @@
     "47": {
       "name": "경북",
       "short": "경북",
-      "totalTrades": 202,
-      "avgPrice": 12126,
-      "avgPpyeong": 1031,
+      "totalTrades": 205,
+      "avgPrice": 11995,
+      "avgPpyeong": 1021,
       "ranking": [
         {
           "name": "유니언SM오피스텔",
@@ -7034,9 +7196,9 @@
         {
           "name": "영무 메트로",
           "umdNm": "율곡동",
-          "tradeCount": 3,
-          "pricePerPyeong": 594,
-          "avgPrice": 4900,
+          "tradeCount": 4,
+          "pricePerPyeong": 592,
+          "avgPrice": 4888,
           "avgPyeong": 8.3
         }
       ],
@@ -7044,9 +7206,9 @@
         {
           "name": "영무 메트로",
           "umdNm": "율곡동",
-          "tradeCount": 3,
-          "pricePerPyeong": 594,
-          "avgPrice": 4900,
+          "tradeCount": 4,
+          "pricePerPyeong": 592,
+          "avgPrice": 4888,
           "avgPyeong": 8.3
         },
         {
@@ -7230,6 +7392,14 @@
           "avgPyeong": 10.7
         },
         {
+          "name": "영무 메트로",
+          "umdNm": "율곡동",
+          "tradeCount": 4,
+          "pricePerPyeong": 592,
+          "avgPrice": 4888,
+          "avgPyeong": 8.3
+        },
+        {
           "name": "코아루프라임시티오피스텔2차",
           "umdNm": "풍천면 갈전리",
           "tradeCount": 4,
@@ -7260,14 +7430,6 @@
           "pricePerPyeong": 708,
           "avgPrice": 5133,
           "avgPyeong": 7.2
-        },
-        {
-          "name": "영무 메트로",
-          "umdNm": "율곡동",
-          "tradeCount": 3,
-          "pricePerPyeong": 594,
-          "avgPrice": 4900,
-          "avgPyeong": 8.3
         },
         {
           "name": "유니언SM오피스텔",
@@ -7318,9 +7480,9 @@
     "48": {
       "name": "경남",
       "short": "경남",
-      "totalTrades": 277,
-      "avgPrice": 9243,
-      "avgPpyeong": 714,
+      "totalTrades": 284,
+      "avgPrice": 9105,
+      "avgPpyeong": 707,
       "ranking": [
         {
           "name": "코아루 웰가",
@@ -7421,10 +7583,10 @@
         {
           "name": "창원 중앙 블루힐스",
           "umdNm": "중앙동",
-          "tradeCount": 6,
-          "pricePerPyeong": 872,
-          "avgPrice": 6600,
-          "avgPyeong": 7.4
+          "tradeCount": 7,
+          "pricePerPyeong": 879,
+          "avgPrice": 6500,
+          "avgPyeong": 7.3
         },
         {
           "name": "네오 리더스",
@@ -7639,10 +7801,10 @@
         {
           "name": "창원 중앙 블루힐스",
           "umdNm": "중앙동",
-          "tradeCount": 6,
-          "pricePerPyeong": 872,
-          "avgPrice": 6600,
-          "avgPyeong": 7.4
+          "tradeCount": 7,
+          "pricePerPyeong": 879,
+          "avgPrice": 6500,
+          "avgPyeong": 7.3
         }
       ],
       "rankRise": [
@@ -7881,6 +8043,14 @@
           "avgPyeong": 14.5
         },
         {
+          "name": "창원 중앙 블루힐스",
+          "umdNm": "중앙동",
+          "tradeCount": 7,
+          "pricePerPyeong": 879,
+          "avgPrice": 6500,
+          "avgPyeong": 7.3
+        },
+        {
           "name": "창원광장 동광뷰엘",
           "umdNm": "중앙동",
           "tradeCount": 7,
@@ -7903,14 +8073,6 @@
           "pricePerPyeong": 902,
           "avgPrice": 6342,
           "avgPyeong": 7
-        },
-        {
-          "name": "창원 중앙 블루힐스",
-          "umdNm": "중앙동",
-          "tradeCount": 6,
-          "pricePerPyeong": 872,
-          "avgPrice": 6600,
-          "avgPyeong": 7.4
         },
         {
           "name": "더블리안 S-클래스",
@@ -8041,10 +8203,18 @@
     "50": {
       "name": "제주",
       "short": "제주",
-      "totalTrades": 160,
-      "avgPrice": 10769,
-      "avgPpyeong": 884,
+      "totalTrades": 171,
+      "avgPrice": 10740,
+      "avgPpyeong": 892,
       "ranking": [
+        {
+          "name": "연동드림아이오피스텔",
+          "umdNm": "연동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1112,
+          "avgPrice": 13200,
+          "avgPyeong": 11.7
+        },
         {
           "name": "디오션시티1차",
           "umdNm": "연동",
@@ -8052,6 +8222,14 @@
           "pricePerPyeong": 1104,
           "avgPrice": 8367,
           "avgPyeong": 7.6
+        },
+        {
+          "name": "에코그린빌14차 와우",
+          "umdNm": "일도이동",
+          "tradeCount": 8,
+          "pricePerPyeong": 1027,
+          "avgPrice": 10250,
+          "avgPyeong": 10
         },
         {
           "name": "이도센트레시티",
@@ -8168,15 +8346,41 @@
           "avgPyeong": 8.9
         },
         {
+          "name": "에코그린빌14차 와우",
+          "umdNm": "일도이동",
+          "tradeCount": 8,
+          "pricePerPyeong": 1027,
+          "avgPrice": 10250,
+          "avgPyeong": 10
+        },
+        {
           "name": "디오션시티1차",
           "umdNm": "연동",
           "tradeCount": 3,
           "pricePerPyeong": 1104,
           "avgPrice": 8367,
           "avgPyeong": 7.6
+        },
+        {
+          "name": "연동드림아이오피스텔",
+          "umdNm": "연동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1112,
+          "avgPrice": 13200,
+          "avgPyeong": 11.7
         }
       ],
       "rankRise": [
+        {
+          "name": "연동드림아이오피스텔",
+          "umdNm": "연동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1112,
+          "avgPrice": 13200,
+          "avgPyeong": 11.7,
+          "prevPpyeong": 899,
+          "riseRate": 23.7
+        },
         {
           "name": "디오션시티1차",
           "umdNm": "연동",
@@ -8216,6 +8420,14 @@
           "avgPyeong": 8.9
         },
         {
+          "name": "에코그린빌14차 와우",
+          "umdNm": "일도이동",
+          "tradeCount": 8,
+          "pricePerPyeong": 1027,
+          "avgPrice": 10250,
+          "avgPyeong": 10
+        },
+        {
           "name": "제주 아빌로스",
           "umdNm": "도련일동",
           "tradeCount": 5,
@@ -8256,6 +8468,14 @@
           "avgPyeong": 6.1
         },
         {
+          "name": "연동드림아이오피스텔",
+          "umdNm": "연동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1112,
+          "avgPrice": 13200,
+          "avgPyeong": 11.7
+        },
+        {
           "name": "진아타워",
           "umdNm": "삼도이동",
           "tradeCount": 3,
@@ -8287,10 +8507,18 @@
     "51": {
       "name": "강원",
       "short": "강원",
-      "totalTrades": 57,
-      "avgPrice": 9022,
-      "avgPpyeong": 987,
+      "totalTrades": 59,
+      "avgPrice": 9247,
+      "avgPpyeong": 995,
       "ranking": [
+        {
+          "name": "남춘천역 코아루웰라움타워",
+          "umdNm": "퇴계동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1659,
+          "avgPrice": 15683,
+          "avgPyeong": 9.8
+        },
         {
           "name": "골드팰리스",
           "umdNm": "홍제동",
@@ -8404,6 +8632,14 @@
           "pricePerPyeong": 1334,
           "avgPrice": 8667,
           "avgPyeong": 6.5
+        },
+        {
+          "name": "남춘천역 코아루웰라움타워",
+          "umdNm": "퇴계동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1659,
+          "avgPrice": 15683,
+          "avgPyeong": 9.8
         }
       ],
       "rankRise": [
@@ -8426,6 +8662,16 @@
           "avgPyeong": 11.3,
           "prevPpyeong": 281,
           "riseRate": 6.8
+        },
+        {
+          "name": "남춘천역 코아루웰라움타워",
+          "umdNm": "퇴계동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1659,
+          "avgPrice": 15683,
+          "avgPyeong": 9.8,
+          "prevPpyeong": 1639,
+          "riseRate": 1.2
         },
         {
           "name": "동진리조트 오피스텔",
@@ -8478,6 +8724,14 @@
           "pricePerPyeong": 1334,
           "avgPrice": 8667,
           "avgPyeong": 6.5
+        },
+        {
+          "name": "남춘천역 코아루웰라움타워",
+          "umdNm": "퇴계동",
+          "tradeCount": 3,
+          "pricePerPyeong": 1659,
+          "avgPrice": 15683,
+          "avgPyeong": 9.8
         },
         {
           "name": "채움플러스 혁신1차",
