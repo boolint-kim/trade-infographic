@@ -1,88 +1,100 @@
 {
-  "generated": "2026-06-20T11:20:39.950Z",
+  "generated": "2026-06-23T03:43:39.363Z",
   "period": "202604~202606",
   "sido": {
     "11": {
       "name": "서울",
-      "total": 4289,
-      "avgMonthlyRent": 94,
-      "avgDeposit": 20619,
+      "total": 4791,
+      "avgMonthlyRent": 97,
+      "avgDeposit": 20942,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 219
+          "cnt": 225
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 201
+          "cnt": 208
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 189
+          "cnt": 196
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 226
+          "cnt": 230
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 234
+          "cnt": 244
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 214
+          "cnt": 228
         },
         {
           "dealDate": "2026-06-07",
-          "cnt": 24
+          "cnt": 28
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 257
+          "cnt": 263
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 348
+          "cnt": 358
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 487
+          "cnt": 496
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 343
+          "cnt": 348
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 320
+          "cnt": 328
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 234
+          "cnt": 252
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 29
+          "cnt": 32
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 249
+          "cnt": 262
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 233
+          "cnt": 247
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 234
+          "cnt": 262
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 155
+          "cnt": 185
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 93
+          "cnt": 155
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 105
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 19
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 120
         }
       ],
       "topTradesAll": [
@@ -143,6 +155,15 @@
           "dealDate": "2026-06-04"
         },
         {
+          "name": "브라이튼N40",
+          "umdNm": "논현동",
+          "deposit": 20000,
+          "monthlyRent": 800,
+          "area": "84.0023",
+          "floor": "4",
+          "dealDate": "2026-06-18"
+        },
+        {
           "name": "래미안퍼스티지",
           "umdNm": "반포동",
           "deposit": 10000,
@@ -152,6 +173,15 @@
           "dealDate": "2026-06-02"
         },
         {
+          "name": "래미안퍼스티지",
+          "umdNm": "반포동",
+          "deposit": 20000,
+          "monthlyRent": 620,
+          "area": "84.93",
+          "floor": "29",
+          "dealDate": "2026-06-20"
+        },
+        {
           "name": "라체르보푸르지오써밋",
           "umdNm": "행당동",
           "deposit": 5000,
@@ -159,24 +189,6 @@
           "area": "84.7769",
           "floor": "9",
           "dealDate": "2026-06-05"
-        },
-        {
-          "name": "삼성동센트럴아이파크",
-          "umdNm": "삼성동",
-          "deposit": 20000,
-          "monthlyRent": 590,
-          "area": "84.99",
-          "floor": "23",
-          "dealDate": "2026-06-19"
-        },
-        {
-          "name": "잠실엘스",
-          "umdNm": "잠실동",
-          "deposit": 5000,
-          "monthlyRent": 580,
-          "area": "84.8",
-          "floor": "27",
-          "dealDate": "2026-06-15"
         }
       ],
       "topTrades59": [
@@ -229,9 +241,9 @@
     },
     "26": {
       "name": "부산",
-      "total": 683,
+      "total": 779,
       "avgMonthlyRent": 73,
-      "avgDeposit": 5538,
+      "avgDeposit": 5600,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -239,15 +251,15 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 41
+          "cnt": 43
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 35
+          "cnt": 36
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 41
+          "cnt": 43
         },
         {
           "dealDate": "2026-06-05",
@@ -255,7 +267,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 40
+          "cnt": 44
         },
         {
           "dealDate": "2026-06-07",
@@ -263,7 +275,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 45
+          "cnt": 47
         },
         {
           "dealDate": "2026-06-09",
@@ -271,43 +283,55 @@
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 41
-        },
-        {
-          "dealDate": "2026-06-11",
-          "cnt": 39
-        },
-        {
-          "dealDate": "2026-06-12",
-          "cnt": 44
-        },
-        {
-          "dealDate": "2026-06-13",
-          "cnt": 30
-        },
-        {
-          "dealDate": "2026-06-14",
-          "cnt": 11
-        },
-        {
-          "dealDate": "2026-06-15",
-          "cnt": 43
-        },
-        {
-          "dealDate": "2026-06-16",
           "cnt": 45
         },
         {
+          "dealDate": "2026-06-11",
+          "cnt": 40
+        },
+        {
+          "dealDate": "2026-06-12",
+          "cnt": 47
+        },
+        {
+          "dealDate": "2026-06-13",
+          "cnt": 34
+        },
+        {
+          "dealDate": "2026-06-14",
+          "cnt": 13
+        },
+        {
+          "dealDate": "2026-06-15",
+          "cnt": 45
+        },
+        {
+          "dealDate": "2026-06-16",
+          "cnt": 49
+        },
+        {
           "dealDate": "2026-06-17",
-          "cnt": 36
+          "cnt": 41
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 23
+          "cnt": 27
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 13
+          "cnt": 20
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 22
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 8
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 19
         }
       ],
       "topTradesAll": [
@@ -368,6 +392,15 @@
           "dealDate": "2026-06-12"
         },
         {
+          "name": "마린시티자이",
+          "umdNm": "우동",
+          "deposit": 10000,
+          "monthlyRent": 250,
+          "area": "84.9816",
+          "floor": "29",
+          "dealDate": "2026-06-22"
+        },
+        {
           "name": "더샵센텀파크1차",
           "umdNm": "재송동",
           "deposit": 5000,
@@ -393,15 +426,6 @@
           "area": "84.9704",
           "floor": "37",
           "dealDate": "2026-06-07"
-        },
-        {
-          "name": "사직KCC스위첸2단지",
-          "umdNm": "사직동",
-          "deposit": 500,
-          "monthlyRent": 230,
-          "area": "84.9859",
-          "floor": "20",
-          "dealDate": "2026-06-11"
         }
       ],
       "topTrades59": [
@@ -413,6 +437,15 @@
           "area": "59.9732",
           "floor": "28",
           "dealDate": "2026-06-04"
+        },
+        {
+          "name": "더샵온천헤리티지",
+          "umdNm": "온천동",
+          "deposit": 5000,
+          "monthlyRent": 150,
+          "area": "59.9893",
+          "floor": "24",
+          "dealDate": "2026-06-15"
         },
         {
           "name": "레이카운티(3단지)",
@@ -440,23 +473,14 @@
           "area": "59.8917",
           "floor": "21",
           "dealDate": "2026-06-05"
-        },
-        {
-          "name": "화명플리체비스타동원",
-          "umdNm": "화명동",
-          "deposit": 5000,
-          "monthlyRent": 140,
-          "area": "59.9004",
-          "floor": "9",
-          "dealDate": "2026-06-10"
         }
       ]
     },
     "27": {
       "name": "대구",
-      "total": 466,
+      "total": 501,
       "avgMonthlyRent": 70,
-      "avgDeposit": 4085,
+      "avgDeposit": 4028,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -464,11 +488,11 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 37
+          "cnt": 38
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 32
+          "cnt": 34
         },
         {
           "dealDate": "2026-06-04",
@@ -480,7 +504,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 30
+          "cnt": 31
         },
         {
           "dealDate": "2026-06-07",
@@ -488,11 +512,11 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 36
+          "cnt": 39
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 28
+          "cnt": 29
         },
         {
           "dealDate": "2026-06-10",
@@ -500,15 +524,15 @@
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 15
+          "cnt": 18
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 21
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 26
+          "cnt": 28
         },
         {
           "dealDate": "2026-06-14",
@@ -524,15 +548,27 @@
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 19
+          "cnt": 22
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 11
+          "cnt": 14
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 11
+          "cnt": 14
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 6
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 2
         }
       ],
       "topTradesAll": [
@@ -658,13 +694,13 @@
           "dealDate": "2026-06-09"
         },
         {
-          "name": "대봉태왕아너스",
-          "umdNm": "대봉동",
-          "deposit": 2000,
-          "monthlyRent": 95,
-          "area": "59.9728",
-          "floor": "13",
-          "dealDate": "2026-06-03"
+          "name": "남산자이하늘채",
+          "umdNm": "남산동",
+          "deposit": 3000,
+          "monthlyRent": 110,
+          "area": "59.1983",
+          "floor": "35",
+          "dealDate": "2026-06-06"
         },
         {
           "name": "캐슬골드파크3단지",
@@ -679,25 +715,25 @@
     },
     "28": {
       "name": "인천",
-      "total": 1057,
-      "avgMonthlyRent": 76,
-      "avgDeposit": 7312,
+      "total": 1175,
+      "avgMonthlyRent": 77,
+      "avgDeposit": 7166,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 85
+          "cnt": 87
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 69
+          "cnt": 73
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 37
+          "cnt": 38
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 84
+          "cnt": 86
         },
         {
           "dealDate": "2026-06-05",
@@ -705,7 +741,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 44
+          "cnt": 46
         },
         {
           "dealDate": "2026-06-07",
@@ -713,7 +749,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 89
+          "cnt": 93
         },
         {
           "dealDate": "2026-06-09",
@@ -721,19 +757,19 @@
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 67
+          "cnt": 69
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 59
+          "cnt": 61
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 44
+          "cnt": 46
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 37
+          "cnt": 43
         },
         {
           "dealDate": "2026-06-14",
@@ -741,23 +777,35 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 69
+          "cnt": 72
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 50
+          "cnt": 53
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 64
+          "cnt": 69
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 59
+          "cnt": 67
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 38
+          "cnt": 61
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 24
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 4
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 21
         }
       ],
       "topTradesAll": [
@@ -809,6 +857,15 @@
       ],
       "topTrades84": [
         {
+          "name": "힐스테이트레이크송도4차",
+          "umdNm": "송도동",
+          "deposit": 5000,
+          "monthlyRent": 260,
+          "area": "84.96",
+          "floor": "10",
+          "dealDate": "2026-06-19"
+        },
+        {
           "name": "힐스테이트송도더스카이",
           "umdNm": "송도동",
           "deposit": 2500,
@@ -843,15 +900,6 @@
           "area": "84.8787",
           "floor": "57",
           "dealDate": "2026-06-11"
-        },
-        {
-          "name": "디에트르송도시그니처뷰",
-          "umdNm": "송도동",
-          "deposit": 5000,
-          "monthlyRent": 230,
-          "area": "84.9691",
-          "floor": "10",
-          "dealDate": "2026-06-10"
         }
       ],
       "topTrades59": [
@@ -904,13 +952,13 @@
     },
     "29": {
       "name": "광주",
-      "total": 449,
+      "total": 495,
       "avgMonthlyRent": 44,
-      "avgDeposit": 7757,
+      "avgDeposit": 7491,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 32
+          "cnt": 33
         },
         {
           "dealDate": "2026-06-02",
@@ -938,27 +986,27 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 31
+          "cnt": 32
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 46
+          "cnt": 47
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 53
+          "cnt": 54
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 52
+          "cnt": 56
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 31
+          "cnt": 33
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 13
+          "cnt": 14
         },
         {
           "dealDate": "2026-06-14",
@@ -966,22 +1014,34 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 17
+          "cnt": 20
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 11
+          "cnt": 13
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 21
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 18
+          "cnt": 21
         },
         {
           "dealDate": "2026-06-19",
+          "cnt": 17
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 6
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-22",
           "cnt": 12
         }
       ],
@@ -1129,13 +1189,13 @@
     },
     "30": {
       "name": "대전",
-      "total": 321,
-      "avgMonthlyRent": 54,
-      "avgDeposit": 5706,
+      "total": 443,
+      "avgMonthlyRent": 47,
+      "avgDeposit": 5039,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 31
+          "cnt": 34
         },
         {
           "dealDate": "2026-06-02",
@@ -1143,15 +1203,15 @@
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 14
+          "cnt": 16
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 27
+          "cnt": 28
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 21
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-06",
@@ -1163,7 +1223,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 19
+          "cnt": 20
         },
         {
           "dealDate": "2026-06-09",
@@ -1171,7 +1231,7 @@
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 21
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-11",
@@ -1179,11 +1239,11 @@
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 20
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 18
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-14",
@@ -1191,15 +1251,15 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 20
+          "cnt": 22
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 10
+          "cnt": 11
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 13
+          "cnt": 15
         },
         {
           "dealDate": "2026-06-18",
@@ -1207,7 +1267,15 @@
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 6
+          "cnt": 8
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 12
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 88
         }
       ],
       "topTradesAll": [
@@ -1335,28 +1403,28 @@
         {
           "name": "노은새미래숲2단지",
           "umdNm": "지족동",
-          "deposit": 3000,
+          "deposit": 2000,
           "monthlyRent": 95,
-          "area": "59.98",
-          "floor": "9",
-          "dealDate": "2026-06-06"
+          "area": "59.99",
+          "floor": "7",
+          "dealDate": "2026-06-20"
         },
         {
-          "name": "유성숲오투그란데3차",
-          "umdNm": "덕명동",
-          "deposit": 3000,
-          "monthlyRent": 90,
-          "area": "59.7564",
-          "floor": "18",
-          "dealDate": "2026-06-11"
+          "name": "노은새미래숲2단지",
+          "umdNm": "지족동",
+          "deposit": 2000,
+          "monthlyRent": 95,
+          "area": "59.99",
+          "floor": "7",
+          "dealDate": "2026-06-20"
         }
       ]
     },
     "31": {
       "name": "울산",
-      "total": 179,
-      "avgMonthlyRent": 56,
-      "avgDeposit": 6689,
+      "total": 198,
+      "avgMonthlyRent": 58,
+      "avgDeposit": 6697,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -1380,7 +1448,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 9
+          "cnt": 10
         },
         {
           "dealDate": "2026-06-07",
@@ -1388,7 +1456,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 11
+          "cnt": 13
         },
         {
           "dealDate": "2026-06-09",
@@ -1396,7 +1464,7 @@
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 18
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-11",
@@ -1412,7 +1480,7 @@
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 1
+          "cnt": 2
         },
         {
           "dealDate": "2026-06-15",
@@ -1420,19 +1488,31 @@
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 7
+          "cnt": 8
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 2
+          "cnt": 3
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 5
+          "cnt": 6
         },
         {
           "dealDate": "2026-06-19",
           "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 6
         }
       ],
       "topTradesAll": [
@@ -1466,20 +1546,20 @@
         {
           "name": "울산지웰시티자이2단지",
           "umdNm": "서부동",
+          "deposit": 1000,
+          "monthlyRent": 200,
+          "area": "84.9839",
+          "floor": "13",
+          "dealDate": "2026-06-22"
+        },
+        {
+          "name": "울산지웰시티자이2단지",
+          "umdNm": "서부동",
           "deposit": 5000,
           "monthlyRent": 200,
           "area": "107.9175",
           "floor": "24",
           "dealDate": "2026-06-01"
-        },
-        {
-          "name": "롯데캐슬골드1단지",
-          "umdNm": "야음동",
-          "deposit": 5000,
-          "monthlyRent": 180,
-          "area": "157.06",
-          "floor": "3",
-          "dealDate": "2026-06-07"
         }
       ],
       "topTrades84": [
@@ -1493,6 +1573,15 @@
           "dealDate": "2026-06-17"
         },
         {
+          "name": "울산지웰시티자이2단지",
+          "umdNm": "서부동",
+          "deposit": 1000,
+          "monthlyRent": 200,
+          "area": "84.9839",
+          "floor": "13",
+          "dealDate": "2026-06-22"
+        },
+        {
           "name": "스위첸웰츠타워2단지",
           "umdNm": "전하동",
           "deposit": 1000,
@@ -1502,31 +1591,22 @@
           "dealDate": "2026-06-03"
         },
         {
-          "name": "옥동서광",
-          "umdNm": "옥동",
-          "deposit": 20000,
-          "monthlyRent": 150,
-          "area": "84.98",
-          "floor": "16",
-          "dealDate": "2026-06-09"
+          "name": "울산송정금강펜테리움그린테라스1차",
+          "umdNm": "화봉동",
+          "deposit": 3000,
+          "monthlyRent": 160,
+          "area": "84.2118",
+          "floor": "15",
+          "dealDate": "2026-06-20"
         },
         {
-          "name": "울산전하푸르지오1단지",
-          "umdNm": "전하동",
-          "deposit": 5000,
-          "monthlyRent": 135,
-          "area": "84.8283",
-          "floor": "8",
-          "dealDate": "2026-06-06"
-        },
-        {
-          "name": "옥동서광",
-          "umdNm": "옥동",
-          "deposit": 20000,
-          "monthlyRent": 130,
-          "area": "84.98",
-          "floor": "3",
-          "dealDate": "2026-06-05"
+          "name": "힐스테이트수암(2단지)",
+          "umdNm": "야음동",
+          "deposit": 10000,
+          "monthlyRent": 155,
+          "area": "84.8029",
+          "floor": "12",
+          "dealDate": "2026-06-21"
         }
       ],
       "topTrades59": [
@@ -1567,21 +1647,21 @@
           "dealDate": "2026-06-02"
         },
         {
-          "name": "달동주공1단지",
-          "umdNm": "달동",
+          "name": "울산오토밸리로Z00M파크",
+          "umdNm": "중산동",
           "deposit": 2000,
-          "monthlyRent": 80,
-          "area": "58.65",
-          "floor": "8",
-          "dealDate": "2026-06-01"
+          "monthlyRent": 90,
+          "area": "59.85",
+          "floor": "20",
+          "dealDate": "2026-06-22"
         }
       ]
     },
     "36": {
       "name": "세종",
-      "total": 222,
+      "total": 255,
       "avgMonthlyRent": 78,
-      "avgDeposit": 3455,
+      "avgDeposit": 3551,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -1593,11 +1673,11 @@
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 17
+          "cnt": 20
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 15
+          "cnt": 16
         },
         {
           "dealDate": "2026-06-05",
@@ -1605,7 +1685,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 9
+          "cnt": 10
         },
         {
           "dealDate": "2026-06-07",
@@ -1629,11 +1709,11 @@
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 9
+          "cnt": 10
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 11
+          "cnt": 12
         },
         {
           "dealDate": "2026-06-14",
@@ -1641,23 +1721,35 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 12
-        },
-        {
-          "dealDate": "2026-06-16",
           "cnt": 13
         },
         {
+          "dealDate": "2026-06-16",
+          "cnt": 14
+        },
+        {
           "dealDate": "2026-06-17",
-          "cnt": 11
+          "cnt": 12
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 9
+          "cnt": 10
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 4
+          "cnt": 10
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 9
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 5
         }
       ],
       "topTradesAll": [
@@ -1727,6 +1819,24 @@
           "dealDate": "2026-06-05"
         },
         {
+          "name": "새뜸마을11단지(더샵힐스테이트)",
+          "umdNm": "새롬동",
+          "deposit": 5000,
+          "monthlyRent": 130,
+          "area": "84.9032",
+          "floor": "6",
+          "dealDate": "2026-06-16"
+        },
+        {
+          "name": "호려울마을5단지(제일풍경채)",
+          "umdNm": "보람동",
+          "deposit": 3000,
+          "monthlyRent": 130,
+          "area": "84.9383",
+          "floor": "20",
+          "dealDate": "2026-06-20"
+        },
+        {
           "name": "새샘마을3단지(모아미래도리버시티)",
           "umdNm": "소담동",
           "deposit": 2000,
@@ -1734,24 +1844,6 @@
           "area": "84.9989",
           "floor": "18",
           "dealDate": "2026-06-15"
-        },
-        {
-          "name": "산울마을8단지엘리프세종6-3",
-          "umdNm": "산울동",
-          "deposit": 3000,
-          "monthlyRent": 130,
-          "area": "84.71",
-          "floor": "21",
-          "dealDate": "2026-06-09"
-        },
-        {
-          "name": "새나루마을1단지세종자이e편한세상",
-          "umdNm": "집현동",
-          "deposit": 3000,
-          "monthlyRent": 120,
-          "area": "84.58",
-          "floor": "3",
-          "dealDate": "2026-06-16"
         }
       ],
       "topTrades59": [
@@ -1804,85 +1896,97 @@
     },
     "41": {
       "name": "경기",
-      "total": 4950,
-      "avgMonthlyRent": 66,
-      "avgDeposit": 9224,
+      "total": 5543,
+      "avgMonthlyRent": 67,
+      "avgDeposit": 9196,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 380
+          "cnt": 389
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 333
+          "cnt": 340
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 229
+          "cnt": 237
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 292
+          "cnt": 300
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 347
+          "cnt": 359
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 228
+          "cnt": 233
         },
         {
           "dealDate": "2026-06-07",
-          "cnt": 48
+          "cnt": 52
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 369
+          "cnt": 377
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 446
+          "cnt": 459
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 336
+          "cnt": 344
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 372
+          "cnt": 388
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 258
+          "cnt": 267
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 197
+          "cnt": 218
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 39
+          "cnt": 42
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 289
+          "cnt": 305
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 284
+          "cnt": 308
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 200
+          "cnt": 228
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 179
+          "cnt": 201
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 124
+          "cnt": 183
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 98
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 26
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 189
         }
       ],
       "topTradesAll": [
@@ -1894,6 +1998,15 @@
           "area": "132.17",
           "floor": "20",
           "dealDate": "2026-06-10"
+        },
+        {
+          "name": "판교퍼스트힐푸르지오1단지",
+          "umdNm": "대장동",
+          "deposit": 2000,
+          "monthlyRent": 450,
+          "area": "84.97",
+          "floor": "12",
+          "dealDate": "2026-06-21"
         },
         {
           "name": "봇들마을9단지(금호어울림)",
@@ -1921,18 +2034,18 @@
           "area": "155.11",
           "floor": "34",
           "dealDate": "2026-06-10"
-        },
-        {
-          "name": "힐스테이트판교엘포레A6BL",
-          "umdNm": "대장동",
-          "deposit": 20000,
-          "monthlyRent": 400,
-          "area": "128.016",
-          "floor": "14",
-          "dealDate": "2026-06-16"
         }
       ],
       "topTrades84": [
+        {
+          "name": "판교퍼스트힐푸르지오1단지",
+          "umdNm": "대장동",
+          "deposit": 2000,
+          "monthlyRent": 450,
+          "area": "84.97",
+          "floor": "12",
+          "dealDate": "2026-06-21"
+        },
         {
           "name": "파크뷰",
           "umdNm": "정자동",
@@ -1968,15 +2081,6 @@
           "area": "84.99",
           "floor": "6",
           "dealDate": "2026-06-10"
-        },
-        {
-          "name": "광교중흥에스클래스",
-          "umdNm": "원천동",
-          "deposit": 25000,
-          "monthlyRent": 330,
-          "area": "84.9723",
-          "floor": "20",
-          "dealDate": "2026-06-13"
         }
       ],
       "topTrades59": [
@@ -1999,6 +2103,15 @@
           "dealDate": "2026-06-11"
         },
         {
+          "name": "과천위버필드",
+          "umdNm": "원문동",
+          "deposit": 30000,
+          "monthlyRent": 255,
+          "area": "59.94",
+          "floor": "16",
+          "dealDate": "2026-06-18"
+        },
+        {
           "name": "고덕하늘채시그니처",
           "umdNm": "고덕면 궁리",
           "deposit": 1000,
@@ -2015,47 +2128,38 @@
           "area": "56.555",
           "floor": "5",
           "dealDate": "2026-06-16"
-        },
-        {
-          "name": "우미이노스빌",
-          "umdNm": "동천동",
-          "deposit": 5000,
-          "monthlyRent": 220,
-          "area": "59.9359",
-          "floor": "14",
-          "dealDate": "2026-06-13"
         }
       ]
     },
     "43": {
       "name": "충북",
-      "total": 390,
+      "total": 440,
       "avgMonthlyRent": 50,
-      "avgDeposit": 5321,
+      "avgDeposit": 5090,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 25
+          "cnt": 26
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 30
+          "cnt": 31
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 17
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 23
+          "cnt": 24
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 39
+          "cnt": 40
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 8
+          "cnt": 10
         },
         {
           "dealDate": "2026-06-07",
@@ -2063,7 +2167,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 37
+          "cnt": 39
         },
         {
           "dealDate": "2026-06-09",
@@ -2075,7 +2179,7 @@
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 33
+          "cnt": 35
         },
         {
           "dealDate": "2026-06-12",
@@ -2083,15 +2187,15 @@
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 17
+          "cnt": 20
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 6
+          "cnt": 7
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 28
+          "cnt": 30
         },
         {
           "dealDate": "2026-06-16",
@@ -2099,15 +2203,27 @@
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 7
+          "cnt": 8
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 4
+          "cnt": 7
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 20
+          "cnt": 29
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 4
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 1
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 14
         }
       ],
       "topTradesAll": [
@@ -2218,6 +2334,15 @@
           "name": "오송역파라곤센트럴시티",
           "umdNm": "오송읍 봉산리",
           "deposit": 2000,
+          "monthlyRent": 125,
+          "area": "59.98",
+          "floor": "10",
+          "dealDate": "2026-06-21"
+        },
+        {
+          "name": "오송역파라곤센트럴시티",
+          "umdNm": "오송읍 봉산리",
+          "deposit": 2000,
           "monthlyRent": 120,
           "area": "59.8447",
           "floor": "15",
@@ -2240,35 +2365,26 @@
           "area": "59.8447",
           "floor": "12",
           "dealDate": "2026-06-08"
-        },
-        {
-          "name": "오송역파라곤센트럴시티",
-          "umdNm": "오송읍 봉산리",
-          "deposit": 2000,
-          "monthlyRent": 120,
-          "area": "59.8447",
-          "floor": "11",
-          "dealDate": "2026-06-06"
         }
       ]
     },
     "44": {
       "name": "충남",
-      "total": 633,
-      "avgMonthlyRent": 52,
-      "avgDeposit": 3026,
+      "total": 732,
+      "avgMonthlyRent": 53,
+      "avgDeposit": 3168,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 60
+          "cnt": 63
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 56
+          "cnt": 58
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 36
+          "cnt": 40
         },
         {
           "dealDate": "2026-06-04",
@@ -2276,11 +2392,11 @@
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 40
+          "cnt": 42
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 39
+          "cnt": 41
         },
         {
           "dealDate": "2026-06-07",
@@ -2288,51 +2404,63 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 49
+          "cnt": 51
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 35
+          "cnt": 38
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 31
+          "cnt": 36
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 41
+          "cnt": 43
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 34
+          "cnt": 39
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 20
+          "cnt": 21
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 12
+          "cnt": 14
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 33
+          "cnt": 39
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 27
+          "cnt": 28
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 30
+          "cnt": 35
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 25
+          "cnt": 35
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 15
+          "cnt": 29
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 9
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 4
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 17
         }
       ],
       "topTradesAll": [
@@ -2346,6 +2474,24 @@
           "dealDate": "2026-06-11"
         },
         {
+          "name": "신영한들물빛도시지웰시티센트럴푸르지오3단지",
+          "umdNm": "탕정면 매곡리",
+          "deposit": 5000,
+          "monthlyRent": 250,
+          "area": "101.9208",
+          "floor": "22",
+          "dealDate": "2026-06-20"
+        },
+        {
+          "name": "펜타포트(103동)",
+          "umdNm": "불당동",
+          "deposit": 5000,
+          "monthlyRent": 230,
+          "area": "131.977",
+          "floor": "24",
+          "dealDate": "2026-06-06"
+        },
+        {
           "name": "불당파크푸르지오2단지",
           "umdNm": "불당동",
           "deposit": 6000,
@@ -2355,31 +2501,13 @@
           "dealDate": "2026-06-07"
         },
         {
-          "name": "천안불당호반써밋플레이스",
+          "name": "천안불당 지웰푸르지오",
           "umdNm": "불당동",
-          "deposit": 10000,
+          "deposit": 5000,
           "monthlyRent": 190,
-          "area": "84.7392",
+          "area": "99.995",
           "floor": "14",
-          "dealDate": "2026-06-15"
-        },
-        {
-          "name": "신영한들물빛도시지웰시티센트럴푸르지오3단지",
-          "umdNm": "탕정면 매곡리",
-          "deposit": 5000,
-          "monthlyRent": 180,
-          "area": "84.9953",
-          "floor": "6",
-          "dealDate": "2026-06-13"
-        },
-        {
-          "name": "불당이안",
-          "umdNm": "불당동",
-          "deposit": 5000,
-          "monthlyRent": 160,
-          "area": "84.92",
-          "floor": "27",
-          "dealDate": "2026-06-01"
+          "dealDate": "2026-06-17"
         }
       ],
       "topTrades84": [
@@ -2479,9 +2607,9 @@
     },
     "46": {
       "name": "전남",
-      "total": 369,
-      "avgMonthlyRent": 26,
-      "avgDeposit": 8561,
+      "total": 421,
+      "avgMonthlyRent": 29,
+      "avgDeposit": 8475,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -2489,7 +2617,7 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 24
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-03",
@@ -2497,7 +2625,7 @@
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 17
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-05",
@@ -2505,7 +2633,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 5
+          "cnt": 8
         },
         {
           "dealDate": "2026-06-07",
@@ -2517,7 +2645,7 @@
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 24
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-10",
@@ -2525,35 +2653,47 @@
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 23
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 25
+          "cnt": 26
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 4
+          "cnt": 6
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 47
+          "cnt": 48
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 25
+          "cnt": 26
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 21
+          "cnt": 22
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 28
+          "cnt": 33
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 14
+          "cnt": 18
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 1
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 25
         }
       ],
       "topTradesAll": [
@@ -2585,22 +2725,22 @@
           "dealDate": "2026-06-08"
         },
         {
-          "name": "중흥에듀힐스9단지",
-          "umdNm": "해룡면 신대리",
-          "deposit": 2000,
+          "name": "쌍용더플래티넘여수35",
+          "umdNm": "학동",
+          "deposit": 1400,
           "monthlyRent": 120,
-          "area": "84.9684",
-          "floor": "15",
-          "dealDate": "2026-06-18"
+          "area": "84.9631",
+          "floor": "11",
+          "dealDate": "2026-06-22"
         },
         {
-          "name": "신영웅천지웰2차",
-          "umdNm": "웅천동",
-          "deposit": 3000,
-          "monthlyRent": 115,
-          "area": "84.955",
-          "floor": "21",
-          "dealDate": "2026-06-09"
+          "name": "쌍용더플래티넘여수35",
+          "umdNm": "학동",
+          "deposit": 1400,
+          "monthlyRent": 120,
+          "area": "84.9149",
+          "floor": "11",
+          "dealDate": "2026-06-22"
         }
       ],
       "topTrades84": [
@@ -2623,6 +2763,24 @@
           "dealDate": "2026-06-06"
         },
         {
+          "name": "쌍용더플래티넘여수35",
+          "umdNm": "학동",
+          "deposit": 1400,
+          "monthlyRent": 120,
+          "area": "84.9631",
+          "floor": "11",
+          "dealDate": "2026-06-22"
+        },
+        {
+          "name": "쌍용더플래티넘여수35",
+          "umdNm": "학동",
+          "deposit": 1400,
+          "monthlyRent": 120,
+          "area": "84.9149",
+          "floor": "11",
+          "dealDate": "2026-06-22"
+        },
+        {
           "name": "중흥에듀힐스9단지",
           "umdNm": "해룡면 신대리",
           "deposit": 2000,
@@ -2630,24 +2788,6 @@
           "area": "84.9684",
           "floor": "15",
           "dealDate": "2026-06-18"
-        },
-        {
-          "name": "신영웅천지웰2차",
-          "umdNm": "웅천동",
-          "deposit": 3000,
-          "monthlyRent": 115,
-          "area": "84.955",
-          "floor": "21",
-          "dealDate": "2026-06-09"
-        },
-        {
-          "name": "e편한세상순천2단지",
-          "umdNm": "용당동",
-          "deposit": 2000,
-          "monthlyRent": 110,
-          "area": "84.949",
-          "floor": "2",
-          "dealDate": "2026-06-09"
         }
       ],
       "topTrades59": [
@@ -2679,6 +2819,15 @@
           "dealDate": "2026-06-15"
         },
         {
+          "name": "나주남평강변도시양우내안애리버시티1차",
+          "umdNm": "남평읍 동사리",
+          "deposit": 2000,
+          "monthlyRent": 65,
+          "area": "59.982",
+          "floor": "12",
+          "dealDate": "2026-06-18"
+        },
+        {
           "name": "흥한에르가",
           "umdNm": "광양읍 덕례리",
           "deposit": 1000,
@@ -2686,27 +2835,18 @@
           "area": "59.97",
           "floor": "7",
           "dealDate": "2026-06-08"
-        },
-        {
-          "name": "에스티엑스칸.중우하나린",
-          "umdNm": "남평읍 동사리",
-          "deposit": 1000,
-          "monthlyRent": 63,
-          "area": "59.9596",
-          "floor": "24",
-          "dealDate": "2026-06-10"
         }
       ]
     },
     "47": {
       "name": "경북",
-      "total": 278,
-      "avgMonthlyRent": 53,
-      "avgDeposit": 3282,
+      "total": 314,
+      "avgMonthlyRent": 54,
+      "avgDeposit": 3133,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 24
+          "cnt": 27
         },
         {
           "dealDate": "2026-06-02",
@@ -2714,7 +2854,7 @@
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 12
+          "cnt": 13
         },
         {
           "dealDate": "2026-06-04",
@@ -2722,15 +2862,15 @@
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 22
+          "cnt": 24
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 11
+          "cnt": 12
         },
         {
           "dealDate": "2026-06-07",
-          "cnt": 3
+          "cnt": 5
         },
         {
           "dealDate": "2026-06-08",
@@ -2746,42 +2886,63 @@
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 23
+          "cnt": 24
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 13
+          "cnt": 15
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 5
+          "cnt": 6
         },
         {
           "dealDate": "2026-06-14",
-          "cnt": 5
+          "cnt": 7
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 19
+          "cnt": 21
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 18
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 12
+          "cnt": 14
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 12
+          "cnt": 15
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 7
+          "cnt": 10
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 4
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 3
         }
       ],
       "topTradesAll": [
+        {
+          "name": "중산자이2단지",
+          "umdNm": "중산동",
+          "deposit": 5000,
+          "monthlyRent": 190,
+          "area": "117.9551",
+          "floor": "22",
+          "dealDate": "2026-06-19"
+        },
         {
           "name": "중산자이2단지",
           "umdNm": "중산동",
@@ -2817,15 +2978,6 @@
           "area": "84.8592",
           "floor": "1",
           "dealDate": "2026-06-05"
-        },
-        {
-          "name": "삼성그린빌라",
-          "umdNm": "지곡동",
-          "deposit": 2000,
-          "monthlyRent": 140,
-          "area": "84.996",
-          "floor": "1",
-          "dealDate": "2026-06-04"
         }
       ],
       "topTrades84": [
@@ -2836,6 +2988,15 @@
           "monthlyRent": 150,
           "area": "84.8592",
           "floor": "1",
+          "dealDate": "2026-06-05"
+        },
+        {
+          "name": "중산자이1단지",
+          "umdNm": "중산동",
+          "deposit": 3000,
+          "monthlyRent": 145,
+          "area": "84.9901",
+          "floor": "21",
           "dealDate": "2026-06-05"
         },
         {
@@ -2864,15 +3025,6 @@
           "area": "84.8592",
           "floor": "17",
           "dealDate": "2026-06-14"
-        },
-        {
-          "name": "라온프라이빗스카이파크",
-          "umdNm": "대잠동",
-          "deposit": 1000,
-          "monthlyRent": 130,
-          "area": "84.7747",
-          "floor": "30",
-          "dealDate": "2026-06-12"
         }
       ],
       "topTrades59": [
@@ -2925,9 +3077,9 @@
     },
     "48": {
       "name": "경남",
-      "total": 549,
+      "total": 628,
       "avgMonthlyRent": 50,
-      "avgDeposit": 5379,
+      "avgDeposit": 5356,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -2935,23 +3087,23 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 37
+          "cnt": 40
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 24
+          "cnt": 26
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 44
+          "cnt": 46
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 44
+          "cnt": 46
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 22
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-07",
@@ -2959,27 +3111,27 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 34
+          "cnt": 35
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 41
+          "cnt": 42
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 29
+          "cnt": 30
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 22
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 33
+          "cnt": 34
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 24
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-14",
@@ -2987,23 +3139,35 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 39
+          "cnt": 43
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 38
+          "cnt": 41
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 28
+          "cnt": 34
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 22
+          "cnt": 27
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 10
+          "cnt": 21
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 16
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 15
         }
       ],
       "topTradesAll": [
@@ -3035,6 +3199,15 @@
           "dealDate": "2026-06-04"
         },
         {
+          "name": "창원중동유니시티4단지",
+          "umdNm": "중동",
+          "deposit": 5000,
+          "monthlyRent": 175,
+          "area": "84.7171",
+          "floor": "31",
+          "dealDate": "2026-06-20"
+        },
+        {
           "name": "창원자이시그니처",
           "umdNm": "가음동",
           "deposit": 7000,
@@ -3042,15 +3215,6 @@
           "area": "75.6306",
           "floor": "25",
           "dealDate": "2026-06-10"
-        },
-        {
-          "name": "창원중동유니시티1단지",
-          "umdNm": "중동",
-          "deposit": 10000,
-          "monthlyRent": 160,
-          "area": "84.1031",
-          "floor": "14",
-          "dealDate": "2026-06-09"
         }
       ],
       "topTrades84": [
@@ -3062,6 +3226,24 @@
           "area": "84.1031",
           "floor": "23",
           "dealDate": "2026-06-04"
+        },
+        {
+          "name": "창원중동유니시티4단지",
+          "umdNm": "중동",
+          "deposit": 5000,
+          "monthlyRent": 175,
+          "area": "84.7171",
+          "floor": "31",
+          "dealDate": "2026-06-20"
+        },
+        {
+          "name": "신진주역세권우미린더시그니처",
+          "umdNm": "가좌동",
+          "deposit": 4000,
+          "monthlyRent": 170,
+          "area": "84.9888",
+          "floor": "20",
+          "dealDate": "2026-06-02"
         },
         {
           "name": "창원중동유니시티1단지",
@@ -3080,24 +3262,6 @@
           "area": "84.7312",
           "floor": "16",
           "dealDate": "2026-06-10"
-        },
-        {
-          "name": "진주혁신도시중흥에스-클래스센트럴시티4단지",
-          "umdNm": "충무공동",
-          "deposit": 10000,
-          "monthlyRent": 150,
-          "area": "84.9815",
-          "floor": "14",
-          "dealDate": "2026-06-13"
-        },
-        {
-          "name": "진주혁신코오롱하늘채",
-          "umdNm": "충무공동",
-          "deposit": 5000,
-          "monthlyRent": 150,
-          "area": "84.95",
-          "floor": "9",
-          "dealDate": "2026-06-01"
         }
       ],
       "topTrades59": [
@@ -3150,9 +3314,9 @@
     },
     "50": {
       "name": "제주",
-      "total": 87,
-      "avgMonthlyRent": 69,
-      "avgDeposit": 1854,
+      "total": 105,
+      "avgMonthlyRent": 71,
+      "avgDeposit": 1695,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -3160,7 +3324,7 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 4
+          "cnt": 6
         },
         {
           "dealDate": "2026-06-03",
@@ -3172,7 +3336,7 @@
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 2
+          "cnt": 3
         },
         {
           "dealDate": "2026-06-06",
@@ -3184,7 +3348,7 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 11
+          "cnt": 12
         },
         {
           "dealDate": "2026-06-09",
@@ -3204,7 +3368,7 @@
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 3
+          "cnt": 4
         },
         {
           "dealDate": "2026-06-14",
@@ -3212,7 +3376,7 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 6
+          "cnt": 7
         },
         {
           "dealDate": "2026-06-16",
@@ -3220,7 +3384,7 @@
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 3
+          "cnt": 7
         },
         {
           "dealDate": "2026-06-18",
@@ -3228,7 +3392,15 @@
         },
         {
           "dealDate": "2026-06-19",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-06-21",
           "cnt": 1
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 5
         }
       ],
       "topTradesAll": [
@@ -3240,6 +3412,15 @@
           "area": "115.1601",
           "floor": "11",
           "dealDate": "2026-06-17"
+        },
+        {
+          "name": "제주첨단꿈에그린3단지아파트",
+          "umdNm": "월평동",
+          "deposit": 3000,
+          "monthlyRent": 217,
+          "area": "137.2969",
+          "floor": "4",
+          "dealDate": "2026-06-05"
         },
         {
           "name": "아라아이파크",
@@ -3260,22 +3441,13 @@
           "dealDate": "2026-06-01"
         },
         {
-          "name": "제주삼화엘에이치2단지",
-          "umdNm": "화북이동",
+          "name": "부영5차",
+          "umdNm": "노형동",
           "deposit": 2000,
           "monthlyRent": 167,
-          "area": "84.83",
-          "floor": "10",
-          "dealDate": "2026-06-04"
-        },
-        {
-          "name": "호반써밋제주",
-          "umdNm": "용담이동",
-          "deposit": 2000,
-          "monthlyRent": 166,
-          "area": "84.4725",
+          "area": "84.9508",
           "floor": "9",
-          "dealDate": "2026-06-02"
+          "dealDate": "2026-06-08"
         }
       ],
       "topTrades84": [
@@ -3298,6 +3470,15 @@
           "dealDate": "2026-06-01"
         },
         {
+          "name": "부영5차",
+          "umdNm": "노형동",
+          "deposit": 2000,
+          "monthlyRent": 167,
+          "area": "84.9508",
+          "floor": "9",
+          "dealDate": "2026-06-08"
+        },
+        {
           "name": "제주삼화엘에이치2단지",
           "umdNm": "화북이동",
           "deposit": 2000,
@@ -3314,15 +3495,6 @@
           "area": "84.4725",
           "floor": "9",
           "dealDate": "2026-06-02"
-        },
-        {
-          "name": "호반써밋제주",
-          "umdNm": "용담이동",
-          "deposit": 2000,
-          "monthlyRent": 158,
-          "area": "84.4725",
-          "floor": "7",
-          "dealDate": "2026-06-04"
         }
       ],
       "topTrades59": [
@@ -3375,13 +3547,13 @@
     },
     "51": {
       "name": "강원",
-      "total": 330,
-      "avgMonthlyRent": 50,
-      "avgDeposit": 3629,
+      "total": 390,
+      "avgMonthlyRent": 51,
+      "avgDeposit": 3357,
       "daily": [
         {
           "dealDate": "2026-06-01",
-          "cnt": 26
+          "cnt": 28
         },
         {
           "dealDate": "2026-06-02",
@@ -3389,11 +3561,11 @@
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 10
+          "cnt": 11
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 21
+          "cnt": 22
         },
         {
           "dealDate": "2026-06-05",
@@ -3401,7 +3573,7 @@
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 16
+          "cnt": 18
         },
         {
           "dealDate": "2026-06-07",
@@ -3409,27 +3581,27 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 30
+          "cnt": 33
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 21
+          "cnt": 22
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 16
+          "cnt": 17
         },
         {
           "dealDate": "2026-06-11",
-          "cnt": 23
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 20
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 11
+          "cnt": 15
         },
         {
           "dealDate": "2026-06-14",
@@ -3437,23 +3609,35 @@
         },
         {
           "dealDate": "2026-06-15",
-          "cnt": 29
+          "cnt": 31
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 22
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 18
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 9
+          "cnt": 12
         },
         {
           "dealDate": "2026-06-19",
+          "cnt": 18
+        },
+        {
+          "dealDate": "2026-06-20",
           "cnt": 12
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 4
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 9
         }
       ],
       "topTradesAll": [
@@ -3476,6 +3660,15 @@
           "dealDate": "2026-06-18"
         },
         {
+          "name": "이편한세상춘천한숲시티",
+          "umdNm": "퇴계동",
+          "deposit": 3000,
+          "monthlyRent": 160,
+          "area": "84.8462",
+          "floor": "14",
+          "dealDate": "2026-06-20"
+        },
+        {
           "name": "더샵원주센트럴파크2단지",
           "umdNm": "명륜동",
           "deposit": 5000,
@@ -3492,15 +3685,6 @@
           "area": "113.999",
           "floor": "26",
           "dealDate": "2026-06-02"
-        },
-        {
-          "name": "춘천파크자이",
-          "umdNm": "삼천동",
-          "deposit": 4000,
-          "monthlyRent": 145,
-          "area": "84.9693",
-          "floor": "20",
-          "dealDate": "2026-06-06"
         }
       ],
       "topTrades84": [
@@ -3512,6 +3696,15 @@
           "area": "84.9242",
           "floor": "21",
           "dealDate": "2026-06-18"
+        },
+        {
+          "name": "이편한세상춘천한숲시티",
+          "umdNm": "퇴계동",
+          "deposit": 3000,
+          "monthlyRent": 160,
+          "area": "84.8462",
+          "floor": "14",
+          "dealDate": "2026-06-20"
         },
         {
           "name": "더샵원주센트럴파크2단지",
@@ -3539,15 +3732,6 @@
           "area": "84.9565",
           "floor": "29",
           "dealDate": "2026-06-08"
-        },
-        {
-          "name": "춘천후평우미린뉴시티",
-          "umdNm": "후평동",
-          "deposit": 2000,
-          "monthlyRent": 140,
-          "area": "84.995",
-          "floor": "30",
-          "dealDate": "2026-06-10"
         }
       ],
       "topTrades59": [
@@ -3600,9 +3784,9 @@
     },
     "52": {
       "name": "전북",
-      "total": 769,
-      "avgMonthlyRent": 17,
-      "avgDeposit": 9843,
+      "total": 814,
+      "avgMonthlyRent": 18,
+      "avgDeposit": 9670,
       "daily": [
         {
           "dealDate": "2026-06-01",
@@ -3610,23 +3794,23 @@
         },
         {
           "dealDate": "2026-06-02",
-          "cnt": 126
+          "cnt": 128
         },
         {
           "dealDate": "2026-06-03",
-          "cnt": 88
+          "cnt": 89
         },
         {
           "dealDate": "2026-06-04",
-          "cnt": 131
+          "cnt": 133
         },
         {
           "dealDate": "2026-06-05",
-          "cnt": 115
+          "cnt": 118
         },
         {
           "dealDate": "2026-06-06",
-          "cnt": 77
+          "cnt": 81
         },
         {
           "dealDate": "2026-06-07",
@@ -3634,15 +3818,15 @@
         },
         {
           "dealDate": "2026-06-08",
-          "cnt": 23
+          "cnt": 25
         },
         {
           "dealDate": "2026-06-09",
-          "cnt": 17
+          "cnt": 19
         },
         {
           "dealDate": "2026-06-10",
-          "cnt": 19
+          "cnt": 20
         },
         {
           "dealDate": "2026-06-11",
@@ -3650,11 +3834,11 @@
         },
         {
           "dealDate": "2026-06-12",
-          "cnt": 14
+          "cnt": 15
         },
         {
           "dealDate": "2026-06-13",
-          "cnt": 8
+          "cnt": 9
         },
         {
           "dealDate": "2026-06-14",
@@ -3666,19 +3850,31 @@
         },
         {
           "dealDate": "2026-06-16",
-          "cnt": 13
+          "cnt": 14
         },
         {
           "dealDate": "2026-06-17",
-          "cnt": 44
+          "cnt": 49
         },
         {
           "dealDate": "2026-06-18",
-          "cnt": 20
+          "cnt": 23
         },
         {
           "dealDate": "2026-06-19",
-          "cnt": 10
+          "cnt": 12
+        },
+        {
+          "dealDate": "2026-06-20",
+          "cnt": 6
+        },
+        {
+          "dealDate": "2026-06-21",
+          "cnt": 2
+        },
+        {
+          "dealDate": "2026-06-22",
+          "cnt": 7
         }
       ],
       "topTradesAll": [
@@ -3777,6 +3973,24 @@
       ],
       "topTrades59": [
         {
+          "name": "서신아이파크이편한세상",
+          "umdNm": "서신동",
+          "deposit": 5000,
+          "monthlyRent": 150,
+          "area": "59.9805",
+          "floor": "13",
+          "dealDate": "2026-06-03"
+        },
+        {
+          "name": "태평아이파크",
+          "umdNm": "태평동",
+          "deposit": 5000,
+          "monthlyRent": 130,
+          "area": "59.7204",
+          "floor": "4",
+          "dealDate": "2026-06-20"
+        },
+        {
           "name": "에코시티데시앙5블럭",
           "umdNm": "송천동2가",
           "deposit": 8000,
@@ -3795,31 +4009,13 @@
           "dealDate": "2026-06-13"
         },
         {
-          "name": "동아한일",
-          "umdNm": "서신동",
+          "name": "건지산이지움아파트",
+          "umdNm": "인후동2가",
           "deposit": 3000,
-          "monthlyRent": 80,
-          "area": "59.706",
-          "floor": "6",
-          "dealDate": "2026-06-07"
-        },
-        {
-          "name": "전주반월동남해오네뜨하이뷰",
-          "umdNm": "반월동",
-          "deposit": 3000,
-          "monthlyRent": 75,
-          "area": "59.8307",
-          "floor": "6",
-          "dealDate": "2026-06-10"
-        },
-        {
-          "name": "우성삼천2차",
-          "umdNm": "삼천동1가",
-          "deposit": 2000,
-          "monthlyRent": 70,
-          "area": "58.4",
-          "floor": "8",
-          "dealDate": "2026-06-01"
+          "monthlyRent": 100,
+          "area": "59.98",
+          "floor": "9",
+          "dealDate": "2026-06-20"
         }
       ]
     }
@@ -3827,79 +4023,91 @@
   "nationalDaily": [
     {
       "dealDate": "2026-06-01",
-      "cnt": 1119
+      "cnt": 1149
     },
     {
       "dealDate": "2026-06-02",
-      "cnt": 1061
-    },
-    {
-      "dealDate": "2026-06-03",
-      "cnt": 780
-    },
-    {
-      "dealDate": "2026-06-04",
-      "cnt": 1055
-    },
-    {
-      "dealDate": "2026-06-05",
-      "cnt": 1111
-    },
-    {
-      "dealDate": "2026-06-06",
-      "cnt": 784
-    },
-    {
-      "dealDate": "2026-06-07",
-      "cnt": 177
-    },
-    {
-      "dealDate": "2026-06-08",
       "cnt": 1093
     },
     {
+      "dealDate": "2026-06-03",
+      "cnt": 815
+    },
+    {
+      "dealDate": "2026-06-04",
+      "cnt": 1081
+    },
+    {
+      "dealDate": "2026-06-05",
+      "cnt": 1146
+    },
+    {
+      "dealDate": "2026-06-06",
+      "cnt": 827
+    },
+    {
+      "dealDate": "2026-06-07",
+      "cnt": 187
+    },
+    {
+      "dealDate": "2026-06-08",
+      "cnt": 1131
+    },
+    {
       "dealDate": "2026-06-09",
-      "cnt": 1231
+      "cnt": 1264
     },
     {
       "dealDate": "2026-06-10",
-      "cnt": 1233
+      "cnt": 1268
     },
     {
       "dealDate": "2026-06-11",
-      "cnt": 1109
+      "cnt": 1150
     },
     {
       "dealDate": "2026-06-12",
-      "cnt": 923
+      "cnt": 966
     },
     {
       "dealDate": "2026-06-13",
-      "cnt": 668
+      "cnt": 736
     },
     {
       "dealDate": "2026-06-14",
-      "cnt": 144
+      "cnt": 158
     },
     {
       "dealDate": "2026-06-15",
-      "cnt": 951
+      "cnt": 1009
     },
     {
       "dealDate": "2026-06-16",
-      "cnt": 830
+      "cnt": 890
     },
     {
       "dealDate": "2026-06-17",
-      "cnt": 763
+      "cnt": 863
     },
     {
       "dealDate": "2026-06-18",
-      "cnt": 597
+      "cnt": 701
     },
     {
       "dealDate": "2026-06-19",
-      "cnt": 392
+      "cnt": 610
+    },
+    {
+      "dealDate": "2026-06-20",
+      "cnt": 337
+    },
+    {
+      "dealDate": "2026-06-21",
+      "cnt": 86
+    },
+    {
+      "dealDate": "2026-06-22",
+      "cnt": 557
     }
   ]
 }
