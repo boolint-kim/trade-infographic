@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T12:45:50.262Z",
+  "generated": "2026-07-09T07:44:21.619Z",
   "period": "202605~202607",
   "sido": {
     "11": {
@@ -146,6 +146,15 @@
           "dealDate": "2026-07-03"
         }
       ]
+    },
+    "12": {
+      "name": "전남광주",
+      "total": 0,
+      "avgDeposit": null,
+      "daily": [],
+      "topTradesAll": [],
+      "topTrades84": [],
+      "topTrades59": []
     },
     "26": {
       "name": "부산",
@@ -439,20 +448,40 @@
     },
     "28": {
       "name": "인천",
-      "total": 68,
-      "avgDeposit": 28999,
+      "total": 189,
+      "avgDeposit": 29585,
       "daily": [
         {
           "dealDate": "2026-07-01",
-          "cnt": 25
+          "cnt": 45
         },
         {
           "dealDate": "2026-07-02",
-          "cnt": 28
+          "cnt": 44
         },
         {
           "dealDate": "2026-07-03",
-          "cnt": 15
+          "cnt": 32
+        },
+        {
+          "dealDate": "2026-07-04",
+          "cnt": 36
+        },
+        {
+          "dealDate": "2026-07-05",
+          "cnt": 5
+        },
+        {
+          "dealDate": "2026-07-06",
+          "cnt": 14
+        },
+        {
+          "dealDate": "2026-07-07",
+          "cnt": 9
+        },
+        {
+          "dealDate": "2026-07-08",
+          "cnt": 4
         }
       ],
       "topTradesAll": [
@@ -507,6 +536,14 @@
           "dealDate": "2026-07-02"
         },
         {
+          "name": "청라국제금융단지한양수자인레이크블루",
+          "umdNm": "청라동",
+          "deposit": 49000,
+          "area": "84.3971",
+          "floor": "22",
+          "dealDate": "2026-07-04"
+        },
+        {
           "name": "부평신일해피트리더루츠",
           "umdNm": "산곡동",
           "deposit": 47000,
@@ -529,17 +566,33 @@
           "area": "84.9",
           "floor": "40",
           "dealDate": "2026-07-01"
-        },
-        {
-          "name": "인천시청역힐스테이트",
-          "umdNm": "간석동",
-          "deposit": 45000,
-          "area": "84.93",
-          "floor": "18",
-          "dealDate": "2026-07-02"
         }
       ],
       "topTrades59": [
+        {
+          "name": "힐데스하임",
+          "umdNm": "청라동",
+          "deposit": 35000,
+          "area": "59.9007",
+          "floor": "6",
+          "dealDate": "2026-07-02"
+        },
+        {
+          "name": "검암역로열파크씨티푸르지오1단지",
+          "umdNm": "백석동",
+          "deposit": 35000,
+          "area": "59.8599",
+          "floor": "20",
+          "dealDate": "2026-07-07"
+        },
+        {
+          "name": "서해그랑블",
+          "umdNm": "청라동",
+          "deposit": 33100,
+          "area": "59.9974",
+          "floor": "13",
+          "dealDate": "2026-07-04"
+        },
         {
           "name": "학익SKVIEW",
           "umdNm": "학익동",
@@ -553,30 +606,6 @@
           "umdNm": "주안동",
           "deposit": 32000,
           "area": "59.9145",
-          "floor": "22",
-          "dealDate": "2026-07-02"
-        },
-        {
-          "name": "부평삼산엠코타운",
-          "umdNm": "삼산동",
-          "deposit": 31000,
-          "area": "59.999",
-          "floor": "1",
-          "dealDate": "2026-07-03"
-        },
-        {
-          "name": "더샵아르테",
-          "umdNm": "주안동",
-          "deposit": 27300,
-          "area": "59.854",
-          "floor": "10",
-          "dealDate": "2026-07-01"
-        },
-        {
-          "name": "인천시청역힐스테이트",
-          "umdNm": "간석동",
-          "deposit": 25000,
-          "area": "59.88",
           "floor": "22",
           "dealDate": "2026-07-02"
         }
@@ -2154,19 +2183,35 @@
   "nationalDaily": [
     {
       "dealDate": "2026-07-01",
-      "cnt": 697
+      "cnt": 717
     },
     {
       "dealDate": "2026-07-02",
-      "cnt": 547
+      "cnt": 563
     },
     {
       "dealDate": "2026-07-03",
-      "cnt": 391
+      "cnt": 408
     },
     {
       "dealDate": "2026-07-04",
-      "cnt": 2
+      "cnt": 38
+    },
+    {
+      "dealDate": "2026-07-05",
+      "cnt": 5
+    },
+    {
+      "dealDate": "2026-07-06",
+      "cnt": 14
+    },
+    {
+      "dealDate": "2026-07-07",
+      "cnt": 9
+    },
+    {
+      "dealDate": "2026-07-08",
+      "cnt": 4
     }
   ]
 }

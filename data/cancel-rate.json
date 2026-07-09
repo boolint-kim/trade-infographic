@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T12:57:39.193Z",
+  "generated": "2026-07-09T07:55:53.124Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -69,6 +69,77 @@
           "canceled": 635,
           "total": 37544,
           "cancelRate": 1.7
+        }
+      ]
+    },
+    "12": {
+      "name": "전남광주",
+      "yearly": [
+        {
+          "yr": "2016",
+          "canceled": 0,
+          "total": 32115,
+          "cancelRate": 0
+        },
+        {
+          "yr": "2017",
+          "canceled": 0,
+          "total": 41794,
+          "cancelRate": 0
+        },
+        {
+          "yr": "2018",
+          "canceled": 0,
+          "total": 42553,
+          "cancelRate": 0
+        },
+        {
+          "yr": "2019",
+          "canceled": 0,
+          "total": 36714,
+          "cancelRate": 0
+        },
+        {
+          "yr": "2020",
+          "canceled": 2081,
+          "total": 53441,
+          "cancelRate": 3.9
+        },
+        {
+          "yr": "2021",
+          "canceled": 2120,
+          "total": 45372,
+          "cancelRate": 4.7
+        },
+        {
+          "yr": "2022",
+          "canceled": 1204,
+          "total": 25553,
+          "cancelRate": 4.7
+        },
+        {
+          "yr": "2023",
+          "canceled": 1245,
+          "total": 27983,
+          "cancelRate": 4.4
+        },
+        {
+          "yr": "2024",
+          "canceled": 1803,
+          "total": 30778,
+          "cancelRate": 5.9
+        },
+        {
+          "yr": "2025",
+          "canceled": 1809,
+          "total": 32086,
+          "cancelRate": 5.6
+        },
+        {
+          "yr": "2026",
+          "canceled": 557,
+          "total": 15815,
+          "cancelRate": 3.5
         }
       ]
     },
@@ -218,9 +289,15 @@
       "name": "인천",
       "yearly": [
         {
+          "yr": "2015",
+          "canceled": 0,
+          "total": 2391,
+          "cancelRate": 0
+        },
+        {
           "yr": "2016",
           "canceled": 0,
-          "total": 34555,
+          "total": 36535,
           "cancelRate": 0
         },
         {
@@ -262,99 +339,32 @@
         {
           "yr": "2023",
           "canceled": 1179,
-          "total": 25530,
+          "total": 25531,
           "cancelRate": 4.6
         },
         {
           "yr": "2024",
-          "canceled": 1702,
-          "total": 29923,
+          "canceled": 1709,
+          "total": 29934,
           "cancelRate": 5.7
         },
         {
           "yr": "2025",
-          "canceled": 2013,
-          "total": 29531,
+          "canceled": 2022,
+          "total": 29592,
           "cancelRate": 6.8
         },
         {
           "yr": "2026",
-          "canceled": 551,
-          "total": 15989,
-          "cancelRate": 3.4
+          "canceled": 612,
+          "total": 16358,
+          "cancelRate": 3.7
         }
       ]
     },
     "29": {
       "name": "광주",
-      "yearly": [
-        {
-          "yr": "2016",
-          "canceled": 0,
-          "total": 17269,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2017",
-          "canceled": 0,
-          "total": 22706,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2018",
-          "canceled": 0,
-          "total": 25422,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2019",
-          "canceled": 0,
-          "total": 20161,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2020",
-          "canceled": 1270,
-          "total": 30053,
-          "cancelRate": 4.2
-        },
-        {
-          "yr": "2021",
-          "canceled": 1231,
-          "total": 25571,
-          "cancelRate": 4.8
-        },
-        {
-          "yr": "2022",
-          "canceled": 610,
-          "total": 12598,
-          "cancelRate": 4.8
-        },
-        {
-          "yr": "2023",
-          "canceled": 650,
-          "total": 14241,
-          "cancelRate": 4.6
-        },
-        {
-          "yr": "2024",
-          "canceled": 1012,
-          "total": 15615,
-          "cancelRate": 6.5
-        },
-        {
-          "yr": "2025",
-          "canceled": 993,
-          "total": 16672,
-          "cancelRate": 6
-        },
-        {
-          "yr": "2026",
-          "canceled": 323,
-          "total": 8280,
-          "cancelRate": 3.9
-        }
-      ]
+      "yearly": []
     },
     "30": {
       "name": "대전",
@@ -784,74 +794,7 @@
     },
     "46": {
       "name": "전남",
-      "yearly": [
-        {
-          "yr": "2016",
-          "canceled": 0,
-          "total": 14846,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2017",
-          "canceled": 0,
-          "total": 19088,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2018",
-          "canceled": 0,
-          "total": 17131,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2019",
-          "canceled": 0,
-          "total": 16553,
-          "cancelRate": 0
-        },
-        {
-          "yr": "2020",
-          "canceled": 811,
-          "total": 23388,
-          "cancelRate": 3.5
-        },
-        {
-          "yr": "2021",
-          "canceled": 889,
-          "total": 19801,
-          "cancelRate": 4.5
-        },
-        {
-          "yr": "2022",
-          "canceled": 594,
-          "total": 12955,
-          "cancelRate": 4.6
-        },
-        {
-          "yr": "2023",
-          "canceled": 595,
-          "total": 13742,
-          "cancelRate": 4.3
-        },
-        {
-          "yr": "2024",
-          "canceled": 791,
-          "total": 15163,
-          "cancelRate": 5.2
-        },
-        {
-          "yr": "2025",
-          "canceled": 816,
-          "total": 15414,
-          "cancelRate": 5.3
-        },
-        {
-          "yr": "2026",
-          "canceled": 234,
-          "total": 7535,
-          "cancelRate": 3.1
-        }
-      ]
+      "yearly": []
     },
     "47": {
       "name": "경북",

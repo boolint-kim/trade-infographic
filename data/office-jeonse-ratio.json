@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T13:01:26.012Z",
+  "generated": "2026-07-09T07:59:43.885Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -91,6 +91,99 @@
           "ratio": 78.3,
           "dealCnt": 6413,
           "rentCnt": 10131
+        }
+      ]
+    },
+    "12": {
+      "name": "전남광주",
+      "yearly": [
+        {
+          "yr": "2016",
+          "avgDeal": 7462,
+          "avgDeposit": 6281,
+          "ratio": 84.2,
+          "dealCnt": 792,
+          "rentCnt": 415
+        },
+        {
+          "yr": "2017",
+          "avgDeal": 6624,
+          "avgDeposit": 8000,
+          "ratio": 120.8,
+          "dealCnt": 1085,
+          "rentCnt": 907
+        },
+        {
+          "yr": "2018",
+          "avgDeal": 8315,
+          "avgDeposit": 10472,
+          "ratio": 125.9,
+          "dealCnt": 1105,
+          "rentCnt": 1419
+        },
+        {
+          "yr": "2019",
+          "avgDeal": 7791,
+          "avgDeposit": 9396,
+          "ratio": 120.6,
+          "dealCnt": 849,
+          "rentCnt": 1357
+        },
+        {
+          "yr": "2020",
+          "avgDeal": 8843,
+          "avgDeposit": 12038,
+          "ratio": 136.1,
+          "dealCnt": 881,
+          "rentCnt": 2596
+        },
+        {
+          "yr": "2021",
+          "avgDeal": 11510,
+          "avgDeposit": 12101,
+          "ratio": 105.1,
+          "dealCnt": 1178,
+          "rentCnt": 2424
+        },
+        {
+          "yr": "2022",
+          "avgDeal": 10469,
+          "avgDeposit": 13014,
+          "ratio": 124.3,
+          "dealCnt": 921,
+          "rentCnt": 3126
+        },
+        {
+          "yr": "2023",
+          "avgDeal": 11401,
+          "avgDeposit": 13466,
+          "ratio": 118.1,
+          "dealCnt": 1026,
+          "rentCnt": 3187
+        },
+        {
+          "yr": "2024",
+          "avgDeal": 8453,
+          "avgDeposit": 14205,
+          "ratio": 168,
+          "dealCnt": 1036,
+          "rentCnt": 3249
+        },
+        {
+          "yr": "2025",
+          "avgDeal": 9904,
+          "avgDeposit": 13135,
+          "ratio": 132.6,
+          "dealCnt": 1044,
+          "rentCnt": 2301
+        },
+        {
+          "yr": "2026",
+          "avgDeal": 9909,
+          "avgDeposit": 13690,
+          "ratio": 138.2,
+          "dealCnt": 523,
+          "rentCnt": 941
         }
       ]
     },
@@ -284,12 +377,20 @@
       "name": "인천",
       "yearly": [
         {
+          "yr": "2015",
+          "avgDeal": 20569,
+          "avgDeposit": 10637,
+          "ratio": 51.7,
+          "dealCnt": 171,
+          "rentCnt": 193
+        },
+        {
           "yr": "2016",
-          "avgDeal": 14252,
-          "avgDeposit": 11098,
-          "ratio": 77.9,
-          "dealCnt": 2847,
-          "rentCnt": 1738
+          "avgDeal": 14108,
+          "avgDeposit": 11065,
+          "ratio": 78.4,
+          "dealCnt": 2988,
+          "rentCnt": 1927
         },
         {
           "yr": "2017",
@@ -333,10 +434,10 @@
         },
         {
           "yr": "2022",
-          "avgDeal": 18514,
+          "avgDeal": 18516,
           "avgDeposit": 15765,
-          "ratio": 85.2,
-          "dealCnt": 4419,
+          "ratio": 85.1,
+          "dealCnt": 4420,
           "rentCnt": 11818
         },
         {
@@ -345,124 +446,31 @@
           "avgDeposit": 14489,
           "ratio": 88.9,
           "dealCnt": 2378,
-          "rentCnt": 10118
+          "rentCnt": 10119
         },
         {
           "yr": "2024",
           "avgDeal": 17000,
-          "avgDeposit": 15161,
+          "avgDeposit": 15159,
           "ratio": 89.2,
           "dealCnt": 2805,
-          "rentCnt": 10300
+          "rentCnt": 10311
         },
         {
           "yr": "2025",
-          "avgDeal": 17924,
-          "avgDeposit": 15639,
+          "avgDeal": 17919,
+          "avgDeposit": 15651,
           "ratio": 87.3,
-          "dealCnt": 3519,
-          "rentCnt": 9096
+          "dealCnt": 3524,
+          "rentCnt": 9142
         },
         {
           "yr": "2026",
-          "avgDeal": 18693,
-          "avgDeposit": 15873,
-          "ratio": 84.9,
-          "dealCnt": 1890,
-          "rentCnt": 4049
-        }
-      ]
-    },
-    "29": {
-      "name": "광주",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeal": 7977,
-          "avgDeposit": 7069,
-          "ratio": 88.6,
-          "dealCnt": 457,
-          "rentCnt": 177
-        },
-        {
-          "yr": "2017",
-          "avgDeal": 6936,
-          "avgDeposit": 9572,
-          "ratio": 138,
-          "dealCnt": 777,
-          "rentCnt": 424
-        },
-        {
-          "yr": "2018",
-          "avgDeal": 9222,
-          "avgDeposit": 12249,
-          "ratio": 132.8,
-          "dealCnt": 811,
-          "rentCnt": 701
-        },
-        {
-          "yr": "2019",
-          "avgDeal": 8310,
-          "avgDeposit": 11232,
-          "ratio": 135.2,
-          "dealCnt": 579,
-          "rentCnt": 540
-        },
-        {
-          "yr": "2020",
-          "avgDeal": 9943,
-          "avgDeposit": 12778,
-          "ratio": 128.5,
-          "dealCnt": 550,
-          "rentCnt": 980
-        },
-        {
-          "yr": "2021",
-          "avgDeal": 13050,
-          "avgDeposit": 13846,
-          "ratio": 106.1,
-          "dealCnt": 801,
-          "rentCnt": 1245
-        },
-        {
-          "yr": "2022",
-          "avgDeal": 12129,
-          "avgDeposit": 14047,
-          "ratio": 115.8,
-          "dealCnt": 557,
-          "rentCnt": 1705
-        },
-        {
-          "yr": "2023",
-          "avgDeal": 13097,
-          "avgDeposit": 14797,
-          "ratio": 113,
-          "dealCnt": 512,
-          "rentCnt": 2252
-        },
-        {
-          "yr": "2024",
-          "avgDeal": 11056,
-          "avgDeposit": 14954,
-          "ratio": 135.3,
-          "dealCnt": 483,
-          "rentCnt": 2229
-        },
-        {
-          "yr": "2025",
-          "avgDeal": 11510,
-          "avgDeposit": 13357,
-          "ratio": 116,
-          "dealCnt": 513,
-          "rentCnt": 1626
-        },
-        {
-          "yr": "2026",
-          "avgDeal": 11102,
-          "avgDeposit": 13915,
-          "ratio": 125.3,
-          "dealCnt": 209,
-          "rentCnt": 724
+          "avgDeal": 18609,
+          "avgDeposit": 15825,
+          "ratio": 85,
+          "dealCnt": 1906,
+          "rentCnt": 4178
         }
       ]
     },
@@ -1021,99 +1029,6 @@
           "ratio": 124.3,
           "dealCnt": 413,
           "rentCnt": 877
-        }
-      ]
-    },
-    "46": {
-      "name": "전남",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeal": 6759,
-          "avgDeposit": 5695,
-          "ratio": 84.3,
-          "dealCnt": 335,
-          "rentCnt": 238
-        },
-        {
-          "yr": "2017",
-          "avgDeal": 5839,
-          "avgDeposit": 6620,
-          "ratio": 113.4,
-          "dealCnt": 308,
-          "rentCnt": 483
-        },
-        {
-          "yr": "2018",
-          "avgDeal": 5815,
-          "avgDeposit": 8736,
-          "ratio": 150.2,
-          "dealCnt": 294,
-          "rentCnt": 718
-        },
-        {
-          "yr": "2019",
-          "avgDeal": 6678,
-          "avgDeposit": 8182,
-          "ratio": 122.5,
-          "dealCnt": 270,
-          "rentCnt": 817
-        },
-        {
-          "yr": "2020",
-          "avgDeal": 7015,
-          "avgDeposit": 11590,
-          "ratio": 165.2,
-          "dealCnt": 331,
-          "rentCnt": 1616
-        },
-        {
-          "yr": "2021",
-          "avgDeal": 8239,
-          "avgDeposit": 10257,
-          "ratio": 124.5,
-          "dealCnt": 377,
-          "rentCnt": 1179
-        },
-        {
-          "yr": "2022",
-          "avgDeal": 7928,
-          "avgDeposit": 11774,
-          "ratio": 148.5,
-          "dealCnt": 364,
-          "rentCnt": 1421
-        },
-        {
-          "yr": "2023",
-          "avgDeal": 9711,
-          "avgDeposit": 10261,
-          "ratio": 105.7,
-          "dealCnt": 514,
-          "rentCnt": 935
-        },
-        {
-          "yr": "2024",
-          "avgDeal": 6180,
-          "avgDeposit": 12569,
-          "ratio": 203.4,
-          "dealCnt": 553,
-          "rentCnt": 1020
-        },
-        {
-          "yr": "2025",
-          "avgDeal": 8352,
-          "avgDeposit": 12600,
-          "ratio": 150.9,
-          "dealCnt": 531,
-          "rentCnt": 675
-        },
-        {
-          "yr": "2026",
-          "avgDeal": 9114,
-          "avgDeposit": 12937,
-          "ratio": 141.9,
-          "dealCnt": 314,
-          "rentCnt": 217
         }
       ]
     },

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T13:02:13.837Z",
+  "generated": "2026-07-09T08:00:33.045Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -102,6 +102,110 @@
           "wolse": 61195,
           "total": 72301,
           "wolseRatio": 84.6
+        }
+      ]
+    },
+    "12": {
+      "name": "전남광주",
+      "yearly": [
+        {
+          "yr": "2016",
+          "avgDeposit": 3129,
+          "avgMonthly": 29,
+          "jeonse": 3412,
+          "wolse": 2756,
+          "total": 6168,
+          "wolseRatio": 44.7
+        },
+        {
+          "yr": "2017",
+          "avgDeposit": 3144,
+          "avgMonthly": 29,
+          "jeonse": 4400,
+          "wolse": 3763,
+          "total": 8163,
+          "wolseRatio": 46.1
+        },
+        {
+          "yr": "2018",
+          "avgDeposit": 3335,
+          "avgMonthly": 31,
+          "jeonse": 5551,
+          "wolse": 4458,
+          "total": 10009,
+          "wolseRatio": 44.5
+        },
+        {
+          "yr": "2019",
+          "avgDeposit": 3382,
+          "avgMonthly": 31,
+          "jeonse": 5065,
+          "wolse": 4470,
+          "total": 9535,
+          "wolseRatio": 46.9
+        },
+        {
+          "yr": "2020",
+          "avgDeposit": 3693,
+          "avgMonthly": 34,
+          "jeonse": 5111,
+          "wolse": 4348,
+          "total": 9459,
+          "wolseRatio": 46
+        },
+        {
+          "yr": "2021",
+          "avgDeposit": 3286,
+          "avgMonthly": 37,
+          "jeonse": 5171,
+          "wolse": 7233,
+          "total": 12404,
+          "wolseRatio": 58.3
+        },
+        {
+          "yr": "2022",
+          "avgDeposit": 2702,
+          "avgMonthly": 38,
+          "jeonse": 4474,
+          "wolse": 10083,
+          "total": 14557,
+          "wolseRatio": 69.3
+        },
+        {
+          "yr": "2023",
+          "avgDeposit": 2135,
+          "avgMonthly": 40,
+          "jeonse": 2650,
+          "wolse": 9215,
+          "total": 11865,
+          "wolseRatio": 77.7
+        },
+        {
+          "yr": "2024",
+          "avgDeposit": 1891,
+          "avgMonthly": 40,
+          "jeonse": 2127,
+          "wolse": 9213,
+          "total": 11340,
+          "wolseRatio": 81.2
+        },
+        {
+          "yr": "2025",
+          "avgDeposit": 1312,
+          "avgMonthly": 42,
+          "jeonse": 1504,
+          "wolse": 11586,
+          "total": 13090,
+          "wolseRatio": 88.5
+        },
+        {
+          "yr": "2026",
+          "avgDeposit": 1089,
+          "avgMonthly": 42,
+          "jeonse": 602,
+          "wolse": 6429,
+          "total": 7031,
+          "wolseRatio": 91.4
         }
       ]
     },
@@ -317,57 +421,66 @@
       "name": "인천",
       "yearly": [
         {
+          "yr": "2015",
+          "avgDeposit": 4373,
+          "avgMonthly": 35,
+          "jeonse": 354,
+          "wolse": 321,
+          "total": 675,
+          "wolseRatio": 47.6
+        },
+        {
           "yr": "2016",
-          "avgDeposit": 4085,
+          "avgDeposit": 4105,
           "avgMonthly": 34,
-          "jeonse": 4151,
-          "wolse": 3201,
-          "total": 7352,
-          "wolseRatio": 43.5
+          "jeonse": 4460,
+          "wolse": 3471,
+          "total": 7931,
+          "wolseRatio": 43.8
         },
         {
           "yr": "2017",
           "avgDeposit": 4070,
           "avgMonthly": 36,
           "jeonse": 5373,
-          "wolse": 4380,
-          "total": 9753,
+          "wolse": 4381,
+          "total": 9754,
           "wolseRatio": 44.9
         },
         {
           "yr": "2018",
-          "avgDeposit": 4513,
+          "avgDeposit": 4512,
           "avgMonthly": 36,
           "jeonse": 5976,
-          "wolse": 4428,
-          "total": 10404,
+          "wolse": 4430,
+          "total": 10406,
           "wolseRatio": 42.6
         },
         {
           "yr": "2019",
-          "avgDeposit": 4445,
+          "avgDeposit": 4444,
           "avgMonthly": 36,
           "jeonse": 5305,
-          "wolse": 4102,
-          "total": 9407,
+          "wolse": 4104,
+          "total": 9409,
           "wolseRatio": 43.6
         },
         {
           "yr": "2020",
-          "avgDeposit": 4702,
+          "avgDeposit": 4701,
           "avgMonthly": 37,
-          "jeonse": 4927,
-          "wolse": 4083,
-          "total": 9010,
+          "jeonse": 4928,
+          "wolse": 4086,
+          "total": 9014,
           "wolseRatio": 45.3
         },
         {
           "yr": "2021",
-          "avgDeposit": 4207,
+          "avgDeposit": 4210,
           "avgMonthly": 41,
-          "jeonse": 4696,
-          "wolse": 6601,
-          "total": 11297,
+          "jeonse": 4698,
+          "wolse": 6603,
+          "total": 11301,
           "wolseRatio": 58.4
         },
         {
@@ -383,141 +496,37 @@
           "yr": "2023",
           "avgDeposit": 3236,
           "avgMonthly": 44,
-          "jeonse": 2665,
-          "wolse": 7712,
-          "total": 10377,
+          "jeonse": 2667,
+          "wolse": 7717,
+          "total": 10384,
           "wolseRatio": 74.3
         },
         {
           "yr": "2024",
-          "avgDeposit": 2982,
+          "avgDeposit": 2983,
           "avgMonthly": 44,
-          "jeonse": 2571,
-          "wolse": 8768,
-          "total": 11339,
+          "jeonse": 2578,
+          "wolse": 8776,
+          "total": 11354,
           "wolseRatio": 77.3
         },
         {
           "yr": "2025",
           "avgDeposit": 2294,
           "avgMonthly": 45,
-          "jeonse": 2128,
-          "wolse": 10766,
-          "total": 12894,
+          "jeonse": 2140,
+          "wolse": 10822,
+          "total": 12962,
           "wolseRatio": 83.5
         },
         {
           "yr": "2026",
-          "avgDeposit": 1881,
+          "avgDeposit": 1897,
           "avgMonthly": 46,
-          "jeonse": 803,
-          "wolse": 5809,
-          "total": 6612,
+          "jeonse": 840,
+          "wolse": 6094,
+          "total": 6934,
           "wolseRatio": 87.9
-        }
-      ]
-    },
-    "29": {
-      "name": "광주",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeposit": 3139,
-          "avgMonthly": 28,
-          "jeonse": 2416,
-          "wolse": 2061,
-          "total": 4477,
-          "wolseRatio": 46
-        },
-        {
-          "yr": "2017",
-          "avgDeposit": 3050,
-          "avgMonthly": 28,
-          "jeonse": 3046,
-          "wolse": 2837,
-          "total": 5883,
-          "wolseRatio": 48.2
-        },
-        {
-          "yr": "2018",
-          "avgDeposit": 3311,
-          "avgMonthly": 30,
-          "jeonse": 3897,
-          "wolse": 3263,
-          "total": 7160,
-          "wolseRatio": 45.6
-        },
-        {
-          "yr": "2019",
-          "avgDeposit": 3347,
-          "avgMonthly": 30,
-          "jeonse": 3520,
-          "wolse": 3268,
-          "total": 6788,
-          "wolseRatio": 48.1
-        },
-        {
-          "yr": "2020",
-          "avgDeposit": 3688,
-          "avgMonthly": 33,
-          "jeonse": 3657,
-          "wolse": 3043,
-          "total": 6700,
-          "wolseRatio": 45.4
-        },
-        {
-          "yr": "2021",
-          "avgDeposit": 3466,
-          "avgMonthly": 36,
-          "jeonse": 3853,
-          "wolse": 4918,
-          "total": 8771,
-          "wolseRatio": 56.1
-        },
-        {
-          "yr": "2022",
-          "avgDeposit": 2853,
-          "avgMonthly": 38,
-          "jeonse": 3243,
-          "wolse": 6688,
-          "total": 9931,
-          "wolseRatio": 67.3
-        },
-        {
-          "yr": "2023",
-          "avgDeposit": 2247,
-          "avgMonthly": 40,
-          "jeonse": 1843,
-          "wolse": 5970,
-          "total": 7813,
-          "wolseRatio": 76.4
-        },
-        {
-          "yr": "2024",
-          "avgDeposit": 2041,
-          "avgMonthly": 39,
-          "jeonse": 1471,
-          "wolse": 5891,
-          "total": 7362,
-          "wolseRatio": 80
-        },
-        {
-          "yr": "2025",
-          "avgDeposit": 1307,
-          "avgMonthly": 42,
-          "jeonse": 969,
-          "wolse": 7398,
-          "total": 8367,
-          "wolseRatio": 88.4
-        },
-        {
-          "yr": "2026",
-          "avgDeposit": 1110,
-          "avgMonthly": 42,
-          "jeonse": 399,
-          "wolse": 4186,
-          "total": 4585,
-          "wolseRatio": 91.3
         }
       ]
     },
@@ -1142,110 +1151,6 @@
           "wolse": 10338,
           "total": 11789,
           "wolseRatio": 87.7
-        }
-      ]
-    },
-    "46": {
-      "name": "전남",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeposit": 3101,
-          "avgMonthly": 30,
-          "jeonse": 996,
-          "wolse": 695,
-          "total": 1691,
-          "wolseRatio": 41.1
-        },
-        {
-          "yr": "2017",
-          "avgDeposit": 3386,
-          "avgMonthly": 30,
-          "jeonse": 1354,
-          "wolse": 926,
-          "total": 2280,
-          "wolseRatio": 40.6
-        },
-        {
-          "yr": "2018",
-          "avgDeposit": 3396,
-          "avgMonthly": 34,
-          "jeonse": 1654,
-          "wolse": 1195,
-          "total": 2849,
-          "wolseRatio": 41.9
-        },
-        {
-          "yr": "2019",
-          "avgDeposit": 3469,
-          "avgMonthly": 32,
-          "jeonse": 1545,
-          "wolse": 1202,
-          "total": 2747,
-          "wolseRatio": 43.8
-        },
-        {
-          "yr": "2020",
-          "avgDeposit": 3706,
-          "avgMonthly": 36,
-          "jeonse": 1454,
-          "wolse": 1305,
-          "total": 2759,
-          "wolseRatio": 47.3
-        },
-        {
-          "yr": "2021",
-          "avgDeposit": 2849,
-          "avgMonthly": 38,
-          "jeonse": 1318,
-          "wolse": 2315,
-          "total": 3633,
-          "wolseRatio": 63.7
-        },
-        {
-          "yr": "2022",
-          "avgDeposit": 2378,
-          "avgMonthly": 39,
-          "jeonse": 1231,
-          "wolse": 3395,
-          "total": 4626,
-          "wolseRatio": 73.4
-        },
-        {
-          "yr": "2023",
-          "avgDeposit": 1919,
-          "avgMonthly": 41,
-          "jeonse": 807,
-          "wolse": 3245,
-          "total": 4052,
-          "wolseRatio": 80.1
-        },
-        {
-          "yr": "2024",
-          "avgDeposit": 1613,
-          "avgMonthly": 41,
-          "jeonse": 656,
-          "wolse": 3322,
-          "total": 3978,
-          "wolseRatio": 83.5
-        },
-        {
-          "yr": "2025",
-          "avgDeposit": 1320,
-          "avgMonthly": 42,
-          "jeonse": 535,
-          "wolse": 4188,
-          "total": 4723,
-          "wolseRatio": 88.7
-        },
-        {
-          "yr": "2026",
-          "avgDeposit": 1049,
-          "avgMonthly": 42,
-          "jeonse": 203,
-          "wolse": 2243,
-          "total": 2446,
-          "wolseRatio": 91.7
         }
       ]
     },

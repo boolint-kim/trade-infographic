@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T13:02:13.837Z",
+  "generated": "2026-07-09T08:00:33.045Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -80,6 +80,88 @@
           "avgPrice": 166308,
           "avgPyeong": 41.1,
           "cnt": 2000
+        }
+      ]
+    },
+    "12": {
+      "name": "전남광주",
+      "yearly": [
+        {
+          "yr": "2016",
+          "avgPpyeong": 299,
+          "avgPrice": 19875,
+          "avgPyeong": 88.5,
+          "cnt": 8988
+        },
+        {
+          "yr": "2017",
+          "avgPpyeong": 312,
+          "avgPrice": 20425,
+          "avgPyeong": 91.4,
+          "cnt": 11417
+        },
+        {
+          "yr": "2018",
+          "avgPpyeong": 344,
+          "avgPrice": 20965,
+          "avgPyeong": 87,
+          "cnt": 11449
+        },
+        {
+          "yr": "2019",
+          "avgPpyeong": 342,
+          "avgPrice": 21628,
+          "avgPyeong": 91.9,
+          "cnt": 9673
+        },
+        {
+          "yr": "2020",
+          "avgPpyeong": 382,
+          "avgPrice": 24330,
+          "avgPyeong": 94.1,
+          "cnt": 11152
+        },
+        {
+          "yr": "2021",
+          "avgPpyeong": 339,
+          "avgPrice": 22439,
+          "avgPyeong": 102.7,
+          "cnt": 10071
+        },
+        {
+          "yr": "2022",
+          "avgPpyeong": 307,
+          "avgPrice": 20984,
+          "avgPyeong": 106.9,
+          "cnt": 7294
+        },
+        {
+          "yr": "2023",
+          "avgPpyeong": 259,
+          "avgPrice": 17257,
+          "avgPyeong": 104.7,
+          "cnt": 5511
+        },
+        {
+          "yr": "2024",
+          "avgPpyeong": 248,
+          "avgPrice": 16755,
+          "avgPyeong": 109.3,
+          "cnt": 5216
+        },
+        {
+          "yr": "2025",
+          "avgPpyeong": 224,
+          "avgPrice": 16249,
+          "avgPyeong": 110.4,
+          "cnt": 4865
+        },
+        {
+          "yr": "2026",
+          "avgPpyeong": 199,
+          "avgPrice": 14661,
+          "avgPyeong": 112.7,
+          "cnt": 2126
         }
       ]
     },
@@ -251,11 +333,18 @@
       "name": "인천",
       "yearly": [
         {
+          "yr": "2015",
+          "avgPpyeong": 648,
+          "avgPrice": 40878,
+          "avgPyeong": 69.8,
+          "cnt": 221
+        },
+        {
           "yr": "2016",
           "avgPpyeong": 692,
-          "avgPrice": 37973,
-          "avgPyeong": 63.8,
-          "cnt": 3169
+          "avgPrice": 38003,
+          "avgPyeong": 63.5,
+          "cnt": 3356
         },
         {
           "yr": "2017",
@@ -280,134 +369,52 @@
         },
         {
           "yr": "2020",
-          "avgPpyeong": 677,
-          "avgPrice": 35038,
-          "avgPyeong": 69,
-          "cnt": 3778
+          "avgPpyeong": 674,
+          "avgPrice": 35031,
+          "avgPyeong": 69.6,
+          "cnt": 3662
         },
         {
           "yr": "2021",
+          "avgPpyeong": 726,
+          "avgPrice": 39248,
+          "avgPyeong": 75.7,
+          "cnt": 3889
+        },
+        {
+          "yr": "2022",
           "avgPpyeong": 730,
-          "avgPrice": 39149,
-          "avgPyeong": 75.1,
-          "cnt": 4043
-        },
-        {
-          "yr": "2022",
-          "avgPpyeong": 745,
-          "avgPrice": 40925,
-          "avgPyeong": 77.3,
-          "cnt": 2119
+          "avgPrice": 40705,
+          "avgPyeong": 78.2,
+          "cnt": 2033
         },
         {
           "yr": "2023",
-          "avgPpyeong": 686,
-          "avgPrice": 40195,
-          "avgPyeong": 84.2,
-          "cnt": 1406
+          "avgPpyeong": 678,
+          "avgPrice": 40138,
+          "avgPyeong": 84.9,
+          "cnt": 1347
         },
         {
           "yr": "2024",
-          "avgPpyeong": 653,
-          "avgPrice": 40533,
-          "avgPyeong": 90,
-          "cnt": 1276
+          "avgPpyeong": 652,
+          "avgPrice": 40227,
+          "avgPyeong": 90.1,
+          "cnt": 1248
         },
         {
           "yr": "2025",
-          "avgPpyeong": 621,
-          "avgPrice": 37104,
-          "avgPyeong": 82.1,
-          "cnt": 1193
+          "avgPpyeong": 610,
+          "avgPrice": 36919,
+          "avgPyeong": 83.3,
+          "cnt": 1150
         },
         {
           "yr": "2026",
-          "avgPpyeong": 588,
-          "avgPrice": 36539,
-          "avgPyeong": 81.9,
-          "cnt": 502
-        }
-      ]
-    },
-    "29": {
-      "name": "광주",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgPpyeong": 475,
-          "avgPrice": 29758,
-          "avgPyeong": 62,
-          "cnt": 4031
-        },
-        {
-          "yr": "2017",
-          "avgPpyeong": 501,
-          "avgPrice": 30447,
-          "avgPyeong": 60.8,
-          "cnt": 5046
-        },
-        {
-          "yr": "2018",
-          "avgPpyeong": 546,
-          "avgPrice": 30245,
-          "avgPyeong": 55.5,
-          "cnt": 5448
-        },
-        {
-          "yr": "2019",
-          "avgPpyeong": 609,
-          "avgPrice": 34203,
-          "avgPyeong": 58,
-          "cnt": 3707
-        },
-        {
-          "yr": "2020",
-          "avgPpyeong": 705,
-          "avgPrice": 39075,
-          "avgPyeong": 58.3,
-          "cnt": 4070
-        },
-        {
-          "yr": "2021",
-          "avgPpyeong": 733,
-          "avgPrice": 40242,
-          "avgPyeong": 62.2,
-          "cnt": 2795
-        },
-        {
-          "yr": "2022",
-          "avgPpyeong": 746,
-          "avgPrice": 41907,
-          "avgPyeong": 58.9,
-          "cnt": 1687
-        },
-        {
-          "yr": "2023",
-          "avgPpyeong": 679,
-          "avgPrice": 38468,
-          "avgPyeong": 61.6,
-          "cnt": 1047
-        },
-        {
-          "yr": "2024",
-          "avgPpyeong": 690,
-          "avgPrice": 36360,
-          "avgPyeong": 55.4,
-          "cnt": 938
-        },
-        {
-          "yr": "2025",
-          "avgPpyeong": 596,
-          "avgPrice": 35124,
-          "avgPyeong": 60.1,
-          "cnt": 837
-        },
-        {
-          "yr": "2026",
-          "avgPpyeong": 588,
-          "avgPrice": 35542,
-          "avgPyeong": 59.9,
-          "cnt": 312
+          "avgPpyeong": 589,
+          "avgPrice": 36577,
+          "avgPyeong": 81.3,
+          "cnt": 495
         }
       ]
     },
@@ -900,88 +907,6 @@
           "avgPrice": 20751,
           "avgPyeong": 141.3,
           "cnt": 1438
-        }
-      ]
-    },
-    "46": {
-      "name": "전남",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgPpyeong": 156,
-          "avgPrice": 11837,
-          "avgPyeong": 110.1,
-          "cnt": 4957
-        },
-        {
-          "yr": "2017",
-          "avgPpyeong": 163,
-          "avgPrice": 12487,
-          "avgPyeong": 115.7,
-          "cnt": 6371
-        },
-        {
-          "yr": "2018",
-          "avgPpyeong": 161,
-          "avgPrice": 12539,
-          "avgPyeong": 115.5,
-          "cnt": 6001
-        },
-        {
-          "yr": "2019",
-          "avgPpyeong": 177,
-          "avgPrice": 13814,
-          "avgPyeong": 112.9,
-          "cnt": 5966
-        },
-        {
-          "yr": "2020",
-          "avgPpyeong": 196,
-          "avgPrice": 15857,
-          "avgPyeong": 114.7,
-          "cnt": 7082
-        },
-        {
-          "yr": "2021",
-          "avgPpyeong": 187,
-          "avgPrice": 15601,
-          "avgPyeong": 118.3,
-          "cnt": 7276
-        },
-        {
-          "yr": "2022",
-          "avgPpyeong": 176,
-          "avgPrice": 14689,
-          "avgPyeong": 121.3,
-          "cnt": 5607
-        },
-        {
-          "yr": "2023",
-          "avgPpyeong": 161,
-          "avgPrice": 12282,
-          "avgPyeong": 114.9,
-          "cnt": 4464
-        },
-        {
-          "yr": "2024",
-          "avgPpyeong": 151,
-          "avgPrice": 12456,
-          "avgPyeong": 121.2,
-          "cnt": 4278
-        },
-        {
-          "yr": "2025",
-          "avgPpyeong": 146,
-          "avgPrice": 12327,
-          "avgPyeong": 120.9,
-          "cnt": 4028
-        },
-        {
-          "yr": "2026",
-          "avgPpyeong": 132,
-          "avgPrice": 11070,
-          "avgPyeong": 121.8,
-          "cnt": 1814
         }
       ]
     },

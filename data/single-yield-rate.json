@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T13:02:13.837Z",
+  "generated": "2026-07-09T08:00:33.045Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -102,6 +102,110 @@
           "yieldRate": 0.39,
           "dealCnt": 2000,
           "rentCnt": 61195
+        }
+      ]
+    },
+    "12": {
+      "name": "전남광주",
+      "yearly": [
+        {
+          "yr": "2016",
+          "avgDeal": 19875,
+          "avgDeposit": 1337,
+          "avgMonthly": 29,
+          "yieldRate": 1.75,
+          "dealCnt": 8988,
+          "rentCnt": 2756
+        },
+        {
+          "yr": "2017",
+          "avgDeal": 20425,
+          "avgDeposit": 1290,
+          "avgMonthly": 29,
+          "yieldRate": 1.7,
+          "dealCnt": 11417,
+          "rentCnt": 3763
+        },
+        {
+          "yr": "2018",
+          "avgDeal": 20965,
+          "avgDeposit": 1183,
+          "avgMonthly": 31,
+          "yieldRate": 1.77,
+          "dealCnt": 11449,
+          "rentCnt": 4458
+        },
+        {
+          "yr": "2019",
+          "avgDeal": 21628,
+          "avgDeposit": 1085,
+          "avgMonthly": 31,
+          "yieldRate": 1.72,
+          "dealCnt": 9673,
+          "rentCnt": 4470
+        },
+        {
+          "yr": "2020",
+          "avgDeal": 24330,
+          "avgDeposit": 1019,
+          "avgMonthly": 34,
+          "yieldRate": 1.68,
+          "dealCnt": 11152,
+          "rentCnt": 4348
+        },
+        {
+          "yr": "2021",
+          "avgDeal": 22439,
+          "avgDeposit": 929,
+          "avgMonthly": 37,
+          "yieldRate": 1.98,
+          "dealCnt": 10071,
+          "rentCnt": 7233
+        },
+        {
+          "yr": "2022",
+          "avgDeal": 20984,
+          "avgDeposit": 753,
+          "avgMonthly": 38,
+          "yieldRate": 2.17,
+          "dealCnt": 7294,
+          "rentCnt": 10083
+        },
+        {
+          "yr": "2023",
+          "avgDeal": 17257,
+          "avgDeposit": 654,
+          "avgMonthly": 40,
+          "yieldRate": 2.78,
+          "dealCnt": 5511,
+          "rentCnt": 9215
+        },
+        {
+          "yr": "2024",
+          "avgDeal": 16755,
+          "avgDeposit": 639,
+          "avgMonthly": 40,
+          "yieldRate": 2.86,
+          "dealCnt": 5216,
+          "rentCnt": 9213
+        },
+        {
+          "yr": "2025",
+          "avgDeal": 16249,
+          "avgDeposit": 538,
+          "avgMonthly": 42,
+          "yieldRate": 3.1,
+          "dealCnt": 4865,
+          "rentCnt": 11586
+        },
+        {
+          "yr": "2026",
+          "avgDeal": 14661,
+          "avgDeposit": 512,
+          "avgMonthly": 42,
+          "yieldRate": 3.44,
+          "dealCnt": 2126,
+          "rentCnt": 6429
         }
       ]
     },
@@ -317,22 +421,31 @@
       "name": "인천",
       "yearly": [
         {
+          "yr": "2015",
+          "avgDeal": 40878,
+          "avgDeposit": 1504,
+          "avgMonthly": 35,
+          "yieldRate": 1.03,
+          "dealCnt": 221,
+          "rentCnt": 321
+        },
+        {
           "yr": "2016",
-          "avgDeal": 37973,
-          "avgDeposit": 1224,
+          "avgDeal": 38003,
+          "avgDeposit": 1238,
           "avgMonthly": 34,
           "yieldRate": 1.07,
-          "dealCnt": 3169,
-          "rentCnt": 3201
+          "dealCnt": 3356,
+          "rentCnt": 3471
         },
         {
           "yr": "2017",
           "avgDeal": 37830,
-          "avgDeposit": 1085,
+          "avgDeposit": 1084,
           "avgMonthly": 36,
           "yieldRate": 1.14,
           "dealCnt": 3704,
-          "rentCnt": 4380
+          "rentCnt": 4381
         },
         {
           "yr": "2018",
@@ -341,183 +454,79 @@
           "avgMonthly": 36,
           "yieldRate": 1.22,
           "dealCnt": 3243,
-          "rentCnt": 4428
+          "rentCnt": 4430
         },
         {
           "yr": "2019",
           "avgDeal": 35232,
-          "avgDeposit": 1026,
+          "avgDeposit": 1025,
           "avgMonthly": 36,
           "yieldRate": 1.23,
           "dealCnt": 3071,
-          "rentCnt": 4102
+          "rentCnt": 4104
         },
         {
           "yr": "2020",
-          "avgDeal": 35038,
+          "avgDeal": 35031,
           "avgDeposit": 994,
           "avgMonthly": 37,
           "yieldRate": 1.27,
-          "dealCnt": 3778,
-          "rentCnt": 4083
+          "dealCnt": 3662,
+          "rentCnt": 4086
         },
         {
           "yr": "2021",
-          "avgDeal": 39149,
-          "avgDeposit": 950,
+          "avgDeal": 39248,
+          "avgDeposit": 949,
           "avgMonthly": 41,
-          "yieldRate": 1.26,
-          "dealCnt": 4043,
-          "rentCnt": 6601
+          "yieldRate": 1.25,
+          "dealCnt": 3889,
+          "rentCnt": 6603
         },
         {
           "yr": "2022",
-          "avgDeal": 40925,
+          "avgDeal": 40705,
           "avgDeposit": 903,
           "avgMonthly": 42,
-          "yieldRate": 1.23,
-          "dealCnt": 2119,
+          "yieldRate": 1.24,
+          "dealCnt": 2033,
           "rentCnt": 8912
         },
         {
           "yr": "2023",
-          "avgDeal": 40195,
+          "avgDeal": 40138,
           "avgDeposit": 926,
           "avgMonthly": 44,
-          "yieldRate": 1.31,
-          "dealCnt": 1406,
-          "rentCnt": 7712
+          "yieldRate": 1.32,
+          "dealCnt": 1347,
+          "rentCnt": 7717
         },
         {
           "yr": "2024",
-          "avgDeal": 40533,
-          "avgDeposit": 933,
+          "avgDeal": 40227,
+          "avgDeposit": 932,
           "avgMonthly": 44,
-          "yieldRate": 1.3,
-          "dealCnt": 1276,
-          "rentCnt": 8768
+          "yieldRate": 1.31,
+          "dealCnt": 1248,
+          "rentCnt": 8776
         },
         {
           "yr": "2025",
-          "avgDeal": 37104,
-          "avgDeposit": 834,
+          "avgDeal": 36919,
+          "avgDeposit": 836,
           "avgMonthly": 45,
           "yieldRate": 1.46,
-          "dealCnt": 1193,
-          "rentCnt": 10766
+          "dealCnt": 1150,
+          "rentCnt": 10822
         },
         {
           "yr": "2026",
-          "avgDeal": 36539,
-          "avgDeposit": 794,
+          "avgDeal": 36577,
+          "avgDeposit": 816,
           "avgMonthly": 46,
           "yieldRate": 1.51,
-          "dealCnt": 502,
-          "rentCnt": 5809
-        }
-      ]
-    },
-    "29": {
-      "name": "광주",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeal": 29758,
-          "avgDeposit": 1373,
-          "avgMonthly": 28,
-          "yieldRate": 1.13,
-          "dealCnt": 4031,
-          "rentCnt": 2061
-        },
-        {
-          "yr": "2017",
-          "avgDeal": 30447,
-          "avgDeposit": 1279,
-          "avgMonthly": 28,
-          "yieldRate": 1.1,
-          "dealCnt": 5046,
-          "rentCnt": 2837
-        },
-        {
-          "yr": "2018",
-          "avgDeal": 30245,
-          "avgDeposit": 1184,
-          "avgMonthly": 30,
-          "yieldRate": 1.19,
-          "dealCnt": 5448,
-          "rentCnt": 3263
-        },
-        {
-          "yr": "2019",
-          "avgDeal": 34203,
-          "avgDeposit": 1106,
-          "avgMonthly": 30,
-          "yieldRate": 1.05,
-          "dealCnt": 3707,
-          "rentCnt": 3268
-        },
-        {
-          "yr": "2020",
-          "avgDeal": 39075,
-          "avgDeposit": 1009,
-          "avgMonthly": 33,
-          "yieldRate": 1.01,
-          "dealCnt": 4070,
-          "rentCnt": 3043
-        },
-        {
-          "yr": "2021",
-          "avgDeal": 40242,
-          "avgDeposit": 995,
-          "avgMonthly": 36,
-          "yieldRate": 1.07,
-          "dealCnt": 2795,
-          "rentCnt": 4918
-        },
-        {
-          "yr": "2022",
-          "avgDeal": 41907,
-          "avgDeposit": 786,
-          "avgMonthly": 38,
-          "yieldRate": 1.09,
-          "dealCnt": 1687,
-          "rentCnt": 6688
-        },
-        {
-          "yr": "2023",
-          "avgDeal": 38468,
-          "avgDeposit": 670,
-          "avgMonthly": 40,
-          "yieldRate": 1.25,
-          "dealCnt": 1047,
-          "rentCnt": 5970
-        },
-        {
-          "yr": "2024",
-          "avgDeal": 36360,
-          "avgDeposit": 686,
-          "avgMonthly": 39,
-          "yieldRate": 1.29,
-          "dealCnt": 938,
-          "rentCnt": 5891
-        },
-        {
-          "yr": "2025",
-          "avgDeal": 35124,
-          "avgDeposit": 547,
-          "avgMonthly": 42,
-          "yieldRate": 1.43,
-          "dealCnt": 837,
-          "rentCnt": 7398
-        },
-        {
-          "yr": "2026",
-          "avgDeal": 35542,
-          "avgDeposit": 537,
-          "avgMonthly": 42,
-          "yieldRate": 1.42,
-          "dealCnt": 312,
-          "rentCnt": 4186
+          "dealCnt": 495,
+          "rentCnt": 6094
         }
       ]
     },
@@ -1142,110 +1151,6 @@
           "yieldRate": 2.49,
           "dealCnt": 1438,
           "rentCnt": 10338
-        }
-      ]
-    },
-    "46": {
-      "name": "전남",
-      "yearly": [
-        {
-          "yr": "2016",
-          "avgDeal": 11837,
-          "avgDeposit": 1228,
-          "avgMonthly": 30,
-          "yieldRate": 3.04,
-          "dealCnt": 4957,
-          "rentCnt": 695
-        },
-        {
-          "yr": "2017",
-          "avgDeal": 12487,
-          "avgDeposit": 1324,
-          "avgMonthly": 30,
-          "yieldRate": 2.88,
-          "dealCnt": 6371,
-          "rentCnt": 926
-        },
-        {
-          "yr": "2018",
-          "avgDeal": 12539,
-          "avgDeposit": 1180,
-          "avgMonthly": 34,
-          "yieldRate": 3.25,
-          "dealCnt": 6001,
-          "rentCnt": 1195
-        },
-        {
-          "yr": "2019",
-          "avgDeal": 13814,
-          "avgDeposit": 1029,
-          "avgMonthly": 32,
-          "yieldRate": 2.78,
-          "dealCnt": 5966,
-          "rentCnt": 1202
-        },
-        {
-          "yr": "2020",
-          "avgDeal": 15857,
-          "avgDeposit": 1041,
-          "avgMonthly": 36,
-          "yieldRate": 2.72,
-          "dealCnt": 7082,
-          "rentCnt": 1305
-        },
-        {
-          "yr": "2021",
-          "avgDeal": 15601,
-          "avgDeposit": 787,
-          "avgMonthly": 38,
-          "yieldRate": 2.92,
-          "dealCnt": 7276,
-          "rentCnt": 2315
-        },
-        {
-          "yr": "2022",
-          "avgDeal": 14689,
-          "avgDeposit": 689,
-          "avgMonthly": 39,
-          "yieldRate": 3.19,
-          "dealCnt": 5607,
-          "rentCnt": 3395
-        },
-        {
-          "yr": "2023",
-          "avgDeal": 12282,
-          "avgDeposit": 624,
-          "avgMonthly": 41,
-          "yieldRate": 4.01,
-          "dealCnt": 4464,
-          "rentCnt": 3245
-        },
-        {
-          "yr": "2024",
-          "avgDeal": 12456,
-          "avgDeposit": 557,
-          "avgMonthly": 41,
-          "yieldRate": 3.95,
-          "dealCnt": 4278,
-          "rentCnt": 3322
-        },
-        {
-          "yr": "2025",
-          "avgDeal": 12327,
-          "avgDeposit": 523,
-          "avgMonthly": 42,
-          "yieldRate": 4.09,
-          "dealCnt": 4028,
-          "rentCnt": 4188
-        },
-        {
-          "yr": "2026",
-          "avgDeal": 11070,
-          "avgDeposit": 466,
-          "avgMonthly": 42,
-          "yieldRate": 4.55,
-          "dealCnt": 1814,
-          "rentCnt": 2243
         }
       ]
     },
