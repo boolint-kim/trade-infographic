@@ -52,7 +52,7 @@
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;Chart.defaults.plugins.datalabels={display:false};
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
-const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
+const SIDO_SHORT={'11':'서울','12':'전남광주','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
 const C={'11':'#6366f1','41':'#3b82f6','26':'#f97316','28':'#f43f5e','27':'#10b981','30':'#8b5cf6','29':'#06b6d4','31':'#ec4899','48':'#14b8a6','44':'#a855f7','52':'#f59e0b','47':'#84cc16','51':'#0ea5e9','43':'#e11d48','46':'#7c3aed','50':'#059669','36':'#d946ef'};
 let D;
 async function load(){try{D=await(await fetch('data/price-gap.json')).json();}catch{try{D=await(await fetch('price-gap.json')).json();}catch{return;}} init();}

@@ -63,7 +63,7 @@
 Chart.defaults.font.family="'Apple SD Gothic Neo','Malgun Gothic',sans-serif";const _m=window.innerWidth<700;Chart.defaults.font.size=_m?11:13;Chart.defaults.plugins.datalabels={display:false};
 const fmt=n=>n.toLocaleString('ko-KR');
 const SIDO_ORDER=['11','41','26','28','27','30','29','31','48','44','52','47','51','43','46','50','36'];
-const SIDO_SHORT={'11':'서울','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
+const SIDO_SHORT={'11':'서울','12':'전남광주','26':'부산','27':'대구','28':'인천','29':'광주','30':'대전','31':'울산','36':'세종','41':'경기','43':'충북','44':'충남','46':'전남','47':'경북','48':'경남','50':'제주','51':'강원','52':'전북'};
 const TYPE_COLORS={'개인':'#3b82f6','법인':'#ef4444','공공기관':'#10b981','기타':'#9ca3af'};
 let D,ch1,ch2,sidoChart;
 async function load(){try{D=await(await fetch('data/buyer-seller.json')).json();}catch{try{D=await(await fetch('buyer-seller.json')).json();}catch{return;}} init();}
