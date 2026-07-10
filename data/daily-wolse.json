@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-09T11:12:29.743Z",
+  "generated": "2026-07-10T00:46:28.588Z",
   "period": "202605~202607",
   "sido": {
     "11": {
@@ -1125,25 +1125,45 @@
     },
     "41": {
       "name": "경기",
-      "total": 588,
-      "avgMonthlyRent": 61,
-      "avgDeposit": 9306,
+      "total": 877,
+      "avgMonthlyRent": 53,
+      "avgDeposit": 8507,
       "daily": [
         {
           "dealDate": "2026-07-01",
-          "cnt": 275
+          "cnt": 330
         },
         {
           "dealDate": "2026-07-02",
-          "cnt": 208
+          "cnt": 233
         },
         {
           "dealDate": "2026-07-03",
-          "cnt": 104
+          "cnt": 139
         },
         {
           "dealDate": "2026-07-04",
-          "cnt": 1
+          "cnt": 16
+        },
+        {
+          "dealDate": "2026-07-05",
+          "cnt": 3
+        },
+        {
+          "dealDate": "2026-07-06",
+          "cnt": 51
+        },
+        {
+          "dealDate": "2026-07-07",
+          "cnt": 52
+        },
+        {
+          "dealDate": "2026-07-08",
+          "cnt": 39
+        },
+        {
+          "dealDate": "2026-07-09",
+          "cnt": 14
         }
       ],
       "topTradesAll": [
@@ -1269,21 +1289,21 @@
           "dealDate": "2026-07-02"
         },
         {
+          "name": "동탄역센트럴상록아파트",
+          "umdNm": "영천동",
+          "deposit": 5000,
+          "monthlyRent": 180,
+          "area": "59.98",
+          "floor": "23",
+          "dealDate": "2026-07-01"
+        },
+        {
           "name": "일산두산위브더제니스",
           "umdNm": "탄현동",
           "deposit": 4800,
           "monthlyRent": 155,
           "area": "59.9258",
           "floor": "18",
-          "dealDate": "2026-07-01"
-        },
-        {
-          "name": "신나무실신안",
-          "umdNm": "영통동",
-          "deposit": 3000,
-          "monthlyRent": 140,
-          "area": "59.965",
-          "floor": "5",
           "dealDate": "2026-07-01"
         }
       ]
@@ -2310,35 +2330,39 @@
   "nationalDaily": [
     {
       "dealDate": "2026-07-01",
-      "cnt": 731
+      "cnt": 786
     },
     {
       "dealDate": "2026-07-02",
-      "cnt": 540
+      "cnt": 565
     },
     {
       "dealDate": "2026-07-03",
-      "cnt": 330
+      "cnt": 365
     },
     {
       "dealDate": "2026-07-04",
-      "cnt": 16
+      "cnt": 31
     },
     {
       "dealDate": "2026-07-05",
-      "cnt": 1
+      "cnt": 4
     },
     {
       "dealDate": "2026-07-06",
-      "cnt": 17
+      "cnt": 68
     },
     {
       "dealDate": "2026-07-07",
-      "cnt": 13
+      "cnt": 65
     },
     {
       "dealDate": "2026-07-08",
-      "cnt": 6
+      "cnt": 45
+    },
+    {
+      "dealDate": "2026-07-09",
+      "cnt": 14
     }
   ]
 }

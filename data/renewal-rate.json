@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-09T11:23:35.934Z",
+  "generated": "2026-07-10T00:57:41.870Z",
   "sido": {
     "11": {
       "name": "서울",
@@ -7786,10 +7786,10 @@
     "41": {
       "name": "경기",
       "period": "202507~202607",
-      "renewalRate": 38.6,
-      "renewal": 125126,
-      "newContract": 199407,
-      "total": 324533,
+      "renewalRate": 38.8,
+      "renewal": 132800,
+      "newContract": 209298,
+      "total": 342098,
       "byArea": [
         {
           "umdNm": "초평동",
@@ -8002,13 +8002,6 @@
           "rate": 55.2
         },
         {
-          "umdNm": "청계동",
-          "renewal": 69,
-          "newContract": 57,
-          "total": 126,
-          "rate": 54.8
-        },
-        {
           "umdNm": "원흥동",
           "renewal": 637,
           "newContract": 545,
@@ -8042,6 +8035,13 @@
           "newContract": 40,
           "total": 84,
           "rate": 52.4
+        },
+        {
+          "umdNm": "영천동",
+          "renewal": 1498,
+          "newContract": 1369,
+          "total": 2867,
+          "rate": 52.2
         },
         {
           "umdNm": "문발동",
@@ -8086,6 +8086,13 @@
           "rate": 50
         },
         {
+          "umdNm": "장지동",
+          "renewal": 1993,
+          "newContract": 2018,
+          "total": 4011,
+          "rate": 49.7
+        },
+        {
           "umdNm": "반월동",
           "renewal": 673,
           "newContract": 703,
@@ -8126,6 +8133,13 @@
           "newContract": 1044,
           "total": 2009,
           "rate": 48
+        },
+        {
+          "umdNm": "신동",
+          "renewal": 550,
+          "newContract": 598,
+          "total": 1148,
+          "rate": 47.9
         },
         {
           "umdNm": "옥정동",
@@ -8300,6 +8314,13 @@
           "renewal": 634,
           "newContract": 765,
           "total": 1399,
+          "rate": 45.3
+        },
+        {
+          "umdNm": "능동",
+          "renewal": 765,
+          "newContract": 925,
+          "total": 1690,
           "rate": 45.3
         },
         {
@@ -8618,6 +8639,13 @@
           "rate": 40.7
         },
         {
+          "umdNm": "산척동",
+          "renewal": 902,
+          "newContract": 1314,
+          "total": 2216,
+          "rate": 40.7
+        },
+        {
           "umdNm": "고암동",
           "renewal": 179,
           "newContract": 261,
@@ -8835,6 +8863,13 @@
           "rate": 38
         },
         {
+          "umdNm": "반송동",
+          "renewal": 657,
+          "newContract": 1076,
+          "total": 1733,
+          "rate": 37.9
+        },
+        {
           "umdNm": "추자동",
           "renewal": 25,
           "newContract": 41,
@@ -8898,13 +8933,6 @@
           "rate": 36.8
         },
         {
-          "umdNm": "신동",
-          "renewal": 23,
-          "newContract": 40,
-          "total": 63,
-          "rate": 36.5
-        },
-        {
           "umdNm": "평동",
           "renewal": 24,
           "newContract": 42,
@@ -8923,6 +8951,13 @@
           "renewal": 638,
           "newContract": 1118,
           "total": 1756,
+          "rate": 36.3
+        },
+        {
+          "umdNm": "목동",
+          "renewal": 433,
+          "newContract": 761,
+          "total": 1194,
           "rate": 36.3
         },
         {
@@ -8980,6 +9015,13 @@
           "newContract": 1458,
           "total": 2266,
           "rate": 35.7
+        },
+        {
+          "umdNm": "석우동",
+          "renewal": 108,
+          "newContract": 195,
+          "total": 303,
+          "rate": 35.6
         },
         {
           "umdNm": "상갈동",
@@ -9143,11 +9185,11 @@
           "rate": 33.6
         },
         {
-          "umdNm": "장지동",
-          "renewal": 30,
-          "newContract": 60,
-          "total": 90,
-          "rate": 33.3
+          "umdNm": "청계동",
+          "renewal": 661,
+          "newContract": 1318,
+          "total": 1979,
+          "rate": 33.4
         },
         {
           "umdNm": "수암동",
@@ -9364,6 +9406,20 @@
           "renewal": 71,
           "newContract": 157,
           "total": 228,
+          "rate": 31.1
+        },
+        {
+          "umdNm": "여울동",
+          "renewal": 151,
+          "newContract": 334,
+          "total": 485,
+          "rate": 31.1
+        },
+        {
+          "umdNm": "송동",
+          "renewal": 131,
+          "newContract": 290,
+          "total": 421,
           "rate": 31.1
         },
         {
@@ -9778,13 +9834,6 @@
           "newContract": 127,
           "total": 172,
           "rate": 26.2
-        },
-        {
-          "umdNm": "능동",
-          "renewal": 53,
-          "newContract": 150,
-          "total": 203,
-          "rate": 26.1
         },
         {
           "umdNm": "태평동",
@@ -11630,81 +11679,88 @@
       ],
       "yearly": [
         {
+          "yr": "2015",
+          "renewal": 1,
+          "newContract": 70,
+          "total": 71,
+          "rate": 1.4
+        },
+        {
           "yr": "2016",
-          "renewal": 2041,
-          "newContract": 11959,
-          "total": 14000,
-          "rate": 14.6
+          "renewal": 2118,
+          "newContract": 12265,
+          "total": 14383,
+          "rate": 14.7
         },
         {
           "yr": "2017",
-          "renewal": 2211,
-          "newContract": 14316,
-          "total": 16527,
-          "rate": 13.4
+          "renewal": 2325,
+          "newContract": 14638,
+          "total": 16963,
+          "rate": 13.7
         },
         {
           "yr": "2018",
-          "renewal": 2562,
-          "newContract": 15547,
-          "total": 18109,
-          "rate": 14.1
+          "renewal": 2571,
+          "newContract": 16015,
+          "total": 18586,
+          "rate": 13.8
         },
         {
           "yr": "2019",
-          "renewal": 2002,
-          "newContract": 16327,
-          "total": 18329,
+          "renewal": 2030,
+          "newContract": 16627,
+          "total": 18657,
           "rate": 10.9
         },
         {
           "yr": "2020",
-          "renewal": 2431,
-          "newContract": 18767,
-          "total": 21198,
-          "rate": 11.5
+          "renewal": 2501,
+          "newContract": 19132,
+          "total": 21633,
+          "rate": 11.6
         },
         {
           "yr": "2021",
-          "renewal": 48335,
-          "newContract": 112264,
-          "total": 160599,
-          "rate": 30.1
+          "renewal": 50542,
+          "newContract": 116490,
+          "total": 167032,
+          "rate": 30.3
         },
         {
           "yr": "2022",
-          "renewal": 109777,
-          "newContract": 180757,
-          "total": 290534,
-          "rate": 37.8
+          "renewal": 114759,
+          "newContract": 187163,
+          "total": 301922,
+          "rate": 38
         },
         {
           "yr": "2023",
-          "renewal": 98067,
-          "newContract": 226830,
-          "total": 324897,
-          "rate": 30.2
+          "renewal": 105343,
+          "newContract": 237217,
+          "total": 342560,
+          "rate": 30.8
         },
         {
           "yr": "2024",
-          "renewal": 116856,
-          "newContract": 235256,
-          "total": 352112,
-          "rate": 33.2
+          "renewal": 125855,
+          "newContract": 246241,
+          "total": 372096,
+          "rate": 33.8
         },
         {
           "yr": "2025",
-          "renewal": 133192,
-          "newContract": 219922,
-          "total": 353114,
-          "rate": 37.7
+          "renewal": 142669,
+          "newContract": 229984,
+          "total": 372653,
+          "rate": 38.3
         },
         {
           "yr": "2026",
-          "renewal": 60614,
-          "newContract": 89632,
-          "total": 150246,
-          "rate": 40.3
+          "renewal": 64173,
+          "newContract": 93771,
+          "total": 157944,
+          "rate": 40.6
         }
       ]
     },
