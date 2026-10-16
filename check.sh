@@ -31,7 +31,16 @@ mkdir -p "$PROFILE"
 
 # --- 로컬 서버 (file:// 는 fetch 가 막힌다) — 빈 포트를 잡아 띄우고 끝나면 내린다 ---
 PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1])')
-python3 -m http.server "$PORT" --bind 127.0.0.1 >/dev/null 2>&1 &
+# no-store — 재사용하는 Chrome 프로필이 휴리스틱 캐시로 고치기 전 파일을 보여주는 것을 막는다(2026-10-16 실제로 겪음)
+python3 -c '
+import http.server, sys
+class H(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+    def log_message(self, *a): pass
+http.server.ThreadingHTTPServer(("127.0.0.1", int(sys.argv[1])), H).serve_forever()
+' "$PORT" >/dev/null 2>&1 &
 SERVER_PID=$!
 trap 'kill $SERVER_PID 2>/dev/null' EXIT
 for _ in $(seq 1 50); do
