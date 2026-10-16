@@ -176,15 +176,48 @@ body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
 </div>
 
 <script>
+// --- 타입별 색 구간·문구 ---
+// bins: 경계 4개(만원/평) → 5색(파랑·초록·주황·빨강·보라). labels 는 범례 막대 아래 5칸
+// 전세 구간은 전월세 JSON 3종의 단지값 분포(5분위 p20/40/60/80 = 672/1,003/1,429/2,148, 2026-10)를 반올림한 것
+var SCALE_DEAL = {
+  bins: [2000, 3000, 4000, 5000],
+  legend: {
+    title: '매매 평당가 (만원)',
+    labels: ['~1,000', '2,000', '3,000', '4,000', '5,000+'],
+    subject: '평당가',          // 로딩 문구 "단지별 ○○"
+    hint: '확대하면 단지별 평당가를 확인할 수 있어요',  // 축소 상태 힌트 (nowrap — 360px 폭에 들어가는 길이로)
+    popupAll: '전체 평당가',
+    popupCount: '거래건수',
+    popupNote: '',               // 팝업 하단 설명 (탭하여 닫기 앞)
+    badgeSuffix: '',             // 팝업 유형 배지 뒤에 붙는 말
+    statsPrefix: ''              // 통계 카드 건수 앞에 붙는 말
+  }
+};
+var SCALE_RENT = {
+  bins: [700, 1000, 1400, 2000],
+  legend: {
+    title: '전세 보증금 평당가 (만원)',
+    labels: ['<700', '700', '1,000', '1,400', '2,000+'],
+    subject: '전세 보증금 평당가',
+    hint: '확대하면 단지별 전세 평당가가 보여요',
+    popupAll: '보증금 평당가',
+    popupCount: '전세 거래건수',
+    popupNote: '전세(월세 0) 보증금 중앙값 · ',
+    badgeSuffix: ' 전세',
+    statsPrefix: '전세 '
+  }
+};
+
 // --- 거래 유형별 데이터 파일 매핑 (앱 임베드용 ?type=xxx 처리) ---
 var TYPE_TO_FILES = {
-  'apt-deal':    { primary: 'apt',    files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
-  'apt-rent':    { primary: 'apt',    files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } },
-  'office-deal': { primary: 'office', files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
-  'office-rent': { primary: 'office', files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } },
-  'multi-deal':  { primary: 'multi',  files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' } },
-  'multi-rent':  { primary: 'multi',  files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' } }
+  'apt-deal':    { primary: 'apt',    files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' },      bins: SCALE_DEAL.bins, legend: SCALE_DEAL.legend },
+  'apt-rent':    { primary: 'apt',    files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' }, bins: SCALE_RENT.bins, legend: SCALE_RENT.legend },
+  'office-deal': { primary: 'office', files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' },      bins: SCALE_DEAL.bins, legend: SCALE_DEAL.legend },
+  'office-rent': { primary: 'office', files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' }, bins: SCALE_RENT.bins, legend: SCALE_RENT.legend },
+  'multi-deal':  { primary: 'multi',  files: { apt: 'data/heatmap.json',      office: 'data/heatmap-office.json',      multi: 'data/heatmap-multi.json' },      bins: SCALE_DEAL.bins, legend: SCALE_DEAL.legend },
+  'multi-rent':  { primary: 'multi',  files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' }, bins: SCALE_RENT.bins, legend: SCALE_RENT.legend }
 };
+var currentType = TYPE_TO_FILES['apt-deal'];  // initMap 에서 ?type= 으로 확정
 
 function resolveTypeConfig(type) {
   return TYPE_TO_FILES[type] || TYPE_TO_FILES['apt-deal'];
@@ -244,20 +277,31 @@ function getVisibleLayerIndices(bounds, key) {
 }
 
 // --- 가격 유틸 ---
+var PRICE_RGB = [[59,130,246], [16,185,129], [245,158,11], [239,68,68], [124,58,237]];
+var PRICE_HEX = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#7c3aed'];
+
+// 현재 타입의 bins 기준 색 단계 (0~4)
+function priceBin(p) {
+  var b = currentType.bins, i = 0;
+  while (i < b.length && p >= b[i]) i++;
+  return i;
+}
+
 function priceRGBA(p, a) {
-  if (p >= 5000) return [124,58,237,a];
-  if (p >= 4000) return [239,68,68,a];
-  if (p >= 3000) return [245,158,11,a];
-  if (p >= 2000) return [16,185,129,a];
-  return [59,130,246,a];
+  var c = PRICE_RGB[priceBin(p)];
+  return [c[0], c[1], c[2], a];
 }
 
 function priceHex(p) {
-  if (p >= 5000) return '#7c3aed';
-  if (p >= 4000) return '#ef4444';
-  if (p >= 3000) return '#f59e0b';
-  if (p >= 2000) return '#10b981';
-  return '#3b82f6';
+  return PRICE_HEX[priceBin(p)];
+}
+
+// 범례·힌트를 현재 타입 문구로
+function applyTypeLegend() {
+  var lg = currentType.legend;
+  document.querySelector('.legend-title').textContent = lg.title;
+  var spans = document.querySelectorAll('.legend-labels span');
+  for (var i = 0; i < spans.length && i < lg.labels.length; i++) spans[i].textContent = lg.labels[i];
 }
 
 function fmt(n) { return n == null ? '-' : n.toLocaleString(); }
@@ -362,7 +406,7 @@ function updateHint(zoom) {
     hint.textContent = '조금 더 확대하면 단지를 탭해 상세 정보를 볼 수 있어요';
     hint.classList.remove('hidden');
   } else {
-    hint.textContent = '확대하면 단지별 평당가를 확인할 수 있어요';
+    hint.textContent = currentType.legend.hint;
     hint.classList.remove('hidden');
   }
 }
@@ -475,7 +519,7 @@ CanvasHeatLayer.prototype.draw = function() {
     .map(function(k) { return LAYER_CFG[k].label; }).join('+');
   document.getElementById('stats').innerHTML =
     '<div class="big">' + vpStats.withPrice.toLocaleString() + ' 단지</div>' +
-    '<div class="sub">' + vpStats.count.toLocaleString() + ' 건</div>' +
+    '<div class="sub">' + currentType.legend.statsPrefix + vpStats.count.toLocaleString() + ' 건</div>' +
     '<div class="sub">' + filterLabel + ' | 최근 ' + currentPeriod + '개월</div>' +
     (activeLabels ? '<div class="sub" style="color:#3b82f6">' + activeLabels + '</div>' : '');
 
@@ -550,7 +594,8 @@ function onMapClick(e) {
     var pMid   = getPriceByKey(bestD, 'm');
     var pSmall = getPriceByKey(bestD, 's');
     var cnt    = getCount(bestD);
-    var typeLabel = LAYER_CFG[bestKey].label;
+    var lg = currentType.legend;
+    var typeLabel = LAYER_CFG[bestKey].label + lg.badgeSuffix;
 
     // 앱 임베드: 단지 클릭 정보를 네이티브에 전달 (인포윈도우는 그대로 표시)
     if (window.AndroidBridge && window.AndroidBridge.onComplexClick) {
@@ -581,12 +626,12 @@ function onMapClick(e) {
         '<div class="type-badge">' + typeLabel + '</div>' +
         '<div class="name">' + esc(bestD.n) + '</div>' +
         '<div class="loc">' + esc(bestD.u) + ' | ' + esc(bestD.r) + '</div>' +
-        '<div class="' + rowCls('a') + '"><span class="label">전체 평당가</span><span class="val high">' + (pAll   ? fmt(pAll)   + '만' : '-') + '</span></div>' +
+        '<div class="' + rowCls('a') + '"><span class="label">' + lg.popupAll + '</span><span class="val high">' + (pAll   ? fmt(pAll)   + '만' : '-') + '</span></div>' +
         '<div class="' + rowCls('l') + '"><span class="label">대형(85㎡+)</span><span class="val">'    + (pLarge ? fmt(pLarge) + '만' : '-') + '</span></div>' +
         '<div class="' + rowCls('m') + '"><span class="label">중형(60~85㎡)</span><span class="val">'  + (pMid   ? fmt(pMid)   + '만' : '-') + '</span></div>' +
         '<div class="' + rowCls('s') + '"><span class="label">소형(&lt;60㎡)</span><span class="val">' + (pSmall ? fmt(pSmall) + '만' : '-') + '</span></div>' +
-        '<div class="row"><span class="label">거래건수</span><span class="val">' + cnt + '건</span></div>' +
-        '<div class="hint">탭하여 닫기</div>' +
+        '<div class="row"><span class="label">' + lg.popupCount + '</span><span class="val">' + cnt + '건</span></div>' +
+        '<div class="hint">' + lg.popupNote + '탭하여 닫기</div>' +
       '</div>',
       new naver.maps.LatLng(bestD.y, bestD.x)
     );
@@ -722,7 +767,7 @@ function goToMyLocation() {
 // --- 데이터 로딩 ---
 function loadAptData() {
   var loading = document.getElementById('loading');
-  loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>아파트 단지별 평당가</p>';
+  loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>아파트 단지별 ' + currentType.legend.subject + '</p>';
   loading.style.display = '';
 
   fetch(LAYER_CFG.apt.url)
@@ -766,7 +811,7 @@ function loadLayerData(key) {
   var isFirstLoad = allMonths.length === 0;
   var loading = document.getElementById('loading');
   if (isFirstLoad) {
-    loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>' + LAYER_CFG[key].label + ' 단지별 평당가</p>';
+    loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>' + LAYER_CFG[key].label + ' 단지별 ' + currentType.legend.subject + '</p>';
     loading.style.display = '';
   } else {
     showToast(LAYER_CFG[key].label + ' 데이터 로딩 중...');
@@ -850,6 +895,9 @@ function initMap() {
 
   // [앱 임베드] type 파라미터로 데이터 파일 및 primary 레이어 결정
   var typeConfig = resolveTypeConfig(embedType);
+  currentType = typeConfig;
+  applyTypeLegend();
+  updateHint(7);  // 초기 줌(7)의 힌트를 타입 문구로
   LAYER_CFG.apt.url    = typeConfig.files.apt;
   LAYER_CFG.office.url = typeConfig.files.office;
   LAYER_CFG.multi.url  = typeConfig.files.multi;
