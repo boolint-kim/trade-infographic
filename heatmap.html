@@ -209,6 +209,12 @@ var ZOOM_LABEL = 14;
 var GRID_SIZE = 0.01;
 var panelOpen = true;  // 패널 상태
 
+// 하나라도 로드된 레이어가 있는가 — primary 가 office·multi 인 타입은 apt 를 로드하지 않는다
+function anyLayerReady() {
+  for (var i = 0; i < LAYER_KEYS.length; i++) if (layerReady[LAYER_KEYS[i]]) return true;
+  return false;
+}
+
 // --- 공간 인덱스 ---
 function buildLayerGrid(key, data) {
   var g = layerGrids[key];
@@ -384,7 +390,7 @@ CanvasHeatLayer.prototype.onRemove = function() {
 };
 
 CanvasHeatLayer.prototype.draw = function() {
-  if (!layerReady.apt) return;
+  if (!anyLayerReady()) return;
 
   var proj = this.getProjection();
   var mapSize = this._map.getSize();
@@ -496,7 +502,7 @@ function closeInfo() {
 
 // --- 클릭 처리 ---
 function onMapClick(e) {
-  if (!layerReady.apt) return;
+  if (!anyLayerReady()) return;
   var zoom = map.getZoom();
 
   if (zoom < 12) {
@@ -798,11 +804,14 @@ function loadLayerData(key) {
     })
     .catch(function(err) {
       LAYER_CFG[key].loading = false;
-      LAYER_CFG[key].enabled = false;
-      if (chip) {
-        chip.classList.remove('loading');
-        chip.classList.remove('active');
-        chip.querySelector('input').checked = false;
+      if (chip) chip.classList.remove('loading');
+      // 첫 로드는 primary 레이어다 — 끄면 '다시 시도' 로 받아도 그리지 않는다. 켜 둔 채 재시도를 기다린다
+      if (!isFirstLoad) {
+        LAYER_CFG[key].enabled = false;
+        if (chip) {
+          chip.classList.remove('active');
+          chip.querySelector('input').checked = false;
+        }
       }
       if (isFirstLoad) {
         loading.innerHTML =
