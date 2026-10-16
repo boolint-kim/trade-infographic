@@ -71,8 +71,11 @@
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
 - **다크모드**: `common.css` 의 CSS 토큰 + `chart-defaults.js` 의 `chartTheme` 헬퍼. 2026-05-20 에 43페이지 일괄 적용
 - **SelfBanner**: `selfbanner-web.js` — 웹 접속에만 하단 배너, 앱 WebView(`window.IS_APP`)는 제외. 2026-05-22
+  - 배너를 그리면 `<html>` 에 CSS 변수 `--sb-h`(실제 배너 높이)를 넣고 닫으면 지운다(2026-10-16). body 패딩은 absolute 요소에 안 먹으므로,
+    바닥에 붙는 요소는 `bottom: calc(Npx + var(--sb-h, 0px))` 로 피한다 — heatmap.html 의 범례·힌트·위치 버튼이 이렇게 돼 있다(미디어쿼리 오버라이드 포함)
 - **차트**: Chart.js 4.4.0 + datalabels 2.2.0 (jsdelivr CDN, 버전 고정)
 - **시도 코드**: 2026-07 개편 반영(전남광주 = 12, 옛 29·46 없음). 페이지마다 시도 맵이 인라인이라 개편 때 46개를 같이 고친다
+  - ⚠️ **문구에 시도 수를 쓰지 않는다**("전국 시도별"). 개편 뒤 16개가 됐는데 "전국 17개 시도" 가 43개 파일 68곳에 남아 있었다(2026-10-16 치환)
 - **heatmap.html** 은 TradeHeatmap Android 라이브러리가 WebView 로 임베드한다 — `?type=apt-deal` 등 URL 파라미터,
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.

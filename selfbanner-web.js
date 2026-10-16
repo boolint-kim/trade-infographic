@@ -92,11 +92,15 @@
 
     document.body.appendChild(wrap);
     document.body.style.paddingBottom = (isDesktop ? 84 : 76) + 'px';
+    // 바닥에 absolute 로 붙는 요소(지도 범례·버튼 등)는 body 패딩의 영향을 받지 않는다
+    // → 실제 배너 높이를 CSS 변수로 알려 페이지가 bottom: calc(… + var(--sb-h, 0px)) 로 피하게 한다
+    document.documentElement.style.setProperty('--sb-h', wrap.offsetHeight + 'px');
 
     wrap.querySelector('.sb-close').addEventListener('click', function () {
       try { localStorage.setItem(CLOSE_KEY, String(Date.now())); } catch (e) {}
       wrap.remove();
       document.body.style.paddingBottom = '';
+      document.documentElement.style.removeProperty('--sb-h');
     });
   }
 
