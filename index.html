@@ -28,9 +28,6 @@
   .group.right .card .tag{color:#e11d48}
   .group.building .group-title{border-color:#78716c}
   .group.building .card .tag{color:#78716c}
-  .group.event .group-title{border-color:#dc2626}
-  .group.event .card .tag{color:#dc2626}
-  .group.event .card{border-left:3px solid #fca5a5}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
   .card{background:var(--card-bg);border-radius:16px;padding:24px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
   .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
@@ -57,20 +54,14 @@
     <div class="group-title" style="border-color:#ef4444">지도 시각화</div>
     <div class="cards">
       <a class="card" href="heatmap.html" style="border-left:3px solid #ef4444">
-        <div class="tag" style="color:#ef4444">MAP · 일 1회 갱신</div>
-        <h3>아파트 평당가 히트맵</h3>
-        <p>전국 22,000개 단지 평당가를 네이버 지도 위에 시각화. 전체/중형/소형 필터, 6개월 기간 선택</p>
+        <div class="tag" style="color:#ef4444">MAP · 매매 · 일 1회 갱신</div>
+        <h3>매매 평당가 히트맵</h3>
+        <p>단지별 매매 평당가를 네이버 지도 위에. 아파트·오피스텔·연립다세대 레이어, 면적대 필터, 최근 6개월 기간 선택</p>
       </a>
-    </div>
-  </div>
-
-  <div class="group event">
-    <div class="group-title">이벤트 분석 (Event-driven)</div>
-    <div class="cards">
-      <a class="card" href="infographic-event-cgt.html">
-        <div class="tag">2026.05.09 만료</div>
-        <h3>양도세 중과 유예 만료</h3>
-        <p>조정대상지역 (서울·경기 12곳) 가격·거래량 추이</p>
+      <a class="card" href="heatmap.html?type=apt-rent" style="border-left:3px solid #ef4444">
+        <div class="tag" style="color:#ef4444">MAP · 전세 · 일 1회 갱신</div>
+        <h3>전세 평당가 히트맵</h3>
+        <p>단지별 전세 보증금 평당가(중앙값)를 지도 위에. 같은 3개 레이어·면적대 필터·기간 선택</p>
       </a>
     </div>
   </div>

@@ -4,7 +4,8 @@
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
 ## 이 레포가 무엇인가
-- 정적 HTML 46개 + `data/` JSON 47개(전월세 히트맵 3종이 첫 배포되면 50개). 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
+- 정적 HTML 45개 + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
+  (2026-10-16 저녁: 전월세 히트맵 JSON 3종 추가, 양도세 이벤트 페이지 `infographic-event-cgt.html` 삭제 — 만료 5개월 경과, 앱 허브 4곳 어디도 링크 안 함)
   - https://trade-infographic.pages.dev/ · 같은 배포가 https://chart.boolint.com/ 로도 나간다(히트맵 앱 임베드용)
 - **데이터는 이 레포가 만들지 않는다.** `~/server/trade-collector` 의 파이프라인(`run-pipeline.sh`)이
   매일 `data/*.json` 을 복사해 넣고 `git add -A` → 커밋 → push 까지 한다(launchd 데일리 02:00, 덮개가 닫혀 있으면 아침에 열 때).
@@ -27,7 +28,6 @@
 | infographic-daily-jeonse.html | daily-jeonse.json | generate-infographic-data.js |
 | infographic-daily-trades.html | daily-trades.json | generate-infographic-data.js |
 | infographic-daily-wolse.html | daily-wolse.json | generate-infographic-data.js |
-| infographic-event-cgt.html | event-cgt.json | generate-event-cgt.js |
 | infographic-factory-price-trend.html | factory-price-trend.json | generate-building-data.js (파일명을 동적으로 조립) |
 | infographic-factory-trade-volume.html | factory-trade-volume.json | generate-building-data.js (파일명을 동적으로 조립) |
 | infographic-floor-premium.html | floor-premium.json | generate-periodic-data.js |
@@ -64,7 +64,7 @@
 | infographic-wolse-ratio.html | wolse-ratio.json | generate-periodic-data.js |
 | infographic-yield-rate.html | yield-rate.json | generate-periodic-data.js |
 
-- index.html 은 45개 페이지를 전부 링크한다(2026-10-16 확인). 페이지를 추가하면 index 에도 넣을 것
+- index.html 은 44개 페이지를 전부 링크한다(2026-10-16 확인, 히트맵은 매매·전세 카드 2장). 페이지를 추가하면 index 에도 넣을 것
 - 2026-10-16 기준 `data/` 의 JSON 은 전부 어느 페이지가 쓰고, 페이지가 찾는 JSON 은 전월세 히트맵 3종(첫 배포 전) 말고 다 있다
 - `region.cache.json`(collector 의 지역목록 캐시)은 2026-10-16 에 복사 대상에서 빼고 `git rm` 했다. 다시 생기면 collector 복사 단계를 볼 것
 
