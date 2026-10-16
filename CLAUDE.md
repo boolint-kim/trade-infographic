@@ -77,9 +77,8 @@
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
     여러 달을 고르면 페이지가 `Σ(mo.a·mo.c)/Σc` 로 합친다(면적대 l/m/s 는 단순평균)
-  - **전월세 3종의 값은 전세(월세 0) 보증금 평당가의 중앙값**(매매는 평균). 계약구분(신규·갱신)은 가리지 않는다
-  - ⚠️ 색 구간(2천·3천·4천·5천만원/평)과 범례 '평당가'는 **매매 기준**이다. 전세는 중앙값이 약 1,100만원이라
-    대부분 파랑으로 칠해진다 — HTML 을 고치지 않는 범위에서 데이터만 붙인 상태(2026-10-16). 고치려면 type 별 구간이 필요
+  - **전월세 3종의 값은 전세(월세 0) 보증금 평당가의 중앙값**(매매는 평균). 계약구분(신규·갱신)은 가리지 않는다.
+    색 구간·문구는 타입별로 다르다(아래 "heatmap 결함 2개")
   - 네이버 지도 SDK(`ncpKeyId`)는 등록 도메인에서만 인증된다. 로컬(127.0.0.1)에서 지도 타일이 안 나와도 데이터 경로 점검은 된다
 
 ## 로컬 테스트·정합성 점검
@@ -91,14 +90,26 @@
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 - check.sh 가 보는 것: 콘솔 오류 / 화면의 "로딩 실패"(heatmap 은 fetch 실패를 화면에만 쓴다) /
-  참조 JSON 존재 / heatmap 의 `#stats`(비어 있으면 점이 하나도 안 그려진 것). 로컬 서버는 빈 포트로 스스로 띄우고 내린다
-- 2026-10-16 결과: 46/46 OK, 시도 코드가 JSON 과 일치, index 링크 45/45 존재
+  참조 JSON 존재 / heatmap 의 `#stats`(비어 있으면 점이 하나도 안 그려진 것). 로컬 서버는 빈 포트로 스스로 띄우고 내린다(no-store)
+- 2026-10-16 결과: 46/46 OK + heatmap 6타입(`?type=apt|office|multi-deal|rent`) 모두 OK, 시도 코드가 JSON 과 일치, index 링크 45/45 존재
 
-### ⚠️ 알려진 결함 — `heatmap.html?type=office-*|multi-*` 는 빈 지도다 (2026-10-16 발견, 미수정)
-`CanvasHeatLayer.draw()` 와 `onMapClick()` 첫 줄이 `if (!layerReady.apt) return;` 인데, primary 가 office·multi 이면
-그 레이어만 로드하고 아파트는 로드하지 않는다 → **점이 하나도 안 그려지고 탭도 무시된다.** 데이터(매매·전월세 모두)는 정상 로드된다.
-check.sh 로 재현: `./check.sh 'heatmap.html?type=office-deal'` → FAIL `#stats 비어 있음`.
-고칠 때는 두 가드를 "켜진 레이어 중 하나라도 ready" 로 바꾸면 된다. 앱(TradeHeatmap)이 이 type 을 쓰는지 먼저 확인할 것
+### heatmap 결함 2개 — 2026-10-16 수정 완료
+- **office·multi 타입 빈 지도** (`6a3539c`): `draw()`·`onMapClick()` 이 `layerReady.apt` 를 기다렸는데 이 타입들은 apt 를 로드하지 않았다
+  → `anyLayerReady()` 로 교체. 첫 로드(primary) 실패 시 레이어를 끄지 않게도 고쳤다(끄면 '다시 시도' 후에도 빈 지도였다).
+  ⚠️ 새 코드에서 "primary = apt" 를 가정하지 말 것 — `?type=` 에 따라 apt 가 아예 안 올 수 있다
+- **타입별 색 구간·문구** (`3b5578d`): `TYPE_TO_FILES` 항목의 `bins`·`legend`(정의는 `SCALE_DEAL`·`SCALE_RENT`)를
+  색·범례·힌트·로딩·팝업·통계가 읽는다. 매매 2,000/3,000/4,000/5,000(종전 그대로), 전세 700/1,000/1,400/2,000
+  (전월세 JSON 3종 단지값 5분위 672/1,003/1,429/2,148 반올림, 2026-10). 분포가 크게 바뀌면 다시 재서 조정할 것
+- `#hint` 는 `left:50%` + `nowrap` 이라 좁은 화면에서 상자가 절반 폭으로 잘린다 — 문구를 360px 에 들어가는 길이로 둔다
+  (줌 10~12 의 "조금 더 확대하면…" 은 지금도 조금 넘친다, 미수정)
+
+### heatmap 을 깊게 검증할 때 (클릭·이동까지)
+- 127.0.0.1 로 열면 네이버 지도가 키 인증에 실패해 **약 1초 뒤 SDK 가 스스로 해체**된다(`naver.maps` → null).
+  check.sh 는 그 전에 첫 draw 가 끝나 통과하지만, 이동·클릭을 거치는 검사는 실패한다
+- 우회: 같은 로컬 파일을 등록 도메인 이름으로 연다(DNS 만 로컬, 배포 무관)
+  `chrome --headless=new --host-resolver-rules="MAP chart.boolint.com 127.0.0.1:<port>" "http://chart.boolint.com/heatmap.html?type=office-rent"`
+- 하네스로 iframe 에 넣어 검사하면 검사 코드는 `iframe.contentWindow.eval(...)` 로 iframe realm 안에서 돌린다
+- 고정 Chrome 프로필은 캐시로 옛 파일을 보여줄 수 있다 → 테스트 서버는 `Cache-Control: no-store`(check.sh 는 적용됨)
 
 ## 2026-10-16 조사 후속 (완료)
 1. 전월세 히트맵 JSON 생성기 — collector `src/generate-heatmap-rent-json.js`, run-pipeline.sh 3단계 등록. HTML 무수정
