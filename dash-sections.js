@@ -98,11 +98,12 @@ function renderCompare(ctx, f) {
 // ─── volume (02 E5) ────────────────────────────────────────
 function renderVolume(ctx, sec) {
   const { data, region } = ctx;
-  const v = region.volume, ytd = data.ytd;
+  const ytd = data.ytd;
   const body = sec.querySelector('.dsec-body');
   if (!body.dataset.built) {
     body.dataset.built = 1;
     body.innerHTML = `
+      <div class="chips" id="volChips" style="margin-bottom:12px"></div>
       <div class="cards" id="volCards"></div>
       <div class="sub-title" id="volMTitle">월별 거래량</div>
       <div class="sub-desc">막대 = 계약월 기준 건수, 선 = 1년 전 같은 달 · 회색 테두리 막대는 신고가 아직 들어오는 중인 달</div>
@@ -115,6 +116,10 @@ function renderVolume(ctx, sec) {
       <div class="sub-desc" id="volCmpDesc"></div>
       <div class="chart-wrap" id="volCmpWrap" style="height:360px"><canvas id="volCmpChart"></canvas></div>`;
   }
+  // 계열이 여럿이면(토지 지목·지분, 건물 일반·집합) 칩으로 고른다
+  const vf = region.volume.by ? D.chips(document.getElementById('volChips'), 'vol', data.facets.volume, () => renderVolume(ctx, sec)) : null;
+  if (!vf) document.getElementById('volChips').innerHTML = '';
+  const v = vf ? region.volume.by[vf] : region.volume;
   const imm = m => D.isImmature(m, data);
   const ytdLabel = ytd.cmpThruMonth ? `1~${ytd.cmpThruMonth}월` : '';
 
@@ -173,24 +178,25 @@ function renderVolume(ctx, sec) {
       scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
   });
 
-  renderVolumeCompare(ctx);
+  renderVolumeCompare(ctx, vf);
 }
 
 // 비교 — 시군구/시도별 전년 동기 거래량 증감 (작년 30건 미만은 뺀다 — 몇 건 차이가 수십 %가 된다)
-function renderVolumeCompare(ctx) {
+function renderVolumeCompare(ctx, vf) {
   const { data, all, sido, sgg } = ctx;
   const ytd = data.ytd;
   const sggCount = Object.keys(data.regions).length - 1;
   const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
-  const mode = D.chips(document.getElementById('volCmpChips'), 'volCmp', modes, () => renderVolumeCompare(ctx));
+  const mode = D.chips(document.getElementById('volCmpChips'), 'volCmp', modes, () => renderVolumeCompare(ctx, vf));
   let rows = mode === 'sgg'
-    ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, y: r.volume.ytd, on: k === sgg }))
-    : all.sido.map(s => ({ key: s.code, name: s.name, y: s.volume, on: s.code === sido }));
+    ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, y: vf ? r.volume.by[vf].ytd : r.volume.ytd, on: k === sgg }))
+    : all.sido.map(s => ({ key: s.code, name: s.name, y: vf ? (s.volumeBy || {})[vf] : s.volume, on: s.code === sido }));
   rows = rows.filter(r => r.y && r.y.prev >= 30 && r.y.pct != null)
     .map(r => ({ ...r, value: r.y.pct, tip: `${D.signPct(r.y.pct)}% · ${D.fmt(r.y.prev)} → ${D.fmt(r.y.cur)}건` }))
     .sort((a, b) => b.value - a.value);
   const rank = rows.findIndex(r => r.on);
-  document.getElementById('volCmpTitle').textContent = mode === 'sgg' ? `${data.sido.name} 시군구 거래량 증감` : '전국 시도 거래량 증감';
+  const vl = vf ? ` · ${data.facets.volume[vf]}` : '';
+  document.getElementById('volCmpTitle').textContent = (mode === 'sgg' ? `${data.sido.name} 시군구 거래량 증감` : '전국 시도 거래량 증감') + vl;
   document.getElementById('volCmpDesc').textContent = !ytd.cmpThruMonth ? '연초에는 비교할 완결 월이 없습니다'
     : `${ytd.yr}년 1~${ytd.cmpThruMonth}월 vs ${ytd.yr - 1}년 같은 기간 · 작년 30건 미만 지역은 뺐습니다`
       + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '');
@@ -359,24 +365,26 @@ function renderWolse(ctx, secEl) {
       <div class="chart-wrap" style="height:300px"><canvas id="woChart"></canvas></div>
       ${cmpHTML('wo')}
       <div class="note">전세 = 월세 0원·보증금 있는 계약, 월세 = 월세가 있는 계약(반전세 포함). 신규·갱신 모두.
-        시장 전환율 = 같은 단지·같은 면적·같은 달의 전세 보증금 중앙값과 월세 계약을 짝지어 월세 × 12 ÷ (전세 − 월세 보증금). 1% 미만·20% 초과와 보증금이 전세의 80%를 넘는 월세는 뺐습니다.
+        ${w.conv ? '시장 전환율 = 같은 단지·같은 면적·같은 달의 전세 보증금 중앙값과 월세 계약을 짝지어 월세 × 12 ÷ (전세 − 월세 보증금). 1% 미만·20% 초과와 보증금이 전세의 80%를 넘는 월세는 뺐습니다.' : ''}
         법정 전환율(전월세 전환 상한) = 기준금리 + 2%p.</div>`;
   }
   const r = w.recent, cv = w.conv;
   const period = `${D.ymText(r.from)}~${D.ymText(r.to)}`;
   // 전환율 — 시군구 표본 부족이면 시도 값, 그것도 없으면 법정
-  const sidoConv = data.regions[''].wolse.conv.rate;
-  const conv = cv.rate ?? sidoConv ?? data.legalRate;
-  const convSrc = cv.rate != null ? `표본 ${D.fmt(cv.n)}건` : sidoConv != null ? `표본 ${D.fmt(cv.n)}건이라 ${data.sido.name} 전체 값` : '표본 부족 — 법정 전환율';
+  const sidoConv = cv ? data.regions[''].wolse.conv.rate : null;
+  const conv = cv ? (cv.rate ?? sidoConv ?? data.legalRate) : null;
+  const convSrc = !cv ? '' : cv.rate != null ? `표본 ${D.fmt(cv.n)}건` : sidoConv != null ? `표본 ${D.fmt(cv.n)}건이라 ${data.sido.name} 전체 값` : '표본 부족 — 법정 전환율';
   D.cards(document.getElementById('woCards'), [
     { label: '월세 비중 (최근 12개월)', value: r.share == null ? null : r.share.toFixed(1), unit: '%',
       sub: `${period}<br>전세 ${D.fmt(r.j)}건 · 월세 ${D.fmt(r.w)}건` },
     w.ytd ? { label: `전년 동기 대비 (1~${ytd.cmpThruMonth}월)`, value: w.ytd.diff == null ? null : `${w.ytd.diff > 0 ? '+' : ''}${w.ytd.diff.toFixed(1)}`, unit: '%p',
       tone: D.toneOf(w.ytd.diff), sub: w.ytd.diff == null ? '' : `${ytd.yr - 1}년 ${w.ytd.prev.share.toFixed(1)}% → ${ytd.yr}년 ${w.ytd.cur.share.toFixed(1)}%` }
       : { label: '전년 동기 대비', value: null, tone: 'na', sub: '연초에는 비교할 완결 월이 없습니다' },
-    { label: '시장 전환율 (최근 6개월)', value: conv == null ? null : conv.toFixed(2), unit: '%',
-      sub: `${convSrc} · ${D.ymText(cv.from)}~${D.ymText(cv.to)}${data.legalRate != null ? `<br>법정 상한 ${data.legalRate}% (기준금리 ${data.baseRate}% + 2%p)` : ''}` },
-    { label: '월세 계약 중앙값', value: r.wolseRent == null ? null : `${D.eok(r.wolseDep)} / ${D.fmt(r.wolseRent)}만`, unit: '',
+    cv ? { label: '시장 전환율 (최근 6개월)', value: conv == null ? null : conv.toFixed(2), unit: '%',
+      sub: `${convSrc} · ${D.ymText(cv.from)}~${D.ymText(cv.to)}${data.legalRate != null ? `<br>법정 상한 ${data.legalRate}% (기준금리 ${data.baseRate}% + 2%p)` : ''}` }
+      : { label: '법정 전환율 상한', value: data.legalRate == null ? null : data.legalRate.toFixed(2), unit: '%',
+        sub: `기준금리 ${data.baseRate}% + 2%p<br>단지 구분이 없어 시장 전환율은 계산하지 않습니다` },
+    { label: `월세 계약 중앙값${r.wolseOf ? ` (${r.wolseOf})` : ''}`, value: r.wolseRent == null ? null : `${D.eok(r.wolseDep)} / ${D.fmt(r.wolseRent)}만`, unit: '',
       sub: r.jeonseDep == null ? period : `보증금 / 월세 · 전세 보증금 중앙값 ${D.eok(r.jeonseDep)}<br>${period}` },
   ]);
 
@@ -384,7 +392,7 @@ function renderWolse(ctx, secEl) {
   const partial = i => w.years[i] === ytd.yr;
   D.chart('woChart', {
     type: 'bar',
-    data: { labels: w.years.map(y => D.yearLabel(y, ytd)), datasets: [
+    data: { labels: w.years.map(y => data.rentBreak && y === data.rentBreak.slice(0, 4) ? `${y}(신고제)` : D.yearLabel(y, ytd)), datasets: [
       { type: 'line', label: '월세 비중(%)', data: w.yearly.map(c => c.share), yAxisID: 'y1', borderColor: '#f97316', backgroundColor: '#f97316',
         borderWidth: 3, tension: .3, pointRadius: 4, pointBorderColor: chartTheme.pointBorder(), pointBorderWidth: 2, order: 1 },
       { label: '전세', data: w.yearly.map(c => c.j), stack: 's', order: 2, borderRadius: 3, backgroundColor: w.years.map((_, i) => partial(i) ? chartTheme.muted() : '#3b82f677') },
@@ -586,7 +594,133 @@ function renderRenewal(ctx, secEl) {
 }
 
 
-const ALL = { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield, wolse: renderWolse, age: renderAge, size: renderSize, renewal: renderRenewal };
+
+// ─── pyeong (04 S5) — 읍면동별 대지 평당가 (단독) ─────────────────
+function renderPyeong(ctx, secEl) {
+  const { data, region } = ctx;
+  const p = region.pyeong, rc = region.price.recent.by.all;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) { body.dataset.built = 1; body.innerHTML = `<div class="cards" id="pyCards"></div><div class="sub-title" id="pyTitle"></div><div class="sub-desc" id="pyDesc"></div><div id="pyTable"></div>`; }
+  const sggs = Object.entries(data.regions).filter(([k, r]) => k && r.price.recent.by.all.med != null).sort((a, b) => b[1].price.recent.by.all.med - a[1].price.recent.by.all.med);
+  const rank = ctx.sgg ? sggs.findIndex(([k]) => k === ctx.sgg) : -1;
+  const yt = region.price.ytd.all;
+  D.cards(document.getElementById('pyCards'), [
+    { label: '대지 평당가 중앙값 (최근 12개월)', value: rc.med == null ? null : D.fmt(rc.med), unit: '만원/평', sub: rc.med == null ? '' : `가운데 50%: ${D.fmt(rc.p25)}~${D.fmt(rc.p75)} · ${D.fmt(rc.cnt)}건` },
+    ctx.sgg ? { label: `${data.sido.name} 안 순위`, value: rank >= 0 ? `${rank + 1}위` : null, unit: rank >= 0 ? ` / ${sggs.length}` : '', sub: '시군구 대지 평당가 중앙값 기준' }
+      : { label: '시군구 수', value: D.fmt(sggs.length), unit: '곳', sub: '거래 5건 이상' },
+    yt ? { label: `전년 동기 대비 (1~${data.ytd.cmpThruMonth}월)`, value: yt.pct == null ? null : D.signPct(yt.pct), unit: '%', tone: D.toneOf(yt.pct), sub: yt.pct == null ? '' : `${D.fmt(yt.prev.med)} → ${D.fmt(yt.cur.med)} 만원/평` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '' },
+  ]);
+  document.getElementById('pyTitle').textContent = `${ctx.regionName} 읍면동별 대지 평당가`;
+  document.getElementById('pyDesc').textContent = `${D.ymText(p.from)}~${D.ymText(p.to)} · ${p.min}건 이상인 동만 · 높은 순 최대 40곳`;
+  D.table(document.getElementById('pyTable'), [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '읍면동', cls: 'name', get: x => D.esc(x.name) },
+    { label: '대지 평당가', cls: 'num hi', get: x => `${D.fmt(x.med)}<div class="faint">만원/평</div>` },
+    { label: '가운데 50%', cls: 'num', get: x => `${D.fmt(x.p25)}~${D.fmt(x.p75)}` },
+    { label: '거래', cls: 'num', get: x => `${x.cnt}건` },
+  ], p.umd, `${p.min}건 이상 거래된 동이 없습니다`);
+}
+
+// ─── jimok (04 L3) — 지목별 평당가 + 대(垈) 읍면동 (토지) ──────────
+function renderJimok(ctx, secEl) {
+  const { data, region } = ctx;
+  const j = region.jimok, f = data.facets.size;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `<div class="cards" id="jmCards"></div>
+      <div class="sub-title">지목별 평당가 (최근 12개월, 비지분)</div><div class="sub-desc" id="jmDesc"></div>
+      <div class="chart-wrap" style="height:260px"><canvas id="jmChart"></canvas></div>
+      <div class="sub-title" id="jmUmdTitle"></div><div class="sub-desc" id="jmUmdDesc"></div><div id="jmTable"></div>`;
+  }
+  const dae = j.by.dae, yt = region.price.ytd.dae;
+  const sggs = Object.entries(data.regions).filter(([k, r]) => k && r.jimok.by.dae.med != null).sort((a, b) => b[1].jimok.by.dae.med - a[1].jimok.by.dae.med);
+  const rank = ctx.sgg ? sggs.findIndex(([k]) => k === ctx.sgg) : -1;
+  D.cards(document.getElementById('jmCards'), [
+    { label: '대(垈) 평당가 중앙값', value: dae.med == null ? null : D.fmt(dae.med), unit: '만원/평', sub: dae.med == null ? `${dae.cnt}건 — 5건 미만` : `가운데 50%: ${D.fmt(dae.p25)}~${D.fmt(dae.p75)} · ${D.fmt(dae.cnt)}건` },
+    ctx.sgg ? { label: `${data.sido.name} 안 순위 (대 기준)`, value: rank >= 0 ? `${rank + 1}위` : null, unit: rank >= 0 ? ` / ${sggs.length}` : '', sub: '' }
+      : { label: '대(垈) 거래 5건 이상 시군구', value: D.fmt(sggs.length), unit: '곳', sub: '' },
+    yt ? { label: `대(垈) 전년 동기 대비 (1~${data.ytd.cmpThruMonth}월)`, value: yt.pct == null ? null : D.signPct(yt.pct), unit: '%', tone: D.toneOf(yt.pct), sub: yt.pct == null ? '' : `${D.fmt(yt.prev.med)} → ${D.fmt(yt.cur.med)} 만원/평` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '' },
+  ]);
+  const keys = Object.keys(f).filter(k => k !== 'all');
+  document.getElementById('jmDesc').textContent = `${ctx.regionName} · ${D.ymText(j.from)}~${D.ymText(j.to)} · 지목에 따라 수십 배 차이가 납니다 — 막대에 손을 대면 건수·가운데 50%`;
+  D.chart('jmChart', {
+    type: 'bar',
+    data: { labels: keys.map(k => f[k]), datasets: [{ data: keys.map(k => j.by[k].med ?? null), borderRadius: 4, backgroundColor: ACCENT + 'aa' }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => { const c = j.by[keys[it.dataIndex]]; return c.med == null ? `표본 부족(${c.cnt}건)` : [`중앙값 ${D.fmt(c.med)}만원/평 · ${D.fmt(c.cnt)}건`, `가운데 50%: ${D.fmt(c.p25)}~${D.fmt(c.p75)}`]; } } } },
+      scales: { x: { type: 'logarithmic', ticks: { callback: v => [1, 10, 100, 1000, 10000, 100000].includes(v) ? D.fmt(v) : '' }, grid: { color: chartTheme.grid() }, title: { display: true, text: '만원/평 (로그 눈금)' } }, y: { grid: { display: false } } } },
+  });
+  document.getElementById('jmUmdTitle').textContent = `${ctx.regionName} 읍면동별 대(垈) 평당가`;
+  document.getElementById('jmUmdDesc').textContent = `비지분 · ${j.min}건 이상인 동만 · 높은 순 최대 40곳`;
+  D.table(document.getElementById('jmTable'), [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '읍면동', cls: 'name', get: x => D.esc(x.name) },
+    { label: '대(垈) 평당가', cls: 'num hi', get: x => `${D.fmt(x.med)}<div class="faint">만원/평</div>` },
+    { label: '가운데 50%', cls: 'num', get: x => `${D.fmt(x.p25)}~${D.fmt(x.p75)}` },
+    { label: '거래', cls: 'num', get: x => `${x.cnt}건` },
+  ], j.umd, `${j.min}건 이상 거래된 동이 없습니다`);
+}
+
+// ─── factory (04 F1·F2) — 공장·창고·지식산업센터 (건물 페이지) ─────
+const FACTORY_MIN = 10;   // 시군구 최근 12개월이 이보다 적으면 시도 값으로 대신한다(공장 시군구 표본은 수도권 몇 곳뿐)
+function renderFactory(ctx, secEl) {
+  const { data } = ctx;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `<div class="chips" id="faChips" style="margin-bottom:12px"></div><div class="cards" id="faCards"></div>
+      <div class="sub-title" id="faTitle"></div><div class="sub-desc" id="faDesc"></div>
+      <div class="chart-wrap" style="height:300px"><canvas id="faChart"></canvas></div>
+      <div class="sub-title">분기별 거래 건수</div><div class="sub-desc">월은 표본이 너무 적어 분기로 셉니다 · 회색 = 신고가 아직 들어오는 분기</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="faQChart"></canvas></div>
+      ${cmpHTML('fa')}`;
+  }
+  const f = D.chips(document.getElementById('faChips'), 'fa', data.facets.factory, () => renderFactory(ctx, secEl));
+  // 시군구 표본이 적으면 시도 값
+  let reg = ctx.region, fallback = false;
+  if (ctx.sgg && reg.factory.price.recent.by[f].cnt < FACTORY_MIN) { reg = data.regions['']; fallback = true; }
+  const p = reg.factory.price, rc = p.recent.by[f], yt = p.ytd[f], rs = p.rise[f];
+  const where = fallback ? `${data.sido.name} 전체` : ctx.regionName;
+  D.cards(document.getElementById('faCards'), [
+    { label: `평당가 중앙값 (최근 12개월)${fallback ? ' · 시도 기준' : ''}`, value: rc.med == null ? null : D.fmt(rc.med), unit: '만원/평',
+      sub: (fallback ? `${ctx.region.name} 거래가 최근 12개월 ${ctx.region.factory.price.recent.by[f].cnt}건뿐이라 ${data.sido.name} 전체 값<br>` : '') + (rc.med == null ? `${rc.cnt}건` : `가운데 50%: ${D.fmt(rc.p25)}~${D.fmt(rc.p75)} · ${D.fmt(rc.cnt)}건 · 거래가 중앙값 ${D.eok(rc.amt)}`) },
+    yt ? { label: `전년 동기 대비 (1~${data.ytd.cmpThruMonth}월)`, value: yt.pct == null ? null : D.signPct(yt.pct), unit: '%', tone: D.toneOf(yt.pct), sub: yt.pct == null ? '표본 부족' : `${D.fmt(yt.prev.med)} → ${D.fmt(yt.cur.med)} · ${yt.prev.cnt} → ${yt.cur.cnt}건` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '' },
+    { label: rs ? `${rs.from}→${rs.to} 상승률` : '장기 상승률', value: rs ? D.signPct(rs.pct) : null, unit: '%', tone: rs ? D.toneOf(rs.pct) : 'na', sub: rs ? `${D.fmt(rs.fromMed)} → ${D.fmt(rs.toMed)}` : '거래 30건 이상인 해가 부족합니다' },
+  ]);
+  document.getElementById('faTitle').textContent = `${where} — ${data.facets.factory[f]}`;
+  document.getElementById('faDesc').textContent = '선 = 중앙값, 띠 = 가운데 50%, 막대 = 거래 건수(지분 거래 제외)';
+  const cells = p.by[f];
+  D.chart('faChart', {
+    type: 'bar',
+    data: { labels: p.years.map(y => D.yearLabel(y, data.ytd)), datasets: [
+      ...D.bandDatasets({ label: '평당가 중앙값(만원/평)', color: ACCENT, med: cells.map(c => c.med ?? null), p25: cells.map(c => c.p25 ?? null), p75: cells.map(c => c.p75 ?? null) }),
+      { type: 'bar', label: '거래 건수', data: cells.map(c => c.cnt), yAxisID: 'y1', order: 2, borderRadius: 4, backgroundColor: D.barColors(p.years, y => y === data.ytd.yr, ACCENT) },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, filter: D.legendFilter } }, tooltip: { filter: it => !it.dataset.label.startsWith('_') } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } }, y1: { position: 'right', ticks: { precision: 0 }, grid: { display: false } } } },
+  });
+  const qs = data.quarters, qi = new Set(data.quarterImmature), qd = reg.factory.quarters[f];
+  D.chart('faQChart', {
+    type: 'bar',
+    data: { labels: qs.map(q => q.replace('Q', ' Q')), datasets: [{ data: qd, borderRadius: 3, backgroundColor: qs.map(q => qi.has(q) ? chartTheme.muted() : ACCENT + '88') }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => `${D.fmt(it.raw)}건${qi.has(qs[it.dataIndex]) ? ' (집계 중)' : ''}` } } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { precision: 0 }, grid: { color: chartTheme.grid() } } } },
+  });
+  compareBlock(ctx, 'fa', {
+    title: m => `${m === 'sgg' ? `${data.sido.name} 시군구` : '전국 시도'} 평당가 · ${data.facets.factory[f]}`,
+    desc: `최근 12개월 중앙값 · ${FACTORY_MIN}건 미만 지역은 뺐습니다`,
+    pickSgg: r => { const c = r.factory.price.recent.by[f]; return c.cnt >= FACTORY_MIN && c.med != null ? { value: c.med, tip: `${D.fmt(c.med)}만원/평 · ${c.cnt}건` } : null; },
+    pickSido: s => { const c = (s.factory || {})[f]; return c && c.cnt >= FACTORY_MIN && c.med != null ? { value: c.med, tip: `${D.fmt(c.med)}만원/평 · ${c.cnt}건` } : null; },
+    tick: v => D.fmt(v),
+  });
+}
+
+const ALL = { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield, wolse: renderWolse, age: renderAge, size: renderSize, renewal: renderRenewal, pyeong: renderPyeong, jimok: renderJimok, factory: renderFactory };
 window.DashSections = {
   setAccent(c) { ACCENT = c; document.documentElement.style.setProperty('--accent', c); document.documentElement.style.setProperty('--accent-soft', c + '22'); },
   pick: (...ids) => Object.fromEntries(ids.map(id => [id, ALL[id]])),

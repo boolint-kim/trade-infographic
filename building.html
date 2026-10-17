@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>건물·공장 — 내 동네 한 장</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<script src="dash-sections.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>상업용 건물·공장 — 내 동네 한 장</h1>
+    <p>국토부 실거래가 기반 | 시군구를 고르면 아래 지표가 모두 그 동네 기준으로 바뀝니다</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+</div>
+
+<nav class="dash-nav" id="dashNav"><div class="inner"><span class="cur-region" id="curRegion"></span></div></nav>
+
+<div class="container">
+  <section class="dsec" id="price" data-nav="평당가">
+    <div class="dsec-head">
+      <div><div class="dsec-title">건물 평당가 추이</div>
+        <div class="dsec-desc"><b>일반(통건물)은 대지</b> 평당가, <b>집합(상가 호실)은 건물면적</b> 평당가 — 칩마다 단위가 다르니 서로 비교하지 마세요 · 지분 거래 제외</div></div>
+      <div id="priceChips"></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="priceCards"></div>
+      <div class="sub-title" id="priceTitle">연도별 평당가 + 거래량</div>
+      <div class="sub-desc">선 = 중앙값, 띠 = 하위 25%~상위 25%, 막대 = 거래 건수</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="priceChart"></canvas></div>
+      <div class="note" id="priceNote"></div>
+      <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="cmpTitle">비교</span><span id="cmpChips"></span></div>
+      <div class="sub-desc" id="cmpDesc"></div>
+      <div class="chart-wrap" id="cmpWrap" style="height:360px"><canvas id="cmpChart"></canvas></div>
+    </div>
+  </section>
+  <section class="dsec" id="volume" data-nav="거래량">
+    <div class="dsec-head"><div><div class="dsec-title">월별 거래량</div><div class="dsec-desc">최근 24개월 · 일반(통건물)/집합(호실)을 칩으로 나눠 봅니다 — 집합은 한 건물 수십 호가 한꺼번에 신고돼 들쭉날쭉합니다</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="factory" data-nav="공장·창고">
+    <div class="dsec-head"><div><div class="dsec-title">공장·창고·지식산업센터</div><div class="dsec-desc">공장·창고는 대지 평당가, 지식산업센터(집합 공장)는 건물면적 평당가 · 시군구 표본이 적으면 시도 값으로 보여줍니다</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외 · 평당가는 지분 거래 제외 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에 들어오므로 최근 두 달은 집계 중이며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+DashSections.setAccent('#78716c');
+Dash.start({ kind: 'building', sections: DashSections.pick('price', 'volume', 'factory') });
+</script>
+</body>
+</html>

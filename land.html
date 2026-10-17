@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>토지 — 내 동네 한 장</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<script src="dash-sections.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>토지 — 내 동네 한 장</h1>
+    <p>국토부 실거래가 기반 | 시군구를 고르면 아래 지표가 모두 그 동네 기준으로 바뀝니다</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+</div>
+
+<nav class="dash-nav" id="dashNav"><div class="inner"><span class="cur-region" id="curRegion"></span></div></nav>
+
+<div class="container">
+  <section class="dsec" id="price" data-nav="평당가">
+    <div class="dsec-head">
+      <div><div class="dsec-title">토지 평당가 추이</div>
+        <div class="dsec-desc">거래면적 평당가(만원/평)의 중앙값. <b>지분 거래는 뺐습니다</b>(지분은 면적이 몇 평뿐이라 땅값을 왜곡) · 지목마다 값이 수십 배 달라 칩으로 나눠 보세요</div></div>
+      <div id="priceChips"></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="priceCards"></div>
+      <div class="sub-title" id="priceTitle">연도별 평당가 + 거래량</div>
+      <div class="sub-desc">선 = 중앙값, 띠 = 하위 25%~상위 25%, 막대 = 거래 건수</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="priceChart"></canvas></div>
+      <div class="note" id="priceNote"></div>
+      <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="cmpTitle">비교</span><span id="cmpChips"></span></div>
+      <div class="sub-desc" id="cmpDesc"></div>
+      <div class="chart-wrap" id="cmpWrap" style="height:360px"><canvas id="cmpChart"></canvas></div>
+    </div>
+  </section>
+  <section class="dsec" id="jimok" data-nav="지목·읍면동">
+    <div class="dsec-head"><div><div class="dsec-title">지목별 평당가 · 읍면동</div><div class="dsec-desc">같은 동네라도 대(垈)·전·답·임야의 값은 수십 배 차이가 납니다</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="volume" data-nav="거래량">
+    <div class="dsec-head"><div><div class="dsec-title">월별 거래량</div><div class="dsec-desc">최근 24개월 · 지목별·지분 거래를 칩으로 나눠 봅니다 · 신고 중인 달은 회색</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외 · 평당가는 지분 거래 제외 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에 들어오므로 최근 두 달은 집계 중이며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+DashSections.setAccent('#d97706');
+Dash.start({ kind: 'land', sections: DashSections.pick('price', 'jimok', 'volume') });
+</script>
+</body>
+</html>
