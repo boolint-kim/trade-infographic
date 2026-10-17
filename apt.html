@@ -441,7 +441,70 @@ function renderYield(ctx, secEl) {
   });
 }
 
-D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield } });
+
+// ─── wolse (02 P2) ─────────────────────────────────────────
+function renderWolse(ctx, secEl) {
+  const { data, region } = ctx;
+  const w = region.wolse, ytd = data.ytd;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="woCards"></div>
+      <div class="sub-title" id="woTitle">연도별 전세·월세 건수와 월세 비중</div>
+      <div class="sub-desc">막대 = 계약 건수(전세 + 월세 쌓기), 선 = 월세 비중 · 2021년 6월 전월세 신고제 전후로 자료 출처가 달라 그 앞뒤를 바로 비교할 때는 주의</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="woChart"></canvas></div>
+      ${cmpHTML('wo')}
+      <div class="note">전세 = 월세 0원·보증금 있는 계약, 월세 = 월세가 있는 계약(반전세 포함). 신규·갱신 모두.
+        시장 전환율 = 같은 단지·같은 면적·같은 달의 전세 보증금 중앙값과 월세 계약을 짝지어 월세 × 12 ÷ (전세 − 월세 보증금). 1% 미만·20% 초과와 보증금이 전세의 80%를 넘는 월세는 뺐습니다.
+        법정 전환율(전월세 전환 상한) = 기준금리 + 2%p.</div>`;
+  }
+  const r = w.recent, cv = w.conv;
+  const period = `${D.ymText(r.from)}~${D.ymText(r.to)}`;
+  // 전환율 — 시군구 표본 부족이면 시도 값, 그것도 없으면 법정
+  const sidoConv = data.regions[''].wolse.conv.rate;
+  const conv = cv.rate ?? sidoConv ?? data.legalRate;
+  const convSrc = cv.rate != null ? `표본 ${D.fmt(cv.n)}건` : sidoConv != null ? `표본 ${D.fmt(cv.n)}건이라 ${data.sido.name} 전체 값` : '표본 부족 — 법정 전환율';
+  D.cards(document.getElementById('woCards'), [
+    { label: '월세 비중 (최근 12개월)', value: r.share == null ? null : r.share.toFixed(1), unit: '%',
+      sub: `${period}<br>전세 ${D.fmt(r.j)}건 · 월세 ${D.fmt(r.w)}건` },
+    w.ytd ? { label: `전년 동기 대비 (1~${ytd.cmpThruMonth}월)`, value: w.ytd.diff == null ? null : `${w.ytd.diff > 0 ? '+' : ''}${w.ytd.diff.toFixed(1)}`, unit: '%p',
+      tone: D.toneOf(w.ytd.diff), sub: w.ytd.diff == null ? '' : `${ytd.yr - 1}년 ${w.ytd.prev.share.toFixed(1)}% → ${ytd.yr}년 ${w.ytd.cur.share.toFixed(1)}%` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '연초에는 비교할 완결 월이 없습니다' },
+    { label: '시장 전환율 (최근 6개월)', value: conv == null ? null : conv.toFixed(2), unit: '%',
+      sub: `${convSrc} · ${D.ymText(cv.from)}~${D.ymText(cv.to)}${data.legalRate != null ? `<br>법정 상한 ${data.legalRate}% (기준금리 ${data.baseRate}% + 2%p)` : ''}` },
+    { label: '월세 계약 중앙값', value: r.wolseRent == null ? null : `${D.eok(r.wolseDep)} / ${D.fmt(r.wolseRent)}만`, unit: '',
+      sub: r.jeonseDep == null ? period : `보증금 / 월세 · 전세 보증금 중앙값 ${D.eok(r.jeonseDep)}<br>${period}` },
+  ]);
+
+  document.getElementById('woTitle').textContent = `${ctx.regionName} — 연도별 전세·월세 건수와 월세 비중`;
+  const partial = i => w.years[i] === ytd.yr;
+  D.chart('woChart', {
+    type: 'bar',
+    data: { labels: w.years.map(y => D.yearLabel(y, ytd)), datasets: [
+      { type: 'line', label: '월세 비중(%)', data: w.yearly.map(c => c.share), yAxisID: 'y1', borderColor: '#f97316', backgroundColor: '#f97316',
+        borderWidth: 3, tension: .3, pointRadius: 4, pointBorderColor: chartTheme.pointBorder(), pointBorderWidth: 2, order: 1 },
+      { label: '전세', data: w.yearly.map(c => c.j), stack: 's', order: 2, borderRadius: 3, backgroundColor: w.years.map((_, i) => partial(i) ? chartTheme.muted() : '#3b82f677') },
+      { label: '월세', data: w.yearly.map(c => c.w), stack: 's', order: 2, borderRadius: 3, backgroundColor: w.years.map((_, i) => partial(i) ? chartTheme.muted() : '#f9731677') },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 14 } },
+        tooltip: { callbacks: { label: it => it.dataset.yAxisID === 'y1' ? `월세 비중 ${it.raw ?? '-'}%` : `${it.dataset.label} ${D.fmt(it.raw)}건` } } },
+      scales: { x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } },
+        y1: { position: 'right', min: 0, max: 100, ticks: { callback: v => v + '%' }, grid: { display: false } } } },
+  });
+
+  compareBlock(ctx, 'wo', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 월세 비중` : '전국 시도 월세 비중',
+    desc: `${period} · 전월세 100건 미만 지역은 뺐습니다`,
+    pickSgg: x => { const q = x.wolse.recent; return q.share == null || q.j + q.w < 100 ? null : { value: q.share, tip: `${q.share}% · 전세 ${D.fmt(q.j)} / 월세 ${D.fmt(q.w)}건` }; },
+    pickSido: x => x.wolse.share == null ? null : { value: x.wolse.share, tip: `${x.wolse.share}% · 월세 ${D.fmt(x.wolse.w)}건 · 전환율 ${x.wolse.conv ?? '-'}%` },
+    tick: v => `${v}%`,
+  });
+}
+
+D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield, wolse: renderWolse } });
 </script>
 </body>
 </html>
