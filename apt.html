@@ -161,24 +161,115 @@ function renderCompare(ctx, f) {
     + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '')
     + (mode === 'sgg' ? ' · 막대를 누르면 그 시군구로 바뀝니다' : ' · 막대를 누르면 그 시도로 바뀝니다');
 
-  const h = Math.max(220, rows.length * (D.isMobile ? 20 : 24) + 40);
-  document.getElementById('cmpWrap').style.height = `${h}px`;
-  D.chart('cmpChart', {
-    type: 'bar',
-    data: { labels: rows.map(r => r.name), datasets: [{ data: rows.map(r => r.med), borderRadius: 4,
-      backgroundColor: rows.map(r => r.on ? ACCENT : chartTheme.muted()) }] },
-    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => `${D.fmt(it.raw)}만원/평 · ${D.fmt(rows[it.dataIndex].cnt)}건` } } },
-      scales: { x: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } }, y: { grid: { display: false }, ticks: { autoSkip: false } } },
-      onClick: (e, els) => {
-        if (!els.length) return;
-        const r = rows[els[0].index];
-        if (mode === 'sgg') ctx.select(sido, r.key); else ctx.select(r.key, '');
-      } },
+  D.rankBars('cmpChart', 'cmpWrap', rows.map(r => ({ ...r, value: r.med, tip: `${D.fmt(r.med)}만원/평 · ${D.fmt(r.cnt)}건` })), {
+    color: ACCENT, onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, ''),
   });
 }
 
-D.start({ kind: 'apt', sections: { price: renderPrice } });
+// ─── volume (02 E5) ────────────────────────────────────────
+function renderVolume(ctx, sec) {
+  const { data, region } = ctx;
+  const v = region.volume, ytd = data.ytd;
+  const body = sec.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="volCards"></div>
+      <div class="sub-title" id="volMTitle">월별 거래량</div>
+      <div class="sub-desc">막대 = 계약월 기준 건수, 선 = 1년 전 같은 달 · 회색 테두리 막대는 신고가 아직 들어오는 중인 달</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="volMChart"></canvas></div>
+      <div class="sub-title">연도별 거래량</div>
+      <div class="sub-desc" id="volYDesc"></div>
+      <div class="chart-wrap" style="height:260px"><canvas id="volYChart"></canvas></div>
+      <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="volCmpTitle">비교</span><span id="volCmpChips"></span></div>
+      <div class="sub-desc" id="volCmpDesc"></div>
+      <div class="chart-wrap" id="volCmpWrap" style="height:360px"><canvas id="volCmpChart"></canvas></div>`;
+  }
+  const imm = m => D.isImmature(m, data);
+  const ytdLabel = ytd.cmpThruMonth ? `1~${ytd.cmpThruMonth}월` : '';
+
+  // 카드 — 전년 동기 / 최근 완결 월 vs 1년 전 / 최다 거래월(완결 월 중)
+  const done = v.months.map((m, i) => ({ m, c: v.cnt[i], p: v.prev[i] })).filter(x => !imm(x.m));
+  const last = done[done.length - 1];
+  const top = done.reduce((a, b) => b.c > a.c ? b : a, done[0]);
+  const lastPct = last && last.p > 0 ? Math.round((last.c - last.p) / last.p * 1000) / 10 : null;
+  D.cards(document.getElementById('volCards'), [
+    v.ytd ? { label: `전년 동기 대비 (${ytdLabel})`, value: v.ytd.pct == null ? null : D.signPct(v.ytd.pct), unit: '%', tone: D.toneOf(v.ytd.pct),
+      sub: `${ytd.yr - 1}년 ${D.fmt(v.ytd.prev)}건 → ${ytd.yr}년 ${D.fmt(v.ytd.cur)}건<br>신고 중인 최근 두 달은 빼고 비교` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '연초에는 비교할 완결 월이 없습니다' },
+    { label: last ? `${D.ymText(last.m)} (최근 완결 월)` : '최근 완결 월', value: last ? D.fmt(last.c) : null, unit: '건', tone: '',
+      sub: last ? `1년 전 같은 달 ${D.fmt(last.p)}건${lastPct == null ? '' : ` · ${D.signPct(lastPct)}%`}` : '' },
+    { label: '최근 24개월 최다 거래월', value: top ? D.fmt(top.c) : null, unit: '건', tone: '',
+      sub: top ? `${D.ymText(top.m)} · 완결 월 중에서` : '' },
+  ]);
+
+  // 월별 — 미완 월 회색 + 테두리, 전년 같은 달 선(미완 월에서 끊는다)
+  document.getElementById('volMTitle').textContent = `${ctx.regionName} — 월별 거래량 (최근 24개월)`;
+  D.chart('volMChart', {
+    type: 'bar',
+    data: { labels: v.months.map(D.monthLabel), datasets: [
+      { type: 'line', label: '1년 전 같은 달', data: v.months.map((m, i) => imm(m) ? null : v.prev[i]), borderColor: '#f59e0b', backgroundColor: '#f59e0b',
+        borderWidth: 2, borderDash: [5, 4], pointRadius: 2, tension: .3, spanGaps: false, order: 1 },
+      { type: 'bar', label: '거래 건수', data: v.cnt, order: 2, borderRadius: 3,
+        backgroundColor: D.barColors(v.months, imm, ACCENT),
+        borderColor: v.months.map(m => imm(m) ? chartTheme.axis() : 'transparent'), borderWidth: v.months.map(m => imm(m) ? 1 : 0) },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 14 } },
+        tooltip: { callbacks: { label: it => `${it.dataset.label} ${D.fmt(it.raw)}건`,
+          footer: items => imm(v.months[items[0].dataIndex]) ? '집계 중 — 신고는 계약 후 30일 안에 들어옵니다' : '' } } },
+      scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 6 } },
+        y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+
+  // 연도별 — 올해는 완결 월(색) + 신고 중(회색)을 쌓고, 뒤에 작년 같은 기간을 테두리 상자로 (Chart.js 막대는 점선 테두리 미지원)
+  const n = v.years.length, curDone = v.ytd ? v.ytd.cur : 0;
+  const isCur = i => v.years[i] === ytd.yr;
+  document.getElementById('volYDesc').textContent = v.ytd
+    ? `${D.yearLabel(ytd.yr, ytd)}: 진한 부분 = ${ytdLabel}(완결), 회색 = 신고 중인 최근 두 달, 테두리 상자 = ${ytd.yr - 1}년 ${ytdLabel}`
+    : `${D.yearLabel(ytd.yr, ytd)} 은 아직 한 해가 끝나지 않았습니다`;
+  D.chart('volYChart', {
+    type: 'bar',
+    data: { labels: v.years.map(y => D.yearLabel(y, ytd)), datasets: [
+      { label: '거래 건수', data: v.yearly.map((c, i) => isCur(i) && v.ytd ? curDone : c), backgroundColor: ACCENT + '88', borderRadius: 3, stack: 'a', order: 1 },
+      { label: '_신고 중', data: v.yearly.map((c, i) => isCur(i) ? (v.ytd ? c - curDone : c) : null), backgroundColor: chartTheme.muted(), borderRadius: 3, stack: 'a', order: 1 },
+      { label: '_작년 같은 기간', data: v.years.map((y, i) => isCur(i) && v.ytd ? v.ytd.prev : null), grouped: false, stack: 'g', order: 2,
+        backgroundColor: 'transparent', borderColor: chartTheme.axis(), borderWidth: 1.5, barPercentage: 1 },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false }, tooltip: { filter: it => it.raw != null, callbacks: {
+        label: it => it.datasetIndex === 0 ? `${isCur(it.dataIndex) && v.ytd ? ytdLabel + ' ' : ''}${D.fmt(it.raw)}건`
+          : it.datasetIndex === 1 ? `신고 중 ${D.fmt(it.raw)}건` : `${ytd.yr - 1}년 ${ytdLabel} ${D.fmt(it.raw)}건` } } },
+      scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+
+  renderVolumeCompare(ctx);
+}
+
+// 비교 — 시군구/시도별 전년 동기 거래량 증감 (작년 30건 미만은 뺀다 — 몇 건 차이가 수십 %가 된다)
+function renderVolumeCompare(ctx) {
+  const { data, all, sido, sgg } = ctx;
+  const ytd = data.ytd;
+  const sggCount = Object.keys(data.regions).length - 1;
+  const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
+  const mode = D.chips(document.getElementById('volCmpChips'), 'volCmp', modes, () => renderVolumeCompare(ctx));
+  let rows = mode === 'sgg'
+    ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, y: r.volume.ytd, on: k === sgg }))
+    : all.sido.map(s => ({ key: s.code, name: s.name, y: s.volume, on: s.code === sido }));
+  rows = rows.filter(r => r.y && r.y.prev >= 30 && r.y.pct != null)
+    .map(r => ({ ...r, value: r.y.pct, tip: `${D.signPct(r.y.pct)}% · ${D.fmt(r.y.prev)} → ${D.fmt(r.y.cur)}건` }))
+    .sort((a, b) => b.value - a.value);
+  const rank = rows.findIndex(r => r.on);
+  document.getElementById('volCmpTitle').textContent = mode === 'sgg' ? `${data.sido.name} 시군구 거래량 증감` : '전국 시도 거래량 증감';
+  document.getElementById('volCmpDesc').textContent = !ytd.cmpThruMonth ? '연초에는 비교할 완결 월이 없습니다'
+    : `${ytd.yr}년 1~${ytd.cmpThruMonth}월 vs ${ytd.yr - 1}년 같은 기간 · 작년 30건 미만 지역은 뺐습니다`
+      + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '');
+  D.rankBars('volCmpChart', 'volCmpWrap', rows, { color: ACCENT, tick: v => `${v > 0 ? '+' : ''}${Math.round(v)}%`,
+    onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, '') });
+}
+
+D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume } });
 </script>
 </body>
 </html>

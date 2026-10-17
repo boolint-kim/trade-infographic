@@ -87,6 +87,22 @@
     return keys.map(k => isPartial(k) ? chartTheme.muted() : color + '55');
   }
 
+  // 순위 가로 막대 — rows = [{key, name, value, on, tip}] (정렬은 호출 쪽). 높이는 행 수에 맞춘다
+  function rankBars(canvasId, wrapId, rows, { tick = fmt, onClick, color = '#6366f1' } = {}) {
+    document.getElementById(wrapId).style.height = `${Math.max(220, rows.length * (isMobile ? 20 : 24) + 40)}px`;
+    return chart(canvasId, {
+      type: 'bar',
+      data: { labels: rows.map(r => r.name), datasets: [{ data: rows.map(r => r.value), borderRadius: 4,
+        backgroundColor: rows.map(r => r.on ? color : chartTheme.muted()) }] },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => rows[it.dataIndex].tip || tick(it.raw) } } },
+        scales: { x: { ticks: { callback: v => tick(v) }, grid: { color: chartTheme.grid() } }, y: { grid: { display: false }, ticks: { autoSkip: false } } },
+        onClick: (e, els) => { if (els.length && onClick) onClick(rows[els[0].index]); } },
+    });
+  }
+  // 'YYYYMM' → '25.11'
+  const monthLabel = ym => `${ym.slice(2, 4)}.${ym.slice(4, 6)}`;
+
   // ─── 섹션 네비 ───────────────────────────────────────────
   function buildNav(nav) {
     const secs = [...document.querySelectorAll('.dsec')];
@@ -177,5 +193,5 @@
     });
   }
 
-  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, isMobile };
+  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, rankBars, monthLabel, isMobile };
 })();
