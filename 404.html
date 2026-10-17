@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>페이지를 찾을 수 없습니다 — 부동산 실거래가 인포그래픽</title>
+<link rel="stylesheet" href="common.css">
+<script src="selfbanner-web.js" defer></script>
+<style>
+  /* Cloudflare Pages 는 루트의 404.html 을 없는 경로에 404 상태로 내준다.
+     이 파일이 없으면 index.html 을 200 으로 내줘(SPA 폴백) 깨진 링크를 영영 못 알아챈다. */
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px;min-height:100vh;display:flex;align-items:center;justify-content:center}
+  .box{max-width:480px;width:100%;background:var(--card-bg);border-radius:16px;box-shadow:var(--shadow);padding:40px 28px;text-align:center}
+  .code{font-size:56px;font-weight:800;color:#6366f1;line-height:1;margin-bottom:12px}
+  h1{font-size:20px;font-weight:800;margin-bottom:10px}
+  p{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:24px;word-break:keep-all}
+  .path{display:inline-block;font-size:12px;color:var(--text-faint);background:var(--card-bg-soft);border:1px solid var(--border);border-radius:6px;padding:4px 10px;margin-bottom:24px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  a.btn{display:inline-block;background:#6366f1;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px}
+  a.btn:hover{background:#4f46e5}
+  @media(max-width:700px){body{padding:20px 12px} .box{padding:32px 20px} .code{font-size:44px} h1{font-size:18px}}
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="code">404</div>
+    <h1>페이지를 찾을 수 없습니다</h1>
+    <p>주소가 바뀌었거나 더 이상 제공하지 않는 인포그래픽입니다.<br>목록에서 다시 골라 주세요.</p>
+    <div class="path" id="path"></div><br>
+    <a class="btn" href="/">인포그래픽 목록으로</a>
+  </div>
+  <script>
+    // 어떤 주소로 들어왔는지 보여준다 (앱 WebView 의 옛 링크를 찾는 단서)
+    try{document.getElementById('path').textContent=location.pathname;}catch(e){}
+  </script>
+</body>
+</html>

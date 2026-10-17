@@ -4,7 +4,8 @@
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
 ## 이 레포가 무엇인가
-- 정적 HTML 45개 + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
+- 정적 HTML 45개(+ `404.html`) + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
+  - `404.html` 은 2026-10-17 추가. **없으면 Pages 가 없는 경로에 index.html 을 200 으로 내준다**(SPA 폴백) — 삭제한 페이지 주소가 허브로 열려 깨진 링크를 못 알아챈다. 지우지 말 것
   (2026-10-16 저녁: 전월세 히트맵 JSON 3종 추가, 양도세 이벤트 페이지 `infographic-event-cgt.html` 삭제 — 만료 5개월 경과, 앱 허브 4곳 어디도 링크 안 함)
   - https://trade-infographic.pages.dev/ · 같은 배포가 https://chart.boolint.com/ 로도 나간다(히트맵 앱 임베드용)
 - **데이터는 이 레포가 만들지 않는다.** `~/server/trade-collector` 의 파이프라인(`run-pipeline.sh`)이
