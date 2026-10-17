@@ -140,7 +140,7 @@ function selectSido(code){
   document.getElementById('chartTitle1').textContent=`${name} 연도별 거래량`;
   if(yearlyChart) yearlyChart.destroy();
   if(yearly){
-    document.getElementById('chartSub1').textContent='2016~2026';
+    document.getElementById('chartSub1').textContent=`${yearly[0].yr}~${yearly[yearly.length-1].yr}`;
     yearlyChart=new Chart(document.getElementById('yearlyChart'),{
       type:'bar',data:{labels:yearly.map(r=>r.yr),datasets:[{data:yearly.map(r=>r.cnt),backgroundColor:'#3b82f6aa',borderRadius:4}]},
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${fmt(ctx.raw)}건`}}},

@@ -36,7 +36,7 @@
 </head>
 <body>
 <div class="container">
-  <div class="header"><h1>건물 매매 평균가 10년 추이</h1><p>국토부 실거래가 기반 | 2016~2026 연도별 평균 거래가격</p></div>
+  <div class="header"><h1>건물 매매 평균가 10년 추이</h1><p>국토부 실거래가 기반 | <span id="yearRange"></span> 연도별 평균 거래가격</p></div>
   <div class="selector" id="sidoButtons"></div>
   <div class="summary-cards">
     <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
@@ -70,6 +70,7 @@ async function load(){
 }
 function init(){
   document.getElementById('genDate').textContent=`생성일: ${DATA.generated.slice(0,10)}`;
+  {const ys=Object.values(DATA.sido).flatMap(s=>(s.yearly||[]).map(y=>+y.yr));document.getElementById('yearRange').textContent=`${Math.min(...ys)}~${Math.max(...ys)}`;}
   const bc=document.getElementById('sidoButtons');
   SIDO_ORDER.forEach(c=>{if(!DATA.sido[c])return;const b=document.createElement('button');b.textContent=DATA.sido[c].name;b.dataset.code=c;b.onclick=()=>selectSido(c);bc.appendChild(b);});
   initSidoChart();

@@ -30,7 +30,7 @@
 </head>
 <body>
 <div class="container">
-  <div class="header"><h1>전월세 전환율 · 월세 비중 추이</h1><p>단독주택 전세의 월세화 추세 | 전국 시도별 | 2016~2026</p></div>
+  <div class="header"><h1>전월세 전환율 · 월세 비중 추이</h1><p>단독주택 전세의 월세화 추세 | 전국 시도별 | <span id="yearRange"></span></p></div>
   <div class="selector" id="sidoButtons"></div>
   <div class="summary-cards">
     <div class="card a"><div class="label" id="cL1"></div><div class="value" id="cV1"></div><div class="sub" id="cS1"></div></div>
@@ -64,6 +64,7 @@ let D,ch1,ch2,sidoChart;
 async function load(){try{D=await(await fetch('data/single-wolse-ratio.json')).json();}catch{try{D=await(await fetch('single-wolse-ratio.json')).json();}catch{return;}} init();}
 function init(){
   document.getElementById('genDate').textContent=`생성일: ${D.generated.slice(0,10)}`;
+  {const ys=Object.values(D.sido).flatMap(s=>(s.yearly||[]).map(y=>+y.yr));document.getElementById('yearRange').textContent=`${Math.min(...ys)}~${Math.max(...ys)}`;}
   const bc=document.getElementById('sidoButtons');
   SIDO_ORDER.forEach(c=>{if(!D.sido[c])return;const b=document.createElement('button');b.textContent=D.sido[c].name;b.dataset.code=c;b.onclick=()=>sel(c);bc.appendChild(b);});
   const codes=SIDO_ORDER.filter(c=>D.sido[c]);

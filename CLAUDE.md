@@ -76,6 +76,8 @@
 - **차트**: Chart.js 4.4.0 + datalabels 2.2.0 (jsdelivr CDN, 버전 고정)
 - **시도 코드**: 2026-07 개편 반영(전남광주 = 12, 옛 29·46 없음). 페이지마다 시도 맵이 인라인이라 개편 때 46개를 같이 고친다
   - ⚠️ **문구에 시도 수를 쓰지 않는다**("전국 시도별"). 개편 뒤 16개가 됐는데 "전국 17개 시도" 가 43개 파일 68곳에 남아 있었다(2026-10-16 치환)
+  - ⚠️ **연도 범위도 문구에 박지 않는다.** 가격추이 8종·월세비중 4종의 헤더는 `<span id="yearRange">` 를 로드 뒤 `sido[*].yearly[].yr` 의 최소~최대로 채우고,
+    거래량 8종의 연도 차트 부제(`chartSub1`)는 `yearly` 의 첫·끝 `yr` 로 쓴다. index 카드는 연도 없이 쓴다(2026-10-17, 21파일의 "2016~2026" 치환)
 - **heatmap.html** 은 TradeHeatmap Android 라이브러리가 WebView 로 임베드한다 — `?type=apt-deal` 등 URL 파라미터,
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
