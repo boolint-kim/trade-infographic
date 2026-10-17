@@ -3,12 +3,12 @@
 > 2026-10-16 정합성 조사에서 초안 작성 → 같은 날 검토·보완(파일 수·생성기·할 일 상태를 실물로 대조).
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
-## ★ 다음 세션 시작점 (2026-10-17) — 지표 43페이지 재설계
-- **작업 문서(정본)**: `~/server/trade-collector/docs/infographic-redesign/` — `00-README.md`(결론·판정표·순서) → `01-common.md`(파라미터 계약·JSON 스키마·배포 절차) → `02~04`(페이지별 스펙) → **`05-checklist.md`(진행 상태는 여기에만)**
-- 2026-10-17 사용자 평가 요청 결과: **유지 9 · 재설계 25 · 폐기 9**(앱이 링크하는 5개는 같은 URL 로 내용 교체, 실제 삭제는 4). 원인은 시도×연도 단순평균(결론 고정)·노이즈 평균·신고 지연 절벽·계산 오류. 처방은 시군구·중앙값·물건 분리·단지 매칭·미완 월 표시
-- ⚠️ 출시 앱 3종(AptTradeChart·OfficeTradeChart·TransTax A+i)이 페이지 URL 을 하드코딩한다 — 목록은 00 §2. **파일명을 지우거나 바꾸지 말 것**
-- ⚠️ 생성기(collector)와 HTML(여기)은 **같은 날 함께** 올린다. 며칠 걸리는 작업은 collector 는 새 파일, 여기는 worktree(`../trade-infographic-wip`, 브랜치 `redesign`) — 01 §8. 02:00 파이프라인이 `git add -A` + push 하므로 반쯤 고친 걸 main 에 두지 않는다
-- 단계 0(HTML 결함 5개)·단계 1(삭제 4)은 생성기 무관이라 바로 시작할 수 있다
+## ★ 다음 세션 시작점 (2026-10-17) — 지표 43페이지 → "내 동네 한 장" 대시보드 7 + 특화 5 로 재편
+- **작업 문서(정본)**: `~/server/trade-collector/docs/infographic-redesign/` — `00-README.md`(결론·새 구성·대응표·순서) → `01-common.md`(파라미터 계약·JSON 스키마·배포 절차) → `02~04`(섹션 스펙) → **`05-checklist.md`(진행 상태는 여기에만)**
+- 2026-10-17 평가: 43페이지 중 유지 9 · 재설계 25 · 폐기 9. 원인은 시도×연도 단순평균·지표 하나=페이지 하나·노이즈 평균·신고 지연. 사용자가 "기존 앱이 거는 URL 은 무시(사용자 없음)" 라 해 **B안(대시보드) 확정** — 시군구 하나를 고르면 전 지표가 한 화면
+- **새 파일로 만들고 다 되면 바꿔 끼운다**: `apt.html`·`dash.js`·`data/dash-apt-11.json`·collector `generate-dash-apt.js` 처럼 전부 새 이름. 옛 43페이지·옛 생성기는 컷오버(단계 5)까지 손대지 않는다. worktree 불필요. 02:00 파이프라인이 `git add -A` + push 하므로 **문법 오류 상태로 하루를 끝내지 말 것**(`./check.sh apt.html`)
+- 컷오버 때 `_redirects`(43줄 301)로 옛 URL 을 받는다 — 출시 앱(AptTradeChart·OfficeTradeChart·TransTax)의 허브가 옛 URL 을 하드코딩하지만 앱 출시 없이 이어진다
+- 시작은 단계 0(공통 인프라 `stats.js`·`region-select.js`·`dash.js`) → 단계 1(`apt.html` 본보기)
 
 ## 이 레포가 무엇인가
 - 정적 HTML 45개(+ `404.html`) + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
