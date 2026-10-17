@@ -1,0 +1,76 @@
+/* 대시보드 공통 레이아웃 — apt.html 등 "내 동네 한 장" 페이지 (B안)
+   색은 common.css 토큰만 쓴다(다크모드 자동). 페이지별 강조색은 --accent 로 덮는다 */
+
+:root{--accent:#6366f1;--accent-soft:#6366f122;--nav-h:44px}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:28px 20px 40px}
+.container{max-width:1100px;margin:0 auto}
+
+.header{text-align:center;margin-bottom:20px}
+.header h1{font-size:26px;font-weight:800;margin-bottom:8px}
+.header p{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+/* 지역 선택 — 시도 버튼 줄 + 시군구 select */
+.region-bar{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px}
+.sido-btns{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.sido-btns button{padding:7px 14px;border:2px solid var(--border);border-radius:24px;background:var(--card-bg);font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit}
+.sido-btns button:hover{border-color:var(--accent);color:var(--accent)}
+.sido-btns button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.sgg-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)}
+.sgg-row select{font:inherit;font-size:15px;font-weight:700;color:var(--text);background:var(--card-bg);border:2px solid var(--accent);border-radius:10px;padding:7px 12px;min-width:200px;cursor:pointer}
+
+/* 섹션 네비 — 상단 고정, 좁은 화면에서는 가로 스크롤 */
+.dash-nav{position:sticky;top:0;z-index:10;background:var(--bg);margin:0 -20px 20px;padding:6px 20px;border-bottom:1px solid var(--border)}
+.dash-nav .inner{max-width:1100px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;align-items:center}
+.dash-nav .inner::-webkit-scrollbar{display:none}
+.dash-nav .cur-region{flex:none;font-size:13px;font-weight:800;color:var(--accent);margin-right:6px;white-space:nowrap}
+.dash-nav a{flex:none;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;padding:6px 12px;border-radius:16px;white-space:nowrap}
+.dash-nav a:hover{color:var(--accent)}
+.dash-nav a.active{background:var(--accent-soft);color:var(--accent)}
+
+/* 섹션 */
+.dsec{background:var(--card-bg);border-radius:16px;padding:24px 28px;box-shadow:var(--shadow);margin-bottom:24px;scroll-margin-top:calc(var(--nav-h) + 12px)}
+.dsec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.dsec-title{font-size:18px;font-weight:800}
+.dsec-desc{font-size:12px;color:var(--text-faint);margin-top:4px;line-height:1.6}
+.dsec .pending{font-size:13px;color:var(--text-faint);padding:20px 0;text-align:center}
+.sub-title{font-size:14px;font-weight:700;margin:22px 0 4px}
+.sub-desc{font-size:12px;color:var(--text-faint);margin-bottom:10px;line-height:1.6}
+
+/* facet 칩 */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{font:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:14px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);cursor:pointer}
+.chips button.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+
+/* 카드 */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:8px}
+.kcard{background:var(--card-bg-soft);color:var(--text);border-radius:12px;padding:16px 18px;border-left:4px solid var(--accent)}
+.kcard .label{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px}
+.kcard .value{font-size:28px;font-weight:900;line-height:1.1;margin-bottom:6px}
+.kcard .value .unit{font-size:13px;font-weight:600;color:var(--text-faint);margin-left:2px}
+.kcard .sub{font-size:12px;color:var(--text-faint);line-height:1.5}
+.kcard.up .value{color:#ef4444}
+.kcard.down .value{color:#3b82f6}
+.kcard.na .value{color:var(--text-faint);font-size:18px}
+
+.chart-wrap{position:relative;width:100%}
+.note{font-size:11px;color:var(--text-faint);margin-top:8px;line-height:1.6}
+.note b{color:var(--text-muted)}
+
+.footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
+
+@media(max-width:700px){
+  body{padding:12px 10px 32px}
+  .header{margin-bottom:12px}
+  .header h1{font-size:19px}
+  .sido-btns{gap:5px}
+  .sido-btns button{padding:5px 10px;font-size:12px}
+  .sgg-row select{min-width:0;flex:1}
+  .sgg-row{width:100%}
+  .dash-nav{margin:0 -10px 14px;padding:6px 10px}
+  .dsec{padding:16px 14px;border-radius:12px;margin-bottom:14px}
+  .dsec-title{font-size:16px}
+  .cards{grid-template-columns:1fr;gap:10px}
+  .kcard .value{font-size:24px}
+}

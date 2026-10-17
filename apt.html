@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 — 내 동네 한 장</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>아파트 — 내 동네 한 장</h1>
+    <p>국토부 실거래가 기반 | 시군구를 고르면 아래 지표가 모두 그 동네 기준으로 바뀝니다</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+</div>
+
+<nav class="dash-nav" id="dashNav"><div class="inner"><span class="cur-region" id="curRegion"></span></div></nav>
+
+<div class="container">
+  <section class="dsec" id="price" data-nav="평당가">
+    <div class="dsec-head">
+      <div><div class="dsec-title">평당가 추이</div>
+        <div class="dsec-desc">전용면적 기준 평당가(만원/평)의 <b>중앙값</b>과 가운데 50% 범위. 총액 평균은 큰 평수·비싼 단지에 끌려가므로 쓰지 않습니다</div></div>
+      <div id="priceChips"></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="priceCards"></div>
+      <div class="sub-title" id="priceTitle">연도별 평당가 + 거래량</div>
+      <div class="sub-desc">선 = 중앙값, 띠 = 하위 25%~상위 25%, 막대 = 거래 건수</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="priceChart"></canvas></div>
+      <div class="note" id="priceNote"></div>
+      <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="cmpTitle">비교</span><span id="cmpChips"></span></div>
+      <div class="sub-desc" id="cmpDesc"></div>
+      <div class="chart-wrap" id="cmpWrap" style="height:360px"><canvas id="cmpChart"></canvas></div>
+    </div>
+  </section>
+
+  <section class="dsec" id="volume" data-nav="거래량">
+    <div class="dsec-head"><div><div class="dsec-title">월별 거래량</div><div class="dsec-desc">최근 24개월 · 신고 중인 달은 회색 · 전년 같은 달과 비교</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="jeonse" data-nav="전세가율">
+    <div class="dsec-head"><div><div class="dsec-title">전세가율</div><div class="dsec-desc">같은 단지·같은 면적의 매매와 전세를 짝지어 계산</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="yield" data-nav="임대수익률">
+    <div class="dsec-head"><div><div class="dsec-title">임대수익률</div><div class="dsec-desc">같은 단지·같은 면적의 매매와 월세를 짝지어 계산 · 기준금리와 비교</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="wolse" data-nav="월세 비중">
+    <div class="dsec-head"><div><div class="dsec-title">월세 비중 · 전환율</div><div class="dsec-desc">전월세 중 월세 계약의 비중과 시장 전환율</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="age" data-nav="연식">
+    <div class="dsec-head"><div><div class="dsec-title">연식별 평당가</div><div class="dsec-desc">신축 프리미엄과 재건축 프리미엄</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="size" data-nav="면적대">
+    <div class="dsec-head"><div><div class="dsec-title">면적대별 평당가</div><div class="dsec-desc">소형·중형·대형의 평당가와 상승률</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+  <section class="dsec" id="renewal" data-nav="갱신">
+    <div class="dsec-head"><div><div class="dsec-title">전월세 갱신</div><div class="dsec-desc">갱신 계약 비율과 갱신 때 보증금 인상률</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에 들어오므로 최근 두 달은 집계 중이며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const ACCENT = '#6366f1';
+const D = Dash;
+
+// ─── price (02 E2) ─────────────────────────────────────────
+function renderPrice(ctx, sec) {
+  const { data, region, all } = ctx;
+  const facets = data.facets.size;
+  const f = D.chips(document.getElementById('priceChips'), 'size', facets, () => renderPrice(ctx, sec));
+  const p = region.price;
+  const fl = f === 'all' ? '' : ` · ${facets[f]}`;
+  const ytd = data.ytd;
+
+  // 카드 3장 — 최근 완결 12개월 / 전년 동기(완결 월) / 10년 상승률(완결연도)
+  const rc = p.recent.by[f], yc = p.ytd[f], rs = p.rise[f];
+  D.cards(document.getElementById('priceCards'), [
+    { label: `최근 12개월 평당가 중앙값${fl}`, value: rc.med == null ? null : D.fmt(rc.med), unit: '만원/평',
+      tone: rc.med == null ? 'na' : '',
+      sub: rc.med == null ? `${D.ymText(p.recent.from)}~${D.ymText(p.recent.to)} · ${D.fmt(rc.cnt)}건`
+        : `가운데 50%: ${D.fmt(rc.p25)}~${D.fmt(rc.p75)}<br>${D.ymText(p.recent.from)}~${D.ymText(p.recent.to)} · ${D.fmt(rc.cnt)}건 · 거래가 중앙값 ${D.eok(rc.amt)}` },
+    yc ? { label: `전년 동기 대비 (1~${ytd.cmpThruMonth}월)`, value: yc.pct == null ? null : D.signPct(yc.pct), unit: '%', tone: D.toneOf(yc.pct),
+      sub: yc.pct == null ? '비교할 거래가 부족합니다'
+        : `${ytd.yr - 1}년 ${D.fmt(yc.prev.med)} → ${ytd.yr}년 ${D.fmt(yc.cur.med)} 만원/평<br>거래 ${D.fmt(yc.prev.cnt)} → ${D.fmt(yc.cur.cnt)}건 (신고 중인 최근 두 달 제외)` }
+      : { label: '전년 동기 대비', value: null, tone: 'na', sub: '연초에는 비교할 완결 월이 없습니다' },
+    { label: rs ? `${rs.from}→${rs.to} 상승률` : '장기 상승률', value: rs ? D.signPct(rs.pct) : null, unit: '%', tone: rs ? D.toneOf(rs.pct) : 'na',
+      sub: rs ? `${D.fmt(rs.fromMed)} → ${D.fmt(rs.toMed)} 만원/평<br>완결 연도끼리 · 거래 30건 이상인 첫 해 기준` : '거래 30건 이상인 해가 부족합니다' },
+  ]);
+
+  // 연도 콤보 — 막대 거래량 + 중앙값 선 + p25~p75 띠
+  const cells = p.by[f];
+  const labels = p.years.map(y => D.yearLabel(y, ytd));
+  const partial = y => y === ytd.yr;
+  document.getElementById('priceTitle').textContent = `${ctx.regionName}${fl} — 연도별 평당가 + 거래량`;
+  D.chart('priceChart', {
+    type: 'bar',
+    data: { labels, datasets: [
+      ...D.bandDatasets({ label: '평당가 중앙값(만원/평)', color: ACCENT,
+        med: cells.map(c => c.med ?? null), p25: cells.map(c => c.p25 ?? null), p75: cells.map(c => c.p75 ?? null) }),
+      { type: 'bar', label: '거래 건수', data: cells.map(c => c.cnt), yAxisID: 'y1', order: 2, borderRadius: 4,
+        backgroundColor: D.barColors(p.years, partial, ACCENT) },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 14, filter: D.legendFilter } },
+        tooltip: { filter: it => !it.dataset.label.startsWith('_'), callbacks: {
+          label: it => it.dataset.yAxisID === 'y1' ? `거래 ${D.fmt(it.raw)}건`
+            : `중앙값 ${D.fmt(it.raw)}만원/평`,
+          afterBody: items => { const c = cells[items[0].dataIndex]; return c.med == null ? ['표본 부족(5건 미만)']
+            : [`가운데 50%: ${D.fmt(c.p25)}~${D.fmt(c.p75)}`, `거래가 중앙값 ${D.eok(c.amt)}`]; } } } },
+      scales: { x: { grid: { display: false } },
+        y: { position: 'left', ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() }, title: { display: !D.isMobile, text: '만원/평' } },
+        y1: { position: 'right', ticks: { callback: v => D.fmt(v) }, grid: { display: false } } } },
+  });
+  document.getElementById('priceNote').innerHTML =
+    `<b>${D.yearLabel(ytd.yr, ytd)}</b> 막대(회색)는 아직 한 해가 끝나지 않았고, 최근 두 달(${data.immature.map(D.ymText).join('·')})은 신고가 계속 들어오는 중입니다 — 건수가 적어 보이는 건 하락이 아닙니다.`;
+
+  renderCompare(ctx, f);
+}
+
+// 비교 막대 — 시도 안 시군구 / 전국 시도 (최근 완결 12개월 평당가 중앙값)
+function renderCompare(ctx, f) {
+  const { data, all, sido, sgg } = ctx;
+  const facets = data.facets.size;
+  const sggCount = Object.keys(data.regions).length - 1;
+  const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
+  const mode = D.chips(document.getElementById('cmpChips'), 'cmp', modes, () => renderCompare(ctx, f));
+  const fl = f === 'all' ? '' : ` · ${facets[f]}`;
+  const recent = data.regions[''].price.recent;
+
+  let rows;
+  if (mode === 'sgg') {
+    rows = Object.entries(data.regions).filter(([k]) => k)
+      .map(([k, r]) => ({ key: k, name: r.name, med: r.price.recent.by[f].med, cnt: r.price.recent.by[f].cnt, on: k === sgg }));
+    document.getElementById('cmpTitle').textContent = `${data.sido.name} 시군구 비교${fl}`;
+  } else {
+    rows = all.sido.map(s => ({ key: s.code, name: s.name, med: s.price[f].med, cnt: s.price[f].cnt, on: s.code === sido }));
+    document.getElementById('cmpTitle').textContent = `전국 시도 비교${fl}`;
+  }
+  rows = rows.filter(r => r.med != null).sort((a, b) => b.med - a.med);
+  const rank = rows.findIndex(r => r.on);
+  document.getElementById('cmpDesc').textContent =
+    `${D.ymText(recent.from)}~${D.ymText(recent.to)} 평당가 중앙값 · 거래 5건 미만 지역은 뺐습니다`
+    + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '')
+    + (mode === 'sgg' ? ' · 막대를 누르면 그 시군구로 바뀝니다' : ' · 막대를 누르면 그 시도로 바뀝니다');
+
+  const h = Math.max(220, rows.length * (D.isMobile ? 20 : 24) + 40);
+  document.getElementById('cmpWrap').style.height = `${h}px`;
+  D.chart('cmpChart', {
+    type: 'bar',
+    data: { labels: rows.map(r => r.name), datasets: [{ data: rows.map(r => r.med), borderRadius: 4,
+      backgroundColor: rows.map(r => r.on ? ACCENT : chartTheme.muted()) }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => `${D.fmt(it.raw)}만원/평 · ${D.fmt(rows[it.dataIndex].cnt)}건` } } },
+      scales: { x: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } }, y: { grid: { display: false }, ticks: { autoSkip: false } } },
+      onClick: (e, els) => {
+        if (!els.length) return;
+        const r = rows[els[0].index];
+        if (mode === 'sgg') ctx.select(sido, r.key); else ctx.select(r.key, '');
+      } },
+  });
+}
+
+D.start({ kind: 'apt', sections: { price: renderPrice } });
+</script>
+</body>
+</html>
