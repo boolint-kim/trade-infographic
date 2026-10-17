@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연립다세대 — 내 동네 한 장</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<script src="dash-sections.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>연립다세대(빌라) — 내 동네 한 장</h1>
+    <p>국토부 실거래가 기반 | 시군구를 고르면 아래 지표가 모두 그 동네 기준으로 바뀝니다</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+</div>
+
+<nav class="dash-nav" id="dashNav"><div class="inner"><span class="cur-region" id="curRegion"></span></div></nav>
+
+<div class="container">
+  <section class="dsec" id="price" data-nav="평당가">
+    <div class="dsec-head">
+      <div><div class="dsec-title">평당가 추이</div>
+        <div class="dsec-desc">전용면적 기준 평당가(만원/평)의 <b>중앙값</b>과 가운데 50% 범위. 빌라 값은 면적보다 연식이 정하므로 연식 칩으로 나눠 보세요</div></div>
+      <div id="priceChips"></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="priceCards"></div>
+      <div class="sub-title" id="priceTitle">연도별 평당가 + 거래량</div>
+      <div class="sub-desc">선 = 중앙값, 띠 = 하위 25%~상위 25%, 막대 = 거래 건수</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="priceChart"></canvas></div>
+      <div class="note" id="priceNote"></div>
+      <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="cmpTitle">비교</span><span id="cmpChips"></span></div>
+      <div class="sub-desc" id="cmpDesc"></div>
+      <div class="chart-wrap" id="cmpWrap" style="height:360px"><canvas id="cmpChart"></canvas></div>
+    </div>
+  </section>
+
+  <section class="dsec" id="volume" data-nav="거래량">
+    <div class="dsec-head"><div><div class="dsec-title">월별 거래량</div><div class="dsec-desc">최근 24개월 · 신고 중인 최근 3개월은 회색(빌라는 신고가 늦습니다) · 전년 같은 달과 비교</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+
+  <section class="dsec" id="wolse" data-nav="월세 비중">
+    <div class="dsec-head"><div><div class="dsec-title">월세 비중 · 전환율</div><div class="dsec-desc">전월세 중 월세 계약의 비중과 시장 전환율</div></div></div>
+    <div class="dsec-body"></div>
+  </section>
+
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외 · 같은 건물 매매·월세 짝이 드물어 임대수익률은 내지 않습니다 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에 들어오므로 최근 세 달은 집계 중이며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+DashSections.setAccent('#8b5cf6');
+Dash.start({ kind: 'multi', sections: DashSections.pick('price', 'volume', 'wolse') });
+</script>
+</body>
+</html>

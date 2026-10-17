@@ -8,7 +8,8 @@
 - 2026-10-17 평가: 43페이지 중 유지 9 · 재설계 25 · 폐기 9. 원인은 시도×연도 단순평균·지표 하나=페이지 하나·노이즈 평균·신고 지연. 사용자가 "기존 앱이 거는 URL 은 무시(사용자 없음)" 라 해 **B안(대시보드) 확정** — 시군구 하나를 고르면 전 지표가 한 화면
 - **새 파일로 만들고 다 되면 바꿔 끼운다**: `apt.html`·`dash.js`·`data/dash-apt-11.json`·collector `generate-dash-apt.js` 처럼 전부 새 이름. 옛 43페이지·옛 생성기는 컷오버(단계 5)까지 손대지 않는다. worktree 불필요. 02:00 파이프라인이 `git add -A` + push 하므로 **문법 오류 상태로 하루를 끝내지 말 것**(`./check.sh apt.html`)
 - 컷오버 때 `_redirects`(43줄 301)로 옛 URL 을 받는다 — 출시 앱(AptTradeChart·OfficeTradeChart·TransTax)의 허브가 옛 URL 을 하드코딩하지만 앱 출시 없이 이어진다
-- 진행: 단계 0·1(`apt.html`)·2(특화 5장 ranking·today·new-high·cancel·hotspot) 완료, 파이프라인 등록·index 카드까지(2026-10-17). 다음은 단계 3(office·multi·right) — 정본은 05-checklist
+- 진행: 단계 0~3 완료(2026-10-17) — `apt`·`office`·`multi`·`right.html` + 특화 5장, 파이프라인 등록·index 카드까지. 다음은 단계 4(single·land·building) — 정본은 05-checklist
+- 구조: 대시보드 섹션 렌더러는 `dash-sections.js`(물건 페이지 공용), 지역 선택 `region-select.js`, 공통 헬퍼 `dash.js`. 생성기 쪽은 collector `src/lib/dash-builder.js` 하나에 설정만 넘긴다
 
 ## 이 레포가 무엇인가
 - 정적 HTML 45개(+ `404.html`) + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
@@ -27,7 +28,7 @@
 | 페이지 | JSON | 생성 스크립트 (trade-collector/src) |
 |---|---|---|
 | heatmap.html | heatmap.json<br>heatmap-office.json · heatmap-multi.json<br>heatmap-rent.json · heatmap-office-rent.json · heatmap-multi-rent.json | generate-heatmap-json.js<br>generate-heatmap-layers-json.js<br>generate-heatmap-rent-json.js (2026-10-16 추가) |
-| apt.html (B안 대시보드, 2026-10-17) | dash-apt-all.json · dash-apt-<시도>.json ×16 | generate-dash-apt.js (+ src/lib/stats·dash-common·match) |
+| apt.html · office.html · multi.html · right.html (B안 대시보드) | dash-<물건>-all.json · dash-<물건>-<시도>.json ×16 | generate-dash-<물건>.js → src/lib/dash-builder.js (+ stats·dash-common·match) |
 | ranking.html?type=apt\|office\|right | dash-ranking-<type>-all.json · -<시도>.json | generate-dash-ranking.js |
 | new-high.html · cancel.html · hotspot.html | dash-events-all.json · dash-events-<시도>.json | generate-dash-events.js |
 | today.html?type=deal\|jeonse\|wolse | dash-today-all.json · dash-today-<시도>.json | generate-dash-today.js (스냅샷 collector/data/snapshots/) |
