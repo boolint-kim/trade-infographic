@@ -80,6 +80,8 @@
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
     여러 달을 고르면 페이지가 `Σ(mo.a·mo.c)/Σc` 로 합친다(면적대 l/m/s 는 단순평균)
+  - **아파트 매매(`heatmap.json`)는 매매 + 분양권·입주권**(2026-10-17~, 호갱노노 매매 목록과 같은 구성).
+    해제 제외 → 완전 동일 행 1건 → 분양권은 같은 단지 좌표로 모은다. 정본은 `~/server/trade-collector/CLAUDE.md`
   - **전월세 3종의 값은 전세(월세 0) 보증금 평당가의 중앙값**(매매는 평균). 계약구분(신규·갱신)은 가리지 않는다.
     색 구간·문구는 타입별로 다르다(아래 "heatmap 결함 2개")
   - 네이버 지도 SDK(`ncpKeyId`)는 등록 도메인에서만 인증된다. 로컬(127.0.0.1)에서 지도 타일이 안 나와도 데이터 경로 점검은 된다
