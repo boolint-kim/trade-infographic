@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 신고가</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>아파트 신고가 — 내 동네</h1>
+    <p>국토부 실거래가 기반 | 최근 3개월, 같은 단지·같은 면적의 이전 최고가를 넘은 거래</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+
+  <section class="dsec" id="newhigh">
+    <div class="dsec-head">
+      <div><div class="dsec-title" id="nhTitle">신고가</div><div class="dsec-desc" id="nhDesc"></div></div>
+      <div id="nhChips"></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="nhCards"></div>
+      <div class="sub-title" id="nhListTitle">최근 신고가 거래</div>
+      <div class="sub-desc">계약일 최근 순 최대 30건 · 단지를 누르면 앱에서 그 단지를 찾습니다(앱에서 열었을 때)</div>
+      <div id="nhTable"></div>
+      <div id="cmpBox"></div>
+      <div class="note">신고가 = 같은 단지·같은 전용면적(㎡, 반올림)에서 이 기간이 시작되기 전까지의 최고가를 넘은 거래. 이 기간 전에 거래가 한 번도 없던 단지·면적은 "첫 거래" 로 따로 셉니다.
+        계약 해제 신고된 거래는 신고가에서도, 이전 최고가에서도 뺐습니다. 최근 계약은 아직 신고가 덜 들어와 건수는 늘어날 수 있습니다.</div>
+    </div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에, 해제 신고는 그보다 늦게 들어오며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const D = Dash, ACCENT = '#ef4444';
+document.documentElement.style.setProperty('--accent', ACCENT);
+document.documentElement.style.setProperty('--accent-soft', ACCENT + '22');
+
+function render(ctx) {
+  const { data, region } = ctx;
+  const n = region.newHigh, m = data.newHigh;
+  document.getElementById('nhTitle').textContent = `${ctx.regionName} — 신고가`;
+  document.getElementById('nhDesc').textContent = `${D.ymText(m.from)}~${D.ymText(m.to)} 계약 (이번 달 포함)`;
+  document.getElementById('cmpBox').innerHTML || (document.getElementById('cmpBox').innerHTML = D.cmpHTML('nh'));
+  D.cards(document.getElementById('nhCards'), [
+    { label: '거래 중 신고가 비율', value: n.share == null ? null : n.share.toFixed(1), unit: '%', tone: n.share > 0 ? 'up' : '',
+      sub: `유효 거래 ${D.fmt(n.deals)}건 중 ${D.fmt(n.highs)}건` },
+    { label: '신고가가 나온 단지', value: D.fmt(n.complexes), unit: '개', sub: `첫 거래(비교 대상 없음) ${D.fmt(n.first)}건은 따로` },
+    { label: '이전 최고가 대비 상승폭', value: n.medPct == null ? null : `+${n.medPct.toFixed(1)}`, unit: '%', tone: 'up', sub: '신고가 거래들의 중앙값' },
+  ]);
+  const f = D.chips(document.getElementById('nhChips'), 'nh', m.facets, () => render(ctx));
+  document.getElementById('nhListTitle').textContent = `최근 신고가 거래 · ${m.facets[f]}`;
+  D.table(document.getElementById('nhTable'), [
+    { label: '계약일', cls: 'num faint', get: x => x.dt ? `${+x.dt.slice(5, 7)}.${+x.dt.slice(8, 10)}` : '' },
+    { label: '단지', cls: 'name', get: x => D.complexName(ctx, x, x.f ? ` · ${D.esc(x.f)}층` : '') },
+    { label: '거래가', cls: 'num hi', get: x => D.eok(x.p) },
+    { label: '이전 최고가', cls: 'num', get: x => D.eok(x.ph) },
+    { label: '상승폭', cls: 'num', get: x => `+${x.pct.toFixed(1)}%` },
+  ], n.lists[f], '이 기간에 신고가 거래가 없습니다', x => D.complexClick(x.n));
+  D.compare(ctx, 'nh', { color: ACCENT,
+    title: mode => mode === 'sgg' ? `${data.sido.name} 시군구별 신고가 비율 — 어디가 뜨겁나` : '전국 시도별 신고가 비율',
+    desc: '거래 중 신고가 비율 · 거래 30건 미만 지역은 뺐습니다',
+    pickSgg: r => r.newHigh.deals >= 30 ? { value: r.newHigh.share, tip: `${r.newHigh.share}% · ${D.fmt(r.newHigh.highs)} / ${D.fmt(r.newHigh.deals)}건` } : null,
+    pickSido: s => s.newHigh.share == null ? null : { value: s.newHigh.share, tip: `${s.newHigh.share}% · 신고가 ${D.fmt(s.newHigh.highs)}건` },
+    tick: v => `${v}%` });
+}
+D.start({ kind: 'events', sections: { newhigh: render } });
+</script>
+</body>
+</html>

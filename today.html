@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘 올라온 거래</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>오늘 올라온 아파트 거래</h1>
+    <p>국토부 실거래가 기반 | 어제 이후 새로 신고된 매매·전세·월세를 동네별로</p>
+  </div>
+  <div class="chips" id="typeTabs" style="justify-content:center;margin-bottom:14px"></div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+</div>
+
+<nav class="dash-nav" id="dashNav"><div class="inner"><span class="cur-region" id="curRegion"></span></div></nav>
+
+<div class="container">
+  <section class="dsec" id="new" data-nav="새로 올라온 거래">
+    <div class="dsec-head"><div><div class="dsec-title" id="nwTitle">새로 올라온 거래</div><div class="dsec-desc" id="nwDesc"></div></div></div>
+    <div class="dsec-body"><div class="cards" id="nwCards"></div><div id="nwTable"></div></div>
+  </section>
+  <section class="dsec" id="national" data-nav="전국">
+    <div class="dsec-head"><div><div class="dsec-title">전국 — 시도별 새로 올라온 건수</div><div class="dsec-desc" id="naDesc"></div></div></div>
+    <div class="dsec-body">
+      <div class="chart-wrap" id="naWrap" style="height:360px"><canvas id="naChart"></canvas></div>
+      <div class="sub-title" id="naTopTitle">전국 이번 달 TOP 20</div>
+      <div id="naTable"></div>
+    </div>
+  </section>
+  <section class="dsec" id="month" data-nav="이번 달">
+    <div class="dsec-head"><div><div class="dsec-title">이번 달 계약일별 신고 현황 (집계 중)</div><div class="dsec-desc">신고는 계약 후 30일 안에 들어옵니다 — 최근 날짜일수록 아직 덜 들어온 것이지 거래가 줄어든 게 아닙니다</div></div></div>
+    <div class="dsec-body">
+      <div class="cards" id="moCards"></div>
+      <div class="chart-wrap" style="height:240px"><canvas id="moChart"></canvas></div>
+      <div class="sub-title" id="moTopTitle">이번 달 TOP 20</div>
+      <div id="moTable"></div>
+    </div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 매매는 계약 해제 신고된 거래 제외 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const D = Dash;
+const ACCENT = '#f59e0b';
+document.documentElement.style.setProperty('--accent', ACCENT);
+document.documentElement.style.setProperty('--accent-soft', ACCENT + '22');
+const TYPES = { deal: '매매', jeonse: '전세', wolse: '월세' };
+let TYPE = D.getType(TYPES);
+let CTX = null;
+
+(function () {
+  const box = document.getElementById('typeTabs');
+  for (const [k, label] of Object.entries(TYPES)) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = label; b.dataset.k = k;
+    b.onclick = () => { TYPE = k; D.setType(k); paintTabs(); if (CTX) CTX.rerender(); };
+    box.appendChild(b);
+  }
+  paintTabs();
+})();
+function paintTabs() { document.querySelectorAll('#typeTabs button').forEach(b => b.classList.toggle('active', b.dataset.k === TYPE)); }
+
+// 금액 칸 — 매매 거래가 / 전세 보증금 / 월세 보증금·월세
+const money = x => TYPE === 'deal' ? D.eok(x.p) : TYPE === 'jeonse' ? D.eok(x.dep) : `${D.eok(x.dep)} / ${D.fmt(x.rent)}만`;
+const moneyLabel = { deal: '거래가', jeonse: '보증금', wolse: '보증금 / 월세' };
+const dateText = dt => dt ? `${+dt.slice(5, 7)}.${+dt.slice(8, 10)}` : '';
+function tableOf(ctx, el, list, empty) {
+  D.table(el, [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '단지', cls: 'name', get: x => D.complexName(ctx, x, `${x.f ? ` · ${x.f}층` : ''}${x.ct ? ` · ${D.esc(x.ct)}` : ''}`) },
+    { label: moneyLabel[TYPE], cls: 'num hi', get: money },
+    { label: '계약일', cls: 'num', get: x => dateText(x.dt) },
+  ], list, empty, x => D.complexClick(x.n));
+}
+
+function renderNew(ctx) {
+  CTX = ctx;
+  const t = ctx.region[TYPE], nat = ctx.all.national[TYPE];
+  document.getElementById('nwTitle').textContent = `${ctx.regionName} — 새로 올라온 ${TYPES[TYPE]}`;
+  if (t.newCnt == null) {
+    document.getElementById('nwDesc').textContent = '어제 목록과 비교해 새로 신고된 것만 골라냅니다';
+    D.cards(document.getElementById('nwCards'), []);
+    document.getElementById('nwTable').innerHTML = '<div class="hint">비교할 어제 목록이 아직 없습니다 — 내일부터 매일 새로 올라온 거래를 보여드립니다</div>';
+    return;
+  }
+  document.getElementById('nwDesc').textContent = `${nat.since} 수집 이후 새로 신고된 ${TYPES[TYPE]} · 금액 높은 순 최대 30건 · 계약일은 며칠~몇 주 전일 수 있습니다`;
+  D.cards(document.getElementById('nwCards'), [
+    { label: `새로 올라온 ${TYPES[TYPE]}`, value: D.fmt(t.newCnt), unit: '건', sub: `${nat.since} 이후 · 전국 ${D.fmt(nat.newCnt)}건` },
+  ]);
+  tableOf(ctx, document.getElementById('nwTable'), t.newList, '이 지역에 새로 올라온 거래가 없습니다');
+}
+
+function renderNational(ctx) {
+  const nat = ctx.all.national[TYPE];
+  document.getElementById('naDesc').textContent = nat.newCnt == null ? '내일부터 시도별 신규 건수를 보여드립니다' : `${nat.since} 이후 새로 신고된 ${TYPES[TYPE]} · 전국 ${D.fmt(nat.newCnt)}건 · 막대를 누르면 그 시도로 바뀝니다`;
+  const rows = ctx.all.sido.map(s => ({ key: s.code, name: s.name, value: nat.bySido[s.code], on: s.code === ctx.sido }))
+    .filter(r => r.value != null).sort((a, b) => b.value - a.value);
+  if (rows.length) D.rankBars('naChart', 'naWrap', rows, { color: ACCENT, tick: v => D.fmt(v), onClick: r => ctx.select(r.key, '') });
+  else document.getElementById('naWrap').style.height = '0px';
+  document.getElementById('naTopTitle').textContent = `전국 이번 달(${+ctx.all.month.slice(4)}월 계약) ${TYPES[TYPE]} TOP 20`;
+  tableOf({ ...ctx, sgg: '', data: { regions: {} } }, document.getElementById('naTable'), nat.top.map(x => ({ ...x, d: `${regionNameOf(ctx, x.g)} ${x.d}`, g: null })), '이번 달 거래가 없습니다');
+}
+// 시군구 코드 → "서울 강남구" (all.json 의 목록으로)
+function regionNameOf(ctx, g) {
+  const s = ctx.all.sido.find(s => s.code === g.slice(0, 2));
+  const x = s && s.sgg.find(x => x.code === g);
+  return s ? `${s.name} ${x ? x.name : ''}`.trim() : '';
+}
+
+function renderMonth(ctx) {
+  const t = ctx.region[TYPE], ym = ctx.data.month;
+  D.cards(document.getElementById('moCards'), [
+    { label: `${+ym.slice(4)}월 계약 · 지금까지 신고된 ${TYPES[TYPE]}`, value: D.fmt(t.month), unit: '건', sub: '이번 달이 끝나고 30일이 지나야 거의 다 들어옵니다' },
+  ]);
+  const days = t.daily.map(d => d[0]);
+  D.chart('moChart', {
+    type: 'bar',
+    data: { labels: days.map(d => `${d}일`), datasets: [{ data: t.daily.map(d => d[1]), backgroundColor: ACCENT + '88', borderRadius: 3 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => `${D.fmt(it.raw)}건 (지금까지)` } } },
+      scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true } }, y: { ticks: { precision: 0, callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+  document.getElementById('moTopTitle').textContent = `${ctx.regionName} — ${+ym.slice(4)}월 계약 ${TYPES[TYPE]} TOP 20`;
+  tableOf(ctx, document.getElementById('moTable'), t.top, '이번 달 신고된 거래가 없습니다');
+}
+
+D.start({ kind: 'today', sections: { new: renderNew, national: renderNational, month: renderMonth } });
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 거래 핫스팟</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>아파트 거래 핫스팟</h1>
+    <p>국토부 실거래가 기반 | 최근 완결 3개월 vs 전년 같은 3개월 — 거래가 늘고 값이 오른 곳</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+
+  <section class="dsec" id="hotspot">
+    <div class="dsec-head"><div><div class="dsec-title" id="hsTitle">핫스팟</div><div class="dsec-desc" id="hsDesc"></div></div></div>
+    <div class="dsec-body">
+      <div class="cards" id="hsCards"></div>
+      <div class="sub-title" id="hsScTitle">시군구 산점도</div>
+      <div class="sub-desc">가로 = 거래 건수 증감, 세로 = 평당가 중앙값 증감 · 오른쪽 위 = 거래 늘고 값 오른 곳 · 점을 누르면 그 시군구로 바뀝니다 · 전년 30건 미만 제외</div>
+      <div class="chart-wrap" style="height:380px"><canvas id="hsScatter"></canvas></div>
+      <div class="sub-title" id="hsUmdTitle">읍면동</div>
+      <div class="sub-desc" id="hsUmdDesc"></div>
+      <div id="hsUmd"></div>
+      <div class="grid2">
+        <div><div class="sub-title">전국 거래 급증 TOP 10</div><div id="hsHot"></div></div>
+        <div><div class="sub-title">전국 거래 급감 TOP 10</div><div id="hsCold"></div></div>
+      </div>
+      <div class="note">신고가 아직 들어오는 최근 두 달은 비교에서 뺐습니다(넣으면 모든 지역이 급감으로 보입니다). 평당가 = 전용면적 기준 중앙값. 계약 해제 신고된 거래 제외.</div>
+    </div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에, 해제 신고는 그보다 늦게 들어오며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const D = Dash, ACCENT = '#10b981';
+document.documentElement.style.setProperty('--accent', ACCENT);
+document.documentElement.style.setProperty('--accent-soft', ACCENT + '22');
+const MIN_PREV = 30;
+const sp = v => v == null ? '-' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`;
+
+function render(ctx) {
+  const { data, region, all } = ctx;
+  const h = region.hotspot, m = data.hotspot;
+  const win = `${D.ymText(m.from)}~${D.ymText(m.to)} vs ${D.ymText(m.prevFrom)}~${D.ymText(m.prevTo)}`;
+  document.getElementById('hsTitle').textContent = `${ctx.regionName} — 거래 핫스팟`;
+  document.getElementById('hsDesc').textContent = win;
+  D.cards(document.getElementById('hsCards'), [
+    { label: '거래 건수 증감', value: h.cntPct == null ? null : D.signPct(h.cntPct), unit: '%', tone: D.toneOf(h.cntPct), sub: `${D.fmt(h.prev)} → ${D.fmt(h.cnt)}건` },
+    { label: '평당가 중앙값 증감', value: h.ppyPct == null ? null : D.signPct(h.ppyPct), unit: '%', tone: D.toneOf(h.ppyPct), sub: h.ppy == null ? '' : `${D.fmt(h.prevPpy)} → ${D.fmt(h.ppy)} 만원/평` },
+  ]);
+
+  // 산점도 — 이 시도의 시군구
+  const pts = Object.entries(data.regions).filter(([k, r]) => k && r.hotspot.prev >= MIN_PREV && r.hotspot.ppyPct != null)
+    .map(([k, r]) => ({ k, name: r.name, x: r.hotspot.cntPct, y: r.hotspot.ppyPct, h: r.hotspot }));
+  document.getElementById('hsScTitle').textContent = `${data.sido.name} 시군구 — 거래량 × 평당가`;
+  D.chart('hsScatter', {
+    type: 'scatter',
+    data: { datasets: [{ data: pts, pointRadius: pts.map(p => p.k === ctx.sgg ? 9 : 6), pointHoverRadius: 10,
+      backgroundColor: pts.map(p => p.k === ctx.sgg ? ACCENT : (p.x > 0 && p.y > 0 ? '#ef4444aa' : chartTheme.muted())),
+      borderColor: pts.map(p => p.k === ctx.sgg ? chartTheme.axis() : 'transparent'), borderWidth: 2 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => { const p = pts[it.dataIndex]; return [`${p.name}`, `거래 ${sp(p.x)} (${D.fmt(p.h.prev)} → ${D.fmt(p.h.cnt)}건)`, `평당가 ${sp(p.y)} (${D.fmt(p.h.prevPpy)} → ${D.fmt(p.h.ppy)})`]; } } } },
+      scales: { x: { title: { display: true, text: '거래 건수 증감(%)' }, grid: { color: c => c.tick.value === 0 ? chartTheme.axis() : chartTheme.grid() }, ticks: { callback: v => v + '%' } },
+        y: { title: { display: true, text: '평당가 증감(%)' }, grid: { color: c => c.tick.value === 0 ? chartTheme.axis() : chartTheme.grid() }, ticks: { callback: v => v + '%' } } },
+      onClick: (e, els) => { if (els.length) ctx.select(ctx.sido, pts[els[0].index].k); } },
+  });
+
+  // 읍면동
+  const umdBox = document.getElementById('hsUmd');
+  if (!ctx.sgg) {
+    document.getElementById('hsUmdTitle').textContent = '읍면동';
+    document.getElementById('hsUmdDesc').textContent = '';
+    umdBox.innerHTML = '<div class="hint">시군구를 고르면 그 안의 읍면동별 증감이 나옵니다</div>';
+  } else {
+    document.getElementById('hsUmdTitle').textContent = `${ctx.region.name} 읍면동`;
+    document.getElementById('hsUmdDesc').textContent = `양쪽 기간 모두 ${m.umdMin}건 이상인 동 · 거래 증감 큰 순`;
+    D.table(umdBox, [
+      { label: '동', cls: 'name', get: x => D.esc(x.name) },
+      { label: '거래 증감', cls: 'num', get: x => `<span class="${x.cntPct > 0 ? 'hi' : 'lo'}">${sp(x.cntPct)}</span><div class="faint">${x.prev} → ${x.cnt}건</div>` },
+      { label: '평당가 증감', cls: 'num', get: x => `<span class="${x.ppyPct > 0 ? 'hi' : 'lo'}">${sp(x.ppyPct)}</span><div class="faint">${D.fmt(x.prevPpy)} → ${D.fmt(x.ppy)}</div>` },
+    ], h.umd || [], `양쪽 기간 모두 ${m.umdMin}건 이상인 동이 없습니다`);
+  }
+
+  // 전국 TOP — all.nationalSgg
+  const nat = all.nationalSgg.filter(x => x.prev >= MIN_PREV && x.cntPct != null);
+  const natCols = [
+    { label: '시군구', cls: 'name', get: x => D.esc(x.name) },
+    { label: '거래', cls: 'num', get: x => `<b>${sp(x.cntPct)}</b><div class="faint">${D.fmt(x.prev)} → ${D.fmt(x.cnt)}</div>` },
+    { label: '평당가', cls: 'num', get: x => sp(x.ppyPct) },
+  ];
+  const go = x => ctx.select(x.g.slice(0, 2), x.g);
+  D.table(document.getElementById('hsHot'), natCols, [...nat].sort((a, b) => b.cntPct - a.cntPct).slice(0, 10), '-', go);
+  D.table(document.getElementById('hsCold'), natCols, [...nat].sort((a, b) => a.cntPct - b.cntPct).slice(0, 10), '-', go);
+}
+D.start({ kind: 'events', sections: { hotspot: render } });
+</script>
+</body>
+</html>

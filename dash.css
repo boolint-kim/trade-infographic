@@ -69,6 +69,9 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
 .tbl .faint{color:var(--text-faint);font-size:11.5px}
 .tbl .hi{color:#ef4444;font-weight:800}
 .tbl .lo{color:#3b82f6;font-weight:800}
+.tbl.clickable tbody tr{cursor:pointer}
+.tag-mini{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:8px;background:var(--accent-soft);color:var(--accent);margin-left:4px;vertical-align:1px}
+.hint{font-size:13px;color:var(--text-muted);padding:16px;border:1px dashed var(--border);border-radius:10px;text-align:center}
 
 .footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
 

@@ -109,10 +109,57 @@
   }
 
   // 표 — cols = [{label, get:(row)=>html, cls?}] . 좁은 화면에서는 가로 스크롤
-  function table(container, cols, rows, empty = '해당 단지가 없습니다') {
+  // onRow(row) 를 주면 행을 누를 수 있다(단지 → 앱 검색 등)
+  function table(container, cols, rows, empty = '해당 단지가 없습니다', onRow) {
     if (!rows.length) { container.innerHTML = `<div class="pending">${esc(empty)}</div>`; return; }
-    container.innerHTML = `<div class="tbl-wrap"><table class="tbl"><thead><tr>${cols.map(c => `<th class="${c.cls || ''}">${esc(c.label)}</th>`).join('')}</tr></thead>
-      <tbody>${rows.map((r, i) => `<tr>${cols.map(c => `<td class="${c.cls || ''}">${c.get(r, i)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    container.innerHTML = `<div class="tbl-wrap"><table class="tbl${onRow ? ' clickable' : ''}"><thead><tr>${cols.map(c => `<th class="${c.cls || ''}">${esc(c.label)}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map((r, i) => `<tr data-i="${i}">${cols.map(c => `<td class="${c.cls || ''}">${c.get(r, i)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    if (onRow) container.querySelector('tbody').onclick = e => { const tr = e.target.closest('tr'); if (tr) onRow(rows[+tr.dataset.i]); };
+  }
+
+  // URL 의 ?type= 을 읽는다 — 모르는 값이면 첫 키. setType 은 URL 만 갈아끼운다(다시 읽지 않는다)
+  function getType(types) {
+    const t = new URLSearchParams(location.search).get('type');
+    return t && t in types ? t : Object.keys(types)[0];
+  }
+  function setType(t) {
+    try { const q = new URLSearchParams(location.search); q.set('type', t); history.replaceState(null, '', `${location.pathname}?${q}${location.hash}`); } catch (e) { /* 부가 기능 */ }
+  }
+
+  // 지역 비교 막대 (시군구 ↔ 시도 칩) — 섹션 안에 cmpHTML(prefix) 를 넣고 compare(ctx, prefix, o) 로 그린다
+  // o = {title(mode), desc, pickSgg(region)→{value,tip}|null, pickSido(allSido)→{value,tip}|null, tick, color}
+  function compare(ctx, prefix, o) {
+    const { data, all, sido, sgg } = ctx;
+    const sggCount = Object.keys(data.regions).length - 1;
+    const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
+    const mode = chips(document.getElementById(`${prefix}CmpChips`), `${prefix}Cmp`, modes, () => compare(ctx, prefix, o));
+    let rows = mode === 'sgg'
+      ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, on: k === sgg, ...(o.pickSgg(r) || {}) }))
+      : all.sido.map(s => ({ key: s.code, name: s.name, on: s.code === sido, ...(o.pickSido(s) || {}) }));
+    rows = rows.filter(r => r.value != null).sort((a, b) => b.value - a.value);
+    const rank = rows.findIndex(r => r.on);
+    document.getElementById(`${prefix}CmpTitle`).textContent = o.title(mode);
+    document.getElementById(`${prefix}CmpDesc`).textContent = o.desc
+      + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '')
+      + ` · 막대를 누르면 그 ${mode === 'sgg' ? '시군구' : '시도'}로 바뀝니다`;
+    rankBars(`${prefix}CmpChart`, `${prefix}CmpWrap`, rows, { color: o.color, tick: o.tick,
+      onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, '') });
+  }
+  const cmpHTML = prefix => `
+    <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <span id="${prefix}CmpTitle">비교</span><span id="${prefix}CmpChips"></span></div>
+    <div class="sub-desc" id="${prefix}CmpDesc"></div>
+    <div class="chart-wrap" id="${prefix}CmpWrap" style="height:360px"><canvas id="${prefix}CmpChart"></canvas></div>`;
+
+  // 단지 이름 칸 — 시도 전체를 볼 때는 시군구 이름을 붙인다. x = {n, d, g, a}
+  function complexName(ctx, x, extra = '') {
+    const where = ctx.sgg ? x.d : `${(ctx.data.regions[x.g] || {}).name || ''} ${x.d}`;
+    return `${esc(x.n)}<div class="faint">${esc(where.trim())}${x.a ? ` · 전용 ${x.a}㎡` : ''}${extra}</div>`;
+  }
+
+  // 단지 행을 누르면 앱(AndroidBridge)에 단지명을 넘긴다. 웹이거나 앱이 이 메서드를 모르면 조용히 무시
+  function complexClick(name) {
+    try { window.AndroidBridge && window.AndroidBridge.onComplexClick && window.AndroidBridge.onComplexClick(name); } catch (e) { /* 앱 쪽 시그니처가 다를 수 있다 */ }
   }
 
   // 'YYYYMM' → '25.11'
@@ -208,5 +255,5 @@
     });
   }
 
-  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, rankBars, monthLabel, histLabels, table, isMobile };
+  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, rankBars, monthLabel, histLabels, table, compare, cmpHTML, complexName, complexClick, getType, setType, isMobile };
 })();

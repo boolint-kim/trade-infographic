@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아파트 계약 해제</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>아파트 계약 해제 — 내 동네</h1>
+    <p>국토부 실거래가 기반 | 해제율 월별 추이와 해제가 몰린 단지</p>
+  </div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+
+  <section class="dsec" id="cancel">
+    <div class="dsec-head"><div><div class="dsec-title" id="cxTitle">계약 해제</div><div class="dsec-desc" id="cxDesc"></div></div></div>
+    <div class="dsec-body">
+      <div class="cards" id="cxCards"></div>
+      <div class="sub-title">월별 해제율 (최근 24개월)</div>
+      <div class="sub-desc">막대 = 해제 건수, 선 = 해제율 · 회색 = 해제 신고가 아직 들어오는 중인 최근 6개월(해제는 계약 몇 달 뒤 신고되어 나중에 오릅니다)</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="cxChart"></canvas></div>
+      <div class="sub-title">해제가 몰린 단지 (최근 12개월)</div>
+      <div class="sub-desc">해제 3건 이상, 또는 거래 10건 이상이면서 해제율 20% 이상 · "전고점 해제" = 그때까지의 최고가를 넘긴 거래가 해제된 건수(신고가를 찍고 취소된 패턴)</div>
+      <div id="cxTable"></div>
+      <div id="cmpBox"></div>
+      <div class="note">해제율 = 해제 신고된 거래 ÷ 신고된 전체 거래(계약월 기준). 해제 신고가 들어온 거래는 다른 모든 지표에서 빠집니다.</div>
+    </div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에, 해제 신고는 그보다 늦게 들어오며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const D = Dash, ACCENT = '#8b5cf6';
+document.documentElement.style.setProperty('--accent', ACCENT);
+document.documentElement.style.setProperty('--accent-soft', ACCENT + '22');
+
+function render(ctx) {
+  const { data, region } = ctx;
+  const c = region.cancel, imm = new Set(data.cancel.immature);
+  document.getElementById('cxTitle').textContent = `${ctx.regionName} — 계약 해제`;
+  document.getElementById('cxDesc').textContent = `계약월 ${D.ymText(c.months[0])}~${D.ymText(c.months.at(-1))}`;
+  document.getElementById('cmpBox').innerHTML || (document.getElementById('cmpBox').innerHTML = D.cmpHTML('cx'));
+  const d6 = c.done6, mx = c.maxMonth;
+  const immSum = c.months.reduce((a, ym, i) => imm.has(ym) ? { t: a.t + c.cnt[i], x: a.x + c.cancel[i] } : a, { t: 0, x: 0 });
+  D.cards(document.getElementById('cxCards'), [
+    { label: `해제율 (${D.ymText(d6.from)}~${D.ymText(d6.to)})`, value: d6.rate == null ? null : d6.rate.toFixed(2), unit: '%',
+      sub: `해제가 거의 다 신고된 최근 6개월 · ${D.fmt(d6.cancel)} / ${D.fmt(d6.total)}건` },
+    { label: '24개월 중 해제율 최고 월', value: mx ? mx.rate.toFixed(2) : null, unit: '%', tone: mx ? 'up' : 'na',
+      sub: mx ? `${D.ymText(mx.ym)} · ${D.fmt(mx.cancel)} / ${D.fmt(mx.total)}건 (30건 이상인 달 중)` : '거래 30건 이상인 달이 없습니다' },
+    { label: '최근 6개월 (집계 중)', value: immSum.t ? (immSum.x / immSum.t * 100).toFixed(2) : null, unit: '%', tone: 'na',
+      sub: `지금까지 ${D.fmt(immSum.x)} / ${D.fmt(immSum.t)}건 — 앞으로 오릅니다` },
+  ]);
+  D.chart('cxChart', {
+    type: 'bar',
+    data: { labels: c.months.map(D.monthLabel), datasets: [
+      { type: 'line', label: '해제율(%)', data: c.rate.map((r, i) => c.cnt[i] >= 30 ? r : null), yAxisID: 'y1', borderColor: ACCENT, backgroundColor: ACCENT, borderWidth: 2.5, tension: .3,
+        pointRadius: 3, pointBackgroundColor: c.months.map(m => imm.has(m) ? chartTheme.muted() : ACCENT), spanGaps: false, segment: { borderDash: s => imm.has(c.months[s.p1DataIndex]) ? [5, 4] : undefined }, order: 1 },
+      { type: 'bar', label: '해제 건수', data: c.cancel, order: 2, borderRadius: 3, backgroundColor: D.barColors(c.months, m => imm.has(m), ACCENT) },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true } },
+        tooltip: { callbacks: { label: it => it.datasetIndex === 0 ? `해제율 ${it.raw == null ? '-' : it.raw.toFixed(2) + '%'} (${D.fmt(c.cancel[it.dataIndex])} / ${D.fmt(c.cnt[it.dataIndex])}건)` : `해제 ${D.fmt(it.raw)}건`,
+          footer: items => imm.has(c.months[items[0].dataIndex]) ? '해제 신고 진행 중 — 나중에 오릅니다' : '' } } },
+      scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true } }, y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } },
+        y1: { position: 'right', min: 0, ticks: { callback: v => v + '%' }, grid: { display: false } } } },
+  });
+  D.table(document.getElementById('cxTable'), [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '단지', cls: 'name', get: x => D.complexName(ctx, { ...x, a: null }) },
+    { label: '해제', cls: 'num hi', get: x => `${x.cancel}건` },
+    { label: '해제율', cls: 'num', get: x => `${x.rate.toFixed(1)}%<div class="faint">거래 ${x.total}건</div>` },
+    { label: '전고점 해제', cls: 'num', get: x => x.peak ? `<b>${x.peak}건</b>` : '-' },
+  ], c.clusters, '조건에 맞는 단지가 없습니다', x => D.complexClick(x.n));
+  D.compare(ctx, 'cx', { color: ACCENT,
+    title: mode => mode === 'sgg' ? `${data.sido.name} 시군구 해제율` : '전국 시도 해제율',
+    desc: `${D.ymText(region.cancel.done6.from)}~${D.ymText(region.cancel.done6.to)} · 거래 100건 미만 지역은 뺐습니다`,
+    pickSgg: r => r.cancel.done6.total >= 100 ? { value: r.cancel.done6.rate, tip: `${r.cancel.done6.rate}% · ${D.fmt(r.cancel.done6.cancel)} / ${D.fmt(r.cancel.done6.total)}건` } : null,
+    pickSido: s => s.cancel.rate == null ? null : { value: s.cancel.rate, tip: `${s.cancel.rate}%` },
+    tick: v => `${v}%` });
+}
+D.start({ kind: 'events', sections: { cancel: render } });
+</script>
+</body>
+</html>

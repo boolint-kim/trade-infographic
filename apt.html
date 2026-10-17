@@ -270,36 +270,10 @@ function renderVolumeCompare(ctx) {
 }
 
 
-// ─── 공용: 지역 비교 막대 (시군구 ↔ 시도 칩) ───────────────────
-// o = {key, title(mode), desc(rows,rank,mode), pickSgg(region)→{value,tip}|null, pickSido(allSido)→{value,tip}|null, tick}
-function compareBlock(ctx, prefix, o) {
-  const { data, all, sido, sgg } = ctx;
-  const sggCount = Object.keys(data.regions).length - 1;
-  const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
-  const mode = D.chips(document.getElementById(`${prefix}CmpChips`), `${prefix}Cmp`, modes, () => compareBlock(ctx, prefix, o));
-  let rows = mode === 'sgg'
-    ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, on: k === sgg, ...(o.pickSgg(r) || {}) }))
-    : all.sido.map(s => ({ key: s.code, name: s.name, on: s.code === sido, ...(o.pickSido(s) || {}) }));
-  rows = rows.filter(r => r.value != null).sort((a, b) => b.value - a.value);
-  const rank = rows.findIndex(r => r.on);
-  document.getElementById(`${prefix}CmpTitle`).textContent = o.title(mode);
-  document.getElementById(`${prefix}CmpDesc`).textContent = o.desc
-    + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '')
-    + ` · 막대를 누르면 그 ${mode === 'sgg' ? '시군구' : '시도'}로 바뀝니다`;
-  D.rankBars(`${prefix}CmpChart`, `${prefix}CmpWrap`, rows, { color: ACCENT, tick: o.tick,
-    onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, '') });
-}
-const cmpHTML = prefix => `
-  <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-    <span id="${prefix}CmpTitle">비교</span><span id="${prefix}CmpChips"></span></div>
-  <div class="sub-desc" id="${prefix}CmpDesc"></div>
-  <div class="chart-wrap" id="${prefix}CmpWrap" style="height:360px"><canvas id="${prefix}CmpChart"></canvas></div>`;
-
-// 단지 이름 칸 — 시도 전체를 볼 때는 시군구 이름을 붙인다
-function aptName(ctx, x) {
-  const where = ctx.sgg ? x.d : `${(ctx.data.regions[x.g] || {}).name || ''} ${x.d}`;
-  return `${D.esc(x.n)}<div class="faint">${D.esc(where.trim())} · 전용 ${x.a}㎡</div>`;
-}
+// 공용 블록은 dash.js 로 (특화 페이지도 쓴다)
+const compareBlock = (ctx, prefix, o) => D.compare(ctx, prefix, { color: ACCENT, ...o });
+const cmpHTML = D.cmpHTML;
+const aptName = D.complexName;
 // 연도 추이 라벨 — 올해는 완결 월까지만 들어 있다
 const matchYearLabel = (y, ytd) => y === ytd.yr ? `${y}(1~${ytd.cmpThruMonth}월)` : y;
 

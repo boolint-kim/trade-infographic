@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단지 평당가 랭킹</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart-defaults.js"></script>
+<script src="region-select.js"></script>
+<script src="dash.js"></script>
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="dash.css">
+<script src="selfbanner-web.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 id="pageTitle">단지 평당가 랭킹</h1>
+    <p>국토부 실거래가 기반 | 시군구를 고르면 그 동네 단지 순위가 나옵니다</p>
+  </div>
+  <div class="chips" id="typeTabs" style="justify-content:center;margin-bottom:14px"></div>
+  <div id="regionBar"></div>
+  <div id="dashStatus" class="pending" style="display:none;text-align:center;color:#ef4444;margin-bottom:16px"></div>
+
+  <section class="dsec" id="rank">
+    <div class="dsec-head">
+      <div><div class="dsec-title" id="rkTitle">단지 랭킹</div><div class="dsec-desc" id="rkDesc"></div></div>
+    </div>
+    <div class="dsec-body">
+      <div class="cards" id="rkCards"></div>
+      <div class="chips" id="rkTabs" style="margin:18px 0 10px"></div>
+      <div class="sub-desc" id="rkTabDesc"></div>
+      <div id="rkTable"></div>
+      <div id="rkTable2"></div>
+      <div class="note" id="rkNote"></div>
+    </div>
+  </section>
+
+  <div class="footer">데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외 | <span id="genDate"></span><br>
+  ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고는 계약 후 30일 안에 들어오므로 최근 두 달은 집계 중이며, 투자 판단의 근거로 사용할 수 없습니다.</div>
+</div>
+
+<script>
+const D = Dash;
+const TYPES = { apt: '아파트', office: '오피스텔', right: '분양권·입주권' };
+const TYPE = D.getType(TYPES);
+const ACCENT = { apt: '#6366f1', office: '#06b6d4', right: '#e11d48' }[TYPE];
+document.documentElement.style.setProperty('--accent', ACCENT);
+document.documentElement.style.setProperty('--accent-soft', ACCENT + '22');
+document.getElementById('pageTitle').textContent = `${TYPES[TYPE]} 단지 평당가 랭킹`;
+document.title = `${TYPES[TYPE]} 단지 평당가 랭킹`;
+
+// 물건 탭 — 지역 선택은 URL 에 있으니 type 만 바꿔 다시 연다
+(function () {
+  const box = document.getElementById('typeTabs');
+  for (const [k, label] of Object.entries(TYPES)) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = label; b.classList.toggle('active', k === TYPE);
+    b.onclick = () => { if (k === TYPE) return; const q = new URLSearchParams(location.search); q.set('type', k); location.search = q.toString(); };
+    box.appendChild(b);
+  }
+})();
+
+function renderRank(ctx, sec) {
+  const { data, region, all } = ctx;
+  const sm = region.summary, period = `${D.ymText(data.from)}~${D.ymText(data.to)}`;
+  document.getElementById('rkTitle').textContent = `${ctx.regionName} — ${TYPES[TYPE]} 단지 랭킹`;
+  document.getElementById('rkDesc').textContent = `${period} 계약 · 단지별 전용 평당가 중앙값 · 거래 ${data.minN}건 이상 단지만`;
+
+  // 시도 안 순위 — 시군구 평당가 중앙값 기준
+  const sggs = Object.entries(data.regions).filter(([k, r]) => k && r.summary.ppy != null).sort((a, b) => b[1].summary.ppy - a[1].summary.ppy);
+  const rank = ctx.sgg ? sggs.findIndex(([k]) => k === ctx.sgg) : -1;
+  const sidoRank = [...all.sido].filter(s => s.summary.ppy != null).sort((a, b) => b.summary.ppy - a.summary.ppy).findIndex(s => s.code === ctx.sido);
+  D.cards(document.getElementById('rkCards'), [
+    { label: '평당가 중앙값 (이 지역 전체 거래)', value: sm.ppy == null ? null : D.fmt(sm.ppy), unit: '만원/평', sub: `${period} · ${D.fmt(sm.cnt)}건` },
+    ctx.sgg ? { label: `${data.sido.name} 안 순위`, value: rank >= 0 ? `${rank + 1}위` : null, unit: rank >= 0 ? ` / ${sggs.length}` : '', sub: '시군구 평당가 중앙값 기준' }
+      : { label: '전국 시도 순위', value: sidoRank >= 0 ? `${sidoRank + 1}위` : null, unit: sidoRank >= 0 ? ` / ${all.sido.filter(s => s.summary.ppy != null).length}` : '', sub: '시도 평당가 중앙값 기준' },
+    { label: `${data.minN}건 이상 거래된 단지`, value: D.fmt(sm.complexes), unit: '개', sub: `거래가 있던 단지 ${D.fmt(sm.totalComplexes)}개 중` },
+  ]);
+
+  const tab = D.chips(document.getElementById('rkTabs'), `tab-${TYPE}`, data.tabs, () => renderRank(ctx, sec));
+  const t1 = document.getElementById('rkTable'), t2 = document.getElementById('rkTable2');
+  t2.innerHTML = '';
+  const nameCol = { label: '단지', cls: 'name', get: x => D.complexName(ctx, x, (x.f ? ` · ${x.f[0]}~${x.f[1]}층` : '') + (x.j ? '<span class="tag-mini">지번</span>' : '')) };
+  const click = x => D.complexClick(x.n);
+  const tabDesc = {
+    top: '평당가 높은 순', low: '평당가 낮은 순', vol: '거래 많은 순 (같으면 평당가 순)',
+    size84: '전용 80~85㎡ 거래만, 평당가 높은 순', size59: '전용 55~60㎡ 거래만, 평당가 높은 순',
+    r: '전용 30㎡ 이하 거래만, 평당가 높은 순', t: '전용 30~60㎡ 거래만, 평당가 높은 순', l: '전용 60㎡ 초과 거래만, 평당가 높은 순',
+  };
+  if (tab === 'rise') {
+    const r = region.tabs.rise;
+    document.getElementById('rkTabDesc').textContent =
+      `같은 단지·같은 면적대끼리 ${D.ymText(data.prevFrom)}~${D.ymText(data.prevTo)} 대비 평당가 중앙값 변동 · 양쪽 모두 ${data.minN}건 이상 · 비교 가능한 단지·면적대 ${D.fmt(r.pairs)}개`;
+    const cols = cls => [
+      { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+      { label: '단지', cls: 'name', get: x => D.complexName(ctx, { ...x, a: null }, ` · ${D.esc(data.buckets[x.b] || x.b)}`) },
+      { label: '변동률', cls: `num ${cls}`, get: x => `${D.signPct(x.pct)}%` },
+      { label: '평당가', cls: 'num', get: x => `${D.fmt(x.prev)} → ${D.fmt(x.ppy)}<div class="faint">${x.pc}건 → ${x.c}건</div>` },
+    ];
+    t1.innerHTML = '<div class="sub-title">오른 단지</div><div></div>';
+    D.table(t1.lastChild, cols('hi'), r.up, '비교할 수 있는 단지가 없습니다', click);
+    t2.innerHTML = '<div class="sub-title">내린 단지</div><div></div>';
+    D.table(t2.lastChild, cols('lo'), r.down, '내린 단지가 없습니다', click);
+  } else {
+    const list = region.tabs[tab];
+    document.getElementById('rkTabDesc').textContent = `${tabDesc[tab] || ''} · 최대 20개 · 단지를 누르면 앱에서 그 단지를 찾습니다(앱에서 열었을 때)`;
+    D.table(t1, [
+      { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+      nameCol,
+      { label: '평당가', cls: 'num hi', get: x => `${D.fmt(x.ppy)}<div class="faint">만원/평</div>` },
+      { label: '거래가 중앙값', cls: 'num', get: x => D.eok(x.med) },
+      { label: '거래', cls: 'num', get: x => `${x.c}건` },
+    ], list, region.summary.complexes ? `이 조건에 맞는 단지가 없습니다(${data.minN}건 미만)` : '표본 부족 — 거래 5건 이상인 단지가 없습니다', click);
+  }
+  document.getElementById('rkNote').textContent =
+    `평당가 = 거래가 ÷ 전용면적(평). 한 단지의 평당가는 그 기간 거래들의 중앙값입니다. 최근 두 달은 신고가 아직 들어오는 중입니다.`
+    + (TYPE === 'office' ? ' 이름이 지번뿐인 곳(지번 표시)은 신축 일괄 분양인 경우가 많습니다.' : '')
+    + (TYPE === 'right' ? ' 분양권은 단지가 적어 기간을 12개월로 잡았습니다. 분양가 자료가 없어 "프리미엄" 은 계산하지 않습니다.' : '');
+}
+
+D.start({ kind: `ranking-${TYPE}`, sections: { rank: renderRank } });
+</script>
+</body>
+</html>
