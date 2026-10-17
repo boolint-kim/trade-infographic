@@ -504,7 +504,185 @@ function renderWolse(ctx, secEl) {
   });
 }
 
-D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield, wolse: renderWolse } });
+
+const AGE_COLORS = { n5: '#10b981', n10: '#06b6d4', n20: '#6366f1', n30: '#f59e0b', o30: '#ef4444' };
+const SIZE_COLORS = { s: '#06b6d4', m: '#6366f1', l: '#f59e0b', xl: '#ef4444' };
+const RATIO_MIN = 30;   // 배율 비교는 두 구간 모두 30건 이상인 지역만 — 몇 건짜리 단지 하나가 배율을 뒤집는다
+const times = v => v == null ? '-' : `×${v.toFixed(2)}`;
+const okCell = c => c && c.med != null && c.cnt >= RATIO_MIN;
+
+// ─── age (02 P9) ───────────────────────────────────────────
+function renderAge(ctx, secEl) {
+  const { data, region } = ctx;
+  const a = region.age, groups = data.facets.age, ytd = data.ytd;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="agCards"></div>
+      <div class="grid2">
+        <div><div class="sub-title">연식별 평당가 (최근 12개월)</div><div class="sub-desc" id="agBarDesc"></div>
+          <div class="chart-wrap" style="height:260px"><canvas id="agBar"></canvas></div></div>
+        <div><div class="sub-title">연식별 평당가 추이</div><div class="sub-desc">연도별 중앙값 · 5건 미만인 해는 비움</div>
+          <div class="chart-wrap" style="height:260px"><canvas id="agTrend"></canvas></div></div>
+      </div>
+      ${cmpHTML('ag')}
+      <div class="note">연식 = 계약연도 − 준공연도. 재건축 프리미엄 = 30년 초과 ÷ 11~20년 평당가 중앙값 — 1보다 크면 오래된 아파트가 오히려 비싸게 거래된다는 뜻(재건축 기대).
+        신축 프리미엄 = 5년 이내 ÷ 30년 초과. 배율은 두 구간 모두 ${RATIO_MIN}건 이상일 때만 냅니다.</div>`;
+  }
+  const r = a.recent, period = `${D.ymText(a.from)}~${D.ymText(a.to)}`;
+  const reb = okCell(r.o30) && okCell(r.n20) ? a.rebuild : null;
+  const neu = okCell(r.n5) && okCell(r.o30) ? a.newPrem : null;
+  // 시도 안에서 재건축 프리미엄이 가장 큰 시군구
+  const cand = Object.entries(data.regions).filter(([k, x]) => k && okCell(x.age.recent.o30) && okCell(x.age.recent.n20) && x.age.rebuild != null)
+    .sort((p, q) => q[1].age.rebuild - p[1].age.rebuild);
+  D.cards(document.getElementById('agCards'), [
+    { label: '재건축 프리미엄 (30년 초과 ÷ 11~20년)', value: reb == null ? null : times(reb), tone: reb == null ? 'na' : reb > 1 ? 'up' : '',
+      sub: reb == null ? `두 구간 중 ${RATIO_MIN}건 미만인 구간이 있습니다` : `${D.fmt(r.o30.med)} ÷ ${D.fmt(r.n20.med)} 만원/평<br>${reb > 1 ? '오래된 아파트가 더 비쌉니다' : '오래될수록 쌉니다'} · ${period}` },
+    { label: '신축 프리미엄 (5년 이내 ÷ 30년 초과)', value: neu == null ? null : times(neu), tone: neu == null ? 'na' : '',
+      sub: neu == null ? `두 구간 중 ${RATIO_MIN}건 미만인 구간이 있습니다` : `${D.fmt(r.n5.med)} ÷ ${D.fmt(r.o30.med)} 만원/평` },
+    cand.length ? { label: `${data.sido.name}에서 재건축 프리미엄이 가장 큰 곳`, value: cand[0][1].name, tone: '',
+      sub: `${times(cand[0][1].age.rebuild)}${cand.length > 1 ? ` · 2위 ${D.esc(cand[1][1].name)} ${times(cand[1][1].age.rebuild)}` : ''}` }
+      : { label: '재건축 프리미엄 가장 큰 곳', value: null, tone: 'na', sub: '비교할 시군구가 부족합니다' },
+  ]);
+  document.getElementById('agBarDesc').textContent = `${ctx.regionName} · ${period} · 건수는 막대에 손을 대면 보입니다`;
+  const keys = Object.keys(groups);
+  D.chart('agBar', {
+    type: 'bar',
+    data: { labels: keys.map(k => groups[k]), datasets: [{ data: keys.map(k => r[k].med ?? null), borderRadius: 4, backgroundColor: keys.map(k => AGE_COLORS[k] + 'bb') }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => { const c = r[keys[it.dataIndex]]; return c.med == null ? `표본 부족(${c.cnt}건)` : [`중앙값 ${D.fmt(c.med)}만원/평 · ${D.fmt(c.cnt)}건`, `가운데 50%: ${D.fmt(c.p25)}~${D.fmt(c.p75)}`]; } } } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+  D.chart('agTrend', {
+    type: 'line',
+    data: { labels: a.years.map(y => D.yearLabel(y, ytd)), datasets: keys.map(k => ({ label: groups[k], data: a.by[k].map(c => c.med), borderColor: AGE_COLORS[k], backgroundColor: AGE_COLORS[k],
+      borderWidth: 2, pointRadius: 2, tension: .3, spanGaps: false })) },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: { size: 10 } } },
+        tooltip: { callbacks: { label: it => `${it.dataset.label} ${D.fmt(it.raw)}만원/평 · ${D.fmt(a.by[keys[it.datasetIndex]][it.dataIndex].cnt)}건` } } },
+      scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true } }, y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+  compareBlock(ctx, 'ag', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 재건축 프리미엄` : '전국 시도 재건축 프리미엄',
+    desc: `30년 초과 ÷ 11~20년 · ${period} · 두 구간 모두 ${RATIO_MIN}건 이상인 지역만`,
+    pickSgg: x => okCell(x.age.recent.o30) && okCell(x.age.recent.n20) && x.age.rebuild != null ? { value: x.age.rebuild, tip: times(x.age.rebuild) } : null,
+    pickSido: x => x.age.rebuild == null ? null : { value: x.age.rebuild, tip: times(x.age.rebuild) },
+    tick: v => `×${v}`,
+  });
+}
+
+// ─── size (02 P5) — price 의 면적대 값으로 그린다 ───────────────
+function renderSize(ctx, secEl) {
+  const { data, region } = ctx;
+  const p = region.price, facets = data.facets.size;
+  const keys = Object.keys(facets).filter(k => k !== 'all');
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="szCards"></div>
+      <div class="grid2">
+        <div><div class="sub-title">면적대별 평당가 (최근 12개월)</div><div class="sub-desc" id="szBarDesc"></div>
+          <div class="chart-wrap" style="height:260px"><canvas id="szBar"></canvas></div></div>
+        <div><div class="sub-title">면적대별 장기 상승률</div><div class="sub-desc">완결 연도끼리 · 그 면적대에서 30건 이상인 첫 해 → 작년</div>
+          <div class="chart-wrap" style="height:260px"><canvas id="szRise"></canvas></div></div>
+      </div>
+      ${cmpHTML('sz')}
+      <div class="note">평당가는 전용면적 기준. 총액으로 비교하면 큰 평수가 늘 비싸 보이지만, 평당가로 보면 소형이 더 비싼 지역이 많습니다.
+        소형 프리미엄 = 소형(60㎡ 이하) ÷ 중대형(85~135㎡) 평당가 중앙값, 두 구간 모두 ${RATIO_MIN}건 이상일 때만.</div>`;
+  }
+  const r = p.recent.by, period = `${D.ymText(p.recent.from)}~${D.ymText(p.recent.to)}`;
+  const prem = okCell(r.s) && okCell(r.l) ? Math.round(r.s.med / r.l.med * 100) / 100 : null;
+  const rises = keys.filter(k => p.rise[k]).map(k => ({ k, ...p.rise[k] })).sort((x, y) => y.pct - x.pct);
+  D.cards(document.getElementById('szCards'), [
+    { label: '소형 프리미엄 (소형 ÷ 중대형)', value: prem == null ? null : times(prem), tone: prem == null ? 'na' : prem > 1 ? 'up' : '',
+      sub: prem == null ? `두 구간 중 ${RATIO_MIN}건 미만인 구간이 있습니다` : `${D.fmt(r.s.med)} ÷ ${D.fmt(r.l.med)} 만원/평<br>${prem > 1 ? '평당가는 소형이 더 비쌉니다' : '평당가도 큰 평수가 더 비쌉니다'} · ${period}` },
+    rises.length ? { label: `가장 많이 오른 면적대 (${rises[0].from}→${rises[0].to})`, value: D.signPct(rises[0].pct), unit: '%', tone: D.toneOf(rises[0].pct), sub: facets[rises[0].k] }
+      : { label: '가장 많이 오른 면적대', value: null, tone: 'na', sub: '30건 이상인 해가 부족합니다' },
+    rises.length > 1 ? { label: `가장 덜 오른 면적대 (${rises.at(-1).from}→${rises.at(-1).to})`, value: D.signPct(rises.at(-1).pct), unit: '%', tone: D.toneOf(rises.at(-1).pct), sub: facets[rises.at(-1).k] }
+      : { label: '가장 덜 오른 면적대', value: null, tone: 'na', sub: '비교할 면적대가 부족합니다' },
+  ]);
+  document.getElementById('szBarDesc').textContent = `${ctx.regionName} · ${period}`;
+  D.chart('szBar', {
+    type: 'bar',
+    data: { labels: keys.map(k => facets[k]), datasets: [{ data: keys.map(k => r[k].med ?? null), borderRadius: 4, backgroundColor: keys.map(k => SIZE_COLORS[k] + 'bb') }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => { const c = r[keys[it.dataIndex]]; return c.med == null ? `표본 부족(${c.cnt}건)` : [`중앙값 ${D.fmt(c.med)}만원/평 · ${D.fmt(c.cnt)}건`, `거래가 중앙값 ${D.eok(c.amt)}`]; } } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: D.isMobile ? 9 : 11 } } }, y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } } } },
+  });
+  D.chart('szRise', {
+    type: 'bar',
+    data: { labels: keys.map(k => facets[k]), datasets: [{ data: keys.map(k => p.rise[k] ? p.rise[k].pct : null), borderRadius: 4, backgroundColor: keys.map(k => SIZE_COLORS[k] + 'bb') }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => { const x = p.rise[keys[it.dataIndex]]; return x ? `${x.from}→${x.to} ${D.signPct(x.pct)}% (${D.fmt(x.fromMed)} → ${D.fmt(x.toMed)})` : '표본 부족'; } } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: D.isMobile ? 9 : 11 } } }, y: { ticks: { callback: v => v + '%' }, grid: { color: chartTheme.grid() } } } },
+  });
+  compareBlock(ctx, 'sz', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 소형 프리미엄` : '전국 시도 소형 프리미엄',
+    desc: `소형 ÷ 중대형 평당가 · ${period} · 두 구간 모두 ${RATIO_MIN}건 이상인 지역만`,
+    pickSgg: x => { const b = x.price.recent.by; return okCell(b.s) && okCell(b.l) ? { value: Math.round(b.s.med / b.l.med * 100) / 100, tip: `${times(b.s.med / b.l.med)} · ${D.fmt(b.s.med)} ÷ ${D.fmt(b.l.med)}` } : null; },
+    pickSido: x => { const b = x.price; return b.s.med != null && b.l.med != null && b.s.cnt >= RATIO_MIN && b.l.cnt >= RATIO_MIN ? { value: Math.round(b.s.med / b.l.med * 100) / 100, tip: times(b.s.med / b.l.med) } : null; },
+    tick: v => `×${v}`,
+  });
+}
+
+// ─── renewal (02 P1) ───────────────────────────────────────
+function renderRenewal(ctx, secEl) {
+  const { data, region } = ctx;
+  const n = region.renewal, ytd = data.ytd;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="rnCards"></div>
+      <div class="sub-title" id="rnTitle">연도별 신규·갱신 계약</div>
+      <div class="sub-desc">막대 = 계약 건수(신규 + 갱신 쌓기), 선 = 갱신 비율 · 전월세 계약은 2년 주기라 비율이 한 해 걸러 오르내립니다</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="rnChart"></canvas></div>
+      ${cmpHTML('rn')}
+      <div class="note" id="rnNote"></div>`;
+  }
+  const period = `${D.ymText(n.from)}~${D.ymText(n.to)}`;
+  const ji = n.jeonseInc, wi = n.wolseInc;
+  D.cards(document.getElementById('rnCards'), [
+    { label: '갱신 비율 (최근 12개월)', value: n.share == null ? null : n.share.toFixed(1), unit: '%',
+      sub: `${period}<br>신규 ${D.fmt(n.newCnt)}건 · 갱신 ${D.fmt(n.renCnt)}건` },
+    { label: '갱신 중 갱신요구권 사용', value: n.rrShare == null ? null : n.rrShare.toFixed(1), unit: '%',
+      sub: '세입자가 계약갱신요구권(1회, 인상 5% 상한)을 쓴 갱신의 비율' },
+    { label: '전세 갱신 보증금 인상률', value: ji.med == null ? null : ji.med.toFixed(1), unit: '%',
+      sub: ji.med == null ? `표본 ${D.fmt(ji.cnt)}건` : `중앙값 · 가운데 50%: ${ji.p25.toFixed(1)}~${ji.p75.toFixed(1)}% · ${D.fmt(ji.cnt)}건` },
+    { label: '월세 갱신 월세 인상률', value: wi.med == null ? null : wi.med.toFixed(1), unit: '%',
+      sub: wi.med == null ? `표본 ${D.fmt(wi.cnt)}건` : `중앙값 · 가운데 50%: ${wi.p25.toFixed(1)}~${wi.p75.toFixed(1)}% · ${D.fmt(wi.cnt)}건` },
+  ]);
+  document.getElementById('rnTitle').textContent = `${ctx.regionName} — 연도별 신규·갱신 계약`;
+  D.chart('rnChart', {
+    type: 'bar',
+    data: { labels: n.years.map(y => matchYearLabel(y, ytd)), datasets: [
+      { type: 'line', label: '갱신 비율(%)', data: n.yearly.map(c => c.share), yAxisID: 'y1', borderColor: '#10b981', backgroundColor: '#10b981',
+        borderWidth: 3, tension: .3, pointRadius: 4, pointBorderColor: chartTheme.pointBorder(), pointBorderWidth: 2, order: 1 },
+      { label: '신규', data: n.yearly.map(c => c.n), stack: 's', order: 2, borderRadius: 3, backgroundColor: ACCENT + '66' },
+      { label: '갱신', data: n.yearly.map(c => c.r), stack: 's', order: 2, borderRadius: 3, backgroundColor: '#10b98166' },
+    ] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 14 } },
+        tooltip: { callbacks: { label: it => it.dataset.yAxisID === 'y1' ? `갱신 비율 ${it.raw ?? '-'}%` : `${it.dataset.label} ${D.fmt(it.raw)}건` } } },
+      scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() } },
+        y1: { position: 'right', min: 0, max: 100, ticks: { callback: v => v + '%' }, grid: { display: false } } } },
+  });
+  document.getElementById('rnNote').textContent =
+    `계약구분(신규·갱신)이 신고된 계약만 셉니다. 공공임대 단지(LH·SH·행복주택·국민임대·장기전세 등 이름 패턴) ${D.fmt(n.pubExcluded)}건은 뺐습니다 — 공공임대는 갱신이 대부분이라 동네 비율을 왜곡합니다. `
+    + `보증금 인상률 = 전세 갱신(지금·종전 모두 월세 0)의 (보증금 − 종전 보증금) ÷ 종전 보증금, 월세 인상률 = 월세 갱신의 (월세 − 종전 월세) ÷ 종전 월세. `
+    + `연도별은 전월세 신고제(2021년 6월) 이후, ${ytd.yr}년은 1~${ytd.cmpThruMonth}월.`;
+  compareBlock(ctx, 'rn', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 갱신 비율` : '전국 시도 갱신 비율',
+    desc: `${period} · 신규+갱신 100건 미만 지역은 뺐습니다`,
+    pickSgg: x => { const q = x.renewal; return q.share == null || q.newCnt + q.renCnt < 100 ? null : { value: q.share, tip: `${q.share}% · 갱신 ${D.fmt(q.renCnt)} / 신규 ${D.fmt(q.newCnt)}건` }; },
+    pickSido: x => x.renewal.share == null ? null : { value: x.renewal.share, tip: `${x.renewal.share}% · 보증금 인상률 ${x.renewal.jeonseInc ?? '-'}%` },
+    tick: v => `${v}%`,
+  });
+}
+
+D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield, wolse: renderWolse, age: renderAge, size: renderSize, renewal: renderRenewal } });
 </script>
 </body>
 </html>
