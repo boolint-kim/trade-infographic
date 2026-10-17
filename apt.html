@@ -269,7 +269,179 @@ function renderVolumeCompare(ctx) {
     onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, '') });
 }
 
-D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume } });
+
+// ─── 공용: 지역 비교 막대 (시군구 ↔ 시도 칩) ───────────────────
+// o = {key, title(mode), desc(rows,rank,mode), pickSgg(region)→{value,tip}|null, pickSido(allSido)→{value,tip}|null, tick}
+function compareBlock(ctx, prefix, o) {
+  const { data, all, sido, sgg } = ctx;
+  const sggCount = Object.keys(data.regions).length - 1;
+  const modes = sggCount > 1 ? { sgg: '시군구', sido: '시도' } : { sido: '시도' };
+  const mode = D.chips(document.getElementById(`${prefix}CmpChips`), `${prefix}Cmp`, modes, () => compareBlock(ctx, prefix, o));
+  let rows = mode === 'sgg'
+    ? Object.entries(data.regions).filter(([k]) => k).map(([k, r]) => ({ key: k, name: r.name, on: k === sgg, ...(o.pickSgg(r) || {}) }))
+    : all.sido.map(s => ({ key: s.code, name: s.name, on: s.code === sido, ...(o.pickSido(s) || {}) }));
+  rows = rows.filter(r => r.value != null).sort((a, b) => b.value - a.value);
+  const rank = rows.findIndex(r => r.on);
+  document.getElementById(`${prefix}CmpTitle`).textContent = o.title(mode);
+  document.getElementById(`${prefix}CmpDesc`).textContent = o.desc
+    + (rank >= 0 ? ` · ${rows[rank].name} ${rank + 1}위 / ${rows.length}` : '')
+    + ` · 막대를 누르면 그 ${mode === 'sgg' ? '시군구' : '시도'}로 바뀝니다`;
+  D.rankBars(`${prefix}CmpChart`, `${prefix}CmpWrap`, rows, { color: ACCENT, tick: o.tick,
+    onClick: r => mode === 'sgg' ? ctx.select(sido, r.key) : ctx.select(r.key, '') });
+}
+const cmpHTML = prefix => `
+  <div class="sub-title" style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+    <span id="${prefix}CmpTitle">비교</span><span id="${prefix}CmpChips"></span></div>
+  <div class="sub-desc" id="${prefix}CmpDesc"></div>
+  <div class="chart-wrap" id="${prefix}CmpWrap" style="height:360px"><canvas id="${prefix}CmpChart"></canvas></div>`;
+
+// 단지 이름 칸 — 시도 전체를 볼 때는 시군구 이름을 붙인다
+function aptName(ctx, x) {
+  const where = ctx.sgg ? x.d : `${(ctx.data.regions[x.g] || {}).name || ''} ${x.d}`;
+  return `${D.esc(x.n)}<div class="faint">${D.esc(where.trim())} · 전용 ${x.a}㎡</div>`;
+}
+// 연도 추이 라벨 — 올해는 완결 월까지만 들어 있다
+const matchYearLabel = (y, ytd) => y === ytd.yr ? `${y}(1~${ytd.cmpThruMonth}월)` : y;
+
+// 히스토그램 + 연도 추이 (jeonse·yield 공통)
+function histAndTrend(ctx, prefix, sec, { unit, digits, colorOf, refLine }) {
+  const { data } = ctx;
+  D.chart(`${prefix}Hist`, {
+    type: 'bar',
+    data: { labels: D.histLabels(sec.edges, unit), datasets: [{ data: sec.hist, borderRadius: 3, backgroundColor: sec.hist.map((_, i) => colorOf(i)) }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: it => `${D.fmt(it.raw)}개 (${sec.pairs ? Math.round(it.raw / sec.pairs * 100) : 0}%)` } } },
+      scales: { x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: false, font: { size: D.isMobile ? 9 : 11 } } },
+        y: { ticks: { callback: v => D.fmt(v) }, grid: { color: chartTheme.grid() }, title: { display: !D.isMobile, text: '단지·면적 짝 수' } } } },
+  });
+  const ds = [{ type: 'line', label: '중앙값', data: sec.trend.map(t => t.med), borderColor: ACCENT, backgroundColor: ACCENT, borderWidth: 3, tension: .3,
+    pointRadius: 4, pointBorderColor: chartTheme.pointBorder(), pointBorderWidth: 2, spanGaps: false }];
+  if (refLine) ds.push({ type: 'line', label: refLine.label, data: sec.years.map(() => refLine.value), borderColor: '#ef4444', borderDash: [6, 4], borderWidth: 1.5, pointRadius: 0 });
+  D.chart(`${prefix}Trend`, {
+    type: 'line',
+    data: { labels: sec.years.map(y => matchYearLabel(y, data.ytd)), datasets: ds },
+    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: !!refLine, position: 'top', labels: { usePointStyle: true } },
+        tooltip: { callbacks: { label: it => it.datasetIndex === 0 ? `중앙값 ${it.raw == null ? '표본 부족' : it.raw.toFixed(digits) + unit} · 짝 ${D.fmt(sec.trend[it.dataIndex].pairs)}개` : `${refLine.label}` } } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => v + unit }, grid: { color: chartTheme.grid() } } } },
+  });
+}
+
+// ─── jeonse (02 E4) ────────────────────────────────────────
+function renderJeonse(ctx, secEl) {
+  const { data, region } = ctx;
+  const j = region.jeonse;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="jeCards"></div>
+      <div class="grid2">
+        <div><div class="sub-title">전세가율 분포</div><div class="sub-desc" id="jeHistDesc"></div>
+          <div class="chart-wrap" style="height:240px"><canvas id="jeHist"></canvas></div></div>
+        <div><div class="sub-title">연도별 중앙값</div><div class="sub-desc">그 해 안에서 매매·전세가 각 3건 이상인 짝 · 2021년 전월세 신고제 이후</div>
+          <div class="chart-wrap" style="height:240px"><canvas id="jeTrend"></canvas></div></div>
+      </div>
+      <div class="sub-title">전세가율 80% 이상 — 매매가에 비해 전세가 높은 단지</div>
+      <div class="sub-desc">집값이 조금만 내려도 보증금을 돌려받기 어려울 수 있는 곳(이른바 깡통전세 후보). 높은 순 최대 20개</div>
+      <div id="jeHigh"></div>
+      <div class="sub-title">전세가율 60% 이하 — 매매가와 전세가 차이가 큰 단지</div>
+      <div class="sub-desc">매매에 기대가격(재건축·입지)이 붙은 곳이 많습니다. 낮은 순 최대 20개</div>
+      <div id="jeLow"></div>
+      ${cmpHTML('je')}
+      <div class="note">전세 = 월세 0원인 계약(신규·갱신 모두). 매매는 계약 해제 신고된 거래 제외. 같은 단지라도 전용면적(㎡, 반올림)이 다르면 다른 짝입니다.
+        지역 평균끼리 나누는 방식은 매매와 전세가 서로 다른 집이라 쓰지 않습니다.</div>`;
+  }
+  const period = `${D.ymText(j.from)}~${D.ymText(j.to)}`;
+  D.cards(document.getElementById('jeCards'), [
+    { label: '전세가율 중앙값 (최근 6개월)', value: j.med == null ? null : j.med.toFixed(1), unit: '%',
+      sub: j.med == null ? `짝 ${j.pairs}개 — 5개 미만` : `가운데 50%: ${j.p25.toFixed(1)}~${j.p75.toFixed(1)}%<br>${period} · 단지·면적 짝 ${D.fmt(j.pairs)}개` },
+    { label: '80% 이상 짝', value: j.pairs ? D.fmt(j.highCnt) : null, unit: '개', tone: j.highCnt ? 'up' : '',
+      sub: j.pairs ? `전체 짝의 ${Math.round(j.highCnt / j.pairs * 100)}%` : '' },
+    { label: '60% 이하 짝', value: j.pairs ? D.fmt(j.lowCnt) : null, unit: '개', tone: j.lowCnt ? 'down' : '',
+      sub: j.pairs ? `전체 짝의 ${Math.round(j.lowCnt / j.pairs * 100)}%` : '' },
+  ]);
+  document.getElementById('jeHistDesc').textContent = `${period} · 같은 단지·같은 면적에서 매매 3건 이상, 전세 3건 이상인 짝`;
+  // 구간 색: 60 미만 파랑, 80 이상 빨강
+  histAndTrend(ctx, 'je', j, { unit: '%', digits: 1,
+    colorOf: i => { const lo = i === 0 ? -1 : j.edges[i - 1]; return lo >= 80 ? '#ef4444cc' : (i < j.edges.length && j.edges[i] <= 60) ? '#3b82f6aa' : ACCENT + '77'; } });
+
+  const cols = cls => [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '단지', cls: 'name', get: x => aptName(ctx, x) },
+    { label: '전세가율', cls: `num ${cls}`, get: x => `${x.r.toFixed(1)}%` },
+    { label: '매매 중앙값', cls: 'num', get: x => `${D.eok(x.s)}<div class="faint">${x.sc}건</div>` },
+    { label: '전세 중앙값', cls: 'num', get: x => `${D.eok(x.j)}<div class="faint">${x.jc}건</div>` },
+  ];
+  D.table(document.getElementById('jeHigh'), cols('hi'), j.high, '80% 이상인 짝이 없습니다');
+  D.table(document.getElementById('jeLow'), cols('lo'), j.low, '60% 이하인 짝이 없습니다');
+
+  compareBlock(ctx, 'je', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 전세가율` : '전국 시도 전세가율',
+    desc: `${period} 짝들의 중앙값 · 짝 5개 미만 지역은 뺐습니다`,
+    pickSgg: r => r.jeonse.med == null ? null : { value: r.jeonse.med, tip: `${r.jeonse.med.toFixed(1)}% · 짝 ${D.fmt(r.jeonse.pairs)}개` },
+    pickSido: s => s.jeonse.med == null ? null : { value: s.jeonse.med, tip: `${s.jeonse.med.toFixed(1)}% · 짝 ${D.fmt(s.jeonse.pairs)}개` },
+    tick: v => `${v}%`,
+  });
+}
+
+// ─── yield (02 P8) ─────────────────────────────────────────
+function renderYield(ctx, secEl) {
+  const { data, region } = ctx;
+  const y = region.yield, base = data.baseRate;
+  const body = secEl.querySelector('.dsec-body');
+  if (!body.dataset.built) {
+    body.dataset.built = 1;
+    body.innerHTML = `
+      <div class="cards" id="yiCards"></div>
+      <div class="grid2">
+        <div><div class="sub-title">수익률 분포</div><div class="sub-desc" id="yiHistDesc"></div>
+          <div class="chart-wrap" style="height:240px"><canvas id="yiHist"></canvas></div></div>
+        <div><div class="sub-title">연도별 중앙값</div><div class="sub-desc" id="yiTrendDesc"></div>
+          <div class="chart-wrap" style="height:240px"><canvas id="yiTrend"></canvas></div></div>
+      </div>
+      <div class="sub-title">수익률 높은 단지 TOP 20</div>
+      <div class="sub-desc">보증금이 매매가의 절반을 넘는 짝은 뺐습니다 — 실투자금이 작아 수익률이 부풀려집니다</div>
+      <div id="yiTop"></div>
+      ${cmpHTML('yi')}
+      <div class="note">수익률(캡레이트) = 월세 중앙값 × 12 ÷ (매매가 중앙값 − 월세 보증금 중앙값). 같은 단지·같은 전용면적에서 최근 12개월 매매 3건 이상, 월세 3건 이상인 짝만.
+        세금·관리비·공실·대출이자는 빼지 않은 값입니다. 기준금리는 한국은행 발표값${base == null ? '' : `(${data.baseRateAsOf} 결정)`}.</div>`;
+  }
+  const period = `${D.ymText(y.from)}~${D.ymText(y.to)}`;
+  const gap = y.med != null && base != null ? Math.round((y.med - base) * 100) / 100 : null;
+  D.cards(document.getElementById('yiCards'), [
+    { label: '임대수익률 중앙값 (최근 12개월)', value: y.med == null ? null : y.med.toFixed(2), unit: '%',
+      sub: y.med == null ? `짝 ${y.pairs}개 — 5개 미만` : `가운데 50%: ${y.p25.toFixed(2)}~${y.p75.toFixed(2)}%<br>${period} · 단지·면적 짝 ${D.fmt(y.pairs)}개` },
+    { label: base == null ? '기준금리와 비교' : `기준금리 ${base.toFixed(2)}% 대비`, value: gap == null ? null : `${gap > 0 ? '+' : ''}${gap.toFixed(2)}`, unit: '%p',
+      tone: gap == null ? 'na' : gap > 0 ? 'up' : 'down', sub: gap == null ? '' : gap > 0 ? '중앙값이 기준금리보다 높습니다' : '중앙값이 기준금리보다 낮습니다' },
+    { label: '기준금리보다 높은 짝', value: y.aboveBase == null || !y.pairs ? null : D.fmt(y.aboveBase), unit: '개', tone: '',
+      sub: y.pairs && y.aboveBase != null ? `전체 짝의 ${Math.round(y.aboveBase / y.pairs * 100)}%` : '' },
+  ]);
+  document.getElementById('yiHistDesc').textContent = `${period} · 단지·면적 짝 ${D.fmt(y.pairs)}개`;
+  document.getElementById('yiTrendDesc').textContent = base == null ? '그 해 안에서 매매·월세 각 3건 이상인 짝'
+    : `그 해 안에서 매매·월세 각 3건 이상인 짝 · 빨간 점선 = 지금 기준금리(과거 금리 아님)`;
+  histAndTrend(ctx, 'yi', y, { unit: '%', digits: 2,
+    colorOf: i => { const lo = i === 0 ? -1 : y.edges[i - 1]; return base != null && lo >= base ? '#10b981bb' : ACCENT + '77'; },
+    refLine: base == null ? null : { label: `기준금리 ${base}%`, value: base } });
+
+  D.table(document.getElementById('yiTop'), [
+    { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
+    { label: '단지', cls: 'name', get: x => aptName(ctx, x) },
+    { label: '수익률', cls: 'num hi', get: x => `${x.y.toFixed(2)}%` },
+    { label: '매매 중앙값', cls: 'num', get: x => `${D.eok(x.s)}<div class="faint">${x.sc}건</div>` },
+    { label: '보증금 / 월세', cls: 'num', get: x => `${D.eok(x.dep)} / ${D.fmt(x.rent)}만<div class="faint">${x.wc}건</div>` },
+  ], y.top, '조건에 맞는 짝이 없습니다');
+
+  compareBlock(ctx, 'yi', {
+    title: m => m === 'sgg' ? `${data.sido.name} 시군구 임대수익률` : '전국 시도 임대수익률',
+    desc: `${period} 짝들의 중앙값 · 짝 5개 미만 지역은 뺐습니다`,
+    pickSgg: r => r.yield.med == null ? null : { value: r.yield.med, tip: `${r.yield.med.toFixed(2)}% · 짝 ${D.fmt(r.yield.pairs)}개` },
+    pickSido: s => s.yield.med == null ? null : { value: s.yield.med, tip: `${s.yield.med.toFixed(2)}% · 짝 ${D.fmt(s.yield.pairs)}개` },
+    tick: v => `${v}%`,
+  });
+}
+
+D.start({ kind: 'apt', sections: { price: renderPrice, volume: renderVolume, jeonse: renderJeonse, yield: renderYield } });
 </script>
 </body>
 </html>

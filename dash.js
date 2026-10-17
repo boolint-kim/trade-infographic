@@ -100,6 +100,21 @@
         onClick: (e, els) => { if (els.length && onClick) onClick(rows[els[0].index]); } },
     });
   }
+  // 히스토그램 구간 라벨 — edges [40,50,…,100] → ['40 미만','40~50',…,'100 이상']
+  function histLabels(edges, unit = '') {
+    const out = [`${edges[0]}${unit} 미만`];
+    for (let i = 1; i < edges.length; i++) out.push(`${edges[i - 1]}~${edges[i]}${unit}`);
+    out.push(`${edges[edges.length - 1]}${unit} 이상`);
+    return out;
+  }
+
+  // 표 — cols = [{label, get:(row)=>html, cls?}] . 좁은 화면에서는 가로 스크롤
+  function table(container, cols, rows, empty = '해당 단지가 없습니다') {
+    if (!rows.length) { container.innerHTML = `<div class="pending">${esc(empty)}</div>`; return; }
+    container.innerHTML = `<div class="tbl-wrap"><table class="tbl"><thead><tr>${cols.map(c => `<th class="${c.cls || ''}">${esc(c.label)}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map((r, i) => `<tr>${cols.map(c => `<td class="${c.cls || ''}">${c.get(r, i)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  }
+
   // 'YYYYMM' → '25.11'
   const monthLabel = ym => `${ym.slice(2, 4)}.${ym.slice(4, 6)}`;
 
@@ -193,5 +208,5 @@
     });
   }
 
-  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, rankBars, monthLabel, isMobile };
+  window.Dash = { start, fmt, eok, signPct, ymText, esc, yearLabel, isImmature, cards, toneOf, chips, chart, bandDatasets, legendFilter, barColors, rankBars, monthLabel, histLabels, table, isMobile };
 })();

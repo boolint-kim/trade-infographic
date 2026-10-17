@@ -58,6 +58,18 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
 .note{font-size:11px;color:var(--text-faint);margin-top:8px;line-height:1.6}
 .note b{color:var(--text-muted)}
 
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+.tbl th{background:var(--card-bg-soft);color:var(--text-muted);font-weight:700;text-align:left;padding:7px 8px;border-bottom:1px solid var(--border)}
+.tbl td{padding:7px 8px;border-bottom:1px solid var(--border-soft);color:var(--text)}
+.tbl tr:hover td{background:var(--row-hover)}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .name{font-weight:700;white-space:normal;min-width:110px}
+.tbl .faint{color:var(--text-faint);font-size:11.5px}
+.tbl .hi{color:#ef4444;font-weight:800}
+.tbl .lo{color:#3b82f6;font-weight:800}
+
 .footer{text-align:center;font-size:11px;color:var(--text-faint);margin-top:12px;line-height:1.8}
 
 @media(max-width:700px){
@@ -72,5 +84,6 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
   .dsec{padding:16px 14px;border-radius:12px;margin-bottom:14px}
   .dsec-title{font-size:16px}
   .cards{grid-template-columns:1fr;gap:10px}
+  .grid2{grid-template-columns:1fr}
   .kcard .value{font-size:24px}
 }
