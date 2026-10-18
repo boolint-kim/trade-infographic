@@ -3,16 +3,18 @@
 > 2026-10-16 정합성 조사에서 초안 작성 → 같은 날 검토·보완(파일 수·생성기·할 일 상태를 실물로 대조).
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
-## ★ 다음 세션 시작점 (2026-10-17) — 지표 43페이지 → "내 동네 한 장" 대시보드 7 + 특화 5 로 재편
-- **작업 문서(정본)**: `~/server/trade-collector/docs/infographic-redesign/` — `00-README.md`(결론·새 구성·대응표·순서) → `01-common.md`(파라미터 계약·JSON 스키마·배포 절차) → `02~04`(섹션 스펙) → **`05-checklist.md`(진행 상태는 여기에만)**
-- 2026-10-17 평가: 43페이지 중 유지 9 · 재설계 25 · 폐기 9. 원인은 시도×연도 단순평균·지표 하나=페이지 하나·노이즈 평균·신고 지연. 사용자가 "기존 앱이 거는 URL 은 무시(사용자 없음)" 라 해 **B안(대시보드) 확정** — 시군구 하나를 고르면 전 지표가 한 화면
-- **새 파일로 만들고 다 되면 바꿔 끼운다**: `apt.html`·`dash.js`·`data/dash-apt-11.json`·collector `generate-dash-apt.js` 처럼 전부 새 이름. 옛 43페이지·옛 생성기는 컷오버(단계 5)까지 손대지 않는다. worktree 불필요. 02:00 파이프라인이 `git add -A` + push 하므로 **문법 오류 상태로 하루를 끝내지 말 것**(`./check.sh apt.html`)
-- 컷오버 때 `_redirects`(43줄 301)로 옛 URL 을 받는다 — 출시 앱(AptTradeChart·OfficeTradeChart·TransTax)의 허브가 옛 URL 을 하드코딩하지만 앱 출시 없이 이어진다
-- 진행: 단계 0~4 완료(2026-10-17) — 대시보드 7장(`apt`·`office`·`multi`·`right`·`single`·`land`·`building.html`) + 특화 5장, 파이프라인 등록·index 카드까지. 다음은 단계 5 컷오버(옛 43페이지 삭제·`_redirects`) — 정본은 05-checklist
-- 구조: 대시보드 섹션 렌더러는 `dash-sections.js`(물건 페이지 공용), 지역 선택 `region-select.js`, 공통 헬퍼 `dash.js`. 생성기 쪽은 collector `src/lib/dash-builder.js` 하나에 설정만 넘긴다
+## ★ 현황 (2026-10-18) — 재설계(B안) 컷오버 완료: 대시보드 7 + 특화 5 + 지도
+- **옛 지표 43페이지(`infographic-*.html`)는 2026-10-18 삭제**했다. 옛 주소는 `_redirects`(86줄 = 43개 × `.html`·확장자 없는 형태)가 새 섹션으로 301 한다.
+  출시 앱(AptTradeChart·OfficeTradeChart·TransTax A+i)의 허브가 옛 `.html` 주소를 하드코딩하지만 앱 출시 없이 이어진다(같은 호스트 리다이렉트는 앱 허용 목록 통과)
+  - ⚠️ Cloudflare Pages 는 `/x.html` 을 **308 → `/x`** 로 넘긴다(쿼리 유지). 그래서 `_redirects` 는 옛 주소를 두 형태 다 받고, 목적지는 확장자 없는 주소로 쓴다
+  - 남은 일(선택): 앱 허브를 새 주소로 바꾸고 `?sgg=` 를 넘기기(단계 6) — 05-checklist
+- **작업 문서(정본)**: `~/server/trade-collector/docs/infographic-redesign/` — `00-README.md`(결론·대응표) · `01-common.md`(파라미터 계약·JSON 스키마) · `02~04`(섹션 스펙) · **`05-checklist.md`(진행 기록)**
+- 배경(2026-10-17 평가): 옛 43페이지 중 유지 9 · 재설계 25 · 폐기 9. 원인은 시도×연도 단순평균·지표 하나=페이지 하나·노이즈 평균·신고 지연
+- 원칙: **시군구가 단위**(`?sido=&sgg=`) · 평균 대신 **중앙값** + p25~p75 · 총액 대신 **평당가** · 전세가율·수익률은 **같은 단지·같은 면적 짝** · 신고 중인 최근 달(아파트 2개월·연립 3개월)은 회색, 올해는 "1~N월"
+- 02:00 파이프라인이 `git add -A` + push 하므로 **문법 오류 상태로 하루를 끝내지 말 것**(`./check.sh`)
 
 ## 이 레포가 무엇인가
-- 정적 HTML 45개(+ `404.html`) + `data/` JSON 49개. 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
+- 정적 HTML 14개(+ `404.html`) + `_redirects` + `data/` JSON 약 210개(대부분 시도별 분할). 빌드 단계 없음. GitHub push → Cloudflare Pages 자동 배포
   - `404.html` 은 2026-10-17 추가. **없으면 Pages 가 없는 경로에 index.html 을 200 으로 내준다**(SPA 폴백) — 삭제한 페이지 주소가 허브로 열려 깨진 링크를 못 알아챈다. 지우지 말 것
   (2026-10-16 저녁: 전월세 히트맵 JSON 3종 추가, 양도세 이벤트 페이지 `infographic-event-cgt.html` 삭제 — 만료 5개월 경과, 앱 허브 4곳 어디도 링크 안 함)
   - https://trade-infographic.pages.dev/ · 같은 배포가 https://chart.boolint.com/ 로도 나간다(히트맵 앱 임베드용)
@@ -27,70 +29,27 @@
 ## 페이지 ↔ JSON ↔ 생성 스크립트
 | 페이지 | JSON | 생성 스크립트 (trade-collector/src) |
 |---|---|---|
-| heatmap.html | heatmap.json<br>heatmap-office.json · heatmap-multi.json<br>heatmap-rent.json · heatmap-office-rent.json · heatmap-multi-rent.json | generate-heatmap-json.js<br>generate-heatmap-layers-json.js<br>generate-heatmap-rent-json.js (2026-10-16 추가) |
-| apt · office · multi · right · single · land · building.html (B안 대시보드) | dash-<물건>-all.json · dash-<물건>-<시도>.json ×16 | generate-dash-<물건>.js → src/lib/dash-builder.js (+ stats·dash-common·match) |
+| apt · office · multi · right · single · land · building.html (물건별 대시보드) | dash-<물건>-all.json · dash-<물건>-<시도>.json ×16 | generate-dash-<물건>.js → src/lib/dash-builder.js (+ stats·dash-common·match) |
 | ranking.html?type=apt\|office\|right | dash-ranking-<type>-all.json · -<시도>.json | generate-dash-ranking.js |
 | new-high.html · cancel.html · hotspot.html | dash-events-all.json · dash-events-<시도>.json | generate-dash-events.js |
-| today.html?type=deal\|jeonse\|wolse | dash-today-all.json · dash-today-<시도>.json | generate-dash-today.js (스냅샷 collector/data/snapshots/) |
-| index.html | (없음) | - |
-| infographic-age-premium.html | age-premium.json | generate-periodic-data.js |
-| infographic-building-price-trend.html | building-price-trend.json | generate-building-data.js (파일명을 동적으로 조립) |
-| infographic-building-trade-volume.html | building-trade-volume.json | generate-building-data.js (파일명을 동적으로 조립) |
-| infographic-buyer-seller.html | buyer-seller.json | generate-periodic-data.js |
-| infographic-cancel-rate.html | cancel-rate.json | generate-periodic-data.js |
-| infographic-daily-jeonse.html | daily-jeonse.json | generate-infographic-data.js |
-| infographic-daily-trades.html | daily-trades.json | generate-infographic-data.js |
-| infographic-daily-wolse.html | daily-wolse.json | generate-infographic-data.js |
-| infographic-factory-price-trend.html | factory-price-trend.json | generate-building-data.js (파일명을 동적으로 조립) |
-| infographic-factory-trade-volume.html | factory-trade-volume.json | generate-building-data.js (파일명을 동적으로 조립) |
-| infographic-floor-premium.html | floor-premium.json | generate-periodic-data.js |
-| infographic-hotspot.html | hotspot.json | generate-periodic-data.js |
-| infographic-jeonse-ratio.html | jeonse-ratio.json | generate-infographic-data.js |
-| infographic-land-price-trend.html | land-price-trend.json | generate-land-data.js |
-| infographic-land-pyeong-price.html | land-pyeong-price.json | generate-land-data.js |
-| infographic-land-trade-volume.html | land-trade-volume.json | generate-land-data.js |
-| infographic-multi-price-trend.html | multi-price-trend.json | generate-multi-data.js |
-| infographic-multi-trade-volume.html | multi-trade-volume.json | generate-multi-data.js |
-| infographic-multi-wolse-ratio.html | multi-wolse-ratio.json | generate-multi-data.js |
-| infographic-multi-yield-rate.html | multi-yield-rate.json | generate-multi-data.js |
-| infographic-new-high.html | new-high.json | generate-infographic-data.js |
-| infographic-office-jeonse-ratio.html | office-jeonse-ratio.json | generate-office-data.js |
-| infographic-office-price-per-pyeong.html | office-pyeong-ranking.json | generate-office-data.js |
-| infographic-office-price-trend.html | office-price-trend.json | generate-office-data.js |
-| infographic-office-trade-volume.html | office-trade-volume.json | generate-office-data.js |
-| infographic-office-wolse-ratio.html | office-wolse-ratio.json | generate-office-data.js |
-| infographic-office-yield-rate.html | office-yield-rate.json | generate-office-data.js |
-| infographic-price-gap.html | price-gap.json | generate-periodic-data.js |
-| infographic-price-per-pyeong.html | pyeong-ranking.json | generate-pyeong-json.js |
-| infographic-price-trend.html | price-trend.json | generate-infographic-data.js |
-| infographic-renewal-rate.html | renewal-rate.json | generate-periodic-data.js |
-| infographic-right-price-per-pyeong.html | right-pyeong-ranking.json | generate-right-data.js |
-| infographic-right-price-trend.html | right-price-trend.json | generate-right-data.js |
-| infographic-right-trade-volume.html | right-trade-volume.json | generate-right-data.js |
-| infographic-single-price-trend.html | single-price-trend.json | generate-single-data.js |
-| infographic-single-pyeong-price.html | single-pyeong-price.json | generate-single-data.js |
-| infographic-single-trade-volume.html | single-trade-volume.json | generate-single-data.js |
-| infographic-single-wolse-ratio.html | single-wolse-ratio.json | generate-single-data.js |
-| infographic-single-yield-rate.html | single-yield-rate.json | generate-single-data.js |
-| infographic-size-compare.html | size-compare.json | generate-periodic-data.js |
-| infographic-trade-volume.html | trade-volume.json | generate-infographic-data.js |
-| infographic-wolse-ratio.html | wolse-ratio.json | generate-periodic-data.js |
-| infographic-yield-rate.html | yield-rate.json | generate-periodic-data.js |
+| today.html?type=deal\|jeonse\|wolse | dash-today-all.json · dash-today-<시도>.json | generate-dash-today.js (어제 스냅샷 collector/data/snapshots/) |
+| heatmap.html | heatmap.json<br>heatmap-office.json · heatmap-multi.json<br>heatmap-rent.json · heatmap-office-rent.json · heatmap-multi-rent.json | generate-heatmap-json.js<br>generate-heatmap-layers-json.js<br>generate-heatmap-rent-json.js |
+| index.html · 404.html | (없음) | - |
 
-- index.html 은 44개 페이지를 전부 링크한다(2026-10-16 확인, 히트맵은 매매·전세 카드 2장). 페이지를 추가하면 index 에도 넣을 것
-- 2026-10-16 기준 `data/` 의 JSON 은 전부 어느 페이지가 쓰고, 페이지가 찾는 JSON 은 전월세 히트맵 3종(첫 배포 전) 말고 다 있다
-- `region.cache.json`(collector 의 지역목록 캐시)은 2026-10-16 에 복사 대상에서 빼고 `git rm` 했다. 다시 생기면 collector 복사 단계를 볼 것
+- 페이지는 `<시도>-all.json`(시도·시군구 목록 + 시도 요약)을 먼저 받고, 시도를 고를 때 그 시도 파일 하나를 받는다. 시군구 전환은 fetch 없이 `regions[sgg]`
+- 섹션 id 가 곧 해시다(`apt#yield`). `_redirects` 의 목적지가 이 해시를 쓰므로 **섹션 id 를 바꾸지 말 것**
+- 페이지를 추가하면 index 에도 넣을 것(지금 카드 14장: 물건 7 · 거래 목록·사건 5 · 지도 2)
 
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
-- **다크모드**: `common.css` 의 CSS 토큰 + `chart-defaults.js` 의 `chartTheme` 헬퍼. 2026-05-20 에 43페이지 일괄 적용
+- **대시보드 JS**: `region-select.js`(시도 버튼 + 시군구 select, URL `?sido=&sgg=` 계약) · `dash.js`(로드·섹션 네비·칩·카드·표·차트 헬퍼, 단지 행 → `AndroidBridge.onComplexClick`) ·
+  `dash-sections.js`(물건 페이지 공용 섹션 렌더러 price·volume·jeonse·yield·wolse·age·size·renewal·pyeong·jimok·factory) · `dash.css`
+  - 시도·시군구 이름은 JSON(`-all.json`)이 싣는다 — 페이지에 시도 맵을 박지 않는다(옛 페이지는 46개에 인라인이라 개편 때마다 다 고쳐야 했다)
+- **다크모드**: `common.css` 의 CSS 토큰 + `chart-defaults.js` 의 `chartTheme` 헬퍼
 - **SelfBanner**: `selfbanner-web.js` — 웹 접속에만 하단 배너, 앱 WebView(`window.IS_APP`)는 제외. 2026-05-22
   - 배너를 그리면 `<html>` 에 CSS 변수 `--sb-h`(실제 배너 높이)를 넣고 닫으면 지운다(2026-10-16). body 패딩은 absolute 요소에 안 먹으므로,
     바닥에 붙는 요소는 `bottom: calc(Npx + var(--sb-h, 0px))` 로 피한다 — heatmap.html 의 범례·힌트·위치 버튼이 이렇게 돼 있다(미디어쿼리 오버라이드 포함)
-- **차트**: Chart.js 4.4.0 + datalabels 2.2.0 (jsdelivr CDN, 버전 고정)
-- **시도 코드**: 2026-07 개편 반영(전남광주 = 12, 옛 29·46 없음). 페이지마다 시도 맵이 인라인이라 개편 때 46개를 같이 고친다
-  - ⚠️ **문구에 시도 수를 쓰지 않는다**("전국 시도별"). 개편 뒤 16개가 됐는데 "전국 17개 시도" 가 43개 파일 68곳에 남아 있었다(2026-10-16 치환)
-  - ⚠️ **연도 범위도 문구에 박지 않는다.** 가격추이 8종·월세비중 4종의 헤더는 `<span id="yearRange">` 를 로드 뒤 `sido[*].yearly[].yr` 의 최소~최대로 채우고,
-    거래량 8종의 연도 차트 부제(`chartSub1`)는 `yearly` 의 첫·끝 `yr` 로 쓴다. index 카드는 연도 없이 쓴다(2026-10-17, 21파일의 "2016~2026" 치환)
+- **차트**: Chart.js 4.4.0 (jsdelivr CDN, 버전 고정). 막대는 `borderDash` 를 지원하지 않는다 — 미완 월은 회색 + 테두리로
+- ⚠️ **문구에 시도 수·연도 범위를 박지 않는다**("전국 17개 시도"·"2016~2026" 이 옛 페이지에 수십 곳 남아 있었다) — 데이터에서 채운다
 - **heatmap.html** 은 TradeHeatmap Android 라이브러리가 WebView 로 임베드한다 — `?type=apt-deal` 등 URL 파라미터,
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
@@ -119,7 +78,7 @@ python3 -m http.server 8765 --bind 127.0.0.1
 ```
 - check.sh 가 보는 것: 콘솔 오류 / 화면의 "로딩 실패"(heatmap 은 fetch 실패를 화면에만 쓴다) /
   참조 JSON 존재 / heatmap 의 `#stats`(비어 있으면 점이 하나도 안 그려진 것). 로컬 서버는 빈 포트로 스스로 띄우고 내린다(no-store)
-- 2026-10-16 결과: 46/46 OK + heatmap 6타입(`?type=apt|office|multi-deal|rent`) 모두 OK, 시도 코드가 JSON 과 일치, index 링크 45/45 존재
+- 2026-10-18 컷오버 뒤: 15/15 OK (index·404·heatmap + 대시보드 7 + 특화 5)
 
 ### heatmap 결함 2개 — 2026-10-16 수정 완료
 - **office·multi 타입 빈 지도** (`6a3539c`): `draw()`·`onMapClick()` 이 `layerReady.apt` 를 기다렸는데 이 타입들은 apt 를 로드하지 않았다
@@ -146,5 +105,6 @@ python3 -m http.server 8765 --bind 127.0.0.1
 4. 렌더 점검 루프 → `check.sh`
 
 ## 하지 말 것
-- 사이트를 새로 만들지 않는다. 46페이지가 오늘 데이터로 오류 없이 렌더된다(2026-10-16)
 - `data/` 를 손으로 고치지 않는다. heatmap.html 의 URL 파라미터·AndroidBridge 계약을 깨지 않는다
+- `?sido=&sgg=`·`?type=` 이름과 섹션 id(해시)를 바꾸지 않는다 — 앱·`_redirects` 와의 약속이다
+- 시도 평균끼리 나눈 비율, 총액 평균을 다시 들이지 않는다(재설계의 이유)

@@ -10,393 +10,121 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px}
   .container{max-width:900px;margin:0 auto}
-  .header{text-align:center;margin-bottom:40px}
+  .header{text-align:center;margin-bottom:36px}
   .header h1{font-size:28px;font-weight:800;margin-bottom:8px}
   .header p{font-size:14px;color:var(--text-muted);line-height:1.6}
   .group{margin-bottom:32px}
-  .group-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-left:12px;border-left:4px solid #6366f1}
-  .group.periodic .group-title{border-color:#f97316}
-  .group.office .group-title{border-color:#06b6d4}
-  .group.office .card .tag{color:#06b6d4}
-  .group.multi .group-title{border-color:#8b5cf6}
-  .group.multi .card .tag{color:#8b5cf6}
-  .group.single .group-title{border-color:#059669}
-  .group.single .card .tag{color:#059669}
-  .group.land .group-title{border-color:#d97706}
-  .group.land .card .tag{color:#d97706}
-  .group.right .group-title{border-color:#e11d48}
-  .group.right .card .tag{color:#e11d48}
-  .group.building .group-title{border-color:#78716c}
-  .group.building .card .tag{color:#78716c}
+  .group-title{font-size:18px;font-weight:800;margin-bottom:6px;padding-left:12px;border-left:4px solid #6366f1}
+  .group-desc{font-size:13px;color:var(--text-muted);margin:0 0 14px 16px}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .card{background:var(--card-bg);border-radius:16px;padding:24px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
+  .card{background:var(--card-bg);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:block}
   .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
-  .card .tag{font-size:11px;font-weight:700;color:#6366f1;margin-bottom:8px;letter-spacing:.5px}
-  .group.periodic .card .tag{color:#f97316}
+  .card .tag{font-size:11px;font-weight:700;margin-bottom:8px;letter-spacing:.5px}
   .card h3{font-size:16px;font-weight:700;margin-bottom:6px}
   .card p{font-size:13px;color:var(--text-muted);line-height:1.5}
   .footer{text-align:center;font-size:12px;color:var(--text-faint);margin-top:40px;line-height:1.8}
-  @media (prefers-color-scheme: dark){
-    .group.single .group-title, .group.single .card .tag{color:#10b981}
-    .group.land .group-title, .group.land .card .tag{color:#f59e0b}
-    .group.building .group-title, .group.building .card .tag{color:#a8a29e}
-  }
+  @media(max-width:700px){body{padding:20px 12px} .header h1{font-size:21px}}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <h1>부동산 실거래가 인포그래픽</h1>
-    <p>국토교통부 실거래가 공개시스템 기반 | 3,000만건 데이터 분석 | 전국 시도별</p>
+    <h1>부동산 실거래가 — 내 동네 한 장</h1>
+    <p>국토교통부 실거래가 공개시스템 기반 | 시군구를 고르면 그 동네의 지표가 한 화면에<br>평균 대신 중앙값, 총액 대신 평당가 · 신고가 아직 들어오는 최근 달은 따로 표시</p>
   </div>
 
-  <div class="group" style="margin-bottom:32px">
-    <div class="group-title" style="border-color:#6366f1">내 동네 한 장 — 시군구를 고르면 지표가 한 화면에</div>
+  <div class="group">
+    <div class="group-title" style="border-color:#6366f1">물건별 대시보드</div>
+    <div class="group-desc">시도·시군구를 고르면 아래 지표가 모두 그 동네 기준으로 바뀝니다</div>
     <div class="cards">
       <a class="card" href="apt.html" style="border-left:3px solid #6366f1">
-        <div class="tag" style="color:#6366f1">NEW · 아파트 · 일 1회 갱신</div>
+        <div class="tag" style="color:#6366f1">일 1회 갱신 · 아파트</div>
         <h3>아파트 — 내 동네 한 장</h3>
-        <p>평당가 중앙값 추이 · 월별 거래량 · 단지 매칭 전세가율·임대수익률 · 월세 비중·전환율 · 연식·면적대별 평당가 · 전월세 갱신. 신고 중인 최근 두 달은 따로 표시</p>
+        <p>평당가 추이(면적대별) · 월별 거래량 · 같은 단지끼리 짝지은 전세가율·임대수익률 · 월세 비중·전환율 · 연식·면적대별 평당가 · 전월세 갱신</p>
       </a>
       <a class="card" href="office.html" style="border-left:3px solid #06b6d4">
-        <div class="tag" style="color:#06b6d4">NEW · 오피스텔 · 일 1회 갱신</div>
+        <div class="tag" style="color:#06b6d4">일 1회 갱신 · 오피스텔</div>
         <h3>오피스텔 — 내 동네 한 장</h3>
         <p>원룸·투룸·60㎡ 초과 평당가 · 거래량 · 단지 매칭 전세가율·임대수익률 · 월세 비중·전환율</p>
       </a>
       <a class="card" href="multi.html" style="border-left:3px solid #8b5cf6">
-        <div class="tag" style="color:#8b5cf6">NEW · 연립다세대 · 일 1회 갱신</div>
+        <div class="tag" style="color:#8b5cf6">일 1회 갱신 · 연립다세대</div>
         <h3>빌라 — 내 동네 한 장</h3>
         <p>연식별 평당가 · 거래량(신고 중인 3개월 표시) · 월세 비중·전환율·월세 중앙값</p>
       </a>
       <a class="card" href="right.html" style="border-left:3px solid #e11d48">
-        <div class="tag" style="color:#e11d48">NEW · 분양권·입주권 · 일 1회 갱신</div>
+        <div class="tag" style="color:#e11d48">일 1회 갱신 · 분양권·입주권</div>
         <h3>분양권 — 내 동네 한 장</h3>
-        <p>84형·59형 평당가 추이와 거래량. 분양가 자료가 없어 프리미엄은 계산하지 않습니다</p>
+        <p>84형·59형 평당가 추이와 거래량 — 분양가 자료가 없어 프리미엄은 계산하지 않습니다</p>
       </a>
-      <a class="card" href="single.html" style="border-left:3px solid #10b981">
-        <div class="tag" style="color:#10b981">NEW · 단독·다가구 · 일 1회 갱신</div>
+      <a class="card" href="single.html" style="border-left:3px solid #059669">
+        <div class="tag" style="color:#059669">일 1회 갱신 · 단독·다가구</div>
         <h3>단독·다가구 — 내 동네 한 장</h3>
         <p>대지 평당가 추이(단독/다가구) · 읍면동별 땅값 · 거래량 · 월세 비중과 다가구 월세·보증금</p>
       </a>
       <a class="card" href="land.html" style="border-left:3px solid #d97706">
-        <div class="tag" style="color:#d97706">NEW · 토지 · 일 1회 갱신</div>
+        <div class="tag" style="color:#d97706">일 1회 갱신 · 토지</div>
         <h3>토지 — 내 동네 한 장</h3>
         <p>지목별 평당가 추이(지분 거래 제외) · 대(垈) 읍면동 순위 · 지목·지분별 거래량</p>
       </a>
       <a class="card" href="building.html" style="border-left:3px solid #78716c">
-        <div class="tag" style="color:#78716c">NEW · 건물·공장 · 일 1회 갱신</div>
+        <div class="tag" style="color:#78716c">일 1회 갱신 · 건물·공장</div>
         <h3>건물·공장 — 내 동네 한 장</h3>
         <p>통건물 대지 평당가 · 상가 호실 건물면적 평당가 · 공장·창고·지식산업센터 분기 거래</p>
       </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title" style="border-color:#f59e0b">거래 목록 · 사건</div>
+    <div class="group-desc">단지 이름이 나오는 페이지 — 앱에서 열면 단지를 눌러 찾아갈 수 있습니다</div>
+    <div class="cards">
       <a class="card" href="today.html" style="border-left:3px solid #f59e0b">
-        <div class="tag" style="color:#f59e0b">NEW · 아파트 · 일 1회 갱신</div>
+        <div class="tag" style="color:#f59e0b">매일 갱신</div>
         <h3>오늘 올라온 거래</h3>
-        <p>어제 이후 새로 신고된 매매·전세·월세를 시군구별로. 이번 달 계약일별 신고 현황과 TOP 20</p>
+        <p>어제 이후 새로 신고된 아파트 매매·전세·월세를 시군구별로 · 이번 달 계약일별 신고 현황</p>
       </a>
       <a class="card" href="ranking.html" style="border-left:3px solid #6366f1">
-        <div class="tag" style="color:#6366f1">NEW · 아파트·오피스텔·분양권</div>
+        <div class="tag" style="color:#6366f1">아파트·오피스텔·분양권</div>
         <h3>단지 평당가 랭킹</h3>
         <p>시군구 안 단지 순위 — 84형·59형·고가·저가·거래량·같은 면적끼리 변동률. 5건 이상 단지만</p>
       </a>
       <a class="card" href="new-high.html" style="border-left:3px solid #ef4444">
-        <div class="tag" style="color:#ef4444">NEW · 아파트 · 최근 3개월</div>
+        <div class="tag" style="color:#ef4444">최근 3개월</div>
         <h3>신고가</h3>
-        <p>이전 최고가를 넘은 거래를 최근 순으로. 거래 중 신고가 비율로 어느 동네가 뜨거운지</p>
+        <p>이전 최고가를 넘은 거래를 최근 순으로 · 거래 중 신고가 비율로 어느 동네가 뜨거운지</p>
       </a>
       <a class="card" href="hotspot.html" style="border-left:3px solid #10b981">
-        <div class="tag" style="color:#10b981">NEW · 아파트 · 완결 3개월</div>
+        <div class="tag" style="color:#10b981">완결 3개월</div>
         <h3>거래 핫스팟</h3>
-        <p>전년 같은 기간 대비 거래량·평당가 증감. 시군구 산점도와 읍면동 드릴다운</p>
+        <p>전년 같은 기간 대비 거래량·평당가 증감 · 시군구 산점도와 읍면동</p>
       </a>
       <a class="card" href="cancel.html" style="border-left:3px solid #8b5cf6">
-        <div class="tag" style="color:#8b5cf6">NEW · 아파트 · 최근 24개월</div>
+        <div class="tag" style="color:#8b5cf6">최근 24개월</div>
         <h3>계약 해제</h3>
-        <p>월별 해제율과 해제가 몰린 단지. 신고가를 찍고 취소된 건 표시</p>
+        <p>월별 해제율과 해제가 몰린 단지 · 신고가를 찍고 취소된 건 표시</p>
       </a>
     </div>
   </div>
 
-  <div class="group" style="margin-bottom:32px">
-    <div class="group-title" style="border-color:#ef4444">지도 시각화</div>
+  <div class="group">
+    <div class="group-title" style="border-color:#ef4444">지도</div>
     <div class="cards">
       <a class="card" href="heatmap.html" style="border-left:3px solid #ef4444">
-        <div class="tag" style="color:#ef4444">MAP · 매매 · 일 1회 갱신</div>
+        <div class="tag" style="color:#ef4444">지도 · 매매</div>
         <h3>매매 평당가 히트맵</h3>
-        <p>단지별 매매 평당가를 네이버 지도 위에. 아파트·오피스텔·연립다세대 레이어, 면적대 필터, 최근 6개월 기간 선택</p>
+        <p>단지별 매매 평당가를 지도 위에 — 아파트(분양권 포함)·오피스텔·연립다세대 레이어, 면적대 필터, 기간 선택</p>
       </a>
       <a class="card" href="heatmap.html?type=apt-rent" style="border-left:3px solid #ef4444">
-        <div class="tag" style="color:#ef4444">MAP · 전세 · 일 1회 갱신</div>
-        <h3>전세 평당가 히트맵</h3>
-        <p>단지별 전세 보증금 평당가(중앙값)를 지도 위에. 같은 3개 레이어·면적대 필터·기간 선택</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group evergreen">
-    <div class="group-title">아파트 — 상시 지표 (8개)</div>
-    <div class="cards">
-      <a class="card" href="infographic-daily-trades.html">
-        <div class="tag">E1 · 일 1회 갱신</div>
-        <h3>오늘의 거래 현황</h3>
-        <p>이번 달 일별 거래 신고 건수, 시도별 현황, 고가 거래 TOP 5</p>
-      </a>
-      <a class="card" href="infographic-daily-jeonse.html">
-        <div class="tag">E7 · 일 1회 갱신</div>
-        <h3>오늘의 전세 현황</h3>
-        <p>이번 달 일별 전세 신고 건수, 시도별 현황, 고보증금 TOP 5</p>
-      </a>
-      <a class="card" href="infographic-daily-wolse.html">
-        <div class="tag">E8 · 일 1회 갱신</div>
-        <h3>오늘의 월세 현황</h3>
-        <p>이번 달 일별 월세 신고 건수, 시도별 현황, 고월세 TOP 5</p>
-      </a>
-      <a class="card" href="infographic-price-trend.html">
-        <div class="tag">E2 · 일 1회 갱신</div>
-        <h3>매매 평균가 10년 추이</h3>
-        <p>연도별 평균 거래가 + 거래량 콤보 차트</p>
-      </a>
-      <a class="card" href="infographic-price-per-pyeong.html">
-        <div class="tag">E3 · 일 1회 갱신</div>
-        <h3>평당가 랭킹</h3>
-        <p>시도별 단지 평당가 TOP 20, 전국 시도 비교</p>
-      </a>
-      <a class="card" href="infographic-jeonse-ratio.html">
-        <div class="tag">E4 · 일 1회 갱신</div>
-        <h3>전세가율 10년 추이</h3>
-        <p>매매 대비 전세 비율, 매매가 vs 전세가 갭 분석</p>
-      </a>
-      <a class="card" href="infographic-trade-volume.html">
-        <div class="tag">E5 · 일 1회 갱신</div>
-        <h3>거래량 추이</h3>
-        <p>10년 연도별 + 최근 15개월 월별 거래량</p>
-      </a>
-      <a class="card" href="infographic-new-high.html">
-        <div class="tag">E6 · 일 1회 갱신</div>
-        <h3>신고가 경신</h3>
-        <p>역대 최고가 갱신 거래, 전고점 대비 상승률</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group periodic">
-    <div class="group-title">아파트 — 월간 분석 (10개)</div>
-    <div class="cards">
-      <a class="card" href="infographic-renewal-rate.html">
-        <div class="tag">P1 · 월 1회 갱신</div>
-        <h3>갱신계약 비율</h3>
-        <p>전월세 계약갱신청구권 사용 비율, 구별 비교</p>
-      </a>
-      <a class="card" href="infographic-wolse-ratio.html">
-        <div class="tag">P2 · 월 1회 갱신</div>
-        <h3>전월세 전환율</h3>
-        <p>월세 비중 추이, 전세 vs 월세 건수 변화</p>
-      </a>
-      <a class="card" href="infographic-buyer-seller.html">
-        <div class="tag">P3 · 월 1회 갱신</div>
-        <h3>매수자 · 매도자 유형</h3>
-        <p>개인/법인/공공기관 거래 비율 (2024년~)</p>
-      </a>
-      <a class="card" href="infographic-cancel-rate.html">
-        <div class="tag">P4 · 월 1회 갱신</div>
-        <h3>계약 해제율</h3>
-        <p>매매 계약 해제 비율, 시장 불안 지표 (2020년~)</p>
-      </a>
-      <a class="card" href="infographic-size-compare.html">
-        <div class="tag">P5 · 월 1회 갱신</div>
-        <h3>면적대별 가격 비교</h3>
-        <p>소형/중형/대형/초대형 평균가 + 거래 건수 추이</p>
-      </a>
-      <a class="card" href="infographic-price-gap.html">
-        <div class="tag">P6 · 월 1회 갱신</div>
-        <h3>지역 간 가격 격차</h3>
-        <p>서울 대비 시도별 가격 비율, 격차 변화 추이</p>
-      </a>
-      <a class="card" href="infographic-floor-premium.html">
-        <div class="tag">P7 · 월 1회 갱신</div>
-        <h3>층별 프리미엄</h3>
-        <p>저층/중층/고층/초고층 평당가 비교</p>
-      </a>
-      <a class="card" href="infographic-yield-rate.html">
-        <div class="tag">P8 · 월 1회 갱신</div>
-        <h3>전월세 수익률</h3>
-        <p>매매가 대비 월세 연간 수익률, 은행금리 비교</p>
-      </a>
-      <a class="card" href="infographic-age-premium.html">
-        <div class="tag">P9 · 월 1회 갱신</div>
-        <h3>건축연도별 가격</h3>
-        <p>신축 프리미엄 분석, 연식별 평당가 비교</p>
-      </a>
-      <a class="card" href="infographic-hotspot.html">
-        <div class="tag">P10 · 월 1회 갱신</div>
-        <h3>거래 증감 핫스팟</h3>
-        <p>시군구별 전년 동기 대비 거래량 급증/급감 지역</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group office">
-    <div class="group-title">오피스텔 (6개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-office-price-trend.html">
-        <div class="tag">O1 · 가격 추이</div>
-        <h3>오피스텔 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-office-trade-volume.html">
-        <div class="tag">O2 · 거래량</div>
-        <h3>오피스텔 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-office-price-per-pyeong.html">
-        <div class="tag">O3 · 평당가 랭킹</div>
-        <h3>오피스텔 평당가 랭킹</h3>
-        <p>시도별 단지 평당가 TOP 20</p>
-      </a>
-      <a class="card" href="infographic-office-jeonse-ratio.html">
-        <div class="tag">O4 · 전세가율</div>
-        <h3>오피스텔 전세가율</h3>
-        <p>매매 대비 전세 비율, 갭 분석</p>
-      </a>
-      <a class="card" href="infographic-office-wolse-ratio.html">
-        <div class="tag">O5 · 월세 비중</div>
-        <h3>오피스텔 월세 비중</h3>
-        <p>전세 vs 월세 건수 변화, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-office-yield-rate.html">
-        <div class="tag">O6 · 수익률</div>
-        <h3>오피스텔 전월세 수익률</h3>
-        <p>매매가 대비 월세 연간 수익률, 은행금리 비교</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group multi">
-    <div class="group-title">연립다세대 (4개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-multi-price-trend.html">
-        <div class="tag">M1 · 가격 추이</div>
-        <h3>연립다세대 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-multi-trade-volume.html">
-        <div class="tag">M2 · 거래량</div>
-        <h3>연립다세대 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-multi-wolse-ratio.html">
-        <div class="tag">M3 · 월세 비중</div>
-        <h3>연립다세대 월세 비중</h3>
-        <p>전세 vs 월세 건수 변화, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-multi-yield-rate.html">
-        <div class="tag">M4 · 수익률</div>
-        <h3>연립다세대 전월세 수익률</h3>
-        <p>매매가 대비 월세 연간 수익률</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group single">
-    <div class="group-title">단독주택 (5개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-single-price-trend.html">
-        <div class="tag">S1 · 가격 추이</div>
-        <h3>단독주택 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-single-trade-volume.html">
-        <div class="tag">S2 · 거래량</div>
-        <h3>단독주택 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-single-wolse-ratio.html">
-        <div class="tag">S3 · 월세 비중</div>
-        <h3>단독주택 월세 비중</h3>
-        <p>전세 vs 월세 건수 변화, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-single-yield-rate.html">
-        <div class="tag">S4 · 수익률</div>
-        <h3>단독주택 전월세 수익률</h3>
-        <p>매매가 대비 월세 연간 수익률</p>
-      </a>
-      <a class="card" href="infographic-single-pyeong-price.html">
-        <div class="tag">S5 · 대지 평당가</div>
-        <h3>단독주택 대지 평당가</h3>
-        <p>대지면적 기준 평당 매매가, 땅값 추이</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group land">
-    <div class="group-title">토지 (3개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-land-price-trend.html">
-        <div class="tag">L1 · 가격 추이</div>
-        <h3>토지 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-land-trade-volume.html">
-        <div class="tag">L2 · 거래량</div>
-        <h3>토지 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-land-pyeong-price.html">
-        <div class="tag">L3 · 평당가</div>
-        <h3>토지 평당가 추이</h3>
-        <p>거래면적 기준 평당 매매가, 시도별 비교</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group right">
-    <div class="group-title">분양권 (3개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-right-price-trend.html">
-        <div class="tag">R1 · 가격 추이</div>
-        <h3>분양권 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-right-trade-volume.html">
-        <div class="tag">R2 · 거래량</div>
-        <h3>분양권 거래량 추이</h3>
-        <p>분양시장 열기 지표, 연도별 + 월별</p>
-      </a>
-      <a class="card" href="infographic-right-price-per-pyeong.html">
-        <div class="tag">R3 · 평당가 랭킹</div>
-        <h3>분양권 평당가 랭킹</h3>
-        <p>시도별 단지 평당가 TOP 20</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="group building">
-    <div class="group-title">건물 · 공장 (4개 지표)</div>
-    <div class="cards">
-      <a class="card" href="infographic-building-price-trend.html">
-        <div class="tag">B1 · 가격 추이</div>
-        <h3>건물 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-building-trade-volume.html">
-        <div class="tag">B2 · 거래량</div>
-        <h3>건물 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
-      </a>
-      <a class="card" href="infographic-factory-price-trend.html">
-        <div class="tag">F1 · 가격 추이</div>
-        <h3>공장·창고 매매 평균가 추이</h3>
-        <p>10년 연도별 평균 거래가 + 거래량</p>
-      </a>
-      <a class="card" href="infographic-factory-trade-volume.html">
-        <div class="tag">F2 · 거래량</div>
-        <h3>공장·창고 거래량 추이</h3>
-        <p>연도별 + 월별 거래량, 시도별 비교</p>
+        <div class="tag" style="color:#ef4444">지도 · 전월세</div>
+        <h3>전월세 평당가 히트맵</h3>
+        <p>단지별 전월세 환산 보증금 평당가(중앙값) — 같은 3개 레이어·면적대 필터·기간 선택</p>
       </a>
     </div>
   </div>
 
   <div class="footer">
-    데이터 출처: 국토교통부 실거래가 공개시스템 (3,000만건)<br>
+    데이터 출처: 국토교통부 실거래가 공개시스템 | 계약 해제 신고된 거래 제외<br>
     ※ 본 자료는 국토교통부 실거래가 공개시스템의 공공데이터를 기반으로 제작되었으며, 데이터의 정확성·완전성을 보장하지 않습니다.<br>실거래 신고 지연으로 최신 데이터가 반영되지 않을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다.<br>
     boolint &copy; 2026
   </div>
