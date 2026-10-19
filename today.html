@@ -83,7 +83,7 @@ function tableOf(ctx, el, list, empty) {
     { label: '단지', cls: 'name', get: x => D.complexName(ctx, x, `${x.f ? ` · ${x.f}층` : ''}${x.ct ? ` · ${D.esc(x.ct)}` : ''}`) },
     { label: moneyLabel[TYPE], cls: 'num hi', get: money },
     { label: '계약일', cls: 'num', get: x => dateText(x.dt) },
-  ], list, empty, x => D.complexClick(x.n));
+  ], list, empty, x => D.complexClick(x));
 }
 
 function renderNew(ctx) {
@@ -111,7 +111,7 @@ function renderNational(ctx) {
   if (rows.length) D.rankBars('naChart', 'naWrap', rows, { color: ACCENT, tick: v => D.fmt(v), onClick: r => ctx.select(r.key, '') });
   else document.getElementById('naWrap').style.height = '0px';
   document.getElementById('naTopTitle').textContent = `전국 이번 달(${+ctx.all.month.slice(4)}월 계약) ${TYPES[TYPE]} TOP 20`;
-  tableOf({ ...ctx, sgg: '', data: { regions: {} } }, document.getElementById('naTable'), nat.top.map(x => ({ ...x, d: `${regionNameOf(ctx, x.g)} ${x.d}`, g: null })), '이번 달 거래가 없습니다');
+  tableOf({ ...ctx, sgg: '', data: { regions: {} } }, document.getElementById('naTable'), nat.top.map(x => ({ ...x, d: `${regionNameOf(ctx, x.g)} ${x.d}`, u: x.d })), '이번 달 거래가 없습니다');
 }
 // 시군구 코드 → "서울 강남구" (all.json 의 목록으로)
 function regionNameOf(ctx, g) {

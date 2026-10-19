@@ -81,7 +81,7 @@ function render(ctx) {
     { label: '해제', cls: 'num hi', get: x => `${x.cancel}건` },
     { label: '해제율', cls: 'num', get: x => `${x.rate.toFixed(1)}%<div class="faint">거래 ${x.total}건</div>` },
     { label: '전고점 해제', cls: 'num', get: x => x.peak ? `<b>${x.peak}건</b>` : '-' },
-  ], c.clusters, '조건에 맞는 단지가 없습니다', x => D.complexClick(x.n));
+  ], c.clusters, '조건에 맞는 단지가 없습니다', x => D.complexClick(x));
   D.compare(ctx, 'cx', { color: ACCENT,
     title: mode => mode === 'sgg' ? `${data.sido.name} 시군구 해제율` : '전국 시도 해제율',
     desc: `${D.ymText(region.cancel.done6.from)}~${D.ymText(region.cancel.done6.to)} · 거래 100건 미만 지역은 뺐습니다`,

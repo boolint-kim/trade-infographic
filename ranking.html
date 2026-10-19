@@ -82,7 +82,7 @@ function renderRank(ctx, sec) {
   const t1 = document.getElementById('rkTable'), t2 = document.getElementById('rkTable2');
   t2.innerHTML = '';
   const nameCol = { label: '단지', cls: 'name', get: x => D.complexName(ctx, x, (x.f ? ` · ${x.f[0]}~${x.f[1]}층` : '') + (x.j ? '<span class="tag-mini">지번</span>' : '')) };
-  const click = x => D.complexClick(x.n);
+  const click = x => D.complexClick(x, TYPE);
   const tabDesc = {
     top: '평당가 높은 순', low: '평당가 낮은 순', vol: '거래 많은 순 (같으면 평당가 순)',
     size84: '전용 80~85㎡ 거래만, 평당가 높은 순', size59: '전용 55~60㎡ 거래만, 평당가 높은 순',

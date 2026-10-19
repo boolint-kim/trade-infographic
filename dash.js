@@ -157,9 +157,14 @@
     return `${esc(x.n)}<div class="faint">${esc(where.trim())}${x.a ? ` · 전용 ${x.a}㎡` : ''}${extra}</div>`;
   }
 
-  // 단지 행을 누르면 앱(AndroidBridge)에 단지명을 넘긴다. 웹이거나 앱이 이 메서드를 모르면 조용히 무시
-  function complexClick(name) {
-    try { window.AndroidBridge && window.AndroidBridge.onComplexClick && window.AndroidBridge.onComplexClick(name); } catch (e) { /* 앱 쪽 시그니처가 다를 수 있다 */ }
+  // 단지 행을 누르면 앱(AndroidBridge)에 단지 정보를 JSON 문자열로 넘긴다 — heatmap.html 과 같은 형식(name·regionCode·umd)
+  //   x = 행 {n, d(동), g(시군구), a(전용㎡), u(동 — d 에 지역명이 붙은 표에서)} · kind = apt|office|right
+  //   웹이거나 앱이 이 메서드를 모르면 조용히 무시. 계약 정본: collector docs/infographic-redesign/06-app-hub.md §4.2
+  function complexClick(x, kind = 'apt') {
+    if (!(window.AndroidBridge && window.AndroidBridge.onComplexClick)) return;
+    const sgg = new URLSearchParams(location.search).get('sgg');
+    const payload = { name: x.n, regionCode: x.g || sgg || null, umd: x.u || x.d || null, area: x.a || null, kind };
+    try { window.AndroidBridge.onComplexClick(JSON.stringify(payload)); } catch (e) { /* 앱 쪽 시그니처가 다를 수 있다 */ }
   }
 
   // 'YYYYMM' → '25.11'

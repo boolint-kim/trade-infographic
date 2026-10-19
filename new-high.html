@@ -66,7 +66,7 @@ function render(ctx) {
     { label: '거래가', cls: 'num hi', get: x => D.eok(x.p) },
     { label: '이전 최고가', cls: 'num', get: x => D.eok(x.ph) },
     { label: '상승폭', cls: 'num', get: x => `+${x.pct.toFixed(1)}%` },
-  ], n.lists[f], '이 기간에 신고가 거래가 없습니다', x => D.complexClick(x.n));
+  ], n.lists[f], '이 기간에 신고가 거래가 없습니다', x => D.complexClick(x));
   D.compare(ctx, 'nh', { color: ACCENT,
     title: mode => mode === 'sgg' ? `${data.sido.name} 시군구별 신고가 비율 — 어디가 뜨겁나` : '전국 시도별 신고가 비율',
     desc: '거래 중 신고가 비율 · 거래 30건 미만 지역은 뺐습니다',
