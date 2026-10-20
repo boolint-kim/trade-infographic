@@ -57,6 +57,8 @@
   - **매매 ↔ 전월세 전환**(2026-10-20): `?type=` 은 **첫 화면**이다. 페이지 상단 `매매 | 전월세` 버튼 = `window.setTrade('deal'|'rent')`
     (지도·유형 칩·면적·기간 유지, JSON 캐시, `?type=` 을 replaceState 로 갱신). 바뀌면 `AndroidBridge.onTradeChange(trade)` —
     TradeHeatmap 라이브러리가 이걸로 툴바 제목·네이티브 칩을 맞춘다. 두 지도는 색 기준이 달라 **겹쳐 그리지 않는다**
+  - **📍 현재 위치**: 앱 허브 WebView(`IS_APP` 이고 `compact` 아님)에서는 숨긴다 — InfographicHub 는 위치 권한을 처리하지 않고
+    호스트 앱에도 위치 권한이 없다(넣으면 붙인 앱 전부에 권한·데이터 보안 신고가 딸려온다, 2026-10-20 결정). TradeHeatmap(`compact=1`)은 권한을 처리하므로 보인다
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
     여러 달을 고르면 페이지가 `Σ(mo.a·mo.c)/Σc` 로 합친다(면적대 l/m/s 는 단순평균)
   - **아파트 매매(`heatmap.json`)는 매매 + 분양권·입주권**(2026-10-17~, 호갱노노 매매 목록과 같은 구성).

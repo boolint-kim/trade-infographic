@@ -1051,6 +1051,12 @@ function initMap() {
     if (legend) legend.style.display = 'none';
   }
   if (compact) document.body.classList.add('compact');
+  // 앱 허브 WebView(InfographicHub)는 위치 권한을 처리하지 않는다(앱에 위치 권한도 없다) — 📍 를 숨긴다.
+  // TradeHeatmap 라이브러리(compact=1)는 권한을 처리하므로 그대로 둔다
+  if (window.IS_APP && !compact) {
+    var locBtn = document.querySelector('.loc-btn');
+    if (locBtn) locBtn.style.display = 'none';
+  }
   initLegendToggle();
 
   // [앱 임베드] type 파라미터로 데이터 파일 및 primary 레이어 결정
