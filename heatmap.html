@@ -936,7 +936,9 @@ function goToMyLocation() {
   );
   navigator.geolocation.getCurrentPosition(
     function(pos) { showMyLocation(pos.coords.latitude, pos.coords.longitude); },
-    function() { showToast('위치 정보를 가져올 수 없습니다'); },
+    function(err) {
+      showToast(err && err.code === 1 ? '위치 권한을 허용하면 현재 위치로 이동해요' : '위치 정보를 가져올 수 없습니다');
+    },
     { maximumAge: 0, timeout: 10000, enableHighAccuracy: true }
   );
 }
@@ -1051,9 +1053,9 @@ function initMap() {
     if (legend) legend.style.display = 'none';
   }
   if (compact) document.body.classList.add('compact');
-  // 앱 허브 WebView(InfographicHub)는 위치 권한을 처리하지 않는다(앱에 위치 권한도 없다) — 📍 를 숨긴다.
-  // TradeHeatmap 라이브러리(compact=1)는 권한을 처리하므로 그대로 둔다
-  if (window.IS_APP && !compact) {
+  // 📍 현재 위치 — 웹은 항상. 앱 WebView 는 주인 앱이 위치 권한을 선언했을 때만 라이브러리가 APP_LOCATION 을 넣는다
+  // (InfographicHub·TradeHeatmap 공통 계약. 권한 팝업은 라이브러리가 띄운다). 없는 앱에서 보이면 눌러도 거부만 된다
+  if (window.IS_APP && !window.APP_LOCATION) {
     var locBtn = document.querySelector('.loc-btn');
     if (locBtn) locBtn.style.display = 'none';
   }
