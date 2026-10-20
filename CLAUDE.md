@@ -54,6 +54,9 @@
 - ⚠️ **문구에 시도 수·연도 범위를 박지 않는다**("전국 17개 시도"·"2016~2026" 이 옛 페이지에 수십 곳 남아 있었다) — 데이터에서 채운다
 - **heatmap.html** 은 TradeHeatmap Android 라이브러리가 WebView 로 임베드한다 — `?type=apt-deal` 등 URL 파라미터,
   `window.AndroidBridge`, 외부 호출 함수가 계약이다. 설계 정본: `~/server/trade-collector/docs/android-heatmap/`
+  - **매매 ↔ 전월세 전환**(2026-10-20): `?type=` 은 **첫 화면**이다. 페이지 상단 `매매 | 전월세` 버튼 = `window.setTrade('deal'|'rent')`
+    (지도·유형 칩·면적·기간 유지, JSON 캐시, `?type=` 을 replaceState 로 갱신). 바뀌면 `AndroidBridge.onTradeChange(trade)` —
+    TradeHeatmap 라이브러리가 이걸로 툴바 제목·네이티브 칩을 맞춘다. 두 지도는 색 기준이 달라 **겹쳐 그리지 않는다**
   - JSON 스키마(매매·전월세 공통): `{generated, period, months[], total, data:[{n,r,u,x,y,a,c,l?,m?,s?, mo:{yyyymm:{a,c,l?,m?,s?}}}]}`.
     여러 달을 고르면 페이지가 `Σ(mo.a·mo.c)/Σc` 로 합친다(면적대 l/m/s 는 단순평균)
   - **아파트 매매(`heatmap.json`)는 매매 + 분양권·입주권**(2026-10-17~, 호갱노노 매매 목록과 같은 구성).
