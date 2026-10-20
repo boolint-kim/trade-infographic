@@ -899,7 +899,8 @@ window.toggleLayer = toggleLayer;
 window.setPeriod = setPeriod;
 window.setTrade = setTrade;
 window.closeInfo = closeInfo;
-window.goToMyLocation = function() { goToMyLocation(); };
+// goToMyLocation 은 최상위 function 선언이라 이미 window.goToMyLocation 이다.
+// 감싸서 다시 대입하면 감싼 함수가 자기 자신을 불러 무한 재귀가 된다(2026-03~10 📍 버튼이 웹·앱 모두 먹통이던 원인)
 
 // --- 현재 위치 ---
 function showMyLocation(lat, lng) {
