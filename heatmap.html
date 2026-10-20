@@ -16,6 +16,11 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
 .ctrl{position:absolute;top:8px;left:8px;z-index:1;display:flex;flex-direction:column;gap:0;max-width:calc(100% - 120px)}
 .ctrl-toggle{min-height:36px;padding:0 14px;border:none;border-radius:10px;background:var(--panel-bg);font-size:13px;font-weight:700;color:var(--text);cursor:pointer;box-shadow:var(--panel-shadow);display:flex;align-items:center;gap:6px;white-space:nowrap;align-self:flex-start}
 .ctrl-toggle:active{background:#f0f0f0}
+/* 매매 | 전월세 전환 — 필터를 접어도 보이도록 토글 버튼 옆에 둔다 */
+.ctrl-top{display:flex;gap:6px;align-items:center}
+.trade-seg{display:flex;min-height:36px;padding:3px;border-radius:10px;background:var(--panel-bg);box-shadow:var(--panel-shadow)}
+.trade-seg button{border:none;border-radius:7px;padding:0 12px;background:transparent;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;white-space:nowrap}
+.trade-seg button.active{background:var(--text);color:var(--card-bg)}
 .ctrl-panel{display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .ctrl-panel.hidden{display:none}
 .ctrl-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
@@ -131,7 +136,13 @@ body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
 
 <div class="ctrl">
   <!-- 패널 토글 버튼 (항상 표시) -->
-  <button class="ctrl-toggle" id="ctrlToggle" onclick="togglePanel()">필터 ▾</button>
+  <div class="ctrl-top">
+    <button class="ctrl-toggle" id="ctrlToggle" onclick="togglePanel()">필터 ▾</button>
+    <div class="trade-seg" role="group" aria-label="거래 종류">
+      <button id="btnDeal" onclick="setTrade('deal')">매매</button>
+      <button id="btnRent" onclick="setTrade('rent')">전월세</button>
+    </div>
+  </div>
 
   <!-- 접힘/펼침 패널 -->
   <div class="ctrl-panel" id="ctrlPanel">
@@ -242,9 +253,39 @@ var TYPE_TO_FILES = {
   'multi-rent':  { primary: 'multi',  files: { apt: 'data/heatmap-rent.json', office: 'data/heatmap-office-rent.json', multi: 'data/heatmap-multi-rent.json' }, bins: SCALE_RENT.bins, legend: SCALE_RENT.legend }
 };
 var currentType = TYPE_TO_FILES['apt-deal'];  // initMap 에서 ?type= 으로 확정
+var currentTrade = 'deal';                    // 'deal' | 'rent' — setTrade() 로 바뀐다
+var primaryKey = 'apt';                       // ?type= 의 물건(apt·office·multi). 전환해도 그대로
 
 function resolveTypeConfig(type) {
   return TYPE_TO_FILES[type] || TYPE_TO_FILES['apt-deal'];
+}
+
+// --- JSON 캐시 — 매매↔전월세를 다시 눌렀을 때 받지 않는다 ---
+var jsonCache = {};
+function fetchJson(url) {
+  if (!jsonCache[url]) {
+    jsonCache[url] = fetch(url).then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    });
+    jsonCache[url].catch(function() { delete jsonCache[url]; });  // 실패는 기억하지 않는다(다시 시도)
+  }
+  return jsonCache[url];
+}
+
+// 기간 셀렉트·범례 기간 — 첫 로드와 매매↔전월세 전환이 같이 쓴다. keepPeriod 면 고른 기간을 유지(개월 수가 줄면 맞춘다)
+function applyMonths(json, keepPeriod) {
+  allMonths = json.months || [];
+  var period = keepPeriod ? Math.min(currentPeriod, allMonths.length) : allMonths.length;
+  var sel = document.getElementById('selPeriod');
+  sel.innerHTML = '';
+  for (var i = 1; i <= allMonths.length; i++) {
+    var selected = (i === period) ? ' selected' : '';
+    sel.innerHTML += '<option value="' + i + '"' + selected + '>최근 ' + i + '개월</option>';
+  }
+  currentPeriod = period;
+  if (keepPeriod) setPeriodLabel();
+  else if (json.period) document.getElementById('legendPeriod').textContent = '기준: ' + json.period.replace('~', ' ~ ');
 }
 
 // --- 레이어 설정 ---
@@ -477,6 +518,11 @@ CanvasHeatLayer.prototype.onAdd = function() {
 
 CanvasHeatLayer.prototype.onRemove = function() {
   this._canvas.parentNode.removeChild(this._canvas);
+};
+
+CanvasHeatLayer.prototype.clear = function() {
+  this._ctx.setTransform(1, 0, 0, 1, 0, 0);
+  this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 };
 
 CanvasHeatLayer.prototype.draw = function() {
@@ -738,14 +784,89 @@ function setFilter(f) {
 // --- 기간 ---
 function setPeriod(v) {
   currentPeriod = parseInt(v);
-  // 범례 기간 텍스트 업데이트
+  setPeriodLabel();
+  canvasLayer.draw();
+}
+
+// 범례 기간 텍스트 업데이트
+function setPeriodLabel() {
   var months = getSelectedMonths();
   if (months.length > 0) {
     var from = months[0], to = months[months.length - 1];
     document.getElementById('legendPeriod').textContent =
       '기준: ' + from.slice(0,4) + '.' + from.slice(4) + ' ~ ' + to.slice(0,4) + '.' + to.slice(4);
   }
-  canvasLayer.draw();
+}
+
+// --- 매매 ↔ 전월세 전환 ---
+// 지도 위치·켜 둔 유형 칩·면적·기간은 그대로 두고 데이터·색 구간·문구만 바꾼다.
+// 두 지도는 색 기준이 달라(전월세 = 매매의 절반) 겹쳐 그리지 않는다 — 한 번에 하나.
+// 앱(TradeHeatmap 네이티브 토글)도 이 함수를 부른다. 바뀌면 AndroidBridge.onTradeChange(trade) 로 알린다
+var tradeSeq = 0;
+function setTrade(trade, force) {
+  if (trade !== 'deal' && trade !== 'rent') return false;
+  if (trade === currentTrade && !force) return true;
+  var type = primaryKey + '-' + trade;
+  currentTrade = trade;
+  currentType = TYPE_TO_FILES[type];
+  applyTypeLegend();
+  updateTradeButtons();
+  try {
+    var u = new URL(location.href);
+    u.searchParams.set('type', type);
+    history.replaceState(null, '', u.toString());   // 새로고침·공유해도 같은 화면
+  } catch (e) {}
+  if (!map) return true;   // 초기화 전이면 initMap 이 이어서 로드한다
+
+  closeInfo();
+  var seq = ++tradeSeq;
+  var keys = LAYER_KEYS.filter(function(k) { return LAYER_CFG[k].enabled; });
+  LAYER_KEYS.forEach(function(k) {
+    LAYER_CFG[k].url = currentType.files[k];
+    LAYER_CFG[k].loading = false;
+    layerReady[k] = false;
+    layerData[k] = [];
+    layerGrids[k].clear();
+    var chip = document.getElementById('chip' + k.charAt(0).toUpperCase() + k.slice(1));
+    if (chip) chip.classList.remove('loading');
+  });
+  canvasLayer.clear();   // 옛 색으로 그린 점이 새 범례와 같이 보이지 않게
+
+  if (keys.length === 0) { canvasLayer.draw(); notifyTrade(); return true; }
+  var loading = document.getElementById('loading');
+  loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>단지별 ' + currentType.legend.subject + '</p>';
+  loading.style.display = '';
+  Promise.all(keys.map(function(k) { return fetchJson(LAYER_CFG[k].url); }))
+    .then(function(jsons) {
+      if (seq !== tradeSeq) return;   // 그 사이에 다시 눌렀다
+      keys.forEach(function(k, i) {
+        layerData[k] = jsons[i].data;
+        layerReady[k] = true;
+        buildLayerGrid(k, layerData[k]);
+      });
+      applyMonths(jsons[0], true);
+      loading.style.display = 'none';
+      canvasLayer.draw();
+    })
+    .catch(function(err) {
+      if (seq !== tradeSeq) return;
+      loading.innerHTML =
+        '<h3>데이터 로딩 실패</h3><p>' + err.message + '</p>' +
+        '<button class="retry-btn" onclick="setTrade(\'' + trade + '\', true)">다시 시도</button>';
+    });
+  notifyTrade();
+  return true;
+}
+
+function updateTradeButtons() {
+  document.getElementById('btnDeal').classList.toggle('active', currentTrade === 'deal');
+  document.getElementById('btnRent').classList.toggle('active', currentTrade === 'rent');
+}
+
+function notifyTrade() {
+  if (window.AndroidBridge && window.AndroidBridge.onTradeChange) {
+    try { window.AndroidBridge.onTradeChange(currentTrade); } catch (e) {}
+  }
 }
 
 // --- 앱 임베드용 외부 호출 함수 ---
@@ -776,6 +897,7 @@ window.focusComplex = focusComplex;
 window.setFilter = setFilter;
 window.toggleLayer = toggleLayer;
 window.setPeriod = setPeriod;
+window.setTrade = setTrade;
 window.closeInfo = closeInfo;
 window.goToMyLocation = function() { goToMyLocation(); };
 
@@ -824,30 +946,20 @@ function loadAptData() {
   loading.innerHTML = '<h3>데이터 로딩 중...</h3><p>아파트 단지별 ' + currentType.legend.subject + '</p>';
   loading.style.display = '';
 
-  fetch(LAYER_CFG.apt.url)
-    .then(function(r) { return r.json(); })
+  var url = LAYER_CFG.apt.url;
+  fetchJson(url)
     .then(function(json) {
+      if (LAYER_CFG.apt.url !== url) return;   // 받는 사이 매매↔전월세가 바뀌었다
       layerData.apt = json.data;
-      allMonths = json.months;
       layerReady.apt = true;
       buildLayerGrid('apt', layerData.apt);
-
-      var sel = document.getElementById('selPeriod');
-      sel.innerHTML = '';
-      for (var i = 1; i <= allMonths.length; i++) {
-        var selected = (i === allMonths.length) ? ' selected' : '';
-        sel.innerHTML += '<option value="' + i + '"' + selected + '>최근 ' + i + '개월</option>';
-      }
-      currentPeriod = allMonths.length;
-
-      if (json.period) {
-        document.getElementById('legendPeriod').textContent = '기준: ' + json.period.replace('~', ' ~ ');
-      }
+      applyMonths(json, false);
 
       loading.style.display = 'none';
       canvasLayer.draw();
     })
     .catch(function(err) {
+      if (LAYER_CFG.apt.url !== url) return;
       loading.innerHTML =
         '<h3>데이터 로딩 실패</h3><p>' + err.message + '</p>' +
         '<button class="retry-btn" onclick="loadAptData()">다시 시도</button>';
@@ -871,9 +983,10 @@ function loadLayerData(key) {
     showToast(LAYER_CFG[key].label + ' 데이터 로딩 중...');
   }
 
-  fetch(LAYER_CFG[key].url)
-    .then(function(r) { return r.json(); })
+  var url = LAYER_CFG[key].url;
+  fetchJson(url)
     .then(function(json) {
+      if (LAYER_CFG[key].url !== url) return;   // 받는 사이 매매↔전월세가 바뀌었다 — setTrade 가 새로 받는다
       layerData[key] = json.data;
       layerReady[key] = true;
       LAYER_CFG[key].loading = false;
@@ -882,17 +995,7 @@ function loadLayerData(key) {
 
       // 첫 로드 시 기간 셀렉트박스와 범례 메타데이터 설정
       if (isFirstLoad && json.months) {
-        allMonths = json.months;
-        var sel = document.getElementById('selPeriod');
-        sel.innerHTML = '';
-        for (var i = 1; i <= allMonths.length; i++) {
-          var selected = (i === allMonths.length) ? ' selected' : '';
-          sel.innerHTML += '<option value="' + i + '"' + selected + '>최근 ' + i + '개월</option>';
-        }
-        currentPeriod = allMonths.length;
-        if (json.period) {
-          document.getElementById('legendPeriod').textContent = '기준: ' + json.period.replace('~', ' ~ ');
-        }
+        applyMonths(json, false);
         loading.style.display = 'none';
       }
 
@@ -902,6 +1005,7 @@ function loadLayerData(key) {
       }
     })
     .catch(function(err) {
+      if (LAYER_CFG[key].url !== url) return;
       LAYER_CFG[key].loading = false;
       if (chip) chip.classList.remove('loading');
       // 첫 로드는 primary 레이어다 — 끄면 '다시 시도' 로 받아도 그리지 않는다. 켜 둔 채 재시도를 기다린다
@@ -951,6 +1055,9 @@ function initMap() {
   // [앱 임베드] type 파라미터로 데이터 파일 및 primary 레이어 결정
   var typeConfig = resolveTypeConfig(embedType);
   currentType = typeConfig;
+  primaryKey = typeConfig.primary;
+  currentTrade = typeConfig.legend === SCALE_RENT.legend ? 'rent' : 'deal';
+  updateTradeButtons();
   applyTypeLegend();
   updateHint(7);  // 초기 줌(7)의 힌트를 타입 문구로
   LAYER_CFG.apt.url    = typeConfig.files.apt;
