@@ -52,6 +52,13 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
 .legend-shapes{display:flex;gap:10px;margin-top:6px;font-size:10px;color:var(--text-muted);align-items:center}
 .legend-shape-item{display:inline-flex;align-items:center;gap:4px}
 .legend-period{font-size:10px;color:var(--text-faint);margin-top:4px}
+/* 범례 접기 — 제목을 탭하면 막대·모양·기간을 숨기고 제목 한 줄만 남긴다(상태는 기기에 기억) */
+.legend-title{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.legend-title::after{content:'▾';font-size:11px;color:var(--text-muted)}
+.legend.collapsed{padding:8px 12px}
+.legend.collapsed .legend-title{margin-bottom:0}
+.legend.collapsed .legend-title::after{content:'▸'}
+.legend.collapsed .legend-bar,.legend.collapsed .legend-labels,.legend.collapsed .legend-shapes,.legend.collapsed .legend-period{display:none}
 
 /* 팝업 */
 .info-wrap{--text:#1a1a2e;--text-muted:#6b7280;--text-faint:#9ca3af;--card-bg:#fff;font-size:13px;line-height:1.6;min-width:180px;padding:14px 16px}
@@ -177,6 +184,20 @@ body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
 </div>
 
 <script>
+// --- 범례 접기/펴기 (localStorage 는 막힐 수 있어 try 로 감싼다) ---
+var LEGEND_KEY = 'heatmap.legendCollapsed';
+function initLegendToggle() {
+  var legend = document.querySelector('.legend');
+  var title = document.querySelector('.legend-title');
+  if (!legend || !title) return;
+  try { if (localStorage.getItem(LEGEND_KEY) === '1') legend.classList.add('collapsed'); } catch (e) {}
+  title.setAttribute('role', 'button');
+  title.addEventListener('click', function () {
+    var collapsed = legend.classList.toggle('collapsed');
+    try { localStorage.setItem(LEGEND_KEY, collapsed ? '1' : '0'); } catch (e) {}
+  });
+}
+
 // --- 타입별 색 구간·문구 ---
 // bins: 경계 4개(만원/평) → 5색(파랑·초록·주황·빨강·보라). labels 는 범례 막대 아래 5칸
 // 두 구간 모두 절대값이다(분위수로 다시 맞추지 않는다 — 서울 쏠림이 그대로 보여야 한다)
@@ -927,6 +948,7 @@ function initMap() {
     if (legend) legend.style.display = 'none';
   }
   if (compact) document.body.classList.add('compact');
+  initLegendToggle();
 
   // [앱 임베드] type 파라미터로 데이터 파일 및 primary 레이어 결정
   var typeConfig = resolveTypeConfig(embedType);
