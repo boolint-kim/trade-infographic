@@ -54,7 +54,9 @@
     sggSel.innerHTML = '';
     const name = (opt.sidos.find(s => s.code === cur.sido) || {}).name || '';
     sggSel.appendChild(el('option', { value: '' }, `${name} 전체`));
-    for (const g of opt.sggOf(cur.sido) || []) sggSel.appendChild(el('option', { value: g.code }, g.name));
+    // 가나다순 — 데이터는 행정코드순으로 오는데, 앱 select 다이얼로그는 검색이 없어 이름으로 찾아야 한다
+    const list = [...(opt.sggOf(cur.sido) || [])].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+    for (const g of list) sggSel.appendChild(el('option', { value: g.code }, g.name));
     sggSel.value = cur.sgg;
     // 시군구가 하나뿐인 시도(세종)는 고를 것이 없다
     sggSel.disabled = (opt.sggOf(cur.sido) || []).length <= 1;
