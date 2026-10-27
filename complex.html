@@ -11,6 +11,7 @@
 <script src="trade-api.js"></script>
 <script src="calc/brokerage.js"></script>
 <script src="calc/acqtax.js"></script>
+<script src="calc/junsewolse.js"></script>
 <link rel="stylesheet" href="common.css">
 <link rel="stylesheet" href="dash.css">
 <script src="selfbanner-web.js" defer></script>
@@ -69,6 +70,12 @@
         <div class="chart-wrap" style="height:340px"><canvas id="cxChart"></canvas></div>
         <div class="note" id="chartNote"></div>
       </div>
+    </section>
+
+    <section class="dsec" id="convert" data-nav="전월세 전환">
+      <div class="dsec-head"><div><div class="dsec-title">전세 ↔ 월세 전환</div>
+        <div class="dsec-desc" id="cvDesc"></div></div></div>
+      <div class="dsec-body"><div class="cards" id="cvCards"></div><div id="cvTable"></div><div class="note" id="cvNote"></div></div>
     </section>
 
     <section class="dsec" id="list" data-nav="거래 목록">
@@ -221,6 +228,7 @@
       chipRow('areaChips', areaFacets, st.area, k => { st.area = k; st.shown = PAGE; setParam('area', k === 'all' ? '' : k); renderAll(); });
       const d = pick(deals), r = pick(rents);
       cards(sum, cx, d);
+      convert();
       chart(d, r);
       table(d, r);
     }
@@ -260,6 +268,48 @@
       if (sum.corp12m) extra.push(`법인 거래 비율 ${sum.corp12m}%`);
       if (b && b.yieldRate != null) extra.push(`월세 수익률 ${b.yieldRate}%`);
       note.innerHTML = [...extra, '중앙값·전세가율·전환율은 해제 거래를 뺀 같은 면적 기준'].map(D.esc).join(' · ');
+    }
+
+    // 전월세 전환 — JunseWolse 정본(calc/junsewolse.js). 전세 중앙값을 보증금 단계별 월세로, 이 면적의 시장 전환율과 법정 상한(기준금리+2%p) 두 줄
+    function convert() {
+      const sec = document.getElementById('convert');
+      const JW = window.Calc && Calc.junsewolse;
+      if (!JW || cx.type === 'right') { sec.style.display = 'none'; return; }
+      sec.style.display = '';
+      const b = st.area === 'all' ? null : byArea.find(x => String(x.areaKey) === st.area);
+      const box = document.getElementById('cvCards'), tbl = document.getElementById('cvTable'), note = document.getElementById('cvNote');
+      const desc = document.getElementById('cvDesc');
+      const js = b && b.jeonse, ws = b && b.wolse;
+      if (!b || !js || !js.n12) {
+        desc.textContent = '최근 1년 전세 중앙값 기준';
+        box.innerHTML = ''; note.textContent = '';
+        tbl.innerHTML = `<div class="hint">${st.area === 'all' ? '위에서 면적을 고르면 그 면적의 전세 중앙값으로 계산합니다' : '이 면적은 최근 1년 전세 거래가 없습니다'}</div>`;
+        return;
+      }
+      const area = st.area;
+      JW.loadRates().then(rt => {
+        if (st.area !== area) return;   // 그 사이 면적을 바꿨다
+        const J = js.med12 * 10000, market = b.convRate, legal = rt.houseCap;
+        desc.textContent = `전용 ${+b.area.toFixed(2)}㎡ · 최근 1년 전세 중앙값 ${won(js.med12)} 기준`;
+        D.cards(box, [
+          { label: '시장 전환율', value: market == null ? null : String(market), unit: '%', sub: market == null ? '같은 면적 전세·월세 각 3건 이상일 때 계산' : `이 면적 최근 1년 월세 ${ws ? ws.n12 : 0}건의 중앙값` },
+          { label: '법정 상한', value: String(+legal.toFixed(2)), unit: '%', sub: `기준금리 ${rt.baseRate}% + ${rt.houseSpread}%p (${rt.asOf} 기준)` },
+          ...(ws && ws.n12 ? [{ label: '실제 월세 중앙값', value: `${won(ws.dep12)} / ${D.fmt(ws.rent12)}`, sub: `보증금 / 월세(만원)${market != null ? ` · 시장 전환율로 환산하면 전세 ${won(Math.round(JW.junse(ws.dep12 * 10000, ws.rent12 * 10000, market) / 10000))}` : ''}` }] : []),
+        ]);
+        // 보증금 단계 — 앱과 같은 목록 함수(1천만·5천만 단위), 12줄이 넘으면 고르게 솎는다
+        let list = JW.deposits(J, J <= 100000000 ? 10000000 : 50000000);
+        if (list.length > 12) { const k = Math.ceil(list.length / 12); list = list.filter((_, i) => i % k === k - 1); }
+        list = [0, ...list];
+        const near = ws && ws.n12 ? list.reduce((m, v) => Math.abs(v - ws.dep12 * 10000) < Math.abs(m - ws.dep12 * 10000) ? v : m, list[0]) : null;
+        const man = w => won(Math.round(w / 10000));
+        const cols = [
+          { label: '보증금', cls: 'num', get: v => { const t = v === 0 ? '없음(전액 월세)' : man(v); return v === near ? `<b>${t}</b> <span class="tag-mini">실제 근처</span>` : t; } },
+          ...(market != null ? [{ label: `월세 · 시장 ${market}%`, cls: 'num', get: v => `<b>${D.fmt(Math.round(JW.wolse(J, market, v) / 10000))}만</b>` }] : []),
+          { label: `월세 · 법정 상한 ${+legal.toFixed(2)}%`, cls: 'num', get: v => `${D.fmt(Math.round(JW.wolse(J, legal, v) / 10000))}만` },
+        ];
+        D.table(tbl, cols, list, '');
+        note.textContent = '월세 = (전세 − 보증금) × 전환율 ÷ 12 · 법정 상한은 계약 중 전세를 월세로 바꿀 때 적용됩니다(주택임대차보호법 시행령 제9조). 새 계약에는 상한이 없어 시장 전환율이 실제 시세에 가깝습니다';
+      });
     }
 
     // 산점도 — x = 연도(소수), 날짜 어댑터 없이 linear 축

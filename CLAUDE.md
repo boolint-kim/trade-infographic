@@ -51,7 +51,8 @@
 - **정본은 각 계산기 앱의 Android 코드**다. 여기는 그대로 옮긴 JS 순수 함수 + 패리티 테스트(정본 Java 파일을 그대로 컴파일해 결과 double 비트 비교)
 - `calc/brokerage.js` ← RealEstateCal `helper/CalHelper.java`(중개보수 상한). `calc/parity/run.sh` — 12,624건 불일치 0(2026-10-27). complex 거래 목록의 "중개보수" 열(아파트=주택, 오피스텔=주거용, 분양권 제외)
 - `calc/acqtax.js` ← AcqTax `Utils.java`(getAcqTaxRateHouse·Etc 전체) + `HouseActivity.updateValue()` 합계식. 패리티 38,005건 불일치 0(모든 사유·주택 수·조정·법인·85㎡·가격 경계). complex 매매 목록의 "취득세" 열 = **아파트 1주택 매매**(2026-10-27 사용자 결정, 조정 여부 무관이라 목록 불필요)·오피스텔 4.6%, 분양권 제외
-- 앱 쪽 요율·식을 고치면 → 여기를 맞추고 `run.sh`(두 계산 모두 돈다). 순서: 중개보수 ✓ → 취득세 ✓ → 전월세 전환 → 증여세 → 양도세
+- `calc/junsewolse.js` ← JunseWolse `Utils.java`(calWolse·calJunse·calDeposits_*, 12,027건 불일치 0) + `RateConfig`(기준금리+2%p — Android 의존이라 식·검증 규칙만 옮김, 대조 밖). 법정 기준금리는 app-data `junsewolse/rates.json`(CORS 열림), 실패면 번들값 — **기준금리가 바뀌면 rates.json·앱 번들값·이 파일 BUNDLE 세 곳**. complex 의 "전월세 전환" 섹션(#convert): 시장 전환율(요약 convRate) vs 법정 상한, 전세 중앙값의 보증금 단계별 월세
+- 앱 쪽 요율·식을 고치면 → 여기를 맞추고 `run.sh`(세 계산 모두 돈다). 순서: 중개보수 ✓ → 취득세 ✓ → 전월세 전환 ✓ → 증여세 → 양도세
 
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
 - **대시보드 JS**: `region-select.js`(시도 버튼 + 시군구 select, URL `?sido=&sgg=` 계약) · `dash.js`(로드·섹션 네비·칩·카드·표·차트 헬퍼, 단지 행 → `AndroidBridge.onComplexClick`) ·
