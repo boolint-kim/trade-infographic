@@ -52,7 +52,9 @@
 - `calc/brokerage.js` ← RealEstateCal `helper/CalHelper.java`(중개보수 상한). `calc/parity/run.sh` — 12,624건 불일치 0(2026-10-27). complex 거래 목록의 "중개보수" 열(아파트=주택, 오피스텔=주거용, 분양권 제외)
 - `calc/acqtax.js` ← AcqTax `Utils.java`(getAcqTaxRateHouse·Etc 전체) + `HouseActivity.updateValue()` 합계식. 패리티 38,005건 불일치 0(모든 사유·주택 수·조정·법인·85㎡·가격 경계). complex 매매 목록의 "취득세" 열 = **아파트 1주택 매매**(2026-10-27 사용자 결정, 조정 여부 무관이라 목록 불필요)·오피스텔 4.6%, 분양권 제외
 - `calc/junsewolse.js` ← JunseWolse `Utils.java`(calWolse·calJunse·calDeposits_*, 12,027건 불일치 0) + `RateConfig`(기준금리+2%p — Android 의존이라 식·검증 규칙만 옮김, 대조 밖). 법정 기준금리는 app-data `junsewolse/rates.json`(CORS 열림), 실패면 번들값 — **기준금리가 바뀌면 rates.json·앱 번들값·이 파일 BUNDLE 세 곳**. complex 의 "전월세 전환" 섹션(#convert): 시장 전환율(요약 convRate) vs 법정 상한, 전세 중앙값의 보증금 단계별 월세
-- 앱 쪽 요율·식을 고치면 → 여기를 맞추고 `run.sh`(세 계산 모두 돈다). 순서: 중개보수 ✓ → 취득세 ✓ → 전월세 전환 ✓ → 증여세 → 양도세
+- `calc/gifttax.js` ← GiftTax `taxutil/GiftTax.java`(숫자 계산 전체) + `taxutil/AcqTax.java`(증여 분기만 — 매매·상속은 acqtax.js). 패리티는 GiftTax iOS 도구처럼 taxutil 패키지를 통째로 컴파일, 16,000건 불일치 0.
+  complex 의 "자녀에게 증여하면" 섹션(#gift): 시가 = 유사매매사례(같은 단지·같은 면적, 오늘 전 6개월 가장 최근 유효 거래 — 실제 요건 일부만), 성인·미성년 자녀 두 줄. 가정(2026-10-27 사용자 결정): 부모→자녀·채무 없음·10년 내 증여 없음·부모 1주택(취득세 중과 예외)
+- 앱 쪽 요율·식을 고치면 → 여기를 맞추고 `run.sh`(네 계산 모두 돈다). 순서: 중개보수 ✓ → 취득세 ✓ → 전월세 전환 ✓ → 증여세 ✓ → 양도세
 
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
 - **대시보드 JS**: `region-select.js`(시도 버튼 + 시군구 select, URL `?sido=&sgg=` 계약) · `dash.js`(로드·섹션 네비·칩·카드·표·차트 헬퍼, 단지 행 → `AndroidBridge.onComplexClick`) ·

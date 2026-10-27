@@ -12,6 +12,7 @@
 <script src="calc/brokerage.js"></script>
 <script src="calc/acqtax.js"></script>
 <script src="calc/junsewolse.js"></script>
+<script src="calc/gifttax.js"></script>
 <link rel="stylesheet" href="common.css">
 <link rel="stylesheet" href="dash.css">
 <script src="selfbanner-web.js" defer></script>
@@ -76,6 +77,12 @@
       <div class="dsec-head"><div><div class="dsec-title">전세 ↔ 월세 전환</div>
         <div class="dsec-desc" id="cvDesc"></div></div></div>
       <div class="dsec-body"><div class="cards" id="cvCards"></div><div id="cvTable"></div><div class="note" id="cvNote"></div></div>
+    </section>
+
+    <section class="dsec" id="gift" data-nav="증여">
+      <div class="dsec-head"><div><div class="dsec-title">자녀에게 증여하면</div>
+        <div class="dsec-desc" id="gfDesc"></div></div></div>
+      <div class="dsec-body"><div class="cards" id="gfCards"></div><div id="gfTable"></div><div class="note" id="gfNote"></div></div>
     </section>
 
     <section class="dsec" id="list" data-nav="거래 목록">
@@ -229,6 +236,7 @@
       const d = pick(deals), r = pick(rents);
       cards(sum, cx, d);
       convert();
+      gift(d);
       chart(d, r);
       table(d, r);
     }
@@ -310,6 +318,54 @@
         D.table(tbl, cols, list, '');
         note.textContent = '월세 = (전세 − 보증금) × 전환율 ÷ 12 · 법정 상한은 계약 중 전세를 월세로 바꿀 때 적용됩니다(주택임대차보호법 시행령 제9조). 새 계약에는 상한이 없어 시장 전환율이 실제 시세에 가깝습니다';
       });
+    }
+
+    // 증여 — GiftTax 정본(calc/gifttax.js). 시가 = 유사매매사례(같은 단지·같은 면적, 오늘 전 6개월 안 가장 최근 유효 거래)
+    //   가정(2026-10-27 사용자 결정): 부모 → 자녀(직계존속 공제 성인 5천만·미성년 2천만), 채무 없음, 10년 내 다른 증여 없음,
+    //   부모 1주택 → 직계비속 증여라 취득세 중과 예외(조정지역 여부 무관). 신고세액공제 3% 반영
+    function gift(d) {
+      const sec = document.getElementById('gift');
+      const GT = window.Calc && Calc.gifttax;
+      if (!GT || cx.type === 'right') { sec.style.display = 'none'; return; }
+      sec.style.display = '';
+      const box = document.getElementById('gfCards'), tbl = document.getElementById('gfTable'), note = document.getElementById('gfNote');
+      const desc = document.getElementById('gfDesc');
+      const b = st.area === 'all' ? null : byArea.find(x => String(x.areaKey) === st.area);
+      note.textContent = '';
+      if (!b) {
+        desc.textContent = '시가 = 같은 면적의 최근 거래(유사매매사례)'; box.innerHTML = '';
+        tbl.innerHTML = '<div class="hint">위에서 면적을 고르면 그 면적의 최근 거래로 계산합니다</div>'; return;
+      }
+      const now = new Date(), from = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+      const fromStr = `${from.getFullYear()}-${String(from.getMonth() + 1).padStart(2, '0')}-${String(from.getDate()).padStart(2, '0')}`;
+      const sim = d.filter(x => x.cancel == null && x.date >= fromStr).sort((a, c) => c.date.localeCompare(a.date))[0];
+      desc.textContent = `전용 ${+b.area.toFixed(2)}㎡ · 부모가 자녀에게, 채무 없이 · 오늘 증여한다고 보면`;
+      if (!sim) {
+        box.innerHTML = '';
+        tbl.innerHTML = '<div class="hint">최근 6개월 안에 이 면적의 거래가 없어 유사매매사례가 없습니다.<br>실제 신고에서는 감정가·공시가격(기준시가) 등으로 평가합니다</div>';
+        return;
+      }
+      const price = sim.amount * 10000;
+      const acq = cx.type === 'office' ? GT.giftAcqEtc(price) : GT.giftAcqHouse(price, 1, false, sim.area > 85, 0, 0, true);
+      const row = (label, minor) => {
+        const g = GT.giftTax({ presenter: 'ANCESTOR', giftAmount: price, minor });
+        return { label, ded: g.deduction, gift: g.finalTax, acq: acq.tax, sum: g.finalTax + acq.tax, rate: g.taxRate };
+      };
+      const rows = [row('성인 자녀', false), row('미성년 자녀', true)];
+      const man = w => won(Math.round(w / 10000));
+      D.cards(box, [
+        { label: '시가(유사매매사례)', value: won(sim.amount), sub: `${sim.date} · ${sim.floor}층 · 같은 면적 최근 6개월 중 가장 최근 거래` },
+        { label: '성인 자녀 합계', value: man(rows[0].sum), sub: `증여세 ${man(rows[0].gift)} + 취득세 ${man(rows[0].acq)}` },
+      ]);
+      D.table(tbl, [
+        { label: '받는 사람', get: x => x.label },
+        { label: '증여재산공제', cls: 'num', get: x => man(x.ded) },
+        { label: '증여세', cls: 'num', get: x => `<b>${man(x.gift)}</b> <span class="faint">(${Math.round(x.rate * 100)}% 구간)</span>` },
+        { label: `취득세 ${+acq.total.toFixed(2)}%`, cls: 'num', get: x => man(x.acq) },
+        { label: '합계', cls: 'num', get: x => `<b>${man(x.sum)}</b>` },
+      ], rows, '');
+      note.textContent = '증여세는 신고세액공제 3% 반영·10년 내 다른 증여 없음 가정 · 취득세는 부모가 1주택일 때(직계비속 증여라 중과 예외)'
+        + (cx.type === 'office' ? ' · 오피스텔은 4.0%' : '') + ' · 실제 유사매매사례는 면적·공시가격 차이 5% 이내 등 조건이 더 있고, 평가기준일 뒤 3개월 안 거래도 포함됩니다. 정확한 신고는 세무 상담을 받으세요';
     }
 
     // 산점도 — x = 연도(소수), 날짜 어댑터 없이 linear 축
@@ -415,7 +471,11 @@
 
     renderAll();
     const target = location.hash && document.getElementById(location.hash.slice(1));
-    if (target && target.classList.contains('dsec')) target.scrollIntoView();
+    if (target && target.classList.contains('dsec')) {
+      target.scrollIntoView();
+      // 전월세 전환 섹션은 기준금리(rates.json)를 받은 뒤 그려져 높이가 바뀐다 — 그 뒤에 한 번 더
+      if (window.Calc && Calc.junsewolse) Calc.junsewolse.loadRates().then(() => setTimeout(() => target.scrollIntoView(), 0));
+    }
   }
 
   function head(cx, sggName) {
