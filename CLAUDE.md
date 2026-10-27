@@ -36,11 +36,15 @@
 | new-high.html · cancel.html · hotspot.html | dash-events-all.json · dash-events-<시도>.json | generate-dash-events.js |
 | today.html?type=deal\|jeonse\|wolse | dash-today-all.json · dash-today-<시도>.json | generate-dash-today.js (어제 스냅샷 collector/data/snapshots/) |
 | heatmap.html | heatmap.json<br>heatmap-office.json · heatmap-multi.json<br>heatmap-rent.json · heatmap-office-rent.json · heatmap-multi-rent.json | generate-heatmap-json.js<br>generate-heatmap-layers-json.js<br>generate-heatmap-rent-json.js |
+| complex.html?key=…\|pnu=… (단지 상세, 2026-10-27 시범) | **이 레포 data/ 가 아니다** — `https://trade-kr.boolint.com/v1/` 의 `c/{key}`·`c/{key}/summary`·`idx/pnu/{sgg}`·`sgg/{sgg}`(고르기) | trade-collector `generate-serve.js` → R2 → Worker `trade-kr`(계약 `~/server/trade-serve/docs/contract.md`) |
 | index.html · 404.html | (없음) | - |
 
 - 페이지는 `<시도>-all.json`(시도·시군구 목록 + 시도 요약)을 먼저 받고, 시도를 고를 때 그 시도 파일 하나를 받는다. 시군구 전환은 fetch 없이 `regions[sgg]`
 - 섹션 id 가 곧 해시다(`apt#yield`). `_redirects` 의 목적지가 이 해시를 쓰므로 **섹션 id 를 바꾸지 말 것**
-- 페이지를 추가하면 index 에도 넣을 것(지금 카드 14장: 물건 7 · 거래 목록·사건 5 · 지도 2)
+- 페이지를 추가하면 index 에도 넣을 것(지금 카드 15장: 물건 7 · 거래 목록·사건 6(단지 실거래가 포함) · 지도 2)
+- **complex.html**(플랫폼 5번, 2026-10-27): `?key=apt:11680-218` · `?pnu=<19자리>`(여럿이면 후보 목록) · 없으면 시군구 → 이름 고르기. `&area=84`(전용 반올림 ㎡ = 요약 `areaKey`) `&tab=deal|jeonse|wolse`.
+  API 호출은 `trade-api.js` 한 곳(compare·search 도 이걸 쓴다). **숫자 카드는 요약 조각 그대로**(계산 정본은 collector) — 페이지는 행을 거르기만 한다. 행은 반드시 `cols` 로 읽는다(`TradeApi.rows`).
+  금액은 `33억 4,000` 형식(`Dash.eok` 은 억 반올림이라 거래끼리 구분이 안 된다 — 차트 축만 eok 류). 시군구 이름은 서빙 파일에 없어 `data/dash-apt-all.json` 을 빌린다
 
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
 - **대시보드 JS**: `region-select.js`(시도 버튼 + 시군구 select, URL `?sido=&sgg=` 계약) · `dash.js`(로드·섹션 네비·칩·카드·표·차트 헬퍼, 단지 행 → `AndroidBridge.onComplexClick`) ·
