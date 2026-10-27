@@ -44,7 +44,7 @@
 - 페이지를 추가하면 index 에도 넣을 것(지금 카드 15장: 물건 7 · 거래 목록·사건 6(단지 실거래가 포함) · 지도 2)
 - **complex.html**(플랫폼 5번, 2026-10-27): `?key=apt:11680-218` · `?pnu=<19자리>`(여럿이면 후보 목록) · 없으면 시군구 → 이름 고르기. `&area=84`(전용 반올림 ㎡ = 요약 `areaKey`) `&tab=deal|jeonse|wolse`.
   API 호출은 `trade-api.js` 한 곳(compare·search 도 이걸 쓴다). **숫자 카드는 요약 조각 그대로**(계산 정본은 collector) — 페이지는 행을 거르기만 한다. 행은 반드시 `cols` 로 읽는다(`TradeApi.rows`).
-  **기존 페이지의 단지 행 클릭 → complex**(2026-10-27): `dash.js complexClick` 이 행의 `k`(collector 가 넣는 단지 키) + `area` 로 이동한다. 웹·앱 공통(앱도 브리지 대신 페이지 이동 — 사용자 결정). `k` 가 없는 행만 옛 `AndroidBridge.onComplexClick`. heatmap 팝업은 아직 미연결(히트맵 JSON 에 키 없음)
+  **기존 페이지의 단지 행 클릭 → complex**(2026-10-27): `dash.js complexClick` 이 행의 `k`(collector 가 넣는 단지 키) + `area` 로 이동한다. 웹·앱 공통(앱도 브리지 대신 페이지 이동 — 사용자 결정). `k` 가 없는 행만 옛 `AndroidBridge.onComplexClick`. heatmap 팝업도 같은 날 연결 — 점의 `k` 가 있으면 "실거래 전체 보기 →"(전월세 지도는 `&tab=jeonse`), 브리지 payload 에 `key` 추가. 연립다세대 점은 키 없음
   금액은 `33억 4,000` 형식(`Dash.eok` 은 억 반올림이라 거래끼리 구분이 안 된다 — 차트 축만 eok 류). 시군구 이름은 서빙 파일에 없어 `data/dash-apt-all.json` 을 빌린다
 
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
