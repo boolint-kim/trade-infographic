@@ -104,7 +104,7 @@ function renderRank(ctx, sec) {
     D.table(t2.lastChild, cols('lo'), r.down, '내린 단지가 없습니다', click);
   } else {
     const list = region.tabs[tab];
-    document.getElementById('rkTabDesc').textContent = `${tabDesc[tab] || ''} · 최대 20개 · 단지를 누르면 앱에서 그 단지를 찾습니다(앱에서 열었을 때)`;
+    document.getElementById('rkTabDesc').textContent = `${tabDesc[tab] || ''} · 최대 20개 · 단지를 누르면 그 단지의 실거래 전체를 봅니다`;
     D.table(t1, [
       { label: '#', cls: 'num faint', get: (x, i) => i + 1 },
       nameCol,
