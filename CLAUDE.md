@@ -47,6 +47,11 @@
   **기존 페이지의 단지 행 클릭 → complex**(2026-10-27): `dash.js complexClick` 이 행의 `k`(collector 가 넣는 단지 키) + `area` 로 이동한다. 웹·앱 공통(앱도 브리지 대신 페이지 이동 — 사용자 결정). `k` 가 없는 행만 옛 `AndroidBridge.onComplexClick`. heatmap 팝업도 같은 날 연결 — 점의 `k` 가 있으면 "실거래 전체 보기 →"(전월세 지도는 `&tab=jeonse`), 브리지 payload 에 `key` 추가. 연립다세대 점은 키 없음
   금액은 `33억 4,000` 형식(`Dash.eok` 은 억 반올림이라 거래끼리 구분이 안 된다 — 차트 축만 eok 류). 시군구 이름은 서빙 파일에 없어 `data/dash-apt-all.json` 을 빌린다
 
+## 계산 모듈 `calc/` (2026-10-27~ — 계산기 앱의 결과를 단지 상세에, 플랫폼 계획 §12)
+- **정본은 각 계산기 앱의 Android 코드**다. 여기는 그대로 옮긴 JS 순수 함수 + 패리티 테스트(정본 Java 파일을 그대로 컴파일해 결과 double 비트 비교)
+- `calc/brokerage.js` ← RealEstateCal `helper/CalHelper.java`(중개보수 상한). `calc/parity/run.sh` — 12,624건 불일치 0(2026-10-27). complex 거래 목록의 "중개보수" 열(아파트=주택, 오피스텔=주거용, 분양권 제외)
+- 앱 쪽 요율·식을 고치면 → 여기를 맞추고 `run.sh`. 순서: 중개보수 ✓ → 취득세 → 전월세 전환 → 증여세 → 양도세
+
 ## 공통 인프라 (새 페이지도 이걸 쓴다)
 - **대시보드 JS**: `region-select.js`(시도 버튼 + 시군구 select, URL `?sido=&sgg=` 계약) · `dash.js`(로드·섹션 네비·칩·카드·표·차트 헬퍼, 단지 행 → `AndroidBridge.onComplexClick`) ·
   `dash-sections.js`(물건 페이지 공용 섹션 렌더러 price·volume·jeonse·yield·wolse·age·size·renewal·pyeong·jimok·factory) · `dash.css`

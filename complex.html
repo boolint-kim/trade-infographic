@@ -9,6 +9,7 @@
 <script src="region-select.js"></script>
 <script src="dash.js"></script>
 <script src="trade-api.js"></script>
+<script src="calc/brokerage.js"></script>
 <link rel="stylesheet" href="common.css">
 <link rel="stylesheet" href="dash.css">
 <script src="selfbanner-web.js" defer></script>
@@ -313,6 +314,8 @@
     function table(d, r) {
       chipRow('listChips', types, st.tab, k => { st.tab = k; st.shown = PAGE; setParam('tab', k === 'deal' ? '' : k); table(pick(deals), pick(rents)); });
       const showArea = st.area === 'all';
+      // 중개보수 상한 — RealEstateCal 정본(calc/brokerage.js). 분양권은 거래가액 기준(계약금·중도금·프리미엄)이 달라 빼고, 오피스텔은 주거용 요율
+      const feeObj = window.Calc && Calc.brokerage ? ({ apt: '주택', office: '오피스텔' })[cx.type] : null;
       let list, cols;
       const base = [
         { label: '계약일', get: x => x.date },
@@ -323,17 +326,20 @@
         list = d;
         cols = [...base,
           { label: '거래가', cls: 'num', get: x => x.cancel ? `<span class="cx">${won(x.amount)}</span>` : `<b>${won(x.amount)}</b>` },
+          ...(feeObj ? [{ label: '중개보수', cls: 'num', get: x => x.cancel ? '' : `<span class="faint">${feeText(feeObj, '매매', x.amount, 0)}</span>` }] : []),
           { label: '비고', get: x => dealNote(x) }];
       } else {
         list = r.filter(x => st.tab === 'jeonse' ? !x.rent : x.rent > 0);
         cols = [...base,
           { label: st.tab === 'jeonse' ? '보증금' : '보증금 / 월세', cls: 'num', get: x => `<b>${won(x.deposit)}${x.rent ? ` / ${D.fmt(x.rent)}` : ''}</b>` },
+          ...(feeObj ? [{ label: '중개보수', cls: 'num', get: x => `<span class="faint">${feeText(feeObj, x.rent ? '월세' : '전세', x.deposit, x.rent || 0)}</span>` }] : []),
           { label: '구분', get: x => D.esc(x.contractType || '-') },
           { label: '종전', cls: 'num', get: x => x.preDeposit == null ? '' : `${won(x.preDeposit)}${x.preRent ? ` / ${D.fmt(x.preRent)}` : ''}` },
           { label: '계약기간', get: x => `<span class="faint">${D.esc(x.term || '')}</span>` }];
       }
       list = [...list].reverse();   // 행은 날짜 오름차순으로 온다(계약 §3.3)
-      document.getElementById('listDesc').textContent = `최신순 · ${D.fmt(list.length)}건${st.tab === 'deal' ? ' · 취소선 = 계약 해제' : ''}`;
+      document.getElementById('listDesc').textContent = `최신순 · ${D.fmt(list.length)}건${st.tab === 'deal' ? ' · 취소선 = 계약 해제' : ''}`
+        + (feeObj ? ` · 중개보수 = 법정 상한(부가세 별도${feeObj === '오피스텔' ? ', 주거용 오피스텔 기준' : ''}, 실제는 협의)` : '');
       D.table(document.getElementById('listTable'), cols, list.slice(0, st.shown), '거래가 없습니다');
       const more = document.getElementById('listMore');
       more.style.display = list.length > st.shown ? 'block' : 'none';
@@ -374,6 +380,8 @@
       <div class="facts">${facts.map(f => `<span>${D.esc(f)}</span>`).join('')}${links.join('')}</div>`;
   }
 
+  // 원 → "1,201만" (만원 미만 반올림)
+  const feeText = (obj, trade, p1, p2) => p1 == null ? '' : won(Math.round(Calc.brokerage.fee(obj, trade, p1, p2) / 10000));
   const n12 = b => (b.deal ? b.deal.n12 : 0) + (b.jeonse ? b.jeonse.n12 : 0) + (b.wolse ? b.wolse.n12 : 0);
   function prevYm(ym, k) {
     let y = +ym.slice(0, 4), m = +ym.slice(4, 6) - k;
