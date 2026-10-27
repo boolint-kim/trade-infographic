@@ -3,6 +3,19 @@
 > 2026-10-16 정합성 조사에서 초안 작성 → 같은 날 검토·보완(파일 수·생성기·할 일 상태를 실물로 대조).
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
+## ★ 다음 세션 시작점 (2026-10-27 저녁 작성) — 이 폴더에서 연다
+실거래 플랫폼 5번(단지 상세 `complex` + 계산 모듈)을 하루에 끝냈다. 전부 로컬 커밋 → **10-27 20:00 파이프라인이 push** 해서 10-28 아침부터 라이브.
+1. **배포 확인**(10-28 아침, 5분) — 아래가 전부 되면 넘어간다
+   - `tail -40 ~/server/trade-collector/logs/launchd-daily.log` → "파이프라인 완료" · 4단계 push 성공 · 3.5단계 업로드 PUT 수(마스터 색인 545개는 매일 기본으로 올라간다 — 그걸 뺀 수가 실제 변경)
+   - `git -C ~/server/trade-infographic log origin/main --oneline -3` 에 이 날 커밋들이 있는가
+   - 라이브: https://chart.boolint.com/complex?key=apt:11680-218 (요약·차트·전월세 전환·증여·목록의 중개보수·취득세 열) / 랭킹·신고가에서 단지 행 클릭 → 상세 / 히트맵 팝업 "실거래 전체 보기"
+   - `curl -s https://trade-kr.boolint.com/v1/health` → `ok`
+2. **사용자 폰 확인 의견 반영**(목록 폭·섹션 순서 등) — 의견이 오면 그것부터
+3. **계산 모듈 5호 양도세 시나리오** — 정본 TransTax `taxutil/CalHouse.java`(869줄, 분양권은 `CalSoldNote`). 패리티는 `calc/parity/` 의 다른 넷과 같은 방식(정본 Java 그대로 컴파일, `android.util.Log` 는 RealEstateCal 때처럼 `stub/` 대역).
+   **착수 전에 사용자에게 정할 것**(생성자 입력 중 거래 행에 없는 것): 주택 수(1세대1주택 12억 비과세 vs 다주택) · 거주기간(장기보유특별공제 표1/표2) · 조정지역 중과(현재 유예) · 필요경비(0 가정?) · 화면(같은 면적의 과거 거래를 취득가로, 최근 거래를 양도가로 — "N년 전에 샀다면" 곡선/표)
+4. 그다음은 플랫폼 4번 **PropertyTax 네이티브 카드** — 그 일은 `~/AndroidStudioProjects/PropertyTax` 에서 시작(정본 `~/server/trade-serve/docs/platform-plan.md` §5.1)
+- 계산 모듈 규칙은 아래 "계산 모듈 `calc/`" 절. 정본은 각 앱 Android 이고, 앱 CLAUDE.md 에 "웹으로도 나간다" 를 적어 두었다
+
 ## ★ 현황 (2026-10-18) — 재설계(B안) 컷오버 완료: 대시보드 7 + 특화 5 + 지도
 - **옛 지표 43페이지(`infographic-*.html`)는 2026-10-18 삭제**했다. 옛 주소는 `_redirects`(86줄 = 43개 × `.html`·확장자 없는 형태)가 새 섹션으로 301 한다.
   출시 앱(AptTradeChart·OfficeTradeChart·TransTax A+i)의 허브가 옛 `.html` 주소를 하드코딩하지만 앱 출시 없이 이어진다(같은 호스트 리다이렉트는 앱 허용 목록 통과)
