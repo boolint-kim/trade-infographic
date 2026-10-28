@@ -11,7 +11,8 @@
    - 라이브: https://chart.boolint.com/complex?key=apt:11680-218 이 읍면동 묶음으로 열리는가(개발자 도구 네트워크에 `umd/1168010600/rows`) · `curl -s -o /dev/null -w '%{http_code}' https://trade-kr.boolint.com/v1/c/apt:11680-218` → 404
    - 랭킹·신고가 행 클릭, 히트맵 팝업 링크(둘 다 `&sgg=` 단서를 단다)
 2. **10-30 아침 PUT 수** — 전환 다음 날부터가 평소 값. 예상 약 4,000(읍면동 통계 1,800 + 행 묶음 1,800 + 시군구·색인). 월초(11-01)는 asOf 가 바뀌어 전 파일(약 8,700)
-3. **사용자 폰 확인 의견 반영** — 특히 큰 동(대치동 등) 단지가 무겁지 않은지. 무거우면 **행 묶음 36개월 분할**(Fable 제안, 보류 중 — 최대 1.46MB → 546KB, PUT +7%)
+   - 혼합안(10-28 사용자 결정): `sgg/{5}.json` 에도 전 단지 `summaries` — 구·여러 구 비교용. 확인: `curl -s --compressed https://trade-kr.boolint.com/v1/sgg/11680 | python3 -c "import json,sys;print(len(json.load(sys.stdin)['summaries']))"` → 약 1,037
+3. **사용자 폰 확인 의견 반영** — 특히 큰 동(대치동 등) 단지가 무겁지 않은지, 단지 고르기 화면(시군구 파일이 49KB → 253KB 로 커졌다)이 느리지 않은지. 고르기는 받은 요약으로 목록에 최근 시세를 보여 주는 안(추천)과 요약 파일 분리(PUT +255/일) 중 고른다. 무거우면 **행 묶음 36개월 분할**(Fable 제안, 보류 중 — 최대 1.46MB → 546KB, PUT +7%)
 4. **계산 모듈 5호 양도세 시나리오** — 정본 TransTax `taxutil/CalHouse.java`(869줄, 분양권은 `CalSoldNote`). 패리티는 `calc/parity/` 의 다른 넷과 같은 방식(`android.util.Log` 는 `stub/` 대역).
    **착수 전에 사용자에게 정할 것**: 주택 수(1세대1주택 12억 비과세 vs 다주택) · 거주기간(장기보유특별공제 표1/표2) · 조정지역 중과(현재 유예) · 필요경비(0?) · 화면("N년 전에 샀다면" 곡선/표)
 5. 그다음 플랫폼 4번 **PropertyTax 네이티브 카드** — `~/AndroidStudioProjects/PropertyTax` 에서 시작. v0.5 기준: PNU → `idx/pnu/{sgg}`(키 + `umd` 맵) → `umd/{10}` 의 `summaries[key]` 한 파일
