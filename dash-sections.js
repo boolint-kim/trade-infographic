@@ -232,7 +232,7 @@ function histAndTrend(ctx, prefix, sec, { unit, digits, colorOf, refLine }) {
     options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
       plugins: { legend: { display: !!refLine, position: 'top', labels: { usePointStyle: true } },
         tooltip: { callbacks: { label: it => it.datasetIndex === 0 ? `중앙값 ${it.raw == null ? '표본 부족' : it.raw.toFixed(digits) + unit} · 짝 ${D.fmt(sec.trend[it.dataIndex].pairs)}개` : `${refLine.label}` } } },
-      scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => v + unit }, grid: { color: chartTheme.grid() } } } },
+      scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => +v.toFixed(digits) + unit }, grid: { color: chartTheme.grid() } } } },
   });
 }
 
@@ -527,7 +527,7 @@ function renderSize(ctx, secEl) {
     data: { labels: keys.map(k => facets[k]), datasets: [{ data: keys.map(k => p.rise[k] ? p.rise[k].pct : null), borderRadius: 4, backgroundColor: keys.map(k => SIZE_COLORS[k] + 'bb') }] },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false },
         tooltip: { callbacks: { label: it => { const x = p.rise[keys[it.dataIndex]]; return x ? `${x.from}→${x.to} ${D.signPct(x.pct)}% (${D.fmt(x.fromMed)} → ${D.fmt(x.toMed)})` : '표본 부족'; } } } },
-      scales: { x: { grid: { display: false }, ticks: { font: { size: D.isMobile ? 9 : 11 } } }, y: { ticks: { callback: v => v + '%' }, grid: { color: chartTheme.grid() } } } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: D.isMobile ? 9 : 11 } } }, y: { ticks: { callback: v => +v.toFixed(1) + '%' }, grid: { color: chartTheme.grid() } } } },
   });
   compareBlock(ctx, 'sz', {
     title: m => m === 'sgg' ? `${data.sido.name} 시군구 소형 프리미엄` : '전국 시도 소형 프리미엄',
