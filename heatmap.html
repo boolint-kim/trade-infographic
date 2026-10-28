@@ -735,7 +735,7 @@ function onMapClick(e) {
           '<div class="row"><span class="label">월세 보증금/월세</span><span class="val">' + (wol ? fmtWon(wol.d) + '/' + fmt(wol.r) : '-') + '</span></div>' +
           (bestD.cr ? '<div class="row"><span class="label">환산 전환율</span><span class="val">' + bestD.cr + '%' + (bestD.crL ? ' (법정)' : ' (시장)') + '</span></div>' : '') : '') +
         // 단지 상세 — 같은 호스트 이동이라 앱 WebView 도 그대로 연다. 누름이 팝업(탭하면 닫기)으로 가지 않게 막는다
-        (bestD.k ? '<a class="cx-link" href="complex.html?key=' + encodeURIComponent(bestD.k) + (currentTrade === 'rent' ? '&tab=jeonse' : '') +
+        (bestD.k ? '<a class="cx-link" href="complex.html?key=' + encodeURIComponent(bestD.k) + (bestD.r ? '&sgg=' + bestD.r : '') + (currentTrade === 'rent' ? '&tab=jeonse' : '') +
           '" onclick="event.stopPropagation()">실거래 전체 보기 →</a>' : '') +
         '<div class="hint">' + lg.popupNote + '탭하여 닫기</div>' +
       '</div>',

@@ -121,7 +121,8 @@
     try { const p = new URLSearchParams(location.search); if (v == null || v === '') p.delete(k); else p.set(k, v);
       history.replaceState(null, '', `${location.pathname}?${p}${location.hash}`); } catch (e) { /* 부가 기능 */ }
   }
-  const linkTo = key => `complex.html?key=${encodeURIComponent(key)}`;
+  // 단지 링크 — 읍면동을 찾는 단서(sgg 또는 umd)를 같이 넘긴다(계약 §9)
+  const linkTo = (key, hint = {}) => `complex.html?key=${encodeURIComponent(key)}${hint.umd ? `&umd=${hint.umd}` : hint.sgg ? `&sgg=${hint.sgg}` : ''}${new URLSearchParams(location.search).get('api') === 'local' ? '&api=local' : ''}`;
 
   // ─── 진입: key | pnu | 없음(고르기) ─────────────────────
   async function boot() {
@@ -136,19 +137,20 @@
       setParam('key', key);
     }
     if (!A.isKey(key)) return picker();
-    return detail(key);
+    return detail(key, { umd: q.get('umd'), sgg: q.get('sgg') });
   }
 
   // 한 필지에 단지가 여럿(아파트 + 같은 건물의 오피스텔·분양권 등)
   async function candidates(keys) {
     const sums = await Promise.all(keys.map(k => A.summary(k).catch(() => null)));
+    const umds = await Promise.all(keys.map(k => A.locate(k).catch(() => null)));
     document.getElementById('picker').style.display = 'block';
     document.getElementById('regionBar').style.display = 'none';
     document.getElementById('pickQ').style.display = 'none';
     document.querySelector('#picker .header p').textContent = '이 필지에 단지가 여럿 있습니다 — 하나를 고르세요';
     document.getElementById('pickList').innerHTML = keys.map((k, i) => {
       const s = sums[i] || {};
-      return `<a href="${linkTo(k)}"><span>${D.esc(s.name || k)} <span class="tag-mini">${A.TYPE_NAME[k.split(':')[0]] || ''}</span></span>
+      return `<a href="${linkTo(k, { umd: umds[i] })}"><span>${D.esc(s.name || k)} <span class="tag-mini">${A.TYPE_NAME[k.split(':')[0]] || ''}</span></span>
         <span class="faint">${s.totals ? `매매 ${D.fmt(s.totals.deals)} · 전월세 ${D.fmt(s.totals.rents)}` : ''}</span></a>`;
     }).join('');
   }
@@ -165,7 +167,7 @@
       const s = input.value.replace(/\s+/g, '');
       const hit = s ? items.filter(x => x.search.includes(s)) : items;
       info.textContent = items.length ? `${D.fmt(hit.length)}개 단지${hit.length > 100 ? ' — 앞 100개만 보입니다. 이름을 더 입력하세요' : ''}` : '';
-      list.innerHTML = hit.slice(0, 100).map(x => `<a href="${linkTo(x.key)}"><span>${D.esc(x.name)} <span class="tag-mini">${A.TYPE_NAME[x.type] || ''}</span></span>
+      list.innerHTML = hit.slice(0, 100).map(x => `<a href="${linkTo(x.key, { sgg: x.sgg })}"><span>${D.esc(x.name)} <span class="tag-mini">${A.TYPE_NAME[x.type] || ''}</span></span>
         <span class="faint">${D.esc(x.umd)}</span></a>`).join('');
     }
     input.oninput = draw;
@@ -188,7 +190,7 @@
         for (const [umd, name, type, key] of (f && f.index) || []) {
           const x = byKey.get(key);
           if (x) x.search += '|' + name;
-          else byKey.set(key, { key, name, type, umd, search: name });
+          else byKey.set(key, { key, name, type, umd, sgg, search: name });
         }
         // 색인은 가나다순이라 "(1237-3)" 같은 번지 이름이 맨 앞에 온다 — 한글로 시작하는 이름을 먼저
         const hangul = x => /^[가-힣]/.test(x.name) ? 0 : 1;
@@ -199,9 +201,9 @@
   }
 
   // ─── 상세 ───────────────────────────────────────────────
-  async function detail(key) {
+  async function detail(key, hint) {
     let full, sum, reg;
-    try { [full, sum, reg] = await Promise.all([A.complex(key), A.summary(key), A.regionNames()]); }
+    try { [full, sum, reg] = await Promise.all([A.complex(key, hint), A.summary(key, hint), A.regionNames()]); }
     catch (e) { console.error(e); return fail('데이터 로딩 실패 — 잠시 뒤 다시 열어 주세요'); }
     if (!full) return fail(`단지를 찾을 수 없습니다 — <a href="complex.html">다른 단지 찾기</a>`);
 
@@ -487,8 +489,8 @@
     if (cx.lastDeal) facts.push(`최근 거래 ${cx.lastDeal}`);
     if (cx.firstYm) facts.push(`${D.ymText(cx.firstYm)}~ 기록`);
     const links = [];
-    if (cx.links && cx.links.apt) links.push(`<a href="${linkTo(cx.links.apt)}">입주 후 아파트 →</a>`);
-    if (cx.links && cx.links.right) links.push(`<a href="${linkTo(cx.links.right)}">분양권·입주권 거래 →</a>`);
+    if (cx.links && cx.links.apt) links.push(`<a href="${linkTo(cx.links.apt, { sgg: cx.sgg })}">입주 후 아파트 →</a>`);
+    if (cx.links && cx.links.right) links.push(`<a href="${linkTo(cx.links.right, { sgg: cx.sgg })}">분양권·입주권 거래 →</a>`);
     const others = (cx.names || []).filter(n => n !== cx.name);
     document.getElementById('cxHead').innerHTML = `
       <h1>${D.esc(cx.name)}<span class="type-tag">${A.TYPE_NAME[cx.type] || cx.type}</span></h1>

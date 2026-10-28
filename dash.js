@@ -165,6 +165,7 @@
   function complexClick(x, kind = 'apt') {
     if (x.k) {
       const q = new URLSearchParams({ key: x.k });
+      if (x.g) q.set('sgg', x.g);   // 읍면동을 찾는 단서(계약 §9) — 단지 마스터 파일을 바로 고른다
       if (x.a) q.set('area', Math.round(x.a));
       location.href = `complex.html?${q}`;
       return;
