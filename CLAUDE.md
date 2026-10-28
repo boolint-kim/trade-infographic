@@ -3,18 +3,19 @@
 > 2026-10-16 정합성 조사에서 초안 작성 → 같은 날 검토·보완(파일 수·생성기·할 일 상태를 실물로 대조).
 > 변경 이력은 `HISTORY.md`(2026-03-23 시점, 13종·12 JSON 기준 — 보관용, 현황 판단에 쓰지 말 것).
 
-## ★ 다음 세션 시작점 (2026-10-27 저녁 작성) — 이 폴더에서 연다
-실거래 플랫폼 5번(단지 상세 `complex` + 계산 모듈)을 하루에 끝냈다. 전부 로컬 커밋 → **10-27 20:00 파이프라인이 push** 해서 10-28 아침부터 라이브.
-1. **배포 확인**(10-28 아침, 5분) — 아래가 전부 되면 넘어간다
-   - `tail -40 ~/server/trade-collector/logs/launchd-daily.log` → "파이프라인 완료" · 4단계 push 성공 · 3.5단계 업로드 PUT 수(마스터 색인 545개는 매일 기본으로 올라간다 — 그걸 뺀 수가 실제 변경)
-   - `git -C ~/server/trade-infographic log origin/main --oneline -3` 에 이 날 커밋들이 있는가
-   - 라이브: https://chart.boolint.com/complex?key=apt:11680-218 (요약·차트·전월세 전환·증여·목록의 중개보수·취득세 열) / 랭킹·신고가에서 단지 행 클릭 → 상세 / 히트맵 팝업 "실거래 전체 보기"
-   - `curl -s https://trade-kr.boolint.com/v1/health` → `ok`
-2. **사용자 폰 확인 의견 반영**(목록 폭·섹션 순서 등) — 의견이 오면 그것부터
-3. **계산 모듈 5호 양도세 시나리오** — 정본 TransTax `taxutil/CalHouse.java`(869줄, 분양권은 `CalSoldNote`). 패리티는 `calc/parity/` 의 다른 넷과 같은 방식(정본 Java 그대로 컴파일, `android.util.Log` 는 RealEstateCal 때처럼 `stub/` 대역).
-   **착수 전에 사용자에게 정할 것**(생성자 입력 중 거래 행에 없는 것): 주택 수(1세대1주택 12억 비과세 vs 다주택) · 거주기간(장기보유특별공제 표1/표2) · 조정지역 중과(현재 유예) · 필요경비(0 가정?) · 화면(같은 면적의 과거 거래를 취득가로, 최근 거래를 양도가로 — "N년 전에 샀다면" 곡선/표)
-4. 그다음은 플랫폼 4번 **PropertyTax 네이티브 카드** — 그 일은 `~/AndroidStudioProjects/PropertyTax` 에서 시작(정본 `~/server/trade-serve/docs/platform-plan.md` §5.1)
-- 계산 모듈 규칙은 아래 "계산 모듈 `calc/`" 절. 정본은 각 앱 Android 이고, 앱 CLAUDE.md 에 "웹으로도 나간다" 를 적어 두었다
+## ★ 다음 세션 시작점 (2026-10-28 갱신) — 이 폴더에서 연다
+10-27 에 플랫폼 5번(단지 상세 `complex` + 계산 모듈 4종)을 끝냈고 10-28 아침 라이브 확인 완료.
+10-28 에 **R2 쓰기 절감 v0.5**(단지 파일 15만 개 → 읍면동 묶음, 계약 `~/server/trade-serve/docs/contract.md` §9)를 만들었다 — **10-28 20:00 파이프라인이 처음으로 전환한다.**
+1. **v0.5 전환 확인**(10-29 아침)
+   - `grep -E "PUT|DELETE|완료 —" ~/server/trade-collector/logs/pipeline_20261028_*.log | tail -5` → 이 날만 PUT 약 8,500 · DELETE 약 15만(옛 `c/`, 무료). 상한 가드(3만)에 안 걸려야 한다
+   - 라이브: https://chart.boolint.com/complex?key=apt:11680-218 이 읍면동 묶음으로 열리는가(개발자 도구 네트워크에 `umd/1168010600/rows`) · `curl -s -o /dev/null -w '%{http_code}' https://trade-kr.boolint.com/v1/c/apt:11680-218` → 404
+   - 랭킹·신고가 행 클릭, 히트맵 팝업 링크(둘 다 `&sgg=` 단서를 단다)
+2. **10-30 아침 PUT 수** — 전환 다음 날부터가 평소 값. 예상 약 4,000(읍면동 통계 1,800 + 행 묶음 1,800 + 시군구·색인). 월초(11-01)는 asOf 가 바뀌어 전 파일(약 8,700)
+3. **사용자 폰 확인 의견 반영** — 특히 큰 동(대치동 등) 단지가 무겁지 않은지. 무거우면 **행 묶음 36개월 분할**(Fable 제안, 보류 중 — 최대 1.46MB → 546KB, PUT +7%)
+4. **계산 모듈 5호 양도세 시나리오** — 정본 TransTax `taxutil/CalHouse.java`(869줄, 분양권은 `CalSoldNote`). 패리티는 `calc/parity/` 의 다른 넷과 같은 방식(`android.util.Log` 는 `stub/` 대역).
+   **착수 전에 사용자에게 정할 것**: 주택 수(1세대1주택 12억 비과세 vs 다주택) · 거주기간(장기보유특별공제 표1/표2) · 조정지역 중과(현재 유예) · 필요경비(0?) · 화면("N년 전에 샀다면" 곡선/표)
+5. 그다음 플랫폼 4번 **PropertyTax 네이티브 카드** — `~/AndroidStudioProjects/PropertyTax` 에서 시작. v0.5 기준: PNU → `idx/pnu/{sgg}`(키 + `umd` 맵) → `umd/{10}` 의 `summaries[key]` 한 파일
+- 계산 모듈 규칙은 아래 "계산 모듈 `calc/`" 절. 웹 API 는 `trade-api.js` 한 곳(키 → 읍면동 찾기 포함), 로컬 시험은 `?api=local` + 목 서버(Worker 와 같은 경로 규칙으로 collector `data/serve` 를 준다)
 
 ## ★ 현황 (2026-10-18) — 재설계(B안) 컷오버 완료: 대시보드 7 + 특화 5 + 지도
 - **옛 지표 43페이지(`infographic-*.html`)는 2026-10-18 삭제**했다. 옛 주소는 `_redirects`(86줄 = 43개 × `.html`·확장자 없는 형태)가 새 섹션으로 301 한다.
