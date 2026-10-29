@@ -6,7 +6,7 @@
 ## ★ 다음 세션 시작점 (2026-10-28 갱신) — 이 폴더에서 연다
 10-27 에 플랫폼 5번(단지 상세 `complex` + 계산 모듈 4종)을 끝냈고 10-28 아침 라이브 확인 완료.
 10-28 에 **R2 쓰기 절감 v0.5**(단지 파일 15만 개 → 읍면동 묶음, 계약 `~/server/trade-serve/docs/contract.md` §9)를 만들었다 — **10-28 20:00 파이프라인이 처음으로 전환한다.**
-1. **v0.5 전환 확인**(10-29 아침)
+1. ✅ **v0.5 전환 확인 완료(10-29)** — PUT 8,694 · DELETE 151,580 · 실패 0(13분), 옛 c/ 404, 묶음·시군구 요약·PNU umd 맵 라이브, 은마·화성(단서 없이)·PNU 후보 렌더 OK
    - `grep -E "PUT|DELETE|완료 —" ~/server/trade-collector/logs/pipeline_20261028_*.log | tail -5` → 이 날만 PUT 약 8,500 · DELETE 약 15만(옛 `c/`, 무료). 상한 가드(3만)에 안 걸려야 한다
    - 라이브: https://chart.boolint.com/complex?key=apt:11680-218 이 읍면동 묶음으로 열리는가(개발자 도구 네트워크에 `umd/1168010600/rows`) · `curl -s -o /dev/null -w '%{http_code}' https://trade-kr.boolint.com/v1/c/apt:11680-218` → 404
    - 랭킹·신고가 행 클릭, 히트맵 팝업 링크(둘 다 `&sgg=` 단서를 단다)
