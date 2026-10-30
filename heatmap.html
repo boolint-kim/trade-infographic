@@ -57,6 +57,7 @@ body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var
 .legend-shapes{display:flex;gap:10px;margin-top:6px;font-size:10px;color:var(--text-muted);align-items:center}
 .legend-shape-item{display:inline-flex;align-items:center;gap:4px}
 .legend-period{font-size:10px;color:var(--text-faint);margin-top:4px}
+.legend-source{font-size:9px;color:var(--text-faint);margin-top:4px}
 /* 범례 접기 — 범례 어디를 탭해도 접고 편다. 접으면 색 막대 + 숫자만 남긴다(상태는 기기에 기억) */
 .legend{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 .legend-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -193,6 +194,8 @@ body.popup-open #hint{opacity:.15;pointer-events:none;transition:opacity .2s}
     <span class="legend-shape-item"><span class="icon-triangle" style="color:var(--text-muted)"></span> 다세대</span>
   </div>
   <div class="legend-period" id="legendPeriod"></div>
+  <!-- 출처 + 정부기관 아님(Play 혼동 주장 정책, 2026-10-30). 범례를 접어도 남는다 -->
+  <div class="legend-source">자료: 국토교통부 실거래가(공공데이터포털) · 정부기관 서비스 아님</div>
 </div>
 
 <script>
