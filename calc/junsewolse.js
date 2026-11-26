@@ -26,7 +26,7 @@
   }
 
   // RateConfig 번들값(정본) — 기준금리가 바뀌면 앱과 rates.json 을 고친다. 여기는 받기 실패 때만 쓴다
-  const BUNDLE = { baseRate: 3.0, asOf: '2026.8.27', houseSpread: 2.0 };
+  const BUNDLE = { baseRate: 3.25, asOf: '2026.11.26', houseSpread: 2.0 };
   const RATES_URL = 'https://app-data.pages.dev/junsewolse/rates.json';
   // RateConfig.parse 와 같은 규칙: schemaVersion 1, 범위 밖이면 그 항목은 버림, baseRate·asOf 는 한 묶음
   function pickRates(j) {
